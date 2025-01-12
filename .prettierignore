@@ -1,0 +1,5 @@
+# MDX
+*.mdx
+
+# Lockfiles
+pnpm-lock.yaml
