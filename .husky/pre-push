@@ -1,0 +1,6 @@
+# Strict lint
+pnpm lint --max-warnings 0
+
+# Check Typescript
+pnpm run --recursive types
+pnpm run --recursive check
