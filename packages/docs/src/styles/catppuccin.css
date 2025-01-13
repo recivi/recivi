@@ -1,0 +1,103 @@
+:root,
+::backdrop {
+  /* Dark mode */
+
+  --cp-color-text: #cdd6f4;
+  --cp-color-subtext1: #bac2de;
+  --cp-color-subtext0: #a6adc8;
+  --cp-color-overlay2: #9399b2;
+  --cp-color-overlay1: #7f849c;
+  --cp-color-overlay0: #6c7086;
+  --cp-color-surface2: #585b70;
+  --cp-color-surface1: #45475a;
+  --cp-color-surface0: #313244;
+  --cp-color-base: #1e1e2e;
+  --cp-color-mantle: #181825;
+  --cp-color-crust: #11111b;
+
+  --cp-color-peach: #fab387;
+
+  --sl-color-text: var(--cp-color-text);
+  --sl-color-text-accent: var(--cp-color-peach);
+  --sl-color-text-invert: var(--cp-color-base);
+  --sl-color-gray-2: var(--cp-color-text); /* used by hero's tagline */
+
+  --sl-color-bg: var(--cp-color-base);
+  --sl-color-bg-nav: var(--cp-color-mantle);
+  --sl-color-bg-sidebar: var(--cp-color-mantle);
+  --sl-color-bg-inline-code: var(--cp-color-surface0);
+  --sl-color-bg-accent: var(--cp-color-peach);
+
+  --sl-color-hairline-light: var(--cp-color-surface1);
+  --sl-color-hairline: var(--cp-color-surface1);
+  --sl-color-hairline-shade: var(--cp-color-surface1);
+  --sl-color-gray-6: var(
+    --cp-color-surface1
+  ); /* used by right sidebar's left border */
+
+  /* card icon borders */
+  --sl-color-purple: #cba6f7;
+  --sl-color-orange: #f9e2af;
+  --sl-color-green: #a6e3a1;
+  --sl-color-red: #f38ba8;
+  --sl-color-blue: #89b4fa;
+
+  /* card icon backgrounds */
+  --sl-color-purple-low: unset;
+  --sl-color-orange-low: unset;
+  --sl-color-green-low: unset;
+  --sl-color-red-low: unset;
+  --sl-color-blue-low: unset;
+}
+
+:root[data-theme='light'],
+[data-theme='light'] ::backdrop {
+  /* Light mode */
+
+  --cp-color-text: #4c4f69;
+  --cp-color-subtext1: #5c5f77;
+  --cp-color-subtext0: #6c6f85;
+  --cp-color-overlay2: #7c7f93;
+  --cp-color-overlay1: #8c8fa1;
+  --cp-color-overlay0: #9ca0b0;
+  --cp-color-surface2: #acb0be;
+  --cp-color-surface1: #bcc0cc;
+  --cp-color-surface0: #ccd0da;
+  --cp-color-base: #eff1f5;
+  --cp-color-mantle: #e6e9ef;
+  --cp-color-crust: #dce0e8;
+
+  --cp-color-peach: #fe640b;
+
+  --sl-color-text: var(--cp-color-text);
+  --sl-color-text-accent: var(--cp-color-peach);
+  --sl-color-text-invert: var(--cp-color-base);
+  --sl-color-gray-2: var(--cp-color-text); /* used by hero's tagline */
+
+  --sl-color-bg: var(--cp-color-base);
+  --sl-color-bg-nav: var(--cp-color-mantle);
+  --sl-color-bg-sidebar: var(--cp-color-mantle);
+  --sl-color-bg-inline-code: var(--cp-color-surface0);
+  --sl-color-bg-accent: var(--cp-color-peach);
+
+  --sl-color-hairline-light: var(--cp-color-surface1);
+  --sl-color-hairline: var(--cp-color-surface1);
+  --sl-color-hairline-shade: var(--cp-color-surface1);
+  --sl-color-gray-6: var(
+    --cp-color-surface1
+  ); /* used by right sidebar's left border */
+
+  /* card icon borders */
+  --sl-color-purple: #8839ef;
+  --sl-color-orange: #df8e1d;
+  --sl-color-green: #40a02b;
+  --sl-color-red: #d20f39;
+  --sl-color-blue: #1e66f5;
+
+  /* card icon backgrounds */
+  --sl-color-purple-low: unset;
+  --sl-color-orange-low: unset;
+  --sl-color-green-low: unset;
+  --sl-color-red-low: unset;
+  --sl-color-blue-low: unset;
+}
