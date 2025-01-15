@@ -1,0 +1,29 @@
+{
+  "bio": {
+    "name": "Dhruv Bhanushali",
+    "labels": ["an average person"],
+    "profiles": [
+      {
+        "site": {
+          "name": "Personal"
+        },
+        "url": "https://dhruvkb.dev"
+      },
+      {
+        "site": {
+          "id": "github",
+          "name": "GitHub"
+        },
+        "username": "dhruvkb",
+        "url": "https://github.com/dhruvkb"
+      },
+      {
+        "site": {
+          "id": "bluesky",
+          "name": "Bluesky"
+        },
+        "url": "https://bsky.app/profile/dhruvkb.dev"
+      }
+    ]
+  }
+}

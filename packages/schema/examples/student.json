@@ -1,0 +1,38 @@
+{
+  "bio": {
+    "name": "Dhruv Bhanushali"
+  },
+  "education": [
+    {
+      "id": "iit_roorkee",
+      "name": "Indian Institute of Technology, Roorkee",
+      "shortName": "IIT-R",
+      "url": {
+        "dest": "https://iitr.ac.in",
+        "label": "IIT Roorkee homepage"
+      },
+      "address": {
+        "city": "Roorkee",
+        "state": "UK",
+        "countryCode": "IN",
+        "postalCode": 247667
+      },
+      "certs": [
+        {
+          "id": "b_tech",
+          "name": "Bachelor of Technology",
+          "shortName": "B. Tech.",
+          "issue": [2019],
+          "period": {
+            "start": [2015],
+            "end": [2019]
+          },
+          "score": "7.286",
+          "maxScore": "10.000",
+          "field": "Engineering Physics",
+          "tags": ["resume_pdf"]
+        }
+      ]
+    }
+  ]
+}

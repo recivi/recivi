@@ -1,0 +1,36 @@
+{
+  "bio": {
+    "name": "Dhruv Bhanushali"
+  },
+  "work": [
+    {
+      "id": "htmx",
+      "name": "htmx",
+      "url": {
+        "dest": "https://htmx.org",
+        "label": "htmx homepage"
+      },
+      "contact": {
+        "emails": ["hr@bigsky.software"]
+      },
+      "summary": "High power tools for HTML.",
+      "description": "htmx makes AJAX, CSS Transitions, WebSockets and Server Sent Events accessible directly in HTML, using attributes, so modern user interfaces can be built with the simplicity and power of hypertext.",
+      "roles": [
+        {
+          "id": "ceo",
+          "name": "Chief executive officer",
+          "period": {
+            "start": [2024, 1]
+          },
+          "type": "foss",
+          "location": "remote",
+          "highlights": [
+            "<em>Assumption:</em> <a href=\"https://htmx.org/essays/lore/#htmx-ceo\">Every human is a CEO of htmx.</a>",
+            "<em>Assumption:</em> I am human.",
+            "Therefore, I am a CEO of htmx. <em>Q.E.D.</em>"
+          ]
+        }
+      ]
+    }
+  ]
+}
