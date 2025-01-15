@@ -1,0 +1,76 @@
+{
+  "bio": {
+    "name": "Dhruv Bhanushali"
+  },
+  "creations": [
+    {
+      "id": "pls",
+      "name": "pls",
+      "url": {
+        "dest": "https://pls.cli.rs",
+        "label": "`pls` homepage"
+      },
+      "summary": "A prettier and powerful <code>ls(1)</code> for the pros.",
+      "description": "<code>pls</code> is a prettier and powerful alternative to <code>ls(1)</code>, which adds many niche powerful features, is far more customisable and more easily customisable, and just <em>sparks joy</em>.",
+      "projects": [
+        {
+          "id": "cli_application",
+          "name": "CLI application",
+          "role": "Creator",
+          "summary": "An intuitive & elegant command-line interface.",
+          "description": "<code>pls</code> provides a very intuitive and elegant command-line interface with meaningful arguments, sane defaults and predictable behaviour.",
+          "highlights": [
+            "Enabled boundless customisation with cascading config files.",
+            "Included niche features for power users, like Git integration.",
+            "Added SVG support in terminal using Kitty graphics protocol."
+          ],
+          "technologies": [
+            {
+              "id": "rust",
+              "name": "Rust"
+            },
+            {
+              "id": "yaml",
+              "name": "YAML"
+            }
+          ],
+          "tags": ["resume_pdf"]
+        },
+        {
+          "id": "documentation",
+          "name": "Documentation",
+          "role": "Author",
+          "summary": "Thorough end-user documentation for all features.",
+          "description": "<code>pls</code> is accompanied by thorough documentation describing all the options, their behaviour and quirks, with adequate examples.",
+          "highlights": [
+            "Deployed as a static site with an automated CI + CD pipeline.",
+            "Created a pipeline to generate examples for every release."
+          ],
+          "technologies": [
+            {
+              "id": "python",
+              "name": "Python"
+            },
+            {
+              "id": "mdx",
+              "name": "MDX"
+            },
+            {
+              "id": "typescript",
+              "name": "TypeScript",
+              "shortName": "TS"
+            },
+            {
+              "id": "astro",
+              "name": "Astro"
+            },
+            {
+              "id": "starlight",
+              "name": "Starlight"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
