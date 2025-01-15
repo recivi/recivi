@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@recivi/schema",
+  "version": "0.0.0",
+  "description": "Récivi is a comprehensive schema for documenting résumés.",
+  "keywords": [
+    "resume",
+    "cv",
+    "schema"
+  ],
+  "license": "GPL-3.0-or-later",
+  "author": {
+    "name": "Dhruv Bhanushali",
+    "url": "https://dhruvkb.dev/"
+  },
+  "homepage": "https://recivi.pages.dev/",
+  "repository": "github:recivi/recivi",
+  "bugs": "https://github.com/recivi/recivi/issues",
+  "funding": "https://github.com/sponsors/dhruvkb",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.6",
+    "chalk": "^5.4.1",
+    "commander": "^13.0.0",
+    "glob": "^11.0.0",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "zod-to-json-schema": "^3.24.1"
+  }
+}
