@@ -9,6 +9,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "checks": "pnpm run lint && pnpm run format:check",
+    "dbss": "pnpm -F docs build && pnpm -F schema schema",
     "prepare": "husky"
   },
   "packageManager": "pnpm@9.15.3",
