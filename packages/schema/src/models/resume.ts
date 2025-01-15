@@ -6,6 +6,11 @@ import { type Epic, epicSchema } from '@/models/creations/epic'
 import { type Institute, instituteSchema } from '@/models/education/institute'
 
 export const resumeSchema = z.object({
+  $schema: z
+    .string()
+    .url()
+    .optional()
+    .default('https://recivi.pages.dev/schemas/recivi-resume.json'),
   bio: bioSchema,
   creations: z
     .array(epicSchema)
