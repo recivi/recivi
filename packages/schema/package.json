@@ -26,6 +26,8 @@
   ],
   "scripts": {
     "barrel": "tsx src/scripts/barrel.ts",
+    "validate": "pnpm barrel && tsx src/scripts/validate.ts",
+    "schema": "pnpm barrel && tsx src/scripts/schema.ts",
     "test": "tsx --test",
     "types": "tsc --noEmit"
   },
