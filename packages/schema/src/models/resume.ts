@@ -10,7 +10,10 @@ export const resumeSchema = z.object({
     .string()
     .url()
     .optional()
-    .default('https://recivi.pages.dev/schemas/recivi-resume.json'),
+    .default('https://recivi.pages.dev/schemas/recivi-resume.json')
+    .describe(
+      'the URL to the JSON schema that should be used to validate this document'
+    ),
   bio: bioSchema,
   creations: z
     .array(epicSchema)
