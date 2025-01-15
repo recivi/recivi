@@ -25,6 +25,7 @@
     "dist"
   ],
   "scripts": {
+    "barrel": "tsx src/scripts/barrel.ts",
     "test": "tsx --test",
     "types": "tsc --noEmit"
   },
