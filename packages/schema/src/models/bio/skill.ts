@@ -18,7 +18,7 @@ const baseFormalSkillSchema = z.object({
 
 const formalSkillSchema: z.ZodType<FormalSkill> = baseFormalSkillSchema.extend({
   subSkills: z
-    .lazy(() => skillSchema.array())
+    .lazy(() => z.array(skillSchema))
     .optional()
     .describe('a list of skills that are considered as sub-parts of this one'),
 })
