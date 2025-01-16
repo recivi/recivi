@@ -5,8 +5,8 @@ export const coordsSchema = z
     z
       .object({
         lat: z.union([
-          z.literal(90).describe('North pole'),
-          z.literal(-90).describe('South pole'),
+          z.literal(90).describe('the North pole'),
+          z.literal(-90).describe('the South pole'),
         ]),
         long: z
           .undefined()
