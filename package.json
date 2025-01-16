@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "checks": "pnpm run lint && pnpm run format:check",
-    "ssdb": "pnpm -F schema schema && pnpm -F docs build",
+    "sssrdb": "pnpm -F schema schema && pnpm -F schema reference && pnpm -F docs build",
     "prepare": "husky"
   },
   "packageManager": "pnpm@9.15.3",

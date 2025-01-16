@@ -23,7 +23,12 @@ export default defineConfig({
           label: 'About',
           items: ['about/why', 'about/introduction', 'about/contributing'],
         },
+        {
+          label: 'Reference',
+          autogenerate: { directory: 'reference' },
+        },
       ],
+      tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 6 },
       customCss: ['./src/styles/catppuccin.css'],
     }),
   ],
