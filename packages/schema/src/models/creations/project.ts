@@ -7,41 +7,35 @@ import { type Tag, tagSchema } from '@/models/base/tag'
 
 export const projectSchema = z
   .object({
-    id: z.string().optional().describe('an identifier for the project'),
+    id: z.optional(z.string()).describe('an identifier for the project'),
     name: z.string().describe('the name of the project'),
-    url: urlSchema
-      .optional()
+    url: z
+      .optional(urlSchema)
       .describe('the public facing URL to access this project'),
     summary: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe('a short description or introduction of the project'),
     description: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'long-form description of the project; This is used where space is not constrained.'
       ),
     highlights: z
-      .array(z.string())
-      .optional()
+      .optional(z.array(z.string()))
       .describe(
         'a list of highlights, like noteworthy or salient features, from the project'
       ),
     role: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe('the role of the user in this project'),
     technologies: z
-      .array(techSchema)
-      .optional()
+      .optional(z.array(techSchema))
       .describe('a list of technologies used in this project'),
-    period: periodSchema
-      .optional()
+    period: z
+      .optional(periodSchema)
       .describe('the period over which the project was built or maintained'),
     tags: z
-      .array(tagSchema)
-      .optional()
+      .optional(z.array(tagSchema))
       .describe(
         'tags to apply to this project; The use of tags is left up to the application (for example, the portfolio uses tags for PDF résumés).'
       ),

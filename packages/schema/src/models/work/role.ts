@@ -10,44 +10,39 @@ import { type Tag, tagSchema } from '@/models/base/tag'
 
 export const roleSchema = z
   .object({
-    id: z.string().optional().describe('an identifier for the role'),
+    id: z.optional(z.string()).describe('an identifier for the role'),
     name: z.string().describe('the job title of the role'),
     summary: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe('a short description or introduction of the role'),
     description: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'long-form description of the role; This is used where space is not constrained.'
       ),
     highlights: z
-      .array(z.string())
-      .optional()
+      .optional(z.array(z.string()))
       .describe(
         'a list of highlights, like responsibilities or achievements, from the role'
       ),
-    type: roleTypeSchema
-      .optional()
+    type: z
+      .optional(roleTypeSchema)
       .describe(
         'the nature of the role, in terms of length, commitment and obligations'
       ),
-    location: roleLocationSchema
-      .optional()
+    location: z
+      .optional(roleLocationSchema)
       .describe('the nature of the role, in terms of place of work'),
-    period: periodSchema
-      .optional()
+    period: z
+      .optional(periodSchema)
       .describe('the time duration for which the role was held'),
     epicIds: z
-      .array(z.string())
-      .optional()
+      .optional(z.array(z.string()))
       .describe(
         'the list of IDs for epics that were created or worked on during this role; This is a relationship to the `Epic` model.'
       ),
     tags: z
-      .array(tagSchema)
-      .optional()
+      .optional(z.array(tagSchema))
       .describe(
         'tags to apply to this role; The use of tags is left up to the application (for example, the portfolio uses tags for PDF résumés).'
       ),

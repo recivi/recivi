@@ -5,8 +5,8 @@ import { type Date, dateSchema } from '@/models/base/date'
 export const periodSchema = z
   .object({
     start: dateSchema.describe('the start date of the period'),
-    end: dateSchema
-      .optional()
+    end: z
+      .optional(dateSchema)
       .describe(
         'the end date of a period; If omitted, the period is considered active in the present.'
       ),

@@ -5,10 +5,11 @@ import { phoneSchema, type Phone } from '@/models/base/phone'
 export const contactSchema = z
   .object({
     emails: z
-      .array(z.string().email())
-      .optional()
+      .optional(z.array(z.string().email()))
       .describe('a list of email addresses'),
-    phones: z.array(phoneSchema).optional().describe('a list of phone numbers'),
+    phones: z
+      .optional(z.array(phoneSchema))
+      .describe('a list of phone numbers'),
   })
   .describe('a collection of ways to contact a given entity')
 
