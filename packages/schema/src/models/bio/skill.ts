@@ -9,8 +9,7 @@ export interface FormalSkill {
 const baseFormalSkillSchema = z.object({
   name: z.string().describe('the name of the skill'),
   id: z
-    .string()
-    .optional()
+    .optional(z.string())
     .describe(
       'an identifier for the skill; In implementations, this can be used as a key to find the logo for the skill.'
     ),
@@ -18,8 +17,7 @@ const baseFormalSkillSchema = z.object({
 
 const formalSkillSchema: z.ZodType<FormalSkill> = baseFormalSkillSchema.extend({
   subSkills: z
-    .lazy(() => z.array(skillSchema))
-    .optional()
+    .optional(z.lazy(() => z.array(skillSchema)))
     .describe('a list of skills that are considered as sub-parts of this one'),
 })
 

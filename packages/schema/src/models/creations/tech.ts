@@ -4,14 +4,13 @@ import { type Url, urlSchema } from '@/models/base/url'
 
 export const techSchema = z
   .object({
-    id: z.string().optional().describe('an identifier for the technology'),
+    id: z.optional(z.string()).describe('an identifier for the technology'),
     name: z.string().describe('the name of the technology'),
     shortName: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe('a short informal name for the technology'),
-    url: urlSchema
-      .optional()
+    url: z
+      .optional(urlSchema)
       .describe('the URL to the website or documentation for the technology'),
   })
   .describe(

@@ -7,8 +7,7 @@ export const profileSchema = z
   .object({
     site: siteSchema.describe('the website on which the profile is located'),
     username: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe('the username or handle of the person on the website'),
     url: urlSchema.describe(
       'the URL to the profile of the person on the website'

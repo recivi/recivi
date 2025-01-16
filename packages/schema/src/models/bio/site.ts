@@ -3,8 +3,7 @@ import { z } from 'zod'
 export const siteSchema = z
   .object({
     id: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'a slug for the site; In implementations, this can be used as a key to find the icon for the site.'
       ),

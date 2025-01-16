@@ -8,46 +8,41 @@ import { type Url, urlSchema } from '@/models/base/url'
 export const orgSchema = z
   .object({
     id: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'an identifier for the organisation; In implementations, this can be used as a key to find the logo for the organisation.'
       ),
     name: z.string().describe('the name of the organisation'),
     shortName: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         "a short informal name for the organisation; This can be an abbreviation like 'CC' instead of 'Creative Commons', for example."
       ),
     summary: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'a short description or introduction of the organisation; This is used where space is limited such as a résumé.'
       ),
     description: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'long-form description of the organisation; This is used where space is not constrained.'
       ),
-    url: urlSchema
-      .optional()
+    url: z
+      .optional(urlSchema)
       .describe(
         'the public facing URL to access the organisation website; This should be a place where more information about the organisation can be found.'
       ),
-    address: addressSchema
-      .optional()
+    address: z
+      .optional(addressSchema)
       .describe(
         'the physical location of the organisation; This can be a workplace or the location where the organisation is registered to receive communications.'
       ),
-    contact: contactSchema
-      .optional()
+    contact: z
+      .optional(contactSchema)
       .describe('the contact information to reach the organisation'),
     roles: z
-      .array(roleSchema)
-      .optional()
+      .optional(z.array(roleSchema))
       .describe('a list of roles that are part of this organisation'),
   })
   .describe(

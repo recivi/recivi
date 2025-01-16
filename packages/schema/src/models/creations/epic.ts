@@ -6,32 +6,28 @@ import { type Url, urlSchema } from '@/models/base/url'
 export const epicSchema = z
   .object({
     id: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'an identifier for the epic; In implementations, this can be used as a key to find the logo for the epic.'
       ),
     name: z.string().describe('the name of the epic'),
-    url: urlSchema
-      .optional()
+    url: z
+      .optional(urlSchema)
       .describe(
         'the public facing URL to access this epic homepage; This should be a place where more information about the epic can be found.'
       ),
     summary: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'a short description or introduction of the epic; This is used where space is limited such as a résumé.'
       ),
     description: z
-      .string()
-      .optional()
+      .optional(z.string())
       .describe(
         'long-form description of the epic; This is used where space is not constrained.'
       ),
     projects: z
-      .array(projectSchema)
-      .optional()
+      .optional(z.array(projectSchema))
       .describe('a list of projects that are part of this epic'),
   })
   .describe(
