@@ -18,7 +18,7 @@ export const daySchema = z
   .int()
   .min(1)
   .max(31)
-  .describe('a day in the Gregorian calendar')
+  .describe('a day of the month in the Gregorian calendar')
 
 /**
  * Verify that the given date is valid. This only verifies that the day
@@ -51,11 +51,14 @@ export const dateSchema = z
       })
       .refine(({ year, month, day }) => validateDate(day, month, year))
       .describe('a fully-specified date in the Gregorian calendar'),
-    z.tuple([yearSchema]),
-    z.tuple([yearSchema, monthSchema]),
+    z.tuple([yearSchema]).describe('a date consisting only of a year'),
+    z
+      .tuple([yearSchema, monthSchema])
+      .describe('a date conisisting of a year and a month'),
     z
       .tuple([yearSchema, monthSchema, daySchema])
-      .refine(([year, month, day]) => validateDate(day, month, year)),
+      .refine(([year, month, day]) => validateDate(day, month, year))
+      .describe('a date consisting of a year, a month and a day of the month'),
   ])
   .describe(
     'a combination of year, month and day; This date can optionally skip the day and month fields, as needed.'
