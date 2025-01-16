@@ -21,7 +21,7 @@ import {
   urlSchema,
 } from '@/index' // Import from the barrel file.
 
-console.log(chalk.blue('ZTS'), 'Schema start')
+console.log(chalk.blue('ZTS'), 'Zod to JSON Schema start')
 
 const jsonSchema = zodToJsonSchema(resumeSchema, {
   // Collect all base models inside the `definitions` field.
@@ -38,13 +38,13 @@ const jsonSchema = zodToJsonSchema(resumeSchema, {
 })
 const content = JSON.stringify(jsonSchema, null, 2)
 
-const schemaDir = resolve(
+const schemasDir = resolve(
   import.meta.filename,
-  '../../../../../packages/docs/dist/schemas/'
+  '../../../../../packages/docs/public/schemas/'
 )
-mkdirSync(schemaDir, { recursive: true })
+mkdirSync(schemasDir, { recursive: true })
 
-const schemaPath = join(schemaDir, 'recivi-resume.json')
+const schemaPath = join(schemasDir, 'recivi-resume.json')
 writeFileSync(schemaPath, content, { encoding: 'utf-8' })
 
 console.log(chalk.green('ZTS'), chalk.bold('recivi-resume.json'))
