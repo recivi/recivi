@@ -28,7 +28,7 @@ export default defineConfig({
         },
         {
           label: 'Guides',
-          items: ['guides/validating_data_files'],
+          items: ['guides/writing_data_files', 'guides/validating_data_files'],
         },
         {
           label: 'Reference',
