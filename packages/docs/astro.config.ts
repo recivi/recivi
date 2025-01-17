@@ -15,6 +15,9 @@ export default defineConfig({
         light: './src/assets/logo_light.svg',
         dark: './src/assets/logo_dark.svg',
       },
+      expressiveCode: {
+        themes: ['catppuccin-mocha', 'catppuccin-latte'],
+      },
       social: {
         github: 'https://github.com/recivi/recivi',
       },
@@ -33,7 +36,7 @@ export default defineConfig({
         },
       ],
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 6 },
-      customCss: ['./src/styles/catppuccin.css'],
+      customCss: ['./src/styles/catppuccin.css', './src/styles/style.css'],
     }),
   ],
 })
