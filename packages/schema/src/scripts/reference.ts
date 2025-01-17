@@ -44,26 +44,25 @@ interface SchemaData {
 
 function generateMarkdown(s: SchemaData): string {
   return [
-    s.level ? `${'#'.repeat(s.level + 1)} ${s.name}` : undefined,
+    s.level && `${'#'.repeat(s.level + 1)} \`${s.name}\``,
     '',
     s.reference
-      ? `- **Type:** [\`${s.reference}\`](/reference/${s.reference.toLowerCase()})`
-      : `- **Type:** \`${s.type}\``,
-    s.isOptional ? '- **Optional:** yes' : undefined,
-    s.default && `- **Default:** ${s.default}`,
+      ? `- **type:** [\`${s.reference}\`](/reference/${s.reference.toLowerCase()})`
+      : `- **type:** \`${s.type}\``,
+    s.isOptional && '- **optional?** yes',
+    s.default && `- **default:** ${s.default}`,
+    s.isRefined && '- **additional validation?** yes',
     ...Object.entries(s.info ?? {}).map(
       ([key, value]) => `- **${key}**: ${value}`
     ),
-    s.description && `- **Description:** ${s.description}`,
     '',
-    s.isRefined
-      ? `:::caution\nThis schema has additional validation.\n:::`
-      : undefined,
+    s.description,
     '',
     ...(s.children?.map(generateMarkdown) ?? []),
   ]
-    .filter((val) => val !== undefined)
+    .filter((val) => val === '' || Boolean(val))
     .join('\n')
+    .trim()
 }
 
 function visitCommon(name: string, level: number, s: ZodType): SchemaData {
@@ -202,7 +201,7 @@ function visitLiteral(
   level: number,
   s: ZodLiteral<unknown>
 ): SchemaData {
-  return { type: 'literal', name, level, info: { Value: s.value?.toString() } }
+  return { type: 'literal', name, level, info: { value: s.value?.toString() } }
 }
 
 function visitEnum(
@@ -210,7 +209,7 @@ function visitEnum(
   level: number,
   s: ZodEnum<[string, ...string[]]>
 ): SchemaData {
-  return { type: 'enum', name, level, info: { Values: s.options.join(', ') } }
+  return { type: 'enum', name, level, info: { values: s.options.join(', ') } }
 }
 
 function visitUndefined(name: string, level: number): SchemaData {
@@ -232,7 +231,7 @@ function visitNumber(name: string, level: number, s: ZodNumber): SchemaData {
   if (min || max) {
     const minStr = min ? `${min.inclusive ? '[' : '('}${min.value}` : '(-∞'
     const maxStr = max ? `${max.value}${max.inclusive ? ']' : ')'}` : '∞)'
-    info['Range'] = `${minStr}, ${maxStr}`
+    info.range = `${minStr}, ${maxStr}`
   }
 
   return { type: 'number', name, level, info }
@@ -258,16 +257,16 @@ function visitString(name: string, level: number, s: ZodString): SchemaData {
 
   const info: Record<string, { toString(): string }> = {}
   if (len) {
-    info['Exact length'] = len
+    info['exact length'] = len
   } else if (max || min) {
     const minStr = min ? `[${min}` : '(-∞'
     const maxStr = max ? `${max}]` : '∞)'
-    info['Number of characters'] = `${minStr}, ${maxStr}`
+    info['number of characters'] = `${minStr}, ${maxStr}`
   }
   if (isEmail) {
-    info['Kind'] = 'email'
+    info.kind = 'email'
   } else if (isUrl) {
-    info['Kind'] = 'URL'
+    info.kind = 'URL'
   }
 
   return { type: 'string', name, level, info }
