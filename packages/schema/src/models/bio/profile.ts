@@ -13,12 +13,7 @@ export const profileSchema = z
       'the URL to the profile of the person on the website'
     ),
   })
-  .refine((data) => {
-    if (!data.username && !data.url) {
-      return false
-    }
-    return true
-  }, {})
+  .describe("a person's profile on a website")
 
 /**
  * Examples:
