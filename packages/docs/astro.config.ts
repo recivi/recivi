@@ -37,6 +37,9 @@ export default defineConfig({
       ],
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 6 },
       customCss: ['./src/styles/catppuccin.css', './src/styles/style.css'],
+      components: {
+        Footer: './src/components/Footer.astro',
+      },
     }),
   ],
 })
