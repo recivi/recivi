@@ -307,8 +307,8 @@ ${generateMarkdown(data)}`
 
 if (validities.includes(false)) {
   // At least one file was invalid.
-  console.log(chalk.red('VAL'), '× Zod to reference failure')
+  console.log(chalk.red('ZTR'), '× Zod to reference failure')
   process.exit(1)
 } else {
-  console.log(chalk.green('VAL'), '⚡️ Zod to reference success')
+  console.log(chalk.green('ZTR'), '⚡️ Zod to reference success')
 }
