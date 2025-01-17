@@ -161,7 +161,7 @@ function visitArray(
   s: ZodArray<ZodTypeAny>
 ): SchemaData {
   const inner = visitCommon(`${name}[idx]`, level + 1, s.element)
-  return { type: `array`, name, level, children: [inner] }
+  return { type: 'array', name, level, children: [inner] }
 }
 
 function visitTuple(
@@ -172,7 +172,7 @@ function visitTuple(
   const children = s.items.map((item, idx) => {
     return visitCommon(`${name}[${idx}]`, level + 1, item)
   })
-  return { type: `tuple`, name, level, children }
+  return { type: 'tuple', name, level, children }
 }
 
 function visitObject(
