@@ -24,6 +24,10 @@ export default defineConfig({
           items: ['about/why', 'about/introduction', 'about/contributing'],
         },
         {
+          label: 'Guides',
+          items: ['guides/validating_data_files'],
+        },
+        {
           label: 'Reference',
           autogenerate: { directory: 'reference' },
         },
