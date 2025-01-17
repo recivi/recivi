@@ -47,13 +47,13 @@ function generateMarkdown(s: SchemaData): string {
     s.level && `${'#'.repeat(s.level + 1)} \`${s.name}\``,
     '',
     s.reference
-      ? `- **type:** [\`${s.reference}\`](/reference/${s.reference.toLowerCase()})`
-      : `- **type:** \`${s.type}\``,
-    s.isOptional && '- **optional?** yes',
-    s.default && `- **default:** ${s.default}`,
-    s.isRefined && '- **additional validation?** yes',
+      ? `**type:** [\`${s.reference}\`](/reference/${s.reference.toLowerCase()})  `
+      : `**type:** \`${s.type}\`  `,
+    s.isOptional && '**optional?** yes  ',
+    s.default && `**default:** ${s.default}  `,
+    s.isRefined && '**additional validation?** yes  ',
     ...Object.entries(s.info ?? {}).map(
-      ([key, value]) => `- **${key}**: ${value}`
+      ([key, value]) => `**${key}**: ${value}  `
     ),
     '',
     s.description,
