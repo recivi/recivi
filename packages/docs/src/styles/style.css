@@ -1,0 +1,4 @@
+div.expressive-code {
+  --ec-brdCol: var(--sl-color-hairline);
+  --ec-brdRad: 0.25rem;
+}
