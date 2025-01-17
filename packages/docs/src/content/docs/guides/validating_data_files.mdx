@@ -1,0 +1,78 @@
+---
+title: Validating data files
+description: >-
+  How to validate a résumé data file against the Récivi schema?
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+This guide is for people who want to validate their new résumé data files
+against the Récivi schema. This validation is necessary to ensure that the
+résumé is correct and will be properly parsed by other tools built on top of
+Récivi.
+
+## With VS Code
+
+Using VS Code to write a résumé data file is recommended because you can get
+immediate validation while writing the file and access to inline help and
+documentation. VS Code comes with support for JSON schemas out of the box.
+
+### Pre-requisites
+
+- [VS Code](https://code.visualstudio.com/)
+
+### Steps
+
+<Steps>
+
+1. Open VS Code.
+2. Create a new file and save it with a `.json` extension.
+   ![](@/assets/guides/validating_data_files/new_file.png)
+3. Define the `$schema` key in your JSON file and set it to the Récivi schema
+   URL.
+   ```json
+   {
+     "$schema": "https://recivi.pages.dev/schemas/recivi-resume.json",
+   }
+   ```
+4. Add the résumé data as you normally would.
+   ```json
+   {
+     "$schema": "https://recivi.pages.dev/schemas/recivi-resume.json",
+     "bio": {
+       "name": "Dhruv Bhanushali"
+     }
+   }
+   ```
+5. You can access the documentation by hovering over a key.
+   ![](@/assets/guides/validating_data_files/inline_docs.png)
+6. If anything is off, you will get feedback in your editor itself.
+   ![](@/assets/guides/validating_data_files/validation_error.png)
+
+</Steps>
+
+## Manual
+
+You can write the résumé files without linting in the editor and use a separate
+service to validate it.
+
+### Pre-requisites
+
+- A text editor
+- A web browser
+
+### Steps
+
+<Steps>
+
+1. Write the résumé data file in the text editor of your choice.
+2. Visit [JSONSchema.dev](https://jsonschema.dev/) in the web browser of your
+   choice.
+3. Copy the schema from
+   [its URL](https://recivi.pages.dev/schemas/recivi-resume.json) into the
+   editor pane on the left.
+4. Copy your data file into the editor pane on the right.
+5. You can see the validation results immediately.
+   ![](@/assets/guides/validating_data_files/online_validator.png)
+
+</Steps>
