@@ -24,7 +24,12 @@ export default defineConfig({
       sidebar: [
         {
           label: 'About',
-          items: ['about/why', 'about/introduction', 'about/contributing'],
+          items: [
+            'about/why',
+            'about/introduction',
+            'about/contributing',
+            'about/comparison',
+          ],
         },
         {
           label: 'Guides',
