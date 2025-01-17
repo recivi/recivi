@@ -32,9 +32,7 @@ export const coordsSchema = z
       })
       .describe('a non-polar point on the globe'),
   ])
-  .describe(
-    'a tuple of two numbers that uniquely identify a point on the globe'
-  )
+  .describe('a pair of numbers that uniquely identify a point on the globe')
 
 /**
  * Examples: See tests.
