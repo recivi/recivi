@@ -1,5 +1,5 @@
 pnpx lint-staged
 
 # Check Typescript
-pnpm run --recursive types
-pnpm run --recursive check
+pnpm --recursive types
+pnpm --recursive check

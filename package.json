@@ -5,10 +5,10 @@
   "version": "0.0.0",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "pnpm run lint --fix",
+    "lint:fix": "pnpm lint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "checks": "pnpm run lint && pnpm run format:check",
+    "checks": "pnpm lint && pnpm format:check",
     "sssrdb": "pnpm -F schema schema && pnpm -F schema reference && pnpm -F docs build",
     "prepare": "husky"
   },
