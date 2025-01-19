@@ -1,11 +1,14 @@
 <h1 align="center">
-	Récivi
+  Récivi
 
   <p align="center">
     <a href="https://recivi.pages.dev/">
       <img src="https://img.shields.io/badge/docs-recivi.pages.dev-blue" alt="Documentation"/>
     </a>
-	</p>
+    <a href="https://www.npmjs.com/package/@recivi/schema">
+      <img src="https://img.shields.io/npm/v/%40recivi%2Fschema" alt="Release" />
+    </a>
+  </p>
 </h1>
 
 Récivi is a new kind of résumé for computers and humans, in that order. Récivi
