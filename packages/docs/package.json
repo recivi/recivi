@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "docs",
   "description": "docs for Récivi, a new kind of résumé for computers and humans, in that order",
   "private": true,
