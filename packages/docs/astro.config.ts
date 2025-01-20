@@ -45,7 +45,7 @@ export default defineConfig({
         },
       ],
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 6 },
-      customCss: ['./src/styles/catppuccin.css', './src/styles/style.css'],
+      customCss: ['./src/styles/brand.css', './src/styles/layout.css'],
       components: {
         Footer: './src/components/Footer.astro',
         SocialIcons: './src/components/SocialIcons.astro',
