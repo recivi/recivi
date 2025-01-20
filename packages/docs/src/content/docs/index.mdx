@@ -10,10 +10,6 @@ template: splash
 hero:
   tagline: >-
     Récivi is a new kind of résumé for computers and humans, in that order.
-  image:
-    light: '../../assets/logo_light.svg'
-    dark: '../../assets/logo_dark.svg'
-
   actions:
     - text: Learn more
       link: /about/introduction/
@@ -28,7 +24,7 @@ hero:
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-<CardGrid stagger>
+<CardGrid>
 	<Card title="Schema" icon="seti:json">
 		Récivi provides schemas that define the structure of a résumé data-file.
 	</Card>
@@ -42,3 +38,5 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 		Récivi provides renderers for converting data-files into human-readable formats.
 	</Card>
 </CardGrid>
+
+Récivi is a [**@dhruvkb**](https://dhruvkb.dev) project.

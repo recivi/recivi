@@ -1,0 +1,25 @@
+:root {
+  --cp-peach: #fab387;
+
+  --color-brand: var(--cp-peach);
+
+  --sl-hue-orange: 23;
+
+  --sl-color-accent-high: var(--sl-color-orange-high);
+  --sl-color-accent: var(--sl-color-orange);
+  --sl-color-accent-low: var(--sl-color-orange-low);
+}
+
+:root[data-theme='light'] {
+  --cp-peach: #fe640b;
+
+  --sl-color-accent-high: var(--sl-color-orange-high);
+  --sl-color-accent: var(--sl-color-orange);
+  --sl-color-accent-low: var(--sl-color-orange-low);
+}
+
+h1[data-page-title],
+a.site-title {
+  font-weight: bold;
+  color: var(--color-brand);
+}
