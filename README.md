@@ -1,18 +1,11 @@
-<h1 align="center">
-  Récivi
+# <img src="https://raw.githubusercontent.com/recivi/.github/main/profile/readme_assets/logo.png" height="40" width="40" align="left"> Récivi
 
-  <p align="center">
-    <a href="https://recivi.pages.dev/">
-      <img src="https://img.shields.io/badge/docs-recivi.pages.dev-blue" alt="Documentation"/>
-    </a>
-    <a href="https://www.npmjs.com/package/@recivi/schema">
-      <img src="https://img.shields.io/npm/v/%40recivi%2Fschema" alt="Release" />
-    </a>
-  </p>
-</h1>
+<a href="https://recivi.pages.dev/"><img src="https://img.shields.io/badge/docs-recivi.pages.dev-blue" alt="Documentation"/></a>
+<a href="https://recivi.pages.dev/schemas/recivi-resume.json"><img src="https://img.shields.io/badge/schema-%2Fschemas%2Frecivi--resume.json-blue" alt="Schema"/></a>
+<a href="https://www.npmjs.com/package/@recivi/schema"><img src="https://img.shields.io/npm/v/%40recivi%2Fschema" alt="Release"/></a>
 
 Récivi is a new kind of résumé for computers and humans, in that order. Récivi
-provides the following:
+provides
 
 - **Schema:** Récivi provides schemas that define the structure of a résumé
   data-file.
