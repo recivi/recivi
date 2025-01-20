@@ -48,6 +48,7 @@ export default defineConfig({
       customCss: ['./src/styles/catppuccin.css', './src/styles/style.css'],
       components: {
         Footer: './src/components/Footer.astro',
+        SocialIcons: './src/components/SocialIcons.astro',
       },
     }),
   ],
