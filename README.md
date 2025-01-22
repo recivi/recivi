@@ -4,8 +4,8 @@
 <a href="https://recivi.pages.dev/schemas/recivi-resume.json"><img src="https://img.shields.io/badge/schema-%2Fschemas%2Frecivi--resume.json-blue" alt="Schema"/></a>
 <a href="https://www.npmjs.com/package/@recivi/schema"><img src="https://img.shields.io/npm/v/%40recivi%2Fschema" alt="Release"/></a>
 
-Récivi is a new kind of résumé for computers and humans, in that order. Récivi
-provides
+[Récivi](https://recivi.pages.dev/) is a new kind of résumé for computers and
+humans, in that order. Récivi provides
 
 - **Schema:** Récivi provides schemas that define the structure of a résumé
   data-file.
