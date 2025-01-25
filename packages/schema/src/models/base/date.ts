@@ -54,7 +54,7 @@ export const dateSchema = z
     z.tuple([yearSchema]).describe('a date consisting only of a year'),
     z
       .tuple([yearSchema, monthSchema])
-      .describe('a date conisisting of a year and a month'),
+      .describe('a date consisting of a year and a month'),
     z
       .tuple([yearSchema, monthSchema, daySchema])
       .refine(([year, month, day]) => validateDate(day, month, year))
