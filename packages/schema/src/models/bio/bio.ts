@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { type Skill, skillSchema } from '@/models/bio/skill'
 import { type Profile, profileSchema } from '@/models/bio/profile'
+import { type Language, languageSchema } from '@/models/bio/language'
 import { type Contact, contactSchema } from '@/models/base/contact'
 import { type Address, addressSchema } from '@/models/base/address'
 
@@ -48,6 +49,9 @@ export const bioSchema = z
     skills: z
       .optional(z.array(skillSchema))
       .describe('a list of skills that the person has'),
+    languages: z
+      .optional(z.array(languageSchema))
+      .describe('a list of languages that the person can work with'),
     residence: z
       .optional(addressSchema)
       .describe('current location where the person resides'),
@@ -65,6 +69,7 @@ export type Bio = Omit<
     contact: Contact
     profiles: Profile[]
     skills: Skill[]
+    languages: Language[]
     residence: Address
     origin: Address
   }>
