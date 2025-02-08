@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
+  "packageManager": "pnpm@9.15.0",
   "name": "@recivi/schema",
   "version": "0.0.2",
   "description": "Récivi is a comprehensive schema for documenting résumés.",
