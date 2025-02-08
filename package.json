@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
+  "packageManager": "pnpm@9.15.0",
   "name": "recivi",
   "description": "Récivi is a new kind of résumé for computers and humans, in that order.",
   "private": true,
@@ -12,7 +14,6 @@
     "checks": "pnpm lint && pnpm format:check",
     "sssrdb": "pnpm -F schema schema && pnpm -F schema reference && pnpm -F docs build"
   },
-  "packageManager": "pnpm@9.15.3",
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
     "@eslint/js": "^9.18.0",
