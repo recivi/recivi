@@ -36,27 +36,26 @@ export const instituteSchema = z
       .describe('a list of certifications earned at the institute'),
   })
   .describe(
-    'an organisation that imparts education or training, and offers certifications to corroborate the same; The user can acquire one or more certifications from an institute.'
+    JSON.stringify({
+      description:
+        'an organisation that imparts education or training, and offers certifications to corroborate the same; The user can acquire one or more certifications from an institute.',
+      examples: [
+        {
+          id: 'mit',
+          name: 'Massachusetts Institute of Technology',
+          shortName: 'MIT',
+          url: 'https://web.mit.edu/',
+          address: {
+            city: 'Cambridge',
+            state: 'Massachusetts',
+            countryCode: 'US',
+            postalCode: '02139',
+          },
+        },
+      ],
+    })
   )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "id": "mit",
- *   "name": "Massachusetts Institute of Technology",
- *   "shortName": "MIT",
- *   "url": "https://web.mit.edu/",
- *   "address": {
- *      "city": "Cambridge",
- *      "state": "Massachusetts",
- *      "countryCode": "US",
- *      "postalCode": "02139"
- *   },
- * }
- * ```
- */
 export type Institute = Omit<
   z.infer<typeof instituteSchema>,
   'url' | 'address' | 'contact' | 'certs'

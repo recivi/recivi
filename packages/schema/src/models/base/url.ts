@@ -21,22 +21,17 @@ export const urlSchema = z
         'a combination of the URL endpoint and a label for a11y purposes; This form should be used when a label is provided.'
       ),
   ])
-  .describe('a URL endpoint and an optional label for a11y purposes')
+  .describe(
+    JSON.stringify({
+      description: 'a URL endpoint and an optional label for a11y purposes',
+      examples: [
+        {
+          dest: 'https://dhruvkb.dev',
+          label: 'My website',
+        },
+        'https://dhruvkb.dev',
+      ],
+    })
+  )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "dest": "https://dhruvkb.dev",
- *   "label": "My website"
- * }
- * ```
- *
- * ---
- *
- * ```json
- * "https://dhruvkb.dev"
- * ```
- */
 export type Url = z.infer<typeof urlSchema>

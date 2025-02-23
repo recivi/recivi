@@ -14,25 +14,19 @@ export const siteSchema = z
       ),
   })
   .describe(
-    'a web platform on which a person can have a profile; This can be a professional website or social network.'
+    JSON.stringify({
+      description:
+        'a web platform on which a person can have a profile; This can be a professional website or social network.',
+      examples: [
+        {
+          id: 'github',
+          name: 'GitHub',
+        },
+        {
+          name: 'Personal',
+        },
+      ],
+    })
   )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "id": "github",
- *   "name": "GitHub",
- * }
- * ```
- *
- * ---
- *
- * ```json
- * {
- *   "name": "Personal"
- * }
- * ```
- */
 export type Site = z.infer<typeof siteSchema>

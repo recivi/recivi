@@ -32,30 +32,23 @@ export const skillSchema = z
       'a combination of the skill name, an ID and sub-skills; This form should be used when an ID or sub-skills are provided.'
     ),
   ])
-  .describe('a skill and optional sub-skills possessed by a person')
+  .describe(
+    JSON.stringify({
+      description: 'a skill and optional sub-skills possessed by a person',
+      examples: [
+        {
+          name: 'JavaScript',
+          subSkills: [
+            'Vue.js',
+            {
+              name: 'React',
+              subSkills: ['Next.js'],
+            },
+          ],
+        },
+        'Woodworking',
+      ],
+    })
+  )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "name": "JavaScript",
- *   "subSkills": [
- *     "Vue.js",
- *     {
- *       "name": "React",
- *       "subSkills": [
- *         "Next.js"
- *       ]
- *     }
- *   ]
- * }
- * ```
- *
- * ---
- *
- * ```json
- * "Woodworking"
- * ```
- */
 export type Skill = z.infer<typeof skillSchema>
