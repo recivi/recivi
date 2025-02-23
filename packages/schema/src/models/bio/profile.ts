@@ -13,33 +13,28 @@ export const profileSchema = z
       'the URL to the profile of the person on the website'
     ),
   })
-  .describe("a person's profile on a website")
+  .describe(
+    JSON.stringify({
+      description: "a person's profile on a website",
+      examples: [
+        {
+          site: {
+            name: 'Personal',
+          },
+          url: 'https://dhruvkb.dev',
+        },
+        {
+          site: {
+            id: 'bluesky',
+            name: 'Bluesky',
+          },
+          username: 'dhruvkb.dev',
+          url: 'https://bsky.app/profile/dhruvkb.dev',
+        },
+      ],
+    })
+  )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "site": {
- *     "name": "Personal"
- *   },
- *   "url": "https://dhruvkb.dev"
- * }
- * ```
- *
- * ---
- *
- * ```json
- * {
- *   "site": {
- *     "id": "bluesky",
- *     "name": "Bluesky",
- *   },
- *   "username": "dhruvkb.dev",
- *   "url": "https://bsky.app/profile/dhruvkb.dev"
- * }
- * ```
- */
 export type Profile = Omit<z.infer<typeof profileSchema>, 'site' | 'url'> & {
   site: Site
   url: Url

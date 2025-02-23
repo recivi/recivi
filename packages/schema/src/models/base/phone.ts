@@ -14,25 +14,14 @@ export const phoneSchema = z
         'the phone number itself, in the preferred format; This can include hyphens, parentheses and space.'
       ),
   })
-  .describe('a telephone number that can be used to reach the entity')
+  .describe(
+    JSON.stringify({
+      examples: [
+        { countryCode: 91, number: '9876543210' },
+        { countryCode: 1, number: '(877) 273-3049' },
+      ],
+      description: 'a telephone number that can be used to reach the entity',
+    })
+  )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "countryCode": 91,
- *   "number": "9876543210"
- * }
- * ```
- *
- * ---
- *
- * ```json
- * {
- *   "countryCode": 1,
- *   "number": "(877) 273-3049"
- * }
- * ```
- */
 export type Phone = z.infer<typeof phoneSchema>

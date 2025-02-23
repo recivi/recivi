@@ -14,42 +14,31 @@ export const techSchema = z
       .describe('the URL to the website or documentation for the technology'),
   })
   .describe(
-    'a programming language, tool or framework used in the creation of a project'
+    JSON.stringify({
+      description:
+        'a programming language, tool or framework used in the creation of a project',
+      examples: [
+        {
+          id: 'react',
+          name: 'React',
+        },
+        {
+          id: 'typescript',
+          name: 'TypeScript',
+          shortName: 'TS',
+        },
+        {
+          id: 'recivi',
+          name: 'Récivi',
+          url: {
+            dest: 'https://recivi.vercel.app',
+            label: 'Récivi homepage',
+          },
+        },
+      ],
+    })
   )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "id": "react",
- *   "name": "React",
- * }
- * ```
- *
- * ---
- *
- * ```json
- * {
- *   "id": "typescript",
- *   "name": "TypeScript",
- *   "shortName": "TS"
- * }
- * ```
- *
- * ---
- *
- * ```json
- * {
- *   "id": "recivi",
- *   "name": "Récivi",
- *   "url": {
- *     "dest": "https://recivi.vercel.app",
- *     "label": "Récivi homepage"
- *   }
- * }
- * ```
- */
 export type Tech = Omit<z.infer<typeof techSchema>, 'url'> &
   Partial<{
     url: Url

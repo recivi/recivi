@@ -45,30 +45,27 @@ export const certSchema = z
       ),
   })
   .describe(
-    'a document that proves successful completion of a course of education or training'
+    JSON.stringify({
+      description:
+        'a document that proves successful completion of a course of education or training',
+      examples: [
+        {
+          id: 'b_tech',
+          name: 'Bachelor of Technology',
+          shortName: 'B. Tech.',
+          field: 'Engineering Physics',
+          period: {
+            start: [2015],
+            end: [2019],
+          },
+          score: '7.286',
+          maxScore: '10.000',
+          courses: ['PH101 - Introduction to Physics'],
+        },
+      ],
+    })
   )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "id": "b_tech",
- *   "name": "Bachelor of Technology",
- *   "shortName": "B. Tech.",
- *   "field": "Engineering Physics",
- *   "period": {
- *     "start": [2015],
- *     "end": [2019]
- *   },
- *   "score": "7.286",
- *   "maxScore": "10.000",
- *   "courses": [
- *     "PH101 - Introduction to Physics",
- *   ]
- * }
- * ```
- */
 export type Cert = Omit<
   z.infer<typeof certSchema>,
   'period' | 'issue' | 'expiration' | 'tags'

@@ -23,27 +23,21 @@ export const addressSchema = z
       ),
   })
   .describe(
-    'a physical geographical location; This field can optionally include mailing information.'
+    JSON.stringify({
+      description:
+        'a physical geographical location; This field can optionally include mailing information.',
+      examples: [
+        {
+          city: 'Roorkee',
+          state: 'UK',
+          countryCode: 'IN',
+          postalCode: 247667,
+        },
+        {
+          countryCode: 'IN',
+        },
+      ],
+    })
   )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "city": "Roorkee",
- *   "state": "UK",
- *   "countryCode": "IN",
- *   "postalCode": 247667
- * }
- * ```
- *
- * ---
- *
- * ```json
- * {
- *   "countryCode": "IN"
- * }
- * ```
- */
 export type Address = z.infer<typeof addressSchema>

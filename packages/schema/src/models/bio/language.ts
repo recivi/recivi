@@ -25,56 +25,47 @@ export const nameSchema = z.union([
   }),
 ])
 
-export const languageSchema = z.object({
-  name: nameSchema.describe('basic information about the language name'),
-  speak: z
-    .optional(languageProficiencySchema)
-    .describe('ability to understand text written in the language'),
-  listen: z
-    .optional(languageProficiencySchema)
-    .describe('ability to understand when others speak the language'),
-  write: z
-    .optional(languageProficiencySchema)
-    .describe('ability to write comfortably using the language'),
-  read: z
-    .optional(languageProficiencySchema)
-    .describe('ability to speak the language'),
-})
+export const languageSchema = z
+  .object({
+    name: nameSchema.describe('basic information about the language name'),
+    speak: z
+      .optional(languageProficiencySchema)
+      .describe('ability to understand text written in the language'),
+    listen: z
+      .optional(languageProficiencySchema)
+      .describe('ability to understand when others speak the language'),
+    write: z
+      .optional(languageProficiencySchema)
+      .describe('ability to write comfortably using the language'),
+    read: z
+      .optional(languageProficiencySchema)
+      .describe('ability to speak the language'),
+  })
+  .describe(
+    JSON.stringify({
+      description: "a language and the user's proficiency in it",
+      examples: [
+        {
+          name: 'German',
+        },
+        {
+          name: 'हिन्दी',
+          speak: 'native',
+          write: 'professional_working',
+          read: 'professional_working',
+        },
+        {
+          name: {
+            id: 'gu',
+            name: 'ગુજરાતી',
+            englishName: 'Gujarati',
+          },
+          listen: 'elementary',
+        },
+      ],
+    })
+  )
 
-/**
- * Examples:
- *
- * ```json
- * {
- *   "name": "German"
- * }
- * ```
- *
- * ---
- *
- * ```json
- * {
- *   "name": "हिन्दी",
- *   "speak": "native",
- *   "write": "professional_working"
- *   "read": "professional_working"
- * }
- * ```
- *
- *
- * ---
- *
- * ```json
- * {
- *   "name": {
- *     "id": "gu",
- *     "name": "ગુજરાતી",
- *     "englishName": "Gujarati"
- *   },
- *   "listen": "elementary"
- * }
- * ```
- */
 export type Language = Omit<
   z.infer<typeof languageSchema>,
   'speak' | 'listen' | 'write' | 'read'

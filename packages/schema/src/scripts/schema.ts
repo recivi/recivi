@@ -7,7 +7,7 @@ import { resolve, join } from 'node:path'
 
 import chalk from 'chalk'
 
-import { zodToJsonSchema } from 'zod-to-json-schema'
+import zodToJsonSchema, { jsonDescription } from 'zod-to-json-schema'
 
 import {
   resumeSchema,
@@ -24,6 +24,7 @@ import {
 console.log(chalk.blue('ZTS'), 'Zod to JSON Schema start')
 
 const jsonSchema = zodToJsonSchema(resumeSchema, {
+  postProcess: jsonDescription,
   // Collect all base models inside the `definitions` field.
   definitions: {
     addressSchema,
