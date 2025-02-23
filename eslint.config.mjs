@@ -1,5 +1,4 @@
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 
 import globals from 'globals'
 
@@ -9,10 +8,7 @@ import js from '@eslint/js'
 import ts from 'typescript-eslint'
 import astro from 'eslint-plugin-astro'
 
-const __filename = fileURLToPath(import.meta.url)
-const srcDir = path.dirname(__filename)
-
-const gitignorePath = path.resolve(srcDir, '.gitignore')
+const gitignorePath = resolve(import.meta.filename, '../.gitignore')
 
 export default [
   includeIgnoreFile(gitignorePath),
