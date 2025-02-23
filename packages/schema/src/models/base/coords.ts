@@ -35,6 +35,6 @@ export const coordsSchema = z
   .describe('a pair of numbers that uniquely identify a point on the globe')
 
 /**
- * Examples: See tests.
+ * Examples: Refer to tests.
  */
 export type Coords = z.infer<typeof coordsSchema>
