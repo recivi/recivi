@@ -51,7 +51,7 @@ function generateMarkdown(s: SchemaData): string {
       ? `**type:** [\`${s.reference}\`](/reference/${s.reference.toLowerCase()})  `
       : `**type:** \`${s.type}\`  `,
     s.isOptional && '**optional?** yes  ',
-    s.default && `**default:** ${s.default}  `,
+    s.default && `**default:** \`${JSON.stringify(s.default)}\`  `,
     s.isRefined && '**additional validation?** yes  ',
     ...Object.entries(s.info ?? {}).map(
       ([key, value]) => `**${key}**: ${value}  `
