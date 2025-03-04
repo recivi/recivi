@@ -13,7 +13,7 @@ export const contactSchema = z
   })
   .describe('a collection of ways to contact a given entity')
 
-export type Contact = Omit<z.infer<typeof contactSchema>, 'phone'> &
+export type Contact = Omit<z.infer<typeof contactSchema>, 'phones'> &
   Partial<{
-    phone: Phone
+    phones: Phone[]
   }>
