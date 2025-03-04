@@ -34,6 +34,7 @@ interface SchemaData {
   level: number
   type: string
   description?: string
+  examples?: unknown[]
 
   info?: Record<string, { toString(): string } | undefined>
   default?: string
@@ -57,6 +58,15 @@ function generateMarkdown(s: SchemaData): string {
     ),
     '',
     s.description,
+    '',
+    !s.reference &&
+      s.examples &&
+      `<details>
+<summary>Examples</summary>
+${s.examples
+  ?.map((ex) => '```json\n' + JSON.stringify(ex, null, 2) + '\n```')
+  .join('\n')}
+</details>`,
     '',
     ...(s.children?.map(generateMarkdown) ?? []),
   ]
@@ -109,7 +119,14 @@ function visitCommon(name: string, level: number, s: ZodType): SchemaData {
   }
 
   // Add common description
-  schemaData.description = s.description
+  const description = s.description
+  if (description?.includes('"description":')) {
+    const descriptionObj = JSON.parse(description)
+    schemaData.description = descriptionObj.description
+    schemaData.examples = descriptionObj.examples
+  } else {
+    schemaData.description = description
+  }
 
   return schemaData
 }
