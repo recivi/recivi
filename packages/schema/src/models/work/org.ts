@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Address, addressSchema } from '@/models/base/address'
 import { type Contact, contactSchema } from '@/models/base/contact'
 import { type Role, roleSchema } from '@/models/work/role'
@@ -53,7 +54,7 @@ export type Org = Omit<
   z.infer<typeof orgSchema>,
   'url' | 'address' | 'contact' | 'roles'
 > &
-  Partial<{
+  PartialWithUndefined<{
     url: Url
     address: Address
     contact: Contact

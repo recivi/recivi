@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Date, dateSchema } from '@/models/base/date'
 import { type Period, periodSchema } from '@/models/base/period'
 import { type Tag, tagSchema } from '@/models/base/tag'
@@ -72,7 +73,7 @@ export type Cert = Omit<
 > & {
   period: Period
   issue: Date
-} & Partial<{
+} & PartialWithUndefined<{
     expiration: Date
     tags: Tag[]
   }>

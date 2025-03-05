@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Period, periodSchema } from '@/models/base/period'
 import {
   type RoleLocation,
@@ -50,7 +51,7 @@ export const roleSchema = z
   .describe('an experience of working in a role at an organisation')
 
 export type Role = Omit<z.infer<typeof roleSchema>, 'tags'> &
-  Partial<{
+  PartialWithUndefined<{
     type: RoleType
     location: RoleLocation
     period: Period
