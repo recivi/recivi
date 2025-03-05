@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { phoneSchema, type Phone } from '@/models/base/phone'
 
 export const contactSchema = z
@@ -14,6 +15,6 @@ export const contactSchema = z
   .describe('a collection of ways to contact a given entity')
 
 export type Contact = Omit<z.infer<typeof contactSchema>, 'phones'> &
-  Partial<{
+  PartialWithUndefined<{
     phones: Phone[]
   }>

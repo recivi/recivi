@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Tech, techSchema } from '@/models/creations/tech'
 import { type Period, periodSchema } from '@/models/base/period'
 import { type Url, urlSchema } from '@/models/base/url'
@@ -46,7 +47,7 @@ export type Project = Omit<
   z.infer<typeof projectSchema>,
   'url' | 'technologies' | 'period' | 'tags'
 > &
-  Partial<{
+  PartialWithUndefined<{
     url: Url
     technologies: Tech[]
     period: Period

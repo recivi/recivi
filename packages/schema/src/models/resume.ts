@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Bio, bioSchema } from '@/models/bio/bio'
 import { type Org, orgSchema } from '@/models/work/org'
 import { type Epic, epicSchema } from '@/models/creations/epic'
@@ -35,7 +36,8 @@ export type Resume = Omit<
   'bio' | 'creations' | 'education' | 'work'
 > & {
   bio: Bio
-  creations?: Epic[]
-  education?: Institute[]
-  work?: Org[]
-}
+} & PartialWithUndefined<{
+    creations: Epic[]
+    education: Institute[]
+    work: Org[]
+  }>

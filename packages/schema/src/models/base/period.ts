@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Date, dateSchema } from '@/models/base/date'
 
 export const periodSchema = z
@@ -17,5 +18,4 @@ export const periodSchema = z
 
 export type Period = Omit<z.infer<typeof periodSchema>, 'start' | 'end'> & {
   start: Date
-  end?: Date
-}
+} & PartialWithUndefined<{ end: Date }>

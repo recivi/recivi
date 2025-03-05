@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Project, projectSchema } from '@/models/creations/project'
 import { type Url, urlSchema } from '@/models/base/url'
 
@@ -35,7 +36,7 @@ export const epicSchema = z
   )
 
 export type Epic = Omit<z.infer<typeof epicSchema>, 'projects' | 'url'> &
-  Partial<{
+  PartialWithUndefined<{
     url: Url
     projects: Project[]
   }>

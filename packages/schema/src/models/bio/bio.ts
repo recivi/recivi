@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Skill, skillSchema } from '@/models/bio/skill'
 import { type Profile, profileSchema } from '@/models/bio/profile'
 import { type Language, languageSchema } from '@/models/bio/language'
@@ -65,7 +66,7 @@ export type Bio = Omit<
   z.infer<typeof bioSchema>,
   'contact' | 'profiles' | 'skills' | 'residence' | 'origin'
 > &
-  Partial<{
+  PartialWithUndefined<{
     contact: Contact
     profiles: Profile[]
     skills: Skill[]

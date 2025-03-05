@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Url, urlSchema } from '@/models/base/url'
 
 export const techSchema = z
@@ -40,6 +41,6 @@ export const techSchema = z
   )
 
 export type Tech = Omit<z.infer<typeof techSchema>, 'url'> &
-  Partial<{
+  PartialWithUndefined<{
     url: Url
   }>
