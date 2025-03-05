@@ -226,7 +226,14 @@ function visitEnum(
   level: number,
   s: ZodEnum<[string, ...string[]]>
 ): SchemaData {
-  return { type: 'enum', name, level, info: { values: s.options.join(', ') } }
+  return {
+    type: 'enum',
+    name,
+    level,
+    info: {
+      values: `\n${s.options.map((opt) => `- \`${JSON.stringify(opt)}\``).join('\n')}`,
+    },
+  }
 }
 
 function visitUndefined(name: string, level: number): SchemaData {
