@@ -30,15 +30,19 @@ export const languageSchema = z
     name: nameSchema.describe('basic information about the language name'),
     speak: z
       .optional(languageProficiencySchema)
+      .default('no')
       .describe('ability to understand text written in the language'),
     listen: z
       .optional(languageProficiencySchema)
+      .default('no')
       .describe('ability to understand when others speak the language'),
     write: z
       .optional(languageProficiencySchema)
+      .default('no')
       .describe('ability to write comfortably using the language'),
     read: z
       .optional(languageProficiencySchema)
+      .default('no')
       .describe('ability to speak the language'),
   })
   .describe(
@@ -70,8 +74,8 @@ export type Language = Omit<
   z.infer<typeof languageSchema>,
   'speak' | 'listen' | 'write' | 'read'
 > & {
-  speak?: LanguageProficiency
-  listen?: LanguageProficiency
-  write?: LanguageProficiency
-  read?: LanguageProficiency
+  speak: LanguageProficiency
+  listen: LanguageProficiency
+  write: LanguageProficiency
+  read: LanguageProficiency
 }
