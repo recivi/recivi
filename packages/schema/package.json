@@ -35,7 +35,7 @@
     "types": "tsc --noEmit"
   },
   "dependencies": {
-    "zod": "^3.24.1"
+    "zod": "^4.0.14"
   },
   "devDependencies": {
     "@types/node": "^22.10.6",
@@ -43,7 +43,6 @@
     "commander": "^13.0.0",
     "glob": "^11.0.0",
     "tsup": "^8.3.5",
-    "tsx": "^4.19.2",
-    "zod-to-json-schema": "^3.24.3"
+    "tsx": "^4.19.2"
   }
 }
