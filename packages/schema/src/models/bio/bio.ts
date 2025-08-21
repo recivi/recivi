@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { primaryRegistry } from '@/registries/primary'
+
 import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Skill, skillSchema } from '@/models/bio/skill'
 import { type Profile, profileSchema } from '@/models/bio/profile'
@@ -9,68 +11,83 @@ import { type Address, addressSchema } from '@/models/base/address'
 
 export const bioSchema = z
   .object({
-    name: z
-      .string()
-      .describe(
-        'the nickname or preferred name of the person; This should be the name used for most intents and purposes.'
-      ),
-    fullName: z
-      .optional(z.string())
-      .describe(
-        'the full name of the person; The person may not want to disclose this for privacy reasons.'
-      ),
+    name: z.string().register(primaryRegistry, {
+      description:
+        'the nickname or preferred name of the person; This should be the name used for most intents and purposes.',
+    }),
+    fullName: z.string().optional().register(primaryRegistry, {
+      description:
+        'the full name of the person; The person may not want to disclose this for privacy reasons.',
+    }),
     aliases: z
-      .optional(z.array(z.string()))
-      .describe(
-        'a list of other names that the person goes by; This can be a nickname, a pseudonym, or the name in a different language.'
-      ),
-    image: z
-      .optional(z.string().url())
-      .describe(
-        'the URL to a profile picture for the person; For example, this can be a Gravatar link, or the URL to an image hosted on a public URL.'
-      ),
-    labels: z
-      .optional(z.array(z.string()))
-      .describe('a few short labels describing the person'),
-    summary: z
-      .optional(z.string())
-      .describe('a fairly brief summary of the person'),
-    introduction: z
-      .optional(z.string())
-      .describe('a fairly long introduction about the person'),
-    description: z
-      .optional(z.string())
-      .describe('a detailed description of the person'),
-    contact: z
-      .optional(contactSchema)
-      .describe('the contact information to reach the person'),
+      .array(z.string())
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description:
+          'a list of other names that the person goes by; This can be a nickname, a pseudonym, or the name in a different language.',
+      }),
+    image: z.url().optional().register(primaryRegistry, {
+      description:
+        'the URL to a profile picture for the person; For example, this can be a Gravatar link, or the URL to an image hosted on a public URL.',
+    }),
+    labels: z.array(z.string()).default([]).register(primaryRegistry, {
+      description: 'a few short labels describing the person',
+    }),
+    summary: z.string().optional().register(primaryRegistry, {
+      description: 'a fairly brief summary of the person',
+    }),
+    introduction: z.string().optional().register(primaryRegistry, {
+      description: 'a fairly long introduction about the person',
+    }),
+    description: z.string().optional().register(primaryRegistry, {
+      description: 'a detailed description of the person',
+    }),
+    contact: contactSchema.optional().register(primaryRegistry, {
+      description: 'the contact information to reach the person',
+    }),
     profiles: z
-      .optional(z.array(profileSchema))
-      .describe('a list of web profiles for the person'),
+      .array(profileSchema)
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description: 'a list of web profiles for the person',
+      }),
     skills: z
-      .optional(z.array(skillSchema))
-      .describe('a list of skills that the person has'),
+      .array(skillSchema)
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description: 'a list of skills that the person has',
+      }),
     languages: z
-      .optional(z.array(languageSchema))
-      .describe('a list of languages that the person can work with'),
-    residence: z
-      .optional(addressSchema)
-      .describe('current location where the person resides'),
-    origin: z
-      .optional(addressSchema)
-      .describe('location where the person comes from or holds citizenship of'),
+      .array(languageSchema)
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description: 'a list of languages that the person can work with',
+      }),
+    residence: addressSchema.optional().register(primaryRegistry, {
+      description: 'current location where the person resides',
+    }),
+    origin: addressSchema.optional().register(primaryRegistry, {
+      description:
+        'location where the person comes from or holds citizenship of',
+    }),
   })
-  .describe('information related to the identity of a person')
+  .register(primaryRegistry, {
+    description: 'information related to the identity of a person',
+  })
 
 export type Bio = Omit<
   z.infer<typeof bioSchema>,
   'contact' | 'profiles' | 'skills' | 'residence' | 'origin'
-> &
-  PartialWithUndefined<{
+> & {
+  profiles: Profile[]
+  skills: Skill[]
+  languages: Language[]
+} & PartialWithUndefined<{
     contact: Contact
-    profiles: Profile[]
-    skills: Skill[]
-    languages: Language[]
     residence: Address
     origin: Address
   }>

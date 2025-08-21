@@ -1,74 +1,83 @@
 import { z } from 'zod'
 
+import { primaryRegistry } from '@/registries/primary'
+
 import {
   type LanguageProficiency,
   languageProficiencySchema,
 } from '@/models/bio/language_proficiency'
 
 export const nameSchema = z.union([
-  z
-    .string()
-    .describe(
-      'the name of the language, either in the language itself or in English'
-    ),
+  z.string().register(primaryRegistry, {
+    description:
+      'the name of the language, either in the language itself or in English',
+  }),
   z.object({
-    id: z.string().optional().describe('the IETF BCP 47 language tag'),
-    name: z
-      .string()
-      .describe(
-        'endonym, i.e. the name of the language in the language itself'
-      ),
-    englishName: z
-      .string()
-      .optional()
-      .describe('English exonym, i.e. the name of the language in English'),
+    id: z.string().optional().register(primaryRegistry, {
+      description: 'the IETF BCP 47 language tag',
+    }),
+    name: z.string().register(primaryRegistry, {
+      description:
+        'endonym, i.e. the name of the language in the language itself',
+    }),
+    englishName: z.string().optional().register(primaryRegistry, {
+      description: 'English exonym, i.e. the name of the language in English',
+    }),
   }),
 ])
 
 export const languageSchema = z
   .object({
-    name: nameSchema.describe('basic information about the language name'),
-    speak: z
-      .optional(languageProficiencySchema)
+    name: nameSchema.register(primaryRegistry, {
+      description: 'basic information about the language name',
+    }),
+    speak: languageProficiencySchema
+      .optional()
       .default('no')
-      .describe('ability to understand text written in the language'),
-    listen: z
-      .optional(languageProficiencySchema)
+      .register(primaryRegistry, {
+        description: 'ability to speak using the language',
+      }),
+    listen: languageProficiencySchema
+      .optional()
       .default('no')
-      .describe('ability to understand when others speak the language'),
-    write: z
-      .optional(languageProficiencySchema)
+      .register(primaryRegistry, {
+        description: 'ability to understand speech spoken in the language',
+      }),
+    write: languageProficiencySchema
+      .optional()
       .default('no')
-      .describe('ability to write comfortably using the language'),
-    read: z
-      .optional(languageProficiencySchema)
+      .register(primaryRegistry, {
+        description: 'ability to write using the language',
+      }),
+    read: languageProficiencySchema
+      .optional()
       .default('no')
-      .describe('ability to speak the language'),
+      .register(primaryRegistry, {
+        description: 'ability to read text written in the language',
+      }),
   })
-  .describe(
-    JSON.stringify({
-      description: "a language and the user's proficiency in it",
-      examples: [
-        {
-          name: 'German',
+  .register(primaryRegistry, {
+    description: "a language and the user's proficiency in it",
+    examples: [
+      {
+        name: 'German',
+      },
+      {
+        name: 'हिन्दी',
+        speak: 'native',
+        write: 'professional_working',
+        read: 'professional_working',
+      },
+      {
+        name: {
+          id: 'gu',
+          name: 'ગુજરાતી',
+          englishName: 'Gujarati',
         },
-        {
-          name: 'हिन्दी',
-          speak: 'native',
-          write: 'professional_working',
-          read: 'professional_working',
-        },
-        {
-          name: {
-            id: 'gu',
-            name: 'ગુજરાતી',
-            englishName: 'Gujarati',
-          },
-          listen: 'elementary',
-        },
-      ],
-    })
-  )
+        listen: 'elementary',
+      },
+    ],
+  })
 
 export type Language = Omit<
   z.infer<typeof languageSchema>,

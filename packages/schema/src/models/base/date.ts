@@ -1,24 +1,28 @@
 import { z } from 'zod'
 
-export const yearSchema = z
-  .number()
-  .int()
-  .min(1)
-  .describe('a year in the Gregorian calendar')
+import { primaryRegistry } from '@/registries/primary'
+
+export const yearSchema = z.number().int().min(1).register(primaryRegistry, {
+  description: 'a year in the Gregorian calendar',
+})
 
 export const monthSchema = z
   .number()
   .int()
   .min(1)
   .max(12)
-  .describe('a month in the Gregorian calendar')
+  .register(primaryRegistry, {
+    description: 'a month in the Gregorian calendar',
+  })
 
 export const daySchema = z
   .number()
   .int()
   .min(1)
   .max(31)
-  .describe('a day of the month in the Gregorian calendar')
+  .register(primaryRegistry, {
+    description: 'a day of the month in the Gregorian calendar',
+  })
 
 /**
  * Verify that the given date is valid. This only verifies that the day
@@ -50,19 +54,28 @@ export const dateSchema = z
         day: daySchema,
       })
       .refine(({ year, month, day }) => validateDate(day, month, year))
-      .describe('a fully-specified date in the Gregorian calendar'),
-    z.tuple([yearSchema]).describe('a date consisting only of a year'),
-    z
-      .tuple([yearSchema, monthSchema])
-      .describe('a date consisting of a year and a month'),
+      .register(primaryRegistry, {
+        description: 'a fully-specified date in the Gregorian calendar',
+      }),
+    z.tuple([yearSchema]).register(primaryRegistry, {
+      description: 'a date consisting only of a year',
+    }),
+    z.tuple([yearSchema, monthSchema]).register(primaryRegistry, {
+      description: 'a date consisting of a year and a month',
+    }),
     z
       .tuple([yearSchema, monthSchema, daySchema])
       .refine(([year, month, day]) => validateDate(day, month, year))
-      .describe('a date consisting of a year, a month and a day of the month'),
+      .register(primaryRegistry, {
+        description:
+          'a date consisting of a year, a month and a day of the month',
+      }),
   ])
-  .describe(
-    'a combination of year, month and day; This date can optionally skip the day and month fields, as needed.'
-  )
+  .register(primaryRegistry, {
+    id: 'Date',
+    description:
+      'a combination of year, month and day; This date can optionally skip the day and month fields, as needed.',
+  })
 
 /**
  * Examples: Refer to tests.
