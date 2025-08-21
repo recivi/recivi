@@ -1,54 +1,82 @@
 import { z } from 'zod'
 
-export interface FormalSkill {
-  name: string
-  id?: string
-  subSkills?: Skill[]
-}
+import { primaryRegistry } from '@/registries/primary'
 
-const baseFormalSkillSchema = z.object({
-  name: z.string().describe('the name of the skill'),
-  id: z
-    .optional(z.string())
-    .describe(
-      'an identifier for the skill; In implementations, this can be used as a key to find the logo for the skill.'
-    ),
+export const formalSkillSchema = z.object({
+  id: z.optional(z.string()).register(primaryRegistry, {
+    description:
+      'an identifier for the skill; In implementations, this can be used as a key to find the logo for the skill.',
+  }),
+  name: z.string().register(primaryRegistry, {
+    description: 'the name of the skill',
+  }),
+  get subSkills(): z.ZodDefault<z.ZodOptional<z.ZodArray<typeof skillSchema>>> {
+    return z
+      .array(skillSchema)
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description:
+          'a list of skills that are considered as sub-parts of this one',
+      })
+  },
 })
 
-const formalSkillSchema: z.ZodType<FormalSkill> = baseFormalSkillSchema.extend({
-  subSkills: z
-    .optional(z.lazy(() => z.array(skillSchema)))
-    .describe('a list of skills that are considered as sub-parts of this one'),
-})
+export type FormalSkill = z.infer<typeof formalSkillSchema>
+type _FormalSkill = z.input<typeof formalSkillSchema>
 
-export const skillSchema = z
-  .union([
-    z
-      .string()
-      .describe(
-        'the name of the skill; This form should be used when an ID and sub-skills are not provided.'
-      ),
-    formalSkillSchema.describe(
-      'a combination of the skill name, an ID and sub-skills; This form should be used when an ID or sub-skills are provided.'
-    ),
-  ])
-  .describe(
-    JSON.stringify({
-      description: 'a skill and optional sub-skills possessed by a person',
-      examples: [
+primaryRegistry.add(formalSkillSchema, {
+  description:
+    'a combination of the skill name, an ID and sub-skills; This form should be used when an ID or sub-skills are provided.',
+  examples: [
+    {
+      id: 'javascript',
+      name: 'JavaScript',
+      subSkills: [
         {
-          name: 'JavaScript',
-          subSkills: [
-            'Vue.js',
-            {
-              name: 'React',
-              subSkills: ['Next.js'],
-            },
-          ],
-        },
-        'Woodworking',
+          id: 'vuedotjs',
+          name: 'Vue.js',
+          subSkills: ['Nuxt.js' satisfies _Skill],
+        } satisfies _FormalSkill,
+        {
+          id: 'react',
+          name: 'React',
+        } satisfies _FormalSkill,
       ],
-    })
-  )
+    } satisfies _FormalSkill,
+  ],
+})
+
+export const skillSchema = z.union([
+  z.string().register(primaryRegistry, {
+    description:
+      'the name of the skill; This form should be used when an ID and sub-skills are not provided.',
+    examples: ['Woodworking'],
+  }),
+  formalSkillSchema,
+])
 
 export type Skill = z.infer<typeof skillSchema>
+type _Skill = z.input<typeof skillSchema>
+
+primaryRegistry.add(skillSchema, {
+  description: 'a skill and optional sub-skills possessed by a person',
+  examples: [
+    'Plumbing' satisfies _Skill,
+    {
+      id: 'python',
+      name: 'Python',
+      subSkills: [
+        {
+          id: 'django',
+          name: 'Django',
+          subSkills: ['Django REST Framework' satisfies _Skill],
+        } satisfies _Skill,
+        {
+          id: 'flask',
+          name: 'Flask',
+        } satisfies _Skill,
+      ],
+    } satisfies _Skill,
+  ],
+})

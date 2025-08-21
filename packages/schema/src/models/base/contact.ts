@@ -1,20 +1,37 @@
 import { z } from 'zod'
 
-import type { PartialWithUndefined } from '@/models/utils/partial'
+import { primaryRegistry } from '@/registries/primary'
+
 import { phoneSchema, type Phone } from '@/models/base/phone'
 
 export const contactSchema = z
   .object({
     emails: z
-      .optional(z.array(z.string().email()))
-      .describe('a list of email addresses'),
+      .array(z.email())
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description: 'a list of email addresses',
+      }),
     phones: z
-      .optional(z.array(phoneSchema))
-      .describe('a list of phone numbers'),
+      .array(phoneSchema)
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description: 'a list of phone numbers',
+      }),
   })
-  .describe('a collection of ways to contact a given entity')
+  .register(primaryRegistry, {
+    id: 'Contact',
+    description: 'a collection of ways to contact a given entity',
+    examples: [
+      {
+        emails: ['alice@example.com'],
+        phones: [{ countryCode: 91, number: '9876543210' }],
+      },
+    ],
+  })
 
-export type Contact = Omit<z.infer<typeof contactSchema>, 'phones'> &
-  PartialWithUndefined<{
-    phones: Phone[]
-  }>
+export type Contact = Omit<z.infer<typeof contactSchema>, 'phones'> & {
+  phones: Phone[]
+}
