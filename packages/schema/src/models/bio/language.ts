@@ -10,20 +10,25 @@ import {
 export const nameSchema = z.union([
   z.string().register(primaryRegistry, {
     description:
-      'the name of the language, either in the language itself or in English',
+      'the name of the language, either in the language itself or in English; This form should be used when the language goes by one name.',
   }),
-  z.object({
-    id: z.string().optional().register(primaryRegistry, {
-      description: 'the IETF BCP 47 language tag',
-    }),
-    name: z.string().register(primaryRegistry, {
+  z
+    .object({
+      id: z.string().optional().register(primaryRegistry, {
+        description: 'the IETF BCP 47 language tag',
+      }),
+      name: z.string().register(primaryRegistry, {
+        description:
+          'endonym, i.e. the name of the language in the language itself',
+      }),
+      englishName: z.string().optional().register(primaryRegistry, {
+        description: 'English exonym, i.e. the name of the language in English',
+      }),
+    })
+    .register(primaryRegistry, {
       description:
-        'endonym, i.e. the name of the language in the language itself',
+        'the structured name of the language; This form should be used to provide multiple names and a unique ID.',
     }),
-    englishName: z.string().optional().register(primaryRegistry, {
-      description: 'English exonym, i.e. the name of the language in English',
-    }),
-  }),
 ])
 
 export const languageSchema = z
