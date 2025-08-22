@@ -49,6 +49,7 @@ export const orgSchema = z
       }),
   })
   .register(primaryRegistry, {
+    id: 'Org',
     description:
       'a company or institution that the user has worked for; The user can serve for one or more roles at an organisation.',
   })

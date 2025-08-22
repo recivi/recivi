@@ -53,6 +53,7 @@ export const projectSchema = z
     }),
   })
   .register(primaryRegistry, {
+    id: 'Project',
     description: 'a creative endeavour undertaken as a part of a larger epic',
   })
 

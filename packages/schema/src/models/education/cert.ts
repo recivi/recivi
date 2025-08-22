@@ -54,6 +54,7 @@ export const certSchema = z
     }),
   })
   .register(primaryRegistry, {
+    id: 'Cert',
     description:
       'a document that proves successful completion of a course of education or training',
     examples: [

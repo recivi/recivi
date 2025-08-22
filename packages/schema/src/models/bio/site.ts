@@ -14,6 +14,7 @@ export const siteSchema = z
     }),
   })
   .register(primaryRegistry, {
+    id: 'Site',
     description:
       'a web platform on which a person can have a profile; This can be a professional website or social network.',
     examples: [
