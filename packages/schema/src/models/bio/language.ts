@@ -66,7 +66,7 @@ export const languageSchema = z
     description: "a language and the user's proficiency in it",
     examples: [
       {
-        name: 'German',
+        name: 'English',
       },
       {
         name: 'हिन्दी',
