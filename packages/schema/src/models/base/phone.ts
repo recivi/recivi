@@ -4,7 +4,7 @@ import { primaryRegistry } from '@/registries/primary'
 
 export const phoneSchema = z
   .object({
-    countryCode: z.number().int().register(primaryRegistry, {
+    countryCode: z.number().int().min(1).register(primaryRegistry, {
       description:
         "the country calling code for the phone number, without any leading '+' or zeroes; In implementations, the country code may be used as the key to look up the country name.",
     }),
