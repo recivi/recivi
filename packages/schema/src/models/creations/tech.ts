@@ -21,6 +21,7 @@ export const techSchema = z
     }),
   })
   .register(primaryRegistry, {
+    id: 'Tech',
     description:
       'a programming language, tool or framework used in the creation of a project',
     examples: [

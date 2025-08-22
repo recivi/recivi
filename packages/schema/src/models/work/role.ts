@@ -58,6 +58,7 @@ export const roleSchema = z
     }),
   })
   .register(primaryRegistry, {
+    id: 'Role',
     description: 'an experience of working in a role at an organisation',
   })
 

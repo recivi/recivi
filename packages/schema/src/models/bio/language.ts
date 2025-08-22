@@ -57,6 +57,7 @@ export const languageSchema = z
       }),
   })
   .register(primaryRegistry, {
+    id: 'Language',
     description: "a language and the user's proficiency in it",
     examples: [
       {

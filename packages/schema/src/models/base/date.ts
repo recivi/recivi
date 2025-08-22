@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { primaryRegistry } from '@/registries/primary'
 
 export const yearSchema = z.number().int().min(1).register(primaryRegistry, {
+  id: 'Year',
   description: 'a year in the Gregorian calendar',
 })
 
@@ -12,6 +13,7 @@ export const monthSchema = z
   .min(1)
   .max(12)
   .register(primaryRegistry, {
+    id: 'Month',
     description: 'a month in the Gregorian calendar',
   })
 
@@ -21,6 +23,7 @@ export const daySchema = z
   .min(1)
   .max(31)
   .register(primaryRegistry, {
+    id: 'Day',
     description: 'a day of the month in the Gregorian calendar',
   })
 

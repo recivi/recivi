@@ -18,6 +18,7 @@ export const profileSchema = z
     }),
   })
   .register(primaryRegistry, {
+    id: 'Profile',
     description: "a person's profile on a website",
     examples: [
       {

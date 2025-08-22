@@ -36,6 +36,7 @@ export const epicSchema = z
       }),
   })
   .register(primaryRegistry, {
+    id: 'Epic',
     description:
       'a large creative endeavour that the user has undertaken; The user can work on one or more projects as a part of an epic.',
   })

@@ -34,6 +34,7 @@ export const resumeSchema = z.object({
         'the education of a person, which consists of certifications from various insitutes',
     }),
   work: z.array(orgSchema).optional().default([]).register(primaryRegistry, {
+    id: 'Resume',
     description:
       'the work experience of a person, which consists of positions of responsibility in various organisations',
   }),

@@ -60,6 +60,7 @@ export type Skill = z.infer<typeof skillSchema>
 type _Skill = z.input<typeof skillSchema>
 
 primaryRegistry.add(skillSchema, {
+  id: 'Skill',
   description: 'a skill and optional sub-skills possessed by a person',
   examples: [
     'Plumbing' satisfies _Skill,

@@ -76,6 +76,7 @@ export const bioSchema = z
     }),
   })
   .register(primaryRegistry, {
+    id: 'Bio',
     description: 'information related to the identity of a person',
   })
 

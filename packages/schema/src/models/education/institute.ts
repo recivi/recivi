@@ -41,6 +41,7 @@ export const instituteSchema = z
       }),
   })
   .register(primaryRegistry, {
+    id: 'Institute',
     description:
       'an organisation that imparts education or training, and offers certifications to corroborate the same; The user can acquire one or more certifications from an institute.',
     examples: [
