@@ -16,7 +16,9 @@ export const resumeSchema = z.object({
       description:
         'the URL to the JSON schema that should be used to validate this document',
     }),
-  bio: bioSchema.clone(),
+  bio: bioSchema.clone().register(primaryRegistry, {
+    description: 'the identity and personal information of a person',
+  }),
   creations: z
     .array(epicSchema)
     .optional()
