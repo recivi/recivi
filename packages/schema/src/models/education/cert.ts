@@ -18,10 +18,10 @@ export const certSchema = z
     field: z.string().optional().register(primaryRegistry, {
       description: 'the field of study in which the certificate was obtained',
     }),
-    period: periodSchema.register(primaryRegistry, {
+    period: periodSchema.clone().register(primaryRegistry, {
       description: 'the period of study for the certificate',
     }),
-    issue: dateSchema.register(primaryRegistry, {
+    issue: dateSchema.clone().register(primaryRegistry, {
       description: 'the date on which the certificate was issued',
     }),
     shortName: z.string().optional().register(primaryRegistry, {

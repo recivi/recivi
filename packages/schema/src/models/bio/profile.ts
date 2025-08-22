@@ -7,13 +7,13 @@ import { type Url, urlSchema } from '@/models/base/url'
 
 export const profileSchema = z
   .object({
-    site: siteSchema.register(primaryRegistry, {
+    site: siteSchema.clone().register(primaryRegistry, {
       description: 'the website on which the profile is located',
     }),
     username: z.string().optional().register(primaryRegistry, {
       description: 'the username or handle of the person on the website',
     }),
-    url: urlSchema.register(primaryRegistry, {
+    url: urlSchema.clone().register(primaryRegistry, {
       description: 'the URL to the profile of the person on the website',
     }),
   })
