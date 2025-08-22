@@ -44,7 +44,7 @@ export const projectSchema = z
       .register(primaryRegistry, {
         description: 'a list of technologies used in this project',
       }),
-    period: periodSchema.optional().register(primaryRegistry, {
+    period: periodSchema.clone().optional().register(primaryRegistry, {
       description: 'the period over which the project was built or maintained',
     }),
     tags: z.array(tagSchema).optional().default([]).register(primaryRegistry, {

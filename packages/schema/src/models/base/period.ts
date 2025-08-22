@@ -7,7 +7,7 @@ import { type Date, dateSchema } from '@/models/base/date'
 
 export const periodSchema = z
   .object({
-    start: dateSchema.register(primaryRegistry, {
+    start: dateSchema.clone().register(primaryRegistry, {
       description: 'the start date of the period',
     }),
     end: dateSchema.optional().register(primaryRegistry, {

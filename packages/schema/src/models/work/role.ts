@@ -41,7 +41,7 @@ export const roleSchema = z
     location: roleLocationSchema.optional().register(primaryRegistry, {
       description: 'the nature of the role, in terms of place of work',
     }),
-    period: periodSchema.optional().register(primaryRegistry, {
+    period: periodSchema.clone().optional().register(primaryRegistry, {
       description: 'the time duration for which the role was held',
     }),
     epicIds: z
