@@ -1,0 +1,179 @@
+---
+import { Code } from '@astrojs/starlight/components'
+
+import { parseRange, parseLength } from '@/utils/schema'
+import { toBase64, fromBase64 } from '@/utils/base64'
+
+interface Props {
+  name?: string
+  schemaString: string
+  isRoot?: boolean
+  isRequired?: boolean
+}
+const { name, schemaString, isRoot = false, isRequired = false } = Astro.props
+const schema = JSON.parse(fromBase64(schemaString))
+
+const ref = schema.$ref && schema.$ref.split('/').at(-1)
+
+const range = parseRange(schema)
+const length = parseLength(schema)
+
+/**
+ * Convert a value to a pretty-printed JSON string.
+ *
+ * @param value the value to stringify
+ * @returns a pretty-printed JSON string
+ */
+function prettyStr(value: unknown) {
+  return JSON.stringify(value, null, 2)
+}
+
+/**
+ * Convert a value to a schema string to pass nested `<Astro.self />`.
+ *
+ * @param value the value to convert
+ * @returns a base64-encoded schema string
+ */
+function schemaStr(value: unknown) {
+  return toBase64(JSON.stringify(value))
+}
+---
+
+<div>
+  {
+    !isRoot && (
+      <p>
+        <strong>{name ?? schema.id}</strong>
+        {isRequired && <span class="required-asterisk">*</span>}
+      </p>
+    )
+  }
+
+  <div class="mt-0">{schema.description}</div>
+
+  {
+    ref ? (
+      <div>
+        Type:
+        <a href={`/reference/${ref.toLocaleLowerCase()}`}>
+          <code>{ref}</code>
+        </a>
+      </div>
+    ) : schema.type ? (
+      <div>
+        Type:
+        <code>{schema.type}</code>
+      </div>
+    ) : undefined
+  }
+  {isRequired && <div class="mt-0">Required: yes</div>}
+  {schema.format && <div class="mt-0">Format: {schema.format}</div>}
+  {length && <div class="mt-0">Length: {length}</div>}
+  {
+    schema.default && (
+      <div class="mt-0">
+        Default: <code>{prettyStr(schema.default)}</code>
+      </div>
+    )
+  }
+  {
+    range && (
+      <div class="mt-0">
+        Range:
+        <span
+          class="math"
+          set:html={range}
+        />
+      </div>
+    )
+  }
+  {
+    schema.enum && (
+      <details>
+        <summary>Valid options</summary>
+        <ul>
+          {schema.enum.map((option: string) => (
+            <li>
+              <code>{prettyStr(option)}</code>
+            </li>
+          ))}
+        </ul>
+      </details>
+    )
+  }
+
+  {
+    schema.type === 'object' && (
+      <details>
+        <summary>Properties</summary>
+        {Object.entries(schema.properties).map(([key, value]) => (
+          <Astro.self
+            name={key}
+            schemaString={schemaStr(value)}
+            isRequired={schema.required?.includes(key)}
+          />
+        ))}
+      </details>
+    )
+  }
+
+  {
+    schema.type === 'array' && (
+      <details open>
+        <summary>Item</summary>
+        {schema.items && <Astro.self schemaString={schemaStr(schema.items)} />}
+        {schema.prefixItems &&
+          schema.prefixItems.map((item: unknown, index: number) => (
+            <Astro.self
+              name={`Item ${index + 1}`}
+              schemaString={schemaStr(item)}
+            />
+          ))}
+      </details>
+    )
+  }
+
+  {
+    schema.anyOf && (
+      <details>
+        <summary>Any of</summary>
+        {schema.anyOf.map((item: unknown, index: number) => (
+          <Astro.self
+            name={`Variant ${index + 1}`}
+            schemaString={schemaStr(item)}
+          />
+        ))}
+      </details>
+    )
+  }
+
+  {
+    schema.examples && (
+      <details>
+        <summary>Examples</summary>
+        {schema.examples.map((example: unknown) => (
+          <Code
+            code={prettyStr(example)}
+            lang="json"
+          />
+        ))}
+      </details>
+    )
+  }
+</div>
+
+<style>
+  /* hack to increase specificity */
+  :is(.mt-0):is(.mt-0) {
+    margin-top: 0;
+  }
+
+  .required-asterisk {
+    color: var(--sl-color-text-accent);
+  }
+
+  .math {
+    /* Transitional family */
+    font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+  }
+</style>
