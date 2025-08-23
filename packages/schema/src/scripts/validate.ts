@@ -61,10 +61,12 @@ function isValidResume(file: string): boolean {
         chalk.red('Invalid, see errors below:')
       )
 
-      error.errors.forEach((err) => {
+      error.issues.forEach((err) => {
         const errorText = `\n${JSON.stringify(err, null, 2)}`
         console.log(chalk.red(errorText.replace(/\n/g, chalk.dim('\n...'))))
       })
+    } else {
+      console.log(chalk.red('VAL'), chalk.bold(file), chalk.red(error))
     }
   }
   return false
