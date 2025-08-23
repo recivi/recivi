@@ -7,6 +7,7 @@ export const urlSchema = z
     z.url().register(primaryRegistry, {
       description:
         'the URL endpoint; This form should be used when a label is not provided.',
+      examples: ['https://dhruvkb.dev'],
     }),
     z
       .object({
@@ -21,6 +22,12 @@ export const urlSchema = z
       .register(primaryRegistry, {
         description:
           'a combination of the URL endpoint and a label for a11y purposes; This form should be used when a label is provided.',
+        examples: [
+          {
+            dest: 'https://dhruvkb.dev',
+            label: 'My website',
+          },
+        ],
       }),
   ])
   .register(primaryRegistry, {

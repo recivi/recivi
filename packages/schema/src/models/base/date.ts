@@ -59,12 +59,15 @@ export const dateSchema = z
       .refine(({ year, month, day }) => validateDate(day, month, year))
       .register(primaryRegistry, {
         description: 'a fully-specified date in the Gregorian calendar',
+        examples: [{ year: 1970, month: 1, day: 1 }],
       }),
     z.tuple([yearSchema]).register(primaryRegistry, {
       description: 'a date consisting only of a year',
+      examples: [[1970]],
     }),
     z.tuple([yearSchema, monthSchema]).register(primaryRegistry, {
       description: 'a date consisting of a year and a month',
+      examples: [[1970, 1]],
     }),
     z
       .tuple([yearSchema, monthSchema, daySchema])
@@ -72,6 +75,7 @@ export const dateSchema = z
       .register(primaryRegistry, {
         description:
           'a date consisting of a year, a month and a day of the month',
+        examples: [[1970, 1, 1]],
       }),
   ])
   .register(primaryRegistry, {
