@@ -32,12 +32,12 @@ export const daySchema = z
  * can exist for the given combination of month and year. Other range
  * validations are handled by Zod.
  *
- * @param day {number} the day
- * @param month {number} the month
- * @param year {number} the year
+ * @param day the day
+ * @param month the month
+ * @param year the year
  * @returns {boolean} whether the date is valid
  */
-function validateDate(day: number, month: number, year?: number): boolean {
+function validateDate(day: number, month: number, year: number): boolean {
   if ([4, 6, 9, 11].includes(month) && day > 30) return false
 
   const isLeapYear = (year: number) =>
