@@ -28,21 +28,34 @@ export const certSchema = z
       description:
         'a short informal name for the certificate. This can be an abbreviation.',
     }),
-    score: z.string().optional().register(primaryRegistry, {
-      description:
-        'the score achieved in the certificate examination; This is the overall score (cumulative) for the complete certificate. E.g., "86", "3.9" or "B-".',
-    }),
-    maxScore: z.string().optional().register(primaryRegistry, {
-      description:
-        'the maximum attainable score in the certificate examination; E.g., "100", "4.0" or "A+".',
-    }),
+    score: z
+      .string()
+      .optional()
+      .register(primaryRegistry, {
+        description:
+          'the score achieved in the certificate examination; This is the overall score (cumulative) for the complete certificate.',
+        examples: ['86', '3.9', 'B-'],
+      }),
+    maxScore: z
+      .string()
+      .optional()
+      .register(primaryRegistry, {
+        description:
+          'the maximum attainable score in the certificate examination',
+        examples: ['100', '4.0', 'A+'],
+      }),
     courses: z
       .array(z.string())
       .optional()
       .default([])
       .register(primaryRegistry, {
-        description:
-          'a list of courses completed to obtain the certificate; E.g., "CS50 - Introduction to Computer Science"',
+        description: 'a list of courses completed to obtain the certificate',
+        examples: [
+          [
+            'CS50 - Introduction to Computer Science',
+            'PH101 - Introduction to Physics',
+          ],
+        ],
       }),
     expiration: dateSchema.optional().register(primaryRegistry, {
       description:
