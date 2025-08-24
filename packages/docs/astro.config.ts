@@ -21,9 +21,13 @@ export default defineConfig({
       expressiveCode: {
         themes: ['catppuccin-mocha', 'catppuccin-latte'],
       },
-      social: {
-        github: 'https://github.com/recivi/recivi',
-      },
+      social: [
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/recivi/recivi',
+        },
+      ],
       sidebar: [
         {
           label: 'About',
