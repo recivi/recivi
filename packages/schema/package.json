@@ -30,11 +30,11 @@
     "validate": "pnpm barrel && tsx src/scripts/validate.ts",
     "schema": "pnpm barrel && tsx src/scripts/schema.ts",
     "reference": "pnpm barrel && tsx src/scripts/reference.ts",
-    "build": "pnpm barrel && tsup src/index.ts --dts --format esm",
+    "build": "pnpm barrel && tsdown src/index.ts",
     "test": "tsx --test",
     "types": "tsc --noEmit"
   },
-  "dependencies": {
+  "peerDependencies": {
     "zod": "^4.1.0"
   },
   "devDependencies": {
@@ -42,7 +42,7 @@
     "chalk": "^5.6.0",
     "commander": "^13.1.0",
     "glob": "^11.0.3",
-    "tsup": "^8.5.0",
+    "tsdown": "^0.14.1",
     "tsx": "^4.20.4"
   }
 }
