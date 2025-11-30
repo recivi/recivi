@@ -45,7 +45,7 @@ importers:
         specifier: ^8.40.0
         version: 8.40.0(eslint@9.34.0(jiti@2.6.1))(typescript@5.9.2)
 
-  packages/docs:
+  docs:
     dependencies:
       '@astrojs/check':
         specifier: ^0.9.5
