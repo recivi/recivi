@@ -1,10 +1,10 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
-import type { PartialWithUndefined } from '@/models/utils/partial'
-import { type Project, projectSchema } from '@/models/creations/project'
 import { type Url, urlSchema } from '@/models/base/url'
+import { type Project, projectSchema } from '@/models/creations/project'
+import type { PartialWithUndefined } from '@/models/utils/partial'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const epicSchema = z
   .object({

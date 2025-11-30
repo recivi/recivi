@@ -1,15 +1,15 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
-import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Period, periodSchema } from '@/models/base/period'
+import { type Tag, tagSchema } from '@/models/base/tag'
+import type { PartialWithUndefined } from '@/models/utils/partial'
 import {
   type RoleLocation,
   roleLocationSchema,
 } from '@/models/work/role_location'
 import { type RoleType, roleTypeSchema } from '@/models/work/role_type'
-import { type Tag, tagSchema } from '@/models/base/tag'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const roleSchema = z
   .object({

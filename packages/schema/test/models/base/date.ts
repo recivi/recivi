@@ -1,5 +1,5 @@
-import { suite, test } from 'node:test'
 import assert from 'node:assert'
+import { suite, test } from 'node:test'
 
 import { ZodError } from 'zod'
 

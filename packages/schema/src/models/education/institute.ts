@@ -1,12 +1,12 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
-import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Address, addressSchema } from '@/models/base/address'
 import { type Contact, contactSchema } from '@/models/base/contact'
 import { type Url, urlSchema } from '@/models/base/url'
 import { type Cert, certSchema } from '@/models/education/cert'
+import type { PartialWithUndefined } from '@/models/utils/partial'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const instituteSchema = z
   .object({

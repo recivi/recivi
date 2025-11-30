@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
+import { dateSchema, type Date as RcvDate } from '@/models/base/date'
 import type { PartialWithUndefined } from '@/models/utils/partial'
-import { type Date as RcvDate, dateSchema } from '@/models/base/date'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const periodSchema = z
   .object({

@@ -3,10 +3,10 @@
  */
 
 import { readFileSync, writeFileSync } from 'node:fs'
-import { resolve, join } from 'node:path'
+import { join, resolve } from 'node:path'
 
-import { globSync } from 'glob'
 import chalk from 'chalk'
+import { globSync } from 'glob'
 
 const EXPORT_TYPE_RE = /export (?:interface|type) (?<name>\w+)/
 const EXPORT_ZOD_RE = /export const (?<name>\w+Schema)/

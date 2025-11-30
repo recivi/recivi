@@ -1,13 +1,13 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
-import type { PartialWithUndefined } from '@/models/utils/partial'
-import { type Skill, skillSchema } from '@/models/bio/skill'
-import { type Profile, profileSchema } from '@/models/bio/profile'
-import { type Language, languageSchema } from '@/models/bio/language'
-import { type Contact, contactSchema } from '@/models/base/contact'
 import { type Address, addressSchema } from '@/models/base/address'
+import { type Contact, contactSchema } from '@/models/base/contact'
+import { type Language, languageSchema } from '@/models/bio/language'
+import { type Profile, profileSchema } from '@/models/bio/profile'
+import { type Skill, skillSchema } from '@/models/bio/skill'
+import type { PartialWithUndefined } from '@/models/utils/partial'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const bioSchema = z
   .object({

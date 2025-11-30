@@ -1,12 +1,12 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
-import type { PartialWithUndefined } from '@/models/utils/partial'
-import { type Tech, techSchema } from '@/models/creations/tech'
 import { type Period, periodSchema } from '@/models/base/period'
-import { type Url, urlSchema } from '@/models/base/url'
 import { type Tag, tagSchema } from '@/models/base/tag'
+import { type Url, urlSchema } from '@/models/base/url'
+import { type Tech, techSchema } from '@/models/creations/tech'
+import type { PartialWithUndefined } from '@/models/utils/partial'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const projectSchema = z
   .object({
