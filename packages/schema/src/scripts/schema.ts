@@ -3,7 +3,7 @@
  */
 
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
-import { resolve, join } from 'node:path'
+import { join, resolve } from 'node:path'
 
 import chalk from 'chalk'
 import { z } from 'zod'

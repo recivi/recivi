@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
-import { type Site, siteSchema } from '@/models/bio/site'
 import { type Url, urlSchema } from '@/models/base/url'
+import { type Site, siteSchema } from '@/models/bio/site'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const profileSchema = z
   .object({

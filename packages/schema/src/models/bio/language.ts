@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
 import {
   type LanguageProficiency,
   languageProficiencySchema,
 } from '@/models/bio/language_proficiency'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const nameSchema = z.union([
   z.string().register(primaryRegistry, {

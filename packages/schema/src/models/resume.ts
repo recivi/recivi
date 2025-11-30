@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-import { primaryRegistry } from '@/registries/primary'
-
 import { type Bio, bioSchema } from '@/models/bio/bio'
-import { type Org, orgSchema } from '@/models/work/org'
 import { type Epic, epicSchema } from '@/models/creations/epic'
 import { type Institute, instituteSchema } from '@/models/education/institute'
+import { type Org, orgSchema } from '@/models/work/org'
+
+import { primaryRegistry } from '@/registries/primary'
 
 export const resumeSchema = z
   .object({
