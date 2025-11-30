@@ -58,7 +58,7 @@ function isValidResume(file: string): boolean {
       console.log(
         chalk.red('VAL'),
         chalk.bold(file),
-        chalk.red('Invalid, see errors below:')
+        chalk.red('Invalid, see errors below:'),
       )
 
       error.issues.forEach((err) => {

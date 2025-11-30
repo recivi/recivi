@@ -34,7 +34,7 @@ import Schema from '@/components/Schema.astro'
   console.log(
     chalk.green('ZTR'),
     chalk.bold(`${schema.id.toLocaleLowerCase()}.mdx`),
-    chalk.green(schema.id)
+    chalk.green(schema.id),
   )
 }
 
@@ -47,7 +47,7 @@ console.log(chalk.blue('ZTR'), 'Zod to reference start')
 
 const referenceDir = resolve(
   import.meta.filename,
-  '../../../../../packages/docs/src/content/docs/reference/'
+  '../../../../../packages/docs/src/content/docs/reference/',
 )
 rmSync(referenceDir, { recursive: true, force: true })
 mkdirSync(referenceDir, { recursive: true })

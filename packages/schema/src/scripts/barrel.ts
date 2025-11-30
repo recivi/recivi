@@ -45,11 +45,11 @@ writeFileSync(barrelPath, fileExports.join('\n'), { encoding: 'utf-8' })
 console.log(
   chalk.green('BRL'),
   chalk.bold('src/index.ts'),
-  chalk.green(`${typesCount} types`)
+  chalk.green(`${typesCount} types`),
 )
 console.log(
   chalk.green('BRL'),
   chalk.bold('src/index.ts'),
-  chalk.green(`${schemasCount} schemas`)
+  chalk.green(`${schemasCount} schemas`),
 )
 console.log(chalk.green('BRL'), '⚡️ Barrel success')

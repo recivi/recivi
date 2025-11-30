@@ -10,7 +10,7 @@
   --sl-color-accent-low: var(--sl-color-orange-low);
 }
 
-:root[data-theme='light'] {
+:root[data-theme="light"] {
   --cp-peach: #fe640b;
 
   --sl-color-accent-high: var(--sl-color-orange-high);
