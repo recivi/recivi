@@ -43,7 +43,7 @@ export function parseRange(schema: Schema) {
   let rangeString = range.join('')
   rangeString = rangeString.replaceAll(
     '9007199254740991',
-    '<code>MAX_SAFE_INTEGER</code>'
+    '<code>MAX_SAFE_INTEGER</code>',
   )
   return rangeString
 }
