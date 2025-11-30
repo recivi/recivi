@@ -13,7 +13,7 @@ interface Props {
 const { name, schemaString, isRoot = false, isRequired = false } = Astro.props
 const schema = JSON.parse(fromBase64(schemaString))
 
-const ref = schema.$ref && schema.$ref.split('/').at(-1)
+const ref = schema.$ref?.split('/').at(-1)
 
 const range = parseRange(schema)
 const length = parseLength(schema)

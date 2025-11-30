@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { primaryRegistry } from '@/registries/primary'
 
 import type { PartialWithUndefined } from '@/models/utils/partial'
-import { type Date, dateSchema } from '@/models/base/date'
+import { type Date as RcvDate, dateSchema } from '@/models/base/date'
 import { type Period, periodSchema } from '@/models/base/period'
 import { type Tag, tagSchema } from '@/models/base/tag'
 
@@ -93,9 +93,9 @@ export type Cert = Omit<
   'period' | 'issue' | 'expiration' | 'tags'
 > & {
   period: Period
-  issue: Date
+  issue: RcvDate
 } & {
   tags: Tag[]
 } & PartialWithUndefined<{
-    expiration: Date
+    expiration: RcvDate
   }>
