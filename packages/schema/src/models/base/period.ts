@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { primaryRegistry } from '@/registries/primary'
 
 import type { PartialWithUndefined } from '@/models/utils/partial'
-import { type Date, dateSchema } from '@/models/base/date'
+import { type Date as RcvDate, dateSchema } from '@/models/base/date'
 
 export const periodSchema = z
   .object({
@@ -22,5 +22,5 @@ export const periodSchema = z
   })
 
 export type Period = Omit<z.infer<typeof periodSchema>, 'start' | 'end'> & {
-  start: Date
-} & PartialWithUndefined<{ end: Date }>
+  start: RcvDate
+} & PartialWithUndefined<{ end: RcvDate }>

@@ -41,7 +41,7 @@ function validateDate(day: number, month: number, year: number): boolean {
   if ([4, 6, 9, 11].includes(month) && day > 30) return false
 
   const isLeapYear = (year: number) =>
-    (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
+    (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
   const febLimit = year && !isLeapYear(year) ? 28 : 29
   if (month === 2 && day > febLimit) return false
 
