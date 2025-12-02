@@ -4,6 +4,12 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    astro:
+      specifier: ^5.16.0
+      version: 5.16.0
+
 importers:
 
   .:
@@ -33,7 +39,7 @@ importers:
         specifier: ^0.35.3
         version: 0.35.3(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(rollup@4.53.3)(tsx@4.20.6)(typescript@5.9.2)(yaml@2.8.1))
       astro:
-        specifier: ^5.16.0
+        specifier: 'catalog:'
         version: 5.16.0(@types/node@24.10.1)(jiti@2.6.1)(rollup@4.53.3)(tsx@4.20.6)(typescript@5.9.2)(yaml@2.8.1)
       sharp:
         specifier: ^0.32.6
