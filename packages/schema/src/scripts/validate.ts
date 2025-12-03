@@ -16,7 +16,7 @@ import { resumeSchema } from '@/index' // Import from the barrel file.
  * relative paths to the current working directory and leave absolute
  * paths unmodified.
  *
- * @param file - the name of the file received at the command line
+ * @param file the name of the file received at the command line
  * @returns the resolved file path
  */
 function resolveFilePath(file: string): string {
@@ -31,7 +31,7 @@ function resolveFilePath(file: string): string {
 /**
  * Read the file at the given path.
  *
- * @param file - the path to the file to read
+ * @param file the path to the file to read
  * @returns {string} the content of the file
  */
 function readTextFile(file: string): string {
@@ -42,7 +42,7 @@ function readTextFile(file: string): string {
 /**
  * Validate the résumé data against the Récivi schema.
  *
- * @param file - the name of the file to validate
+ * @param file the name of the file to validate
  * @returns {boolean} whether the file is valid or not
  */
 function isValidResume(file: string): boolean {
@@ -79,7 +79,7 @@ function isValidResume(file: string): boolean {
  * It also sets the exit code based on the overall validity of all data
  * files.
  *
- * @param files - the names of the files to validate
+ * @param files the names of the files to validate
  */
 function main(files: string[]) {
   console.log(chalk.blue('VAL'), 'Validation start')
