@@ -31,9 +31,13 @@ export const bioSchema = z
       description:
         'the URL to a profile picture for the person; For example, this can be a Gravatar link, or the URL to an image hosted on a public URL.',
     }),
-    labels: z.array(z.string()).default([]).register(primaryRegistry, {
-      description: 'a few short labels describing the person',
-    }),
+    labels: z
+      .array(z.string())
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description: 'a few short labels describing the person',
+      }),
     summary: z.string().optional().register(primaryRegistry, {
       description: 'a fairly brief summary of the person',
     }),
