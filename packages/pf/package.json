@@ -8,7 +8,8 @@
     "resume",
     "cv",
     "portfolio",
-    "astro-integration"
+    "astro-integration",
+    "renderer"
   ],
   "license": "GPL-3.0-or-later",
   "author": {
