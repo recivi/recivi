@@ -9,13 +9,24 @@
   "formatter": {
     "indentStyle": "space"
   },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedProperties": "on"
+      }
+    }
+  },
   "css": {
     "parser": {
       "cssModules": true
     }
   },
   "html": {
-    "experimentalFullSupportEnabled": true
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "indentScriptAndStyle": true
+    }
   },
   "javascript": {
     "formatter": {
@@ -26,6 +37,12 @@
   "overrides": [
     {
       "includes": ["**/*.astro"],
+      "assist": {
+        "enabled": true
+      },
+      "formatter": {
+        "enabled": true
+      },
       "linter": {
         "rules": {
           "correctness": {
