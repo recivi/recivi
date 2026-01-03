@@ -7,6 +7,7 @@ import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Role, roleSchema } from '@/models/work/role'
 
 import { primaryRegistry } from '@/registries/primary'
+import { slugify } from '@/utils/slugify'
 
 export const orgSchema = z
   .object({
@@ -48,6 +49,7 @@ export const orgSchema = z
         description: 'a list of roles that are part of this organisation',
       }),
   })
+  .transform((obj) => ({ ...obj, slug: obj.id ?? slugify(obj.name) }))
   .register(primaryRegistry, {
     id: 'Org',
     description:
