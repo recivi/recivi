@@ -5,6 +5,7 @@ import { type Project, projectSchema } from '@/models/creations/project'
 import type { PartialWithUndefined } from '@/models/utils/partial'
 
 import { primaryRegistry } from '@/registries/primary'
+import { slugify } from '@/utils/slugify'
 
 export const epicSchema = z
   .object({
@@ -35,6 +36,7 @@ export const epicSchema = z
         description: 'a list of projects that are part of this epic',
       }),
   })
+  .transform((obj) => ({ ...obj, slug: obj.id ?? slugify(obj.name) }))
   .register(primaryRegistry, {
     id: 'Epic',
     description:
