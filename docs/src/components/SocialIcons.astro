@@ -4,8 +4,7 @@ import Default from '@astrojs/starlight/components/SocialIcons.astro'
 import Stars from '@/components/Stars.astro'
 ---
 
-<Default {...Astro.props}><slot /></Default>
-<Stars
-  owner="recivi"
-  repo="recivi"
-/>
+<Default {...Astro.props}>
+  <slot/>
+</Default>
+<Stars owner="recivi" repo="recivi"/>
