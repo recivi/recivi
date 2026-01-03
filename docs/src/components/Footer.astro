@@ -8,12 +8,13 @@ import Pagination from '@astrojs/starlight/components/Pagination.astro'
     <a
       href="https://creativecommons.org/licenses/by/4.0/"
       target="_blank"
-      rel="noopener">
+      rel="noopener"
+    >
       <span>CC BY 4.0 International</span>
     </a>
-    <EditLink {...Astro.props} />
+    <EditLink {...Astro.props}/>
   </div>
-  <Pagination {...Astro.props} />
+  <Pagination {...Astro.props}/>
 </footer>
 
 <style>
@@ -23,9 +24,9 @@ import Pagination from '@astrojs/starlight/components/Pagination.astro'
     gap: 1.5rem;
   }
   .meta {
+    flex-wrap: wrap;
     gap: 0.75rem 3rem;
     justify-content: space-between;
-    flex-wrap: wrap;
     margin-top: 3rem;
     font-size: var(--sl-text-sm);
     color: var(--sl-color-gray-3);
@@ -36,8 +37,8 @@ import Pagination from '@astrojs/starlight/components/Pagination.astro'
 
   /* Copied from the `EditLink` component. */
   a {
-    text-decoration: none;
     color: var(--sl-color-gray-3);
+    text-decoration: none;
   }
   a:hover {
     color: var(--sl-color-white);

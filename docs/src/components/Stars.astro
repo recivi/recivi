@@ -4,29 +4,25 @@ import { Icon } from '@astrojs/starlight/components'
 const { owner, repo } = Astro.props
 ---
 
-<a
-  href={`https://github.com/${owner}/${repo}`}
-  class="sl-flex stars">
-  <Icon name="star" />
-  <gh-stars
-    data-owner={owner}
-    data-repo={repo}>
+<a href={`https://github.com/${owner}/${repo}`} class="sl-flex stars">
+  <Icon name="star"/>
+  <gh-stars data-owner={owner} data-repo={repo}>
     <span id="star-count">many</span>
   </gh-stars>
 </a>
 
 <style>
   .stars {
-    align-items: center;
     gap: 0.25rem;
+    align-items: center;
     text-decoration: none;
   }
 
   /* Copied from the `SocialIcons` component. */
   a {
-    color: var(--sl-color-text-accent);
     padding: 0.5em;
     margin: -0.5em;
+    color: var(--sl-color-text-accent);
   }
   a:hover {
     opacity: 0.66;
