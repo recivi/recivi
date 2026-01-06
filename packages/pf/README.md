@@ -5,9 +5,13 @@
 [Récivi](https://recivi.pages.dev/) is a new kind of résumé for computers and
 humans, in that order.
 
-Récivi consists of the following packages:
+## @recivi/pf
 
-- [@recivi/schema](https://github.com/recivi/recivi/tree/main/packages/schema)
-- [@recivi/pf](https://github.com/recivi/recivi/tree/main/packages/pf)
+<a href="https://www.npmjs.com/package/@recivi/pf"><img src="https://img.shields.io/npm/v/%40recivi%2Fpf" alt="Release"/></a>
+<a href="TODO:preview link"><img src="https://img.shields.io/badge/preview-todo-blue" alt="Preview"/></a>
+
+This package contains the PF renderer for Récivi résumés. It converts the raw
+JSON data into a fully functional portfolio website with all the features one
+could want or need.
 
 For more information, see the [documentation](https://recivi.pages.dev/).
