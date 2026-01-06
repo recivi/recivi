@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { type Tag, tagSchema } from '@/models/base/tag'
 import { type Url, urlSchema } from '@/models/base/url'
 import { type Site, siteSchema } from '@/models/bio/site'
 
@@ -15,6 +16,10 @@ export const profileSchema = z
     }),
     url: urlSchema.clone().register(primaryRegistry, {
       description: 'the URL to the profile of the person on the website',
+    }),
+    tags: z.array(tagSchema).optional().default([]).register(primaryRegistry, {
+      description:
+        'tags to apply to this profile; The use of tags is left up to the application (for example, the portfolio uses tags for PDF résumés).',
     }),
   })
   .register(primaryRegistry, {
@@ -41,4 +46,5 @@ export const profileSchema = z
 export type Profile = Omit<z.infer<typeof profileSchema>, 'site' | 'url'> & {
   site: Site
   url: Url
+  tags: Tag[]
 }
