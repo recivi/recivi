@@ -36,7 +36,7 @@ export const resumeSchema = z
       .default([])
       .register(primaryRegistry, {
         description:
-          'the education of a person, which consists of certifications from various insitutes',
+          'the education of a person, which consists of certifications from various institutes',
       }),
     work: z.array(orgSchema).optional().default([]).register(primaryRegistry, {
       description:
