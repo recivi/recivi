@@ -26,13 +26,13 @@ const fileExports = allTsFiles.flatMap((tsFile) => {
 
   const types = lines
     .map((line) => EXPORT_TYPE_RE.exec(line)?.groups?.name)
-    .filter(Boolean)
+    .filter((val) => val !== undefined)
     .map((name) => `export type { ${name} } from '${importPath}'`)
   typesCount += types.length
 
   const schemas = lines
     .map((line) => EXPORT_ZOD_RE.exec(line)?.groups?.name)
-    .filter(Boolean)
+    .filter((val) => val !== undefined)
     .map((name) => `export { ${name} } from '${importPath}'`)
   schemasCount += schemas.length
 

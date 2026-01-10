@@ -48,8 +48,7 @@ function readTextFile(file: string): string {
 function isValidResume(file: string): boolean {
   try {
     const content = readTextFile(file)
-    const data = JSON.parse(content)
-    resumeSchema.parse(data)
+    resumeSchema.parse(JSON.parse(content))
 
     console.log(chalk.green('VAL'), chalk.bold(file), chalk.green('Valid'))
     return true
