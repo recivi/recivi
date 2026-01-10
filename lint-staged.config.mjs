@@ -2,15 +2,9 @@
 export default {
   'examples/schema/*.json': [
     // Runs formatter, linter and import sorting to the requested files.
-    'biome check --write --no-errors-on-unmatched',
+    'prettier --write',
     'pnpm -F schema validate',
   ],
-  '*.{js,ts,astro}': [
-    // Runs formatter, linter and import sorting to the requested files.
-    'biome check --write --no-errors-on-unmatched',
-  ],
-  '*.{css,html,md,mdx,pcss,svg,yml}': [
-    // Runs formatter, linter and import sorting to the requested files.
-    'biome check --write --no-errors-on-unmatched',
-  ],
+  '*.{js,ts,astro}': ['eslint --fix', 'prettier --write'],
+  '*.{css,html,json,md,mdx,svg,yml}': ['prettier --write'],
 }
