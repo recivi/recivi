@@ -6,5 +6,5 @@ export default {
     'pnpm -F schema validate',
   ],
   '*.{js,ts,astro}': ['eslint --fix', 'prettier --write'],
-  '*.{css,html,json,md,mdx,svg,yml}': ['prettier --write'],
+  '*.{css,html,json,md,mdx,svg,yml,yaml}': ['prettier --write'],
 }
