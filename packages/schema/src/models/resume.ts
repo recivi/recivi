@@ -3,6 +3,8 @@ import { z } from 'zod'
 import { type Bio, bioSchema } from '@/models/bio/bio'
 import { type Epic, epicSchema } from '@/models/creations/epic'
 import { type Institute, instituteSchema } from '@/models/education/institute'
+import { type Language, languageSchema } from '@/models/languages/language'
+import { type Skill, skillSchema } from '@/models/skills/skill'
 import { type Org, orgSchema } from '@/models/work/org'
 
 import { primaryRegistry } from '@/registries/primary'
@@ -40,6 +42,20 @@ export const resumeSchema = z
       description:
         'the work experience of a person, which consists of positions of responsibility in various organisations',
     }),
+    skills: z
+      .array(skillSchema)
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description: 'a list of skills that the person has',
+      }),
+    languages: z
+      .array(languageSchema)
+      .optional()
+      .default([])
+      .register(primaryRegistry, {
+        description: 'a list of languages that the person can work with',
+      }),
   })
   .register(primaryRegistry, {
     id: 'Resume',
@@ -49,10 +65,12 @@ export const resumeSchema = z
 
 export type Resume = Omit<
   z.infer<typeof resumeSchema>,
-  'bio' | 'creations' | 'education' | 'work'
+  'bio' | 'creations' | 'education' | 'work' | 'skills' | 'languages'
 > & {
   bio: Bio
   creations: Epic[]
   education: Institute[]
   work: Org[]
+  skills: Skill[]
+  languages: Language[]
 }

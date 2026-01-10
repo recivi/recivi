@@ -2,9 +2,7 @@ import { z } from 'zod'
 
 import { type Address, addressSchema } from '@/models/base/address'
 import { type Contact, contactSchema } from '@/models/base/contact'
-import { type Language, languageSchema } from '@/models/bio/language'
 import { type Profile, profileSchema } from '@/models/bio/profile'
-import { type Skill, skillSchema } from '@/models/bio/skill'
 import type { PartialWithUndefined } from '@/models/utils/partial'
 
 import { primaryRegistry } from '@/registries/primary'
@@ -57,20 +55,6 @@ export const bioSchema = z
       .register(primaryRegistry, {
         description: 'a list of web profiles for the person',
       }),
-    skills: z
-      .array(skillSchema)
-      .optional()
-      .default([])
-      .register(primaryRegistry, {
-        description: 'a list of skills that the person has',
-      }),
-    languages: z
-      .array(languageSchema)
-      .optional()
-      .default([])
-      .register(primaryRegistry, {
-        description: 'a list of languages that the person can work with',
-      }),
     residence: addressSchema.optional().register(primaryRegistry, {
       description: 'current location where the person resides',
     }),
@@ -86,11 +70,9 @@ export const bioSchema = z
 
 export type Bio = Omit<
   z.infer<typeof bioSchema>,
-  'contact' | 'profiles' | 'skills' | 'residence' | 'origin'
+  'contact' | 'profiles' | 'residence' | 'origin'
 > & {
   profiles: Profile[]
-  skills: Skill[]
-  languages: Language[]
 } & PartialWithUndefined<{
     contact: Contact
     residence: Address
