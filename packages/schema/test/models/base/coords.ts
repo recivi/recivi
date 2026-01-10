@@ -5,7 +5,7 @@ import { ZodError } from 'zod'
 
 import { coordsSchema } from '@/models/base/coords'
 
-suite('coordsSchema', () => {
+void suite('coordsSchema', () => {
   const validCoords = [
     ['allows null island', { lat: 0, long: 0 }],
     ['allows 180th meridian', { lat: 0, long: 180 }],
@@ -14,7 +14,7 @@ suite('coordsSchema', () => {
     ['allows specific coords', { lat: 19.0647, long: 73.0112 }],
   ] as const
   validCoords.forEach(([name, coords]) => {
-    test(name, () => {
+    void test(name, () => {
       coordsSchema.parse(coords)
     })
   })
@@ -25,7 +25,7 @@ suite('coordsSchema', () => {
     ['disallows numeric longitude at South pole', { lat: -90, long: 0 }],
   ] as const
   invalidCoords.forEach(([name, coords]) => {
-    test(name, () => {
+    void test(name, () => {
       assert.throws(() => {
         coordsSchema.parse(coords)
       }, ZodError)
