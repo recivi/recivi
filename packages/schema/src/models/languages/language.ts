@@ -3,7 +3,7 @@ import { z } from 'zod'
 import {
   type LanguageProficiency,
   languageProficiencySchema,
-} from '@/models/bio/language_proficiency'
+} from '@/models/languages/language_proficiency'
 
 import { primaryRegistry } from '@/registries/primary'
 
