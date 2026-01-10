@@ -4,8 +4,8 @@ import { Icon } from '@astrojs/starlight/components'
 const { owner, repo } = Astro.props
 ---
 
-<a href={`https://github.com/${owner}/${repo}`} class="sl-flex stars">
-  <Icon name="star"/>
+<a class="sl-flex stars" href={`https://github.com/${owner}/${repo}`}>
+  <Icon name="star" />
   <gh-stars data-owner={owner} data-repo={repo}>
     <span id="star-count">many</span>
   </gh-stars>

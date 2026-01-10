@@ -80,10 +80,7 @@ function schemaStr(value: unknown) {
     range && (
       <div class="mt-0">
         Range:
-        <span
-          class="math"
-          set:html={range}
-        />
+        <span class="math" set:html={range} />
       </div>
     )
   }
@@ -108,9 +105,9 @@ function schemaStr(value: unknown) {
         <summary>Properties</summary>
         {Object.entries(schema.properties).map(([key, value]) => (
           <Astro.self
+            isRequired={schema.required?.includes(key)}
             name={key}
             schemaString={schemaStr(value)}
-            isRequired={schema.required?.includes(key)}
           />
         ))}
       </details>
@@ -152,10 +149,7 @@ function schemaStr(value: unknown) {
       <details>
         <summary>Examples</summary>
         {schema.examples.map((example: unknown) => (
-          <Code
-            code={prettyStr(example)}
-            lang="json"
-          />
+          <Code code={prettyStr(example)} lang="json" />
         ))}
       </details>
     )
@@ -174,6 +168,6 @@ function schemaStr(value: unknown) {
 
   .math {
     /* Transitional family */
-    font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
+    font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
   }
 </style>
