@@ -7,15 +7,25 @@
   "version": "0.0.0",
   "scripts": {
     "prepare": "husky",
-    "check": "biome check",
-    "check:write": "biome check --write",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:inspect": "eslint --inspect-config",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "sssrdb": "pnpm -F schema schema && pnpm -F schema reference && pnpm -F docs build"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.8",
+    "@biomejs/biome": "2.3.11",
+    "@eslint/compat": "^2.0.1",
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
+    "eslint-plugin-astro": "^1.5.0",
     "globals": "^15.15.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",
-    "typescript": "^5.9.2"
+    "prettier": "^3.7.4",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.52.0"
   }
 }
