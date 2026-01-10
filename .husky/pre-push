@@ -1,6 +1,7 @@
 # Strict lint
 pnpm lint --max-warnings 0
+pnpm format:check
 
-# Check Typescript
+# Run Typescript and Astro checks
 pnpm --recursive types
 pnpm --recursive check
