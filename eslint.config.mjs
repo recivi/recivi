@@ -1,12 +1,11 @@
 import { fileURLToPath } from 'node:url'
 
-import globals from 'globals'
-
 import { includeIgnoreFile } from '@eslint/compat'
-
 import js from '@eslint/js'
-import ts from 'typescript-eslint'
 import astro from 'eslint-plugin-astro'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import globals from 'globals'
+import ts from 'typescript-eslint'
 
 const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 
@@ -43,6 +42,29 @@ export default [
           allowRegExp: false,
         },
       ],
+    },
+  },
+
+  {
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
+    rules: {
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            ['^\\u0000'], // side effect imports
+            ['^node:'], // Node.js built-ins
+            ['^astro:', '^virtual:'], // Virtual modules
+            ['^@?\\w'], // packages
+            ['^@/'], // TS config path aliases
+            ['^'], // catch-all
+            ['^\\.'], // relative imports
+          ],
+        },
+      ],
+      'simple-import-sort/exports': 'error',
     },
   },
 

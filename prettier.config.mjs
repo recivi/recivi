@@ -19,5 +19,5 @@ export default {
     },
   ],
   proseWrap: 'always',
-  plugins: ['prettier-plugin-astro'],
+  plugins: ['prettier-plugin-css-order', 'prettier-plugin-astro'],
 }
