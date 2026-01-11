@@ -8,7 +8,6 @@ import {
   roleLocationSchema,
 } from '@/models/work/role_location'
 import { type RoleType, roleTypeSchema } from '@/models/work/role_type'
-
 import { primaryRegistry } from '@/registries/primary'
 
 export const roleSchema = z

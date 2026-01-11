@@ -2,7 +2,6 @@ import { z } from 'zod'
 
 import { type Url, urlSchema } from '@/models/base/url'
 import type { PartialWithUndefined } from '@/models/utils/partial'
-
 import { primaryRegistry } from '@/registries/primary'
 
 export const techSchema = z

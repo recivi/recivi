@@ -6,7 +6,6 @@ import { type Institute, instituteSchema } from '@/models/education/institute'
 import { type Language, languageSchema } from '@/models/languages/language'
 import { type Skill, skillSchema } from '@/models/skills/skill'
 import { type Org, orgSchema } from '@/models/work/org'
-
 import { primaryRegistry } from '@/registries/primary'
 
 export const resumeSchema = z

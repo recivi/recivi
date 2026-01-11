@@ -4,7 +4,6 @@ import { type Address, addressSchema } from '@/models/base/address'
 import { type Contact, contactSchema } from '@/models/base/contact'
 import { type Profile, profileSchema } from '@/models/bio/profile'
 import type { PartialWithUndefined } from '@/models/utils/partial'
-
 import { primaryRegistry } from '@/registries/primary'
 
 export const bioSchema = z

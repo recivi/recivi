@@ -5,7 +5,6 @@ import { type Contact, contactSchema } from '@/models/base/contact'
 import { type Url, urlSchema } from '@/models/base/url'
 import type { PartialWithUndefined } from '@/models/utils/partial'
 import { type Role, roleSchema } from '@/models/work/role'
-
 import { primaryRegistry } from '@/registries/primary'
 import { slugify } from '@/utils/slugify'
 
