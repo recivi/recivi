@@ -23,24 +23,10 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./components": "./src/components.ts",
     "./content": "./src/content.ts",
-    "./layouts/Root.astro": {
-      "import": "./src/layouts/Root.astro",
-      "types": "./src/layouts/Root.astro.tsx"
-    },
-    "./layouts/Print.astro": {
-      "import": "./src/layouts/Print.astro",
-      "types": "./src/layouts/Print.astro.tsx"
-    },
-    "./layouts/Og.astro": {
-      "import": "./src/layouts/Og.astro",
-      "types": "./src/layouts/Og.astro.tsx"
-    },
-    "./layouts/Web.astro": {
-      "import": "./src/layouts/Web.astro",
-      "types": "./src/layouts/Web.astro.tsx"
-    },
+    "./component_defs/*": "./src/component_defs/*",
+    "./component_props/*": "./src/component_props/*.ts",
+    "./layouts/*": "./src/layouts/*",
     "./pages/*": "./src/pages/*",
     "./recivi/*": "./src/recivi/*.ts",
     "./styles/*": "./src/styles/*",
