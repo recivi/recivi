@@ -5,7 +5,6 @@ import { type Tag, tagSchema } from '@/models/base/tag'
 import { type Url, urlSchema } from '@/models/base/url'
 import { type Tech, techSchema } from '@/models/creations/tech'
 import type { PartialWithUndefined } from '@/models/utils/partial'
-
 import { primaryRegistry } from '@/registries/primary'
 
 export const projectSchema = z

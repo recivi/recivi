@@ -3,7 +3,6 @@ import { z } from 'zod'
 import { type Url, urlSchema } from '@/models/base/url'
 import { type Project, projectSchema } from '@/models/creations/project'
 import type { PartialWithUndefined } from '@/models/utils/partial'
-
 import { primaryRegistry } from '@/registries/primary'
 import { slugify } from '@/utils/slugify'
 

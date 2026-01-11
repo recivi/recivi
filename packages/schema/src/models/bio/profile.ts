@@ -3,7 +3,6 @@ import { z } from 'zod'
 import { type Tag, tagSchema } from '@/models/base/tag'
 import { type Url, urlSchema } from '@/models/base/url'
 import { type Site, siteSchema } from '@/models/bio/site'
-
 import { primaryRegistry } from '@/registries/primary'
 
 export const profileSchema = z

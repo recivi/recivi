@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 import { type Phone, phoneSchema } from '@/models/base/phone'
-
 import { primaryRegistry } from '@/registries/primary'
 
 export const contactSchema = z

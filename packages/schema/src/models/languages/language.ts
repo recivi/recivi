@@ -4,7 +4,6 @@ import {
   type LanguageProficiency,
   languageProficiencySchema,
 } from '@/models/languages/language_proficiency'
-
 import { primaryRegistry } from '@/registries/primary'
 
 export const nameSchema = z.union([
