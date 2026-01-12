@@ -1,0 +1,6 @@
+{
+  "extends": "astro/tsconfigs/strictest",
+  // Does not define "paths" to force relative imports.
+  // There is no build step for this package!
+  "exclude": ["dist"]
+}
