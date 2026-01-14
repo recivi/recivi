@@ -1,0 +1,52 @@
+---
+// Render a list of technologies as icons.
+// This component is also a table renderer.
+
+import type { TechStackProps } from '../component_props/TechStack'
+import Icon from './Icon.astro'
+
+type Props = TechStackProps
+const { technologies, class: className, ...attrs } = Astro.props
+---
+
+<ul class:list={['pf-tech-stack', className]} {...attrs}>
+  {
+    technologies.map((technology) => (
+      <li>
+        {technology.id ? (
+          <Icon name={technology.id} title={technology.name} />
+        ) : (
+          <div class="letter" title={technology.name}>
+            {technology.name[0]}
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  @layer pf.components {
+    .pf-tech-stack {
+      display: inline-flex;
+      gap: 0.5rem;
+      margin-block: 0;
+      padding-inline-start: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        &:not(:last-child)::after {
+          content: '·';
+          color: var(--pf-color-fg-subtle);
+        }
+
+        .letter {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+</style>

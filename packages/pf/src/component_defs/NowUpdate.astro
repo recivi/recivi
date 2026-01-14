@@ -1,0 +1,67 @@
+---
+// Render an update for the "Now" page.
+
+import { render } from 'astro:content'
+
+import type { NowUpdateProps } from '../component_props/NowUpdate'
+import PfDate from './PfDate.astro'
+
+type Props = NowUpdateProps
+const { update, isLatest, class: className, ...attrs } = Astro.props
+const { data } = update
+
+const { Content } = await render(update)
+---
+
+<div class:list={['pf-now-update', className, { latest: isLatest }]} {...attrs}>
+  <div>
+    <PfDate class="date" date={data.pubDate} />
+    <strong>{data.title}</strong>
+  </div>
+
+  <Content />
+</div>
+
+<style>
+  @layer pf.components {
+    .pf-now-update {
+      position: relative;
+      margin-inline-start: 0.5ex;
+      padding-inline-start: 1rem;
+
+      &::before {
+        position: absolute;
+        inset-block-end: 0;
+        inset-block-start: 1ex;
+        inset-inline: -0.5px;
+        border-inline-start: 1px solid var(--pf-color-border);
+        inline-size: 1px;
+        content: '';
+      }
+
+      &::after {
+        position: absolute;
+        inset-block-start: 1ex;
+        inset-inline-start: -0.5ex;
+        border: 1px solid var(--pf-color-border);
+        border-radius: 999px;
+        background-color: var(--pf-color-bg);
+        inline-size: 1ex;
+        block-size: 1ex;
+        content: '';
+      }
+
+      &.latest {
+        &::before,
+        &::after {
+          border-color: var(--pf-color-accent);
+          background-color: var(--pf-color-accent);
+        }
+      }
+
+      .date {
+        color: var(--pf-color-fg-subtle);
+      }
+    }
+  }
+</style>

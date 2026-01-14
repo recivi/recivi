@@ -1,0 +1,55 @@
+---
+// Render a period between two dates.
+// This component is also a table renderer.
+
+import type { PeriodProps } from '../component_props/Period'
+import PfDate from './PfDate.astro'
+
+type Props = PeriodProps
+const { period, class: className, ...attrs } = Astro.props
+---
+
+<span class:list={['pf-period', className]} {...attrs}>
+  <PfDate date={period.start} />
+  <span>&ndash;</span>
+  {
+    period.end ? (
+      <PfDate date={period.end} />
+    ) : (
+      <span class="present">
+        <span class="dot">•</span>
+        <em>Now</em>
+      </span>
+    )
+  }
+</span>
+
+<style>
+  @layer pf.components {
+    .pf-period {
+      .present {
+        display: inline-flex;
+        font-family: var(--pf-font-family-monospace);
+      }
+
+      .dot {
+        animation: pulse 2s infinite;
+        color: var(--pf-color-red);
+      }
+    }
+
+    :root[data-media='print'] {
+      .pf-period {
+        .dot {
+          animation: none;
+        }
+      }
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: 0.5;
+      }
+    }
+  }
+</style>

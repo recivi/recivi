@@ -1,0 +1,94 @@
+---
+// Render an anchor link.
+// This component is also a table renderer.
+
+import projectContext from 'virtual:pf/project-context'
+
+import type { AnchorProps } from '../component_props/Anchor'
+
+type Props = AnchorProps
+const { url, class: className, ...attrs } = Astro.props
+
+const href = typeof url === 'string' ? url : url.dest
+
+/**
+ * Normalize the path as per the value of the `trailingSlash` configuration.
+ *
+ * @param path the path to normalize
+ * @returns the normalized path
+ */
+function normalizePath(path: string) {
+  if (projectContext.trailingSlash === 'never') {
+    return path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path
+  }
+  return path.endsWith('/') ? path : `${path}/`
+}
+
+/**
+ * Remove the base path from a URL, if present.
+ *
+ * @param path the path to process
+ * @returns the path without the base path
+ */
+function removeBase(path: string) {
+  const base = projectContext.base || '/'
+
+  if (base !== '/' && path.startsWith(base)) {
+    return path.substring(base.length) || '/'
+  }
+
+  return path
+}
+
+const currentPathname = Astro.url.pathname
+const currentPath = normalizePath(removeBase(currentPathname))
+const targetPath = normalizePath(removeBase(href))
+
+const isExactActive = currentPath === targetPath
+const isActive = currentPath.startsWith(targetPath)
+---
+
+<a
+  class:list={[
+    'pf-anchor',
+    className,
+    {
+      active: isActive,
+      exact: isExactActive,
+    },
+  ]}
+  {href}
+  {...attrs}
+  ><slot>
+    <span class="label">{typeof url === 'object' ? url.label : 'link'}</span
+    ><span class="dest">{typeof url === 'object' ? url.dest : url}</span>
+  </slot></a
+>
+
+<style>
+  @layer pf.components {
+    .pf-anchor {
+      &.exact {
+        color: var(--pf-color-accent);
+      }
+
+      .dest {
+        display: none;
+        font-size: calc(1em * pow(var(--pf-font-size-scale), -1));
+        font-family: var(--pf-font-family-monospace);
+      }
+    }
+
+    :root[data-media='print'] {
+      .pf-anchor {
+        .label {
+          display: none;
+        }
+
+        .dest {
+          display: inline;
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,156 @@
+---
+// Render a detailed page for an epic and its projects.
+
+import type { EpicDetailsProps } from '../component_props/EpicDetails'
+import { getLinkedOrg } from '../recivi/relations'
+import Anchor from './Anchor.astro'
+import Entity from './Entity.astro'
+import TechStack from './TechStack.astro'
+
+type Props = EpicDetailsProps
+const {
+  epic,
+  filterTag,
+  headingOffset = 0,
+  isVerbose = true,
+  class: className,
+  ...attrs
+} = Astro.props
+
+const linkedOrg = getLinkedOrg(epic)
+
+const H1 = `h${1 + headingOffset}`
+const H2 = `h${2 + headingOffset}`
+---
+
+<div class:list={['pf-epic-details', className]} {...attrs}>
+  <div class="epic-header">
+    <H1>
+      <Entity entity={epic} />
+    </H1>
+    {
+      !isVerbose && linkedOrg ? (
+        <span class="meta">
+          Built at <Entity entity={linkedOrg} useInternalLink />
+        </span>
+      ) : undefined
+    }
+  </div>
+
+  <dl>
+    {
+      epic.url ? (
+        <Fragment>
+          <dt>URL:</dt>
+          <dd>
+            <Anchor url={epic.url} />
+          </dd>
+        </Fragment>
+      ) : undefined
+    }
+    {
+      isVerbose && linkedOrg ? (
+        <Fragment>
+          <dt>Built at:</dt>
+          <dd>
+            <Entity entity={linkedOrg} useInternalLink />
+          </dd>
+        </Fragment>
+      ) : undefined
+    }
+  </dl>
+
+  {
+    isVerbose && epic.description ? (
+      <p set:html={epic.description} />
+    ) : epic.summary ? (
+      <p set:html={epic.summary} />
+    ) : undefined
+  }
+
+  {
+    epic.projects
+      .filter((project) => !filterTag || project.tags.includes(filterTag))
+      .map((project) => (
+        <div class="project">
+          <div class="project-header">
+            <H2>{project.name}</H2>
+            {!isVerbose && project.technologies.length ? (
+              <span class="meta">
+                <TechStack technologies={project.technologies} />
+              </span>
+            ) : undefined}
+          </div>
+
+          <dl>
+            {project.url ? (
+              <Fragment>
+                <dt>URL:</dt>
+                <dd>
+                  <Anchor url={project.url} />
+                </dd>
+              </Fragment>
+            ) : undefined}
+            {isVerbose && project.technologies.length ? (
+              <Fragment>
+                <dt>Tech:</dt>
+                <dd>
+                  <TechStack technologies={project.technologies} />
+                </dd>
+              </Fragment>
+            ) : undefined}
+          </dl>
+
+          {isVerbose && project.description ? (
+            <p set:html={project.description} />
+          ) : project.summary ? (
+            <p set:html={project.summary} />
+          ) : undefined}
+
+          {project.highlights?.length ? (
+            <ul class="highlights">
+              {project.highlights?.map((highlight) => (
+                <li set:html={highlight} />
+              ))}
+            </ul>
+          ) : undefined}
+        </div>
+      ))
+  }
+</div>
+
+<style>
+  @layer pf.components {
+    .pf-epic-details {
+      /* Don't break page inside an org details block. */
+      break-inside: avoid-page;
+    }
+
+    .project-header,
+    .epic-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-block: var(--pf-margin-block);
+
+      & > * {
+        /* Use `gap` and prevent child elements from combining margins. */
+        margin-block: 0;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        flex-grow: 1;
+      }
+
+      .meta {
+        color: var(--pf-color-fg-subtle);
+      }
+    }
+  }
+</style>

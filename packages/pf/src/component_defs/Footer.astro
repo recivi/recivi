@@ -1,0 +1,41 @@
+---
+// Render the footer with debug information and, optionally, credits.
+
+import config from 'virtual:pf/config'
+
+import type { BaseProps } from '../component_props/base'
+import Brand from './Brand.astro'
+
+type Props = BaseProps
+const { class: className, ...attrs } = Astro.props
+---
+
+<footer class:list={['pf-footer', className]} {...attrs}>
+  <div>Thanks for visiting!</div>
+  {
+    config.showCredits ? (
+      <div>
+        Built with{' '}
+        <Brand
+          anchor={{ url: 'https://recivi.pages.dev' }}
+          icon={{ pack: 'pf', name: 'recivi', title: 'Récivi' }}
+          name="Récivi"
+        />
+      </div>
+    ) : undefined
+  }
+</footer>
+
+<style>
+  @layer pf.components {
+    .pf-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem 1rem;
+      border-block-start: 1px solid var(--pf-color-border);
+      padding: 1rem;
+      color: var(--pf-color-fg-subtle);
+    }
+  }
+</style>

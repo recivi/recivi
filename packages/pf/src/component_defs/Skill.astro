@@ -1,0 +1,63 @@
+---
+// Renders a skill and its sub-skills.
+
+import type { Skill } from '@recivi/schema'
+
+import type { SkillProps } from '../component_props/Skill'
+import Brand from './Brand.astro'
+
+type Props = SkillProps
+const { skill, class: className, ...attrs } = Astro.props
+---
+
+<span class:list={['pf-skill', className]} {...attrs}>
+  {
+    typeof skill === 'string' ? (
+      skill
+    ) : (
+      <Fragment>
+        {skill.id ? (
+          <Brand
+            icon={{ name: skill.id, title: skill.name }}
+            name={skill.name}
+          />
+        ) : (
+          skill.name
+        )}
+        {skill.subSkills.length ? (
+          <ul class="sub-skills">
+            {skill.subSkills?.map((subSkill: Skill) => (
+              <li>
+                <Astro.self skill={subSkill} />
+              </li>
+            ))}
+          </ul>
+        ) : undefined}
+      </Fragment>
+    )
+  }
+</span>
+
+<style>
+  @layer pf.components {
+    .pf-skill {
+      .sub-skills {
+        display: inline-flex;
+        gap: 0.5em;
+        margin-inline-start: 0.5em;
+        margin-block: 0;
+        padding-inline-start: 0;
+        color: var(--pf-color-fg-subtle);
+
+        li {
+          display: flex;
+          gap: 0.5rem;
+
+          &::before {
+            content: '·';
+          }
+        }
+      }
+    }
+  }
+</style>

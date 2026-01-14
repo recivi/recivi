@@ -1,0 +1,59 @@
+---
+// Render an icon.
+
+import config from 'virtual:pf/config'
+
+import type { IconProps } from '../component_props/Icon'
+import { getIconContent } from '../utils/icons'
+
+type Props = IconProps
+const { pack, name, title, class: className, ...attrs } = Astro.props
+
+let iconContent = getIconContent(pack, name)
+const isSuccessful = Boolean(iconContent)
+if (!isSuccessful) {
+  console.warn('Icon not found:', { pack, name })
+  iconContent = getIconContent('lucide', 'triangle-alert')
+}
+---
+
+{
+  config.icons.isEnabled ? (
+    isSuccessful || (!isSuccessful && import.meta.env.DEV) ? (
+      <svg
+        class:list={['pf-icon', className, { failed: !isSuccessful }]}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        height="1em"
+        width="1em"
+        {...attrs}>
+        {title ? <title>{title}</title> : undefined}
+        <Fragment set:html={iconContent} />
+      </svg>
+    ) : (
+      <div class="pf-icon" />
+    )
+  ) : undefined
+}
+
+<style>
+  @layer pf.components {
+    .pf-icon {
+      display: inline-block;
+      vertical-align: -0.1em;
+      inline-size: 1em;
+      block-size: 1em;
+
+      &.failed {
+        animation: pulse 2s ease-in-out infinite;
+        color: var(--pf-color-red);
+      }
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: 0.5;
+      }
+    }
+  }
+</style>

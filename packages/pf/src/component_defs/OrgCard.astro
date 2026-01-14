@@ -1,0 +1,59 @@
+---
+// Render a card displaying org and roles information.
+
+import type { OrgCardProps } from '../component_props/OrgCard'
+import Entity from './Entity.astro'
+import Period from './Period.astro'
+
+type Props = OrgCardProps
+const { org, class: className, ...attrs } = Astro.props
+---
+
+<div class:list={['pf-org-entry', className]} {...attrs}>
+  <Entity entity={org} useInternalLink />
+  <ul class="roles-list">
+    {
+      org.roles.map((role) => (
+        <li>
+          {role.name}
+          {role.period ? (
+            <Period class="period" period={role.period} />
+          ) : undefined}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  @layer pf.components {
+    .pf-org-entry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-inline: -1rem;
+      border-block-end: 1px dashed var(--pf-color-border);
+      padding-inline: 1rem;
+      padding-block: 0.25rem;
+
+      & > * {
+        margin: 0;
+      }
+
+      .roles-list {
+        padding-inline-start: 0;
+        list-style: none;
+
+        li {
+          display: flex;
+          justify-content: space-between;
+          gap: 1rem;
+
+          .period {
+            color: var(--pf-color-fg-subtle);
+          }
+        }
+      }
+    }
+  }
+</style>

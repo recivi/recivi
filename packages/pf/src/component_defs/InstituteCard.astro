@@ -1,0 +1,63 @@
+---
+// Render a card displaying institute and certs information.
+
+import type { InstituteCardProps } from '../component_props/InstituteCard'
+import Entity from './Entity.astro'
+import PfDate from './PfDate.astro'
+
+type Props = InstituteCardProps
+const { institute, class: className, ...attrs } = Astro.props
+---
+
+<div class:list={['pf-institute-entry', className]} {...attrs}>
+  <Entity entity={{ ...institute, id: undefined }} />
+  <ul class="certs-list">
+    {
+      institute.certs.map((cert) => {
+        let degree = cert.shortName ?? cert.name
+        if (cert.field) {
+          degree = `${degree} (${cert.field})`
+        }
+        return (
+          <li>
+            {degree}
+            <PfDate class="date" date={cert.issue} />
+          </li>
+        )
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  @layer pf.components {
+    .pf-institute-entry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-inline: -1rem;
+      border-block-end: 1px dashed var(--pf-color-border);
+      padding-inline: 1rem;
+      padding-block: 0.25rem;
+
+      & > * {
+        margin: 0;
+      }
+
+      .certs-list {
+        padding-inline-start: 0;
+        list-style: none;
+
+        li {
+          display: flex;
+          justify-content: space-between;
+          gap: 1rem;
+
+          .date {
+            color: var(--pf-color-fg-subtle);
+          }
+        }
+      }
+    }
+  }
+</style>

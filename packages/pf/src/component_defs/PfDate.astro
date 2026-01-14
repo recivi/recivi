@@ -1,0 +1,59 @@
+---
+// Render a date.
+// This component is also a table renderer.
+
+import type { PfDateProps } from '../component_props/PfDate'
+import {
+  getDisplayDate,
+  getReadableDate,
+  jsDateToRcvDate,
+} from '../recivi/date'
+
+type Props = PfDateProps
+const { class: className, ...attrs } = Astro.props
+let { date } = Astro.props
+
+if (date instanceof Date) {
+  // The given date is a JavaScript Date object.
+  date = jsDateToRcvDate(date)
+} else if (!Array.isArray(date)) {
+  // The given date is using the object format.
+  date = [date.year, date.month, date.day]
+}
+
+const year = date[0]
+const month = date[1]
+const day = date[2]
+
+// Date parts to be displayed.
+const displayDate = getDisplayDate(year, month, day)
+
+// Full date to be used as tooltip.
+const readableDate = getReadableDate(year, month, day)
+---
+
+<span class:list={['pf-date', className]} title={readableDate} {...attrs}>
+  {
+    displayDate
+      .filter((part) => part !== undefined)
+      .map((part, index) => (
+        <Fragment>
+          {index ? <span class="sep">-</span> : undefined}
+          <span>{part}</span>
+        </Fragment>
+      ))
+  }
+</span>
+
+<style>
+  @layer pf.components {
+    .pf-date {
+      display: inline-flex;
+      font-family: var(--pf-font-family-monospace);
+
+      .sep {
+        color: var(--pf-color-fg-subtle);
+      }
+    }
+  }
+</style>
