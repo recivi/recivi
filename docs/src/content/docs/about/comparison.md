@@ -14,7 +14,7 @@ Récivi's schema is much more detailed. If you only go by number of lines, JSON
 Resume's schema has ~500 lines of code.
 [Récivi's JSON schema](/schemas/recivi-resume.json), even without references,
 languages, awards and publications (which haven't been standardised yet), has
-~800 lines of code.
+~1100 lines of code.
 
 JSON Resume wants to be a résumé for developers. While that makes sense because
 JSON, as a format is unlikely to be used by non-tech savvy folks, Récivi
