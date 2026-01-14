@@ -1,0 +1,92 @@
+@layer pf.props {
+  :root,
+  ::backdrop,
+  ::selection {
+    /* common styles */
+
+    --pf-font-family: sans-serif;
+    --pf-font-family-monospace: monospace;
+    --pf-font-size-base: 14px;
+    --pf-font-size-scale: 1.2457;
+
+    --pf-font-size-l1: calc(1rem * pow(var(--pf-font-size-scale), 5));
+    --pf-font-size-l2: calc(1rem * pow(var(--pf-font-size-scale), 4));
+    --pf-font-size-l3: calc(1rem * pow(var(--pf-font-size-scale), 3));
+    --pf-font-size-l4: calc(1rem * pow(var(--pf-font-size-scale), 2));
+    --pf-font-size-l5: calc(1rem * pow(var(--pf-font-size-scale), 1));
+    --pf-font-size-l6: 1rem;
+    --pf-font-size-l7: calc(1rem * pow(var(--pf-font-size-scale), -1));
+
+    --pf-margin-block: 1rem;
+  }
+
+  :root[data-media='print'] {
+    --pf-font-family: serif;
+    --pf-font-family-monospace: monospace;
+    --pf-font-size-base: 13px;
+    --pf-font-size-scale: 1.1;
+
+    --pf-margin-block: 0.5rem;
+
+    --pf-print-preview-scale: calc(110 / 96); /* Mac screen is 110ppi. */
+    --pf-print-page-size: A4;
+    --pf-print-margin-block: 5mm;
+    --pf-print-margin-inline: 10mm;
+    --pf-print-inline-size: 210mm;
+    --pf-print-block-size: 297mm;
+  }
+
+  :root,
+  ::selection {
+    /* light theme */
+
+    --pf-color-fg: #4c4f69; /* text */
+    --pf-color-fg-subtle: #8c8fa1; /* overlay 1 */
+
+    --pf-color-bg: #eff1f5; /* base */
+    --pf-color-bg-secondary: #e6e9ef; /* mantle */
+    --pf-color-bg-highlight: #ccd0da; /* surface 0 */
+
+    --pf-color-selection: #d3d4dd; /* overlay 2 (25% alpha) on base */
+
+    --pf-color-border: #bcc0cc; /* surface 1 */
+
+    --pf-color-green: #40a02b; /* green */
+    --pf-color-yellow: #df8e1d; /* yellow */
+    --pf-color-red: #d20f39; /* red */
+    --pf-color-blue: #1e66f5; /* blue */
+
+    --pf-color-accent: #179299; /* accent */
+
+    --pf-color-anchor-new: #04a5e5; /* sky */
+    --pf-color-anchor-visited: #8839ef; /* mauve */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-media='print']),
+    :root:not([data-media='print']) ::selection {
+      /* dark theme */
+
+      --pf-color-fg: #cdd6f4; /* text */
+      --pf-color-fg-subtle: #7f849c; /* overlay 1 */
+
+      --pf-color-bg: #1e1e2e; /* base */
+      --pf-color-bg-secondary: #181825; /* mantle */
+      --pf-color-bg-highlight: #313244; /* surface 0 */
+
+      --pf-color-selection: #3c3d4f; /* overlay 2 (25% alpha) on base */
+
+      --pf-color-border: #45475a; /* surface 1 */
+
+      --pf-color-green: #a6e3a1; /* green */
+      --pf-color-yellow: #f9e2af; /* yellow */
+      --pf-color-red: #f38ba8; /* red */
+      --pf-color-blue: #89b4fa; /* blue */
+
+      --pf-color-accent: #94e2d5; /* accent */
+
+      --pf-color-anchor-new: #89dceb; /* sky */
+      --pf-color-anchor-visited: #cba6f7; /* mauve */
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@layer pf.media {
+  html {
+    background-color: var(--pf-color-bg-secondary);
+    color: var(--pf-color-fg);
+    font-size: var(--pf-font-size-base);
+    font-family: var(--pf-font-family);
+  }
+
+  body {
+    background-color: var(--pf-color-bg);
+    width: 600px;
+    height: 315px;
+    line-height: 1.5;
+  }
+
+  /* Anchors */
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
