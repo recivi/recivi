@@ -3,7 +3,7 @@ import { icons as iconsSi } from '@iconify-json/simple-icons'
 import { z } from 'astro/zod'
 
 import reciviSvg from '../assets/icons/recivi.svg?raw'
-import { innerSvg } from '../utils/svg'
+import { innerSvg } from '../utils/markup'
 
 export const iconsSchema = z
   .object({
