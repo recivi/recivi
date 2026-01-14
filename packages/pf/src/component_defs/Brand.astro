@@ -1,0 +1,38 @@
+---
+// Render a brand logo, name and link.
+
+import type { BrandProps } from '../component_props/Brand'
+import Anchor from './Anchor.astro'
+import Icon from './Icon.astro'
+
+type Props = BrandProps
+const { icon, anchor, name, class: className, ...attrs } = Astro.props
+---
+
+<span class:list={['pf-brand', className]} {...attrs}>
+  {
+    anchor ? (
+      <Anchor {...anchor}>
+        {icon ? <Icon class="icon" {...icon} /> : undefined}
+        {name}
+      </Anchor>
+    ) : (
+      <Fragment>
+        {icon ? <Icon class="icon" {...icon} /> : undefined}
+        {name}
+      </Fragment>
+    )
+  }
+</span>
+
+<style>
+  @layer pf.components {
+    .pf-brand {
+      display: inline-block;
+    }
+
+    .icon {
+      margin-inline-end: 0.25em;
+    }
+  }
+</style>

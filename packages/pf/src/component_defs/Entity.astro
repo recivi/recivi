@@ -1,0 +1,41 @@
+---
+// Render an institute, org or epic as a brand.
+// This component is also a table renderer.
+
+import config from 'virtual:pf/config'
+
+import type { BrandProps } from '../component_props/Brand'
+import type { EntityProps } from '../component_props/Entity'
+import Brand from './Brand.astro'
+
+type Props = EntityProps
+const {
+  entity,
+  useInternalLink = false,
+  class: className,
+  ...attrs
+} = Astro.props
+
+const internalDest =
+  'roles' in entity
+    ? config.nav.dynamicPages.resumeOrg.replace('{slug}', entity.slug)
+    : 'projects' in entity
+      ? config.nav.dynamicPages.resumeEpic.replace('{slug}', entity.slug)
+      : undefined
+
+const anchor = useInternalLink
+  ? internalDest
+    ? { url: { dest: internalDest, label: '' } }
+    : undefined
+  : entity.url
+    ? { url: entity.url }
+    : undefined
+
+const brand: BrandProps = {
+  icon: entity.id ? { name: entity.id, title: entity.name } : undefined,
+  anchor,
+  name: entity.name,
+}
+---
+
+<Brand class:list={['pf-entity', className]} {...brand} {...attrs} />

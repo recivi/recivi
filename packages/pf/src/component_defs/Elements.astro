@@ -1,0 +1,16 @@
+---
+// Render multiple instances of a tag from a list of each tag's attributes.
+
+import type { ElementsProps } from '../component_props/Elements'
+
+type Props = ElementsProps
+const { tag: Tag, items, class: className, ...attrs } = Astro.props
+---
+
+<Fragment>
+  {
+    items.map((item) => (
+      <Tag class:list={['pf-elements', className]} {...item} {...attrs} />
+    ))
+  }
+</Fragment>

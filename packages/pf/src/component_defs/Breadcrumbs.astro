@@ -1,0 +1,31 @@
+---
+// Render a breadcrumb navigation trail.
+
+import type { BreadcrumbsProps } from '../component_props/Breadcrumbs'
+import Anchor from './Anchor.astro'
+
+type Props = BreadcrumbsProps
+const { crumbs, class: className, ...attrs } = Astro.props as Props
+---
+
+<ul class:list={['pf-breadcrumbs', className, 'linear']} {...attrs}>
+  {
+    crumbs.map((crumb) => (
+      <li>
+        {typeof crumb === 'string' ? (
+          <span>{crumb}</span>
+        ) : (
+          <Anchor {...crumb} />
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  @layer pf.components {
+    .pf-breadcrumbs {
+      --list-linear-separator: '/';
+    }
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+// Render a table of contents from headings.
+
+import type { TocProps } from '../component_props/Toc'
+
+type Props = TocProps
+const { headings, class: className, ...attrs } = Astro.props
+---
+
+<ul class:list={['pf-toc', className]} {...attrs}>
+  {
+    headings.map((heading) => (
+      <li>
+        {Array.from({ length: heading.depth - 2 }).map(() => (
+          <div class="spacer" aria-hidden="true" />
+        ))}
+        <a href={`#${heading.slug}`}>{heading.text}</a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  @layer pf.components {
+    .pf-toc {
+      padding-inline-start: 0;
+      list-style: none;
+
+      .spacer {
+        display: inline-block;
+        border-inline-start: 1px solid var(--pf-color-border);
+        inline-size: 1rem;
+        block-size: 100%;
+      }
+    }
+  }
+</style>

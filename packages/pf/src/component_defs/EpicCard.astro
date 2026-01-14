@@ -1,0 +1,62 @@
+---
+// Render a card displaying epic and projects information.
+
+import type { EpicCardProps } from '../component_props/EpicCard'
+import Anchor from './Anchor.astro'
+import Entity from './Entity.astro'
+import TechStack from './TechStack.astro'
+
+type Props = EpicCardProps
+const { epic, class: className, ...attrs } = Astro.props
+---
+
+<div class:list={['pf-epic-entry', className]} {...attrs}>
+  <Entity entity={epic} useInternalLink />
+  <ul class="projects-list">
+    {
+      epic.projects.map((project) => (
+        <li>
+          {project.url ? (
+            <Anchor url={project.url}>{project.name}</Anchor>
+          ) : (
+            project.name
+          )}
+          <TechStack class="tech-stack" technologies={project.technologies} />
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  @layer pf.components {
+    .pf-epic-entry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-inline: -1rem;
+      border-block-end: 1px dashed var(--pf-color-border);
+      padding-inline: 1rem;
+      padding-block: 0.25rem;
+
+      & > * {
+        margin: 0;
+      }
+
+      .projects-list {
+        padding-inline-start: 0;
+        list-style: none;
+
+        li {
+          display: flex;
+          justify-content: space-between;
+          gap: 1rem;
+
+          .tech-stack {
+            color: var(--pf-color-fg-subtle);
+          }
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+// Render a blog post listing entry.
+// This component is also a table renderer.
+
+import config from 'virtual:pf/config'
+
+import type { PostProps } from '../component_props/Post'
+import Anchor from './Anchor.astro'
+import Icon from './Icon.astro'
+
+type Props = PostProps
+const {
+  post: { id, data },
+  class: className,
+  ...attrs
+} = Astro.props
+
+function getDest(id: string): string {
+  return config.nav.dynamicPages.blogPost.replace('{slug}', id.substring(5))
+}
+---
+
+<div class:list={['pf-post', className]} {...attrs}>
+  <Anchor url={{ dest: getDest(id), label: data.title }}>{data.title}</Anchor>
+  {
+    data.isDraft ? (
+      <Icon
+        class="draft"
+        name="pencil"
+        pack="lucide"
+        title="Draft, hidden in prod"
+      />
+    ) : undefined
+  }
+  <ul>
+    {
+      data.categories.map((category) => (
+        <li
+          x-data={JSON.stringify({ category })}
+          x-bind:class="activeCategories.includes(category) && 'active'">
+          {category}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  @layer pf.components {
+    .pf-post {
+      .draft {
+        color: var(--pf-color-yellow);
+      }
+
+      ul {
+        display: flex;
+        gap: 0.5rem;
+        margin-block: 0;
+        padding-inline-start: 0;
+        list-style: none;
+
+        li {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: var(--pf-color-fg-subtle);
+
+          &.active {
+            color: var(--pf-color-accent);
+          }
+
+          &:not(:last-child)::after {
+            content: '·';
+          }
+        }
+      }
+    }
+  }
+</style>

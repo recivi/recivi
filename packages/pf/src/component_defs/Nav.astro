@@ -1,0 +1,42 @@
+---
+// Render all pages as a list of navigation links.
+
+import { getCollection } from 'astro:content'
+import projectContext from 'virtual:pf/project-context'
+
+import type { BaseProps } from '../component_props/base'
+import { isNotDraft } from '../utils/collections'
+import { fixTrailingSlash, pathWithBase } from '../utils/project_context'
+import Anchor from './Anchor.astro'
+
+type Props = BaseProps
+const { class: className, ...attrs } = Astro.props
+
+const pages = await getCollection(
+  'pages',
+  (page) => isNotDraft(page) && page.data.navIndex,
+)
+const navPages = pages
+  .sort((a, b) => a.data.navIndex - b.data.navIndex)
+  .map((page) => ({
+    url: {
+      dest: fixTrailingSlash(
+        projectContext,
+        pathWithBase(projectContext, page.id),
+      ),
+      label: page.data.title,
+    },
+  }))
+---
+
+<nav class:list={['pf-nav', className]} {...attrs}>
+  <ul class="linear">
+    {
+      navPages.map((page) => (
+        <li>
+          <Anchor {...page} />
+        </li>
+      ))
+    }
+  </ul>
+</nav>

@@ -1,0 +1,41 @@
+---
+// Render title and navigation in the site header.
+
+import config from 'virtual:pf/config'
+import projectContext from 'virtual:pf/project-context'
+import resumeDate from 'virtual:recivi/data'
+
+import type { BaseProps } from '../component_props/base'
+import Anchor from './Anchor.astro'
+import Nav from './Nav.astro'
+
+type Props = BaseProps
+const { class: className, ...attrs } = Astro.props
+
+const siteTitle = config.title ?? resumeDate.bio.name
+---
+
+<header class:list={['pf-header', className]} {...attrs}>
+  <Anchor class="home" url={{ dest: projectContext.base, label: 'Home' }}>
+    {siteTitle}
+  </Anchor>
+
+  <Nav />
+</header>
+
+<style>
+  @layer pf.components {
+    .pf-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem 1rem;
+      border-block-end: 1px solid var(--pf-color-border);
+      padding: 1rem;
+
+      .home {
+        font-weight: 700;
+      }
+    }
+  }
+</style>

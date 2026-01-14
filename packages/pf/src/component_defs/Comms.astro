@@ -1,0 +1,104 @@
+---
+// Render all communication channels as a list.
+
+import projectContext from 'virtual:pf/project-context'
+import reciviData from 'virtual:recivi/data'
+
+import type { BrandProps } from '../component_props/Brand'
+import type { CommsProps } from '../component_props/Comms'
+import Brand from './Brand.astro'
+
+type Props = CommsProps
+const {
+  filterTag,
+  includeWeb = false,
+  class: className,
+  ...attrs
+} = Astro.props
+
+const { contact: { emails = [], phones = [] } = {}, profiles = [] } =
+  reciviData.bio
+
+const allComms: BrandProps[] = [
+  ...emails.map(
+    // TODO: Determine why `email` needs to be typed manually.
+    (email) => ({
+      // Users can alias "mail" to whatever icon they want.
+      icon: { pack: 'lucide', name: 'mail', title: 'Email address' },
+      anchor: { url: { dest: `mailto:${email}`, label: email }, rel: 'me' },
+      name: email,
+    }),
+  ),
+  ...phones.map(({ countryCode: cc, number }) => ({
+    // Users can alias "phone" to whatever icon they want.
+    icon: { pack: 'lucide', name: 'phone', title: 'Phone number' },
+    anchor: {
+      url: {
+        dest: `tel:+${cc}${number}`,
+        label: `+${cc} ${number}`,
+      },
+      rel: 'me',
+    },
+    name: `+${cc} ${number}`,
+  })),
+  ...profiles
+    .filter((profile) => !filterTag || profile.tags.includes(filterTag))
+    .map((profile) => ({
+      icon: profile.site.id
+        ? { name: profile.site.id, title: profile.site.name }
+        : undefined,
+      anchor: {
+        url: {
+          dest:
+            typeof profile.url === 'string' ? profile.url : profile.url.dest,
+          label: profile.username ?? profile.site.name,
+        },
+        rel: 'me',
+      },
+      name: profile.username ?? profile.site.name,
+    })),
+]
+
+const { site, base } = projectContext
+if (includeWeb && site) {
+  const href = base === '/' ? site : new URL(base, site).href
+  allComms.splice(0, 0, {
+    icon: { pack: 'lucide', name: 'globe', title: 'Website' },
+    anchor: {
+      url: { dest: href, label: href },
+      rel: 'me',
+    },
+    /* We can skip the protocol only if it is "https://". */
+    name: href.replace(/^https:\/\//, ''),
+  })
+}
+---
+
+<ul class:list={['pf-comms', className]} {...attrs}>
+  {
+    allComms.map((comm) => (
+      <li>
+        <Brand {...comm} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  @layer pf.components {
+    .pf-comms {
+      columns: 2;
+      padding-inline-start: 0;
+      list-style: none;
+    }
+
+    :root[data-media='print'] {
+      .pf-comms {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+  }
+</style>
