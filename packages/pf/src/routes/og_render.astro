@@ -1,0 +1,150 @@
+---
+import { getCollection } from 'astro:content'
+import { Entity, PfDate } from 'virtual:pf/components'
+import config from 'virtual:pf/config'
+import reciviData from 'virtual:recivi/data'
+
+import Og from '@recivi/pf/layouts/Og.astro'
+import { experimental_AstroContainer } from 'astro/container'
+
+import type { EntityProps } from '../component_props/Entity'
+import { isNotDraft } from '../utils/collections'
+import { stripHtmlTags } from '../utils/markup'
+
+interface Props {
+  title: EntityProps | string
+  description: string
+  breadcrumbs?: string
+  right?: string
+}
+
+export async function getStaticPaths() {
+  const paths = []
+  const container = await experimental_AstroContainer.create()
+
+  // Site pages
+  const pages = await getCollection('pages', isNotDraft)
+  paths.push(
+    ...pages.map((page) => ({
+      params: { path: page.id },
+      props: { title: page.data.ogTitle, description: page.data.description },
+    })),
+  )
+
+  // Blog posts
+  const posts = await getCollection('blog', isNotDraft)
+  paths.push(
+    ...(await Promise.all(
+      posts.map(async (post) => {
+        const slug = post.id.substring(5)
+        return {
+          params: {
+            path: config.nav.dynamicPages.blogPost.replace('{slug}', slug),
+          },
+          props: {
+            title: post.data.title,
+            description: post.data.description,
+            breadcrumbs: `Blog`,
+            right: await container.renderToString(PfDate, {
+              props: { date: post.data.pubDate },
+            }),
+          } satisfies Props,
+        }
+      }),
+    )),
+  )
+
+  // Orgs
+  paths.push(
+    ...reciviData.work.map((org) => ({
+      params: {
+        path: config.nav.dynamicPages.resumeOrg.replace('{slug}', org.slug),
+      },
+      props: {
+        title: { entity: org, useInternalLink: true },
+        description: stripHtmlTags(org.description ?? ''),
+        breadcrumbs: `Résumé`,
+        right: 'Organization',
+      } satisfies Props,
+    })),
+  )
+
+  // Epics
+  paths.push(
+    ...reciviData.creations.map((epic) => ({
+      params: {
+        path: config.nav.dynamicPages.resumeEpic.replace('{slug}', epic.slug),
+      },
+      props: {
+        title: { entity: epic, useInternalLink: true },
+        description: stripHtmlTags(epic.description ?? ''),
+        breadcrumbs: `Résumé`,
+        right: 'Epic',
+      } satisfies Props,
+    })),
+  )
+
+  return paths
+}
+
+const { title, description, breadcrumbs, right } = Astro.props
+---
+
+<Og>
+  <div>
+    <div class="header">
+      <span class="home">{config.title ?? reciviData.bio.name}</span>
+      {
+        breadcrumbs ? (
+          <span class="breadcrumbs">/{breadcrumbs}</span>
+        ) : undefined
+      }
+      <span class="right" set:html={right} />
+    </div>
+
+    <main>
+      <div class="title">
+        {typeof title === 'string' ? title : <Entity {...title} />}
+      </div>
+
+      <div class="description" set:html={description} />
+    </main>
+  </div>
+</Og>
+
+<style>
+  @layer pf.component {
+    .header,
+    main {
+      padding-inline: 2rem;
+      padding-block: 1rem;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      border-block-end: 1px solid var(--pf-color-border);
+      color: var(--pf-color-fg-subtle);
+      font-size: var(--pf-font-size-l5);
+    }
+
+    .home {
+      font-weight: 700;
+    }
+
+    .right {
+      margin-inline-start: auto;
+    }
+
+    .title {
+      margin-block-end: 1rem;
+      color: var(--pf-color-accent);
+      font-weight: 600;
+      font-size: var(--pf-font-size-l1);
+    }
+
+    .description {
+      font-size: var(--pf-font-size-l5);
+    }
+  }
+</style>
