@@ -1,0 +1,65 @@
+@layer pf.reset {
+  /* Use border-box box sizing model. */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Remove default margin on all elements. */
+  * {
+    margin: 0;
+  }
+
+  /* Enable keyword animations. */
+  html {
+    interpolate-size: allow-keywords;
+  }
+
+  /* Avoid text overflows. */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  /* Isolate root stacking context. */
+  #root,
+  #__next {
+    isolation: isolate;
+  }
+
+  /* Prevent iOS Safari from inflating text sizes. */
+  :root {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Respect user's color scheme preferences. */
+  html {
+    color-scheme: dark;
+
+    @media (prefers-color-scheme: light) {
+      color-scheme: light;
+    }
+  }
+
+  /* Use a standard padding amount for lists. */
+  ul,
+  ol {
+    padding-inline-start: 1.5rem;
+  }
+
+  /* Erase fieldset styles */
+  fieldset {
+    border: none;
+    padding: 0;
+
+    legend {
+      padding: 0;
+    }
+  }
+}

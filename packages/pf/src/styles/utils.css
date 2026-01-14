@@ -1,0 +1,22 @@
+@layer pf.utils {
+  /*
+   * This class was taken from Tailwind CSS.
+   * - `inset-block-start` and
+   * `inset-inline-start` were added to prevent it from breaking scroll.
+   * Additionally, an exception was made for `#footnote-label` to allow
+   * footnote heading to be visible and linkable.
+   */
+  .sr-only:not(#footnote-label) {
+    position: absolute;
+    clip-path: inset(50%);
+    margin: -1px;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    border-width: 0;
+    padding: 0;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

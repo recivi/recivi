@@ -1,0 +1,158 @@
+@layer pf.media {
+  html {
+    background-color: var(--pf-color-bg);
+    color: var(--pf-color-fg);
+    font-size: var(--pf-font-size-base);
+    font-family: var(--pf-font-family);
+  }
+
+  ::selection {
+    background-color: var(--pf-color-selection);
+  }
+
+  body {
+    line-height: 1.5;
+  }
+
+  /* Block elements */
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  ul,
+  ol,
+  dl,
+  pre,
+  blockquote,
+  figure,
+  table,
+  hr {
+    margin-block: var(--pf-margin-block);
+  }
+
+  /* Headings */
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--pf-color-accent);
+  }
+
+  h1 {
+    font-size: var(--pf-font-size-l1);
+  }
+
+  h2 {
+    font-size: var(--pf-font-size-l2);
+  }
+
+  h3 {
+    font-size: var(--pf-font-size-l3);
+  }
+
+  h4 {
+    font-size: var(--pf-font-size-l4);
+  }
+
+  h5 {
+    font-size: var(--pf-font-size-l5);
+  }
+
+  h6 {
+    font-size: var(--pf-font-size-l6);
+  }
+
+  /* Anchors */
+
+  a {
+    display: inline-block;
+    color: inherit;
+    text-decoration-color: currentColor;
+
+    &::before,
+    &::after {
+      display: inline-block;
+      transition: transform 100ms ease-in-out;
+      margin-inline-start: 0.125rem;
+    }
+
+    &::before {
+      content: var(--link-prefix);
+    }
+
+    &::after {
+      content: var(--link-suffix);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+      text-decoration-style: wavy;
+    }
+
+    &:hover::before,
+    &:focus-visible::before,
+    &:hover::after,
+    &:focus-visible::after {
+      transform: translateX(var(--link-affix-translate-x, 0))
+        translateY(var(--link-affix-translate-y, 0));
+    }
+
+    /* back links */
+    &[data-rel='parent'] {
+      --link-prefix: '←';
+      --link-affix-translate-x: -0.25rem;
+    }
+
+    /* download links */
+    &[href$='.pdf'] {
+      --link-suffix: '↓';
+      --link-affix-translate-y: 0.25rem;
+    }
+
+    /* links outside the site */
+    &[href^='http'],
+    &[href^='mailto:'],
+    &[href^='tel:'] {
+      text-decoration-color: var(--pf-color-anchor-new);
+
+      &::before,
+      &::after {
+        color: var(--pf-color-anchor-new);
+      }
+
+      &:visited {
+        text-decoration-color: var(--pf-color-anchor-visited);
+
+        &::before,
+        &::after {
+          color: var(--pf-color-anchor-visited);
+        }
+      }
+    }
+
+    /* external links */
+    &[href^='http'] {
+      --link-suffix: '↗';
+      --link-affix-translate-x: 0.25rem;
+      --link-affix-translate-y: -0.25rem;
+    }
+
+    /* non-web links */
+    &[href^='mailto:'],
+    &[href^='tel:'] {
+      --link-suffix: '↑';
+      --link-affix-translate-y: -0.25rem;
+    }
+  }
+}
