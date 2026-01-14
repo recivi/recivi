@@ -38,16 +38,35 @@ export default defineConfig({
           ],
         },
         {
-          label: 'Guides',
+          label: 'Schema',
           items: [
-            'guides/writing_data_files',
-            'guides/validating_data_files',
-            'guides/building_a_portfolio',
+            {
+              label: 'Guides',
+              items: [
+                'schema/guides/writing_data_files',
+                'schema/guides/validating_data_files',
+              ],
+            },
+            {
+              label: 'Reference',
+              autogenerate: { directory: 'schema/reference' },
+              collapsed: true,
+            },
           ],
         },
         {
-          label: 'Reference',
-          autogenerate: { directory: 'reference' },
+          label: 'PF',
+          items: [
+            {
+              label: 'Guides',
+              items: ['pf/guides/building_a_portfolio', 'pf/guides/how_to'],
+            },
+            {
+              label: 'Reference',
+              autogenerate: { directory: 'pf/reference' },
+              collapsed: true,
+            },
+          ],
         },
       ],
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 6 },

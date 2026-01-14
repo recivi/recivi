@@ -26,16 +26,21 @@ documentation. VS Code comes with support for JSON schemas out of the box.
 <Steps>
 
 1. Open VS Code.
+
 2. Create a new file and save it with a `.json` extension.
    ![](@/assets/guides/validating_data_files/new_file.png)
+
 3. Define the `$schema` key in your JSON file and set it to the Récivi schema
    URL.
+
    ```json
    {
      "$schema": "https://recivi.pages.dev/schemas/recivi-resume.json",
    }
    ```
+
 4. Add the résumé data as you normally would.
+
    ```json
    {
      "$schema": "https://recivi.pages.dev/schemas/recivi-resume.json",
@@ -44,8 +49,10 @@ documentation. VS Code comes with support for JSON schemas out of the box.
      }
    }
    ```
+
 5. You can access the documentation by hovering over a key.
    ![](@/assets/guides/validating_data_files/inline_docs.png)
+
 6. If anything is off, you will get feedback in your editor itself.
    ![](@/assets/guides/validating_data_files/validation_error.png)
 
@@ -66,12 +73,16 @@ service to validate it.
 <Steps>
 
 1. Write the résumé data file in the text editor of your choice.
+
 2. Visit [JSONSchema.dev](https://jsonschema.dev/) in the web browser of your
    choice.
+
 3. Copy the schema from
    [its URL](https://recivi.pages.dev/schemas/recivi-resume.json) into the
    editor pane on the left.
+
 4. Copy your data file into the editor pane on the right.
+
 5. You can see the validation results immediately.
    ![](@/assets/guides/validating_data_files/online_validator.png)
 
