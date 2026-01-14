@@ -27,7 +27,7 @@
     "./component_defs/*": "./src/component_defs/*",
     "./component_props/*": "./src/component_props/*.ts",
     "./layouts/*": "./src/layouts/*",
-    "./pages/*": "./src/pages/*",
+    "./routes/*": "./src/routes/*",
     "./recivi/*": "./src/recivi/*.ts",
     "./styles/*": "./src/styles/*",
     "./utils/*": "./src/utils/*.ts"
