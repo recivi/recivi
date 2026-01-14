@@ -1,0 +1,36 @@
+---
+title: How-to...
+description: >-
+  Various how-to guides for using Récivi.
+---
+
+This guide answers some common questions on how to use and customise the PF
+portfolio site to your liking.
+
+## ...add a page to the navigation menu?
+
+Only pages with a `navIndex` field in the frontmatter are shown in the site's
+navigation menu. To add a page to the navigation menu, add a `navIndex` field to
+the frontmatter of the page with a number value indicating its position in the
+menu. Lower numbers appear first.
+
+## ...remove a page from the navigation menu?
+
+To remove a page from the navigation menu, remove the `navIndex` field from the frontmatter of the page.
+
+## ...add a page to the site?
+
+Pages follow Astro's file-based routing. To add new pages, you must create the
+directory structure inside the `src/pages/` directory matching the URL path. Any
+new `.mdx` or `.astro` file will be automatically routed by Astro.
+
+## ...remove a page from the site?
+
+To remove a page like "Now" or "Colophon", delete the corresponding `.mdx` file
+from the `src/pages/` directory. For the blog and resume pages, delete the
+corresponding directory from the `src/pages/` directory.
+
+---
+
+Look at the configuration reference to learn more about the knobs available to
+customise the portfolio site.

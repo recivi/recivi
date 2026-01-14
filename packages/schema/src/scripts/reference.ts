@@ -47,7 +47,7 @@ console.log(chalk.blue('ZTR'), 'Zod to reference start')
 
 const referenceDir = resolve(
   import.meta.filename,
-  '../../../../../packages/docs/src/content/docs/reference/',
+  '../../../../../docs/src/content/docs/schema/reference/',
 )
 rmSync(referenceDir, { recursive: true, force: true })
 mkdirSync(referenceDir, { recursive: true })

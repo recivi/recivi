@@ -1,0 +1,47 @@
+---
+title: Building a portfolio
+description: >-
+  How to build a portfolio website using the Récivi schema?
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+This guide is for people who have a résumé data file that may be hosted online
+and want to build a portfolio website using the same data file.
+
+## Pre-requisites
+
+- Récivi data file
+
+## Steps
+
+<Steps>
+
+1. [Write a Récivi data file](/guides/writing_data_files) for yourself.
+
+2. Host the Récivi file online somewhere. For example,
+   [GitHub Gist](https://gist.github.com/) is one such suitable place. You can
+   also choose to not host it separately and rather keep it inside the portfolio
+   project itself.
+
+3. Create a new Astro project with the template.
+
+   ```bash
+   pnpm create astro@latest -- --template recivi/recivi/examples/pf
+   ```
+
+   You can also use `npm` if you prefer that.
+
+   ```bash
+   npm create astro@latest -- --template recivi/recivi/examples/pf
+   ```
+
+4. Edit the `astro.config.ts` file and populate the only required option
+   `reciviDataFile`. It should point to the URL of your Récivi data file. It can
+   also point to a local file using absolute path or path relative to the
+   `astro.config.ts` file.
+
+5. Further customise the site with Récivi PF's options or eject and take over
+   the codebase to make it your own.
+
+</Steps>
