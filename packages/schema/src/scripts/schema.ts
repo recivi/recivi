@@ -15,7 +15,7 @@ console.log(chalk.blue('ZTS'), 'Zod to JSON Schema start')
 
 const schemasDir = resolve(
   import.meta.filename,
-  '../../../../../packages/docs/public/schemas/',
+  '../../../../../docs/public/schemas/',
 )
 rmSync(schemasDir, { recursive: true, force: true })
 mkdirSync(schemasDir, { recursive: true })
