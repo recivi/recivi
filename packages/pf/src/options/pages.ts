@@ -23,7 +23,7 @@ const resumeSchema = z.object({
   /** whether to show the "Education" section */
   showEducation: z.boolean().optional().default(true),
 
-  /** whether to show the "Work experience" section */
+  /** whether to show the "Work" section */
   showWork: z.boolean().optional().default(true),
 
   /** whether to show the "Creations" section */
