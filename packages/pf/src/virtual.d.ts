@@ -36,3 +36,13 @@ declare module 'virtual:pf/config' {
   const Options: import('./options').ParsedOptions
   export default Options
 }
+
+declare module 'virtual:recivi/data' {
+  const Resume: import('@recivi/schema').Resume
+  export default Resume
+}
+
+declare module 'virtual:pf/project-context' {
+  const Context: import('./types/project_context').ProjectContext
+  export default Context
+}
