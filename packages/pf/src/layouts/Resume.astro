@@ -1,0 +1,152 @@
+---
+import 'virtual:pf/custom-css/Resume'
+
+import { getEntry, render } from 'astro:content'
+import {
+  EpicCard,
+  InstituteCard,
+  OrgCard,
+  Skill,
+  Table,
+} from 'virtual:pf/components'
+import config from 'virtual:pf/config'
+import reciviData from 'virtual:recivi/data'
+
+import type { z } from 'astro/zod'
+
+import type { pageSchema } from '../content'
+import {
+  getCertsTable,
+  getLanguagesTable,
+  getProjectsTable,
+  getRolesTable,
+} from '../recivi/table'
+import Web from './Web.astro'
+
+interface Props {
+  frontmatter: z.infer<typeof pageSchema>
+}
+const { frontmatter, ...attrs } = Astro.props
+
+const resumeIntro = await getEntry('partials', 'resume__intro')
+const ResumeIntro = resumeIntro && (await render(resumeIntro)).Content
+
+const certsTable = getCertsTable()
+const rolesTable = getRolesTable()
+const projectsTable = getProjectsTable()
+const languagesTable = getLanguagesTable()
+
+// Rendered via `set:html` instead of forwarding slot.
+const defaultContent = (await Astro.slots.render('default')).trim()
+---
+
+<Web {frontmatter} {...attrs}>
+  <!-- SECONDARY/DEFAULT SLOT -->
+  <Fragment slot={defaultContent ? 'secondary' : 'default'}>
+    {ResumeIntro && <ResumeIntro />}
+
+    {
+      config.pages.resume.showEducation && reciviData.education.length ? (
+        <Fragment>
+          <h2>Education</h2>
+          <div class="resume-section-small">
+            {reciviData.education.map((institute) => (
+              <InstituteCard {institute} />
+            ))}
+          </div>
+          <Table class="resume-section-big" table={certsTable} />
+        </Fragment>
+      ) : undefined
+    }
+
+    {
+      config.pages.resume.showWork && reciviData.work.length ? (
+        <Fragment>
+          <h2>Work</h2>
+          <div class="resume-section-small">
+            {reciviData.work.map((org) => (
+              <OrgCard {org} />
+            ))}
+          </div>
+          <Table class="resume-section-big" table={rolesTable} />
+        </Fragment>
+      ) : undefined
+    }
+
+    {
+      config.pages.resume.showCreations && reciviData.creations.length ? (
+        <Fragment>
+          <h2>Creations</h2>
+          <div class="resume-section-small">
+            {reciviData.creations.map((epic) => (
+              <EpicCard {epic} />
+            ))}
+          </div>
+          <Table class="resume-section-big" table={projectsTable} />
+        </Fragment>
+      ) : undefined
+    }
+
+    {
+      config.pages.resume.showSkills && reciviData.skills.length ? (
+        <Fragment>
+          <h2>Skills</h2>
+          <ul>
+            {reciviData.skills.map((skill) => (
+              <li>
+                <Skill {skill} />
+              </li>
+            ))}
+          </ul>
+        </Fragment>
+      ) : undefined
+    }
+
+    {
+      config.pages.resume.showLanguages && reciviData.languages.length ? (
+        <Fragment>
+          <h2>Languages</h2>
+          <ul class="resume-section-small">
+            {reciviData.languages.map((language) => (
+              <li>
+                {typeof language.name === 'string'
+                  ? language.name
+                  : language.name.name}
+              </li>
+            ))}
+          </ul>
+          <Table class="resume-section-big" table={languagesTable} />
+        </Fragment>
+      ) : undefined
+    }
+  </Fragment>
+
+  <!-- DEFAULT SLOT -->
+  {defaultContent ? <Fragment set:html={defaultContent} /> : undefined}
+
+  <!-- forwarded slots -->
+  <slot
+    name="primary-header"
+    slot={Astro.slots.has('primary-header') ? 'primary-header' : undefined}
+  />
+  <slot
+    name="primary-footer"
+    slot={Astro.slots.has('primary-footer') ? 'primary-footer' : undefined}
+  />
+</Web>
+
+<style>
+  @layer pf.core {
+    .resume-section-small {
+      @media (width >= 640px) {
+        display: none;
+      }
+    }
+
+    .resume-section-big {
+      @media (width < 640px) {
+        display: none;
+      }
+    }
+  }
+</style>

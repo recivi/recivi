@@ -1,0 +1,122 @@
+---
+import 'virtual:pf/custom-css/Blog'
+
+import { getCollection, getEntry, render } from 'astro:content'
+import { Table } from 'virtual:pf/components'
+import config from 'virtual:pf/config'
+
+import type { z } from 'astro/zod'
+
+import type { pageSchema } from '../content'
+import { getCategories, getPostsTable, isNotDraft } from '../utils/collections'
+import Web from './Web.astro'
+
+interface Props {
+  frontmatter: z.infer<typeof pageSchema>
+}
+
+const blogIntro = await getEntry('partials', 'blog__intro')
+const BlogIntro = blogIntro && (await render(blogIntro)).Content
+
+const { showCategories } = config.pages.blog
+
+const posts = (await getCollection('blog', isNotDraft)).toReversed()
+const postsTable = getPostsTable(posts)
+
+const categories = await getCategories()
+
+// Rendered via `set:html` instead of forwarding slot.
+const defaultContent = (await Astro.slots.render('default')).trim()
+---
+
+<Web {...Astro.props}>
+  <Fragment slot="head">
+    {
+      showCategories ? (
+        <script is:inline src="//unpkg.com/alpinejs" defer />
+      ) : undefined
+    }
+  </Fragment>
+
+  <!-- SECONDARY/DEFAULT SLOT -->
+  <!-- Needs a real element for `x-data` attribute -->
+  <div
+    slot={defaultContent ? 'secondary' : 'default'}
+    x-data="{ activeCategories: [] }">
+    {BlogIntro && <BlogIntro />}
+
+    <h2>Categories</h2>
+    {
+      showCategories ? (
+        categories.length ? (
+          <fieldset class="categories">
+            <legend class="sr-only">Categories</legend>
+            {categories.map((category) => (
+              <label>
+                <input
+                  type="checkbox"
+                  value={category}
+                  x-model="activeCategories"
+                />
+                {category}
+              </label>
+            ))}
+          </fieldset>
+        ) : (
+          <p>∅ There are no categories.</p>
+        )
+      ) : undefined
+    }
+
+    <h2>Posts</h2>
+    {
+      posts.length ? (
+        <Table table={postsTable} />
+      ) : (
+        <p>∅ There are no blog posts.</p>
+      )
+    }
+  </div>
+
+  <!-- DEFAULT SLOT -->
+  {defaultContent ? <Fragment set:html={defaultContent} /> : undefined}
+
+  <!-- forwarded slots -->
+  <slot
+    name="primary-header"
+    slot={Astro.slots.has('primary-header') ? 'primary-header' : undefined}
+  />
+  <slot
+    name="primary-footer"
+    slot={Astro.slots.has('primary-footer') ? 'primary-footer' : undefined}
+  />
+  <slot
+    name="extra-header"
+    slot={Astro.slots.has('extra-header') ? 'extra-header' : undefined}
+  />
+  <slot name="extra" slot={Astro.slots.has('extra') ? 'extra' : undefined} />
+</Web>
+
+<style>
+  @layer pf.core {
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+
+      label {
+        border: 1px solid var(--pf-color-border);
+        border-radius: 0.25rem;
+        padding: 0.125em 0.25em;
+
+        &:has(input:checked) {
+          border-color: var(--pf-color-accent);
+        }
+
+        input {
+          display: none;
+        }
+      }
+    }
+  }
+</style>
