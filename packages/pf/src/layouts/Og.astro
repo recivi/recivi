@@ -1,0 +1,13 @@
+---
+import 'virtual:pf/custom-css/Og'
+import '../styles/og.css'
+
+import Root from './Root.astro'
+---
+
+<Root {...Astro.props}>
+  <slot name="head" slot={Astro.slots.has('head') ? 'head' : undefined} />
+
+  <!-- DEFAULT SLOT  -->
+  <slot />
+</Root>

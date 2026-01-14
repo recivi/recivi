@@ -1,0 +1,51 @@
+---
+import 'virtual:pf/custom-css/Print'
+import '../styles/print.css'
+
+import { Letterhead } from 'virtual:pf/components'
+
+import { getFullPageTitle } from '../utils/metas'
+import Root from './Root.astro'
+
+interface Props {
+  /** a title for the page */
+  title?: string
+}
+const { title = 'Untitled' } = Astro.props
+---
+
+<Root data-media="print" {...Astro.props}>
+  <Fragment slot="head">
+    <title>{getFullPageTitle(title)}</title>
+
+    <slot name="head" />
+  </Fragment>
+
+  <!-- DEFAULT SLOT -->
+  <main>
+    <div class="header">
+      <Letterhead />
+    </div>
+
+    <div class="content">
+      <slot />
+    </div>
+  </main>
+</Root>
+
+<style>
+  /*
+   * A full-width letter head is present at the top of the page.
+   * ┌───┐
+   * │ L │
+   * ├───┤
+   * │ C │
+   *
+   */
+
+  @layer pf.core {
+    main {
+      inline-size: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import 'virtual:pf/custom-css/Now'
+
+import { getCollection, getEntry, render } from 'astro:content'
+import { Anchor, NowUpdate } from 'virtual:pf/components'
+import config from 'virtual:pf/config'
+
+import type { z } from 'astro/zod'
+
+import type { pageSchema } from '../content'
+import { isNotDraft } from '../utils/collections'
+import Web from './Web.astro'
+
+interface Props {
+  frontmatter: z.infer<typeof pageSchema>
+}
+
+const nowIntro = await getEntry('partials', 'now__intro')
+const NowIntro = nowIntro && (await render(nowIntro)).Content
+
+const { numEntries, archiveUrl } = config.pages.now
+
+const updates = (await getCollection('now', isNotDraft)).toReversed()
+const numHidden = Math.max(updates.length - numEntries, 0)
+
+const word = numHidden === 1 ? 'update' : 'updates'
+---
+
+<Web {...Astro.props}>
+  <!-- DEFAULT SLOT -->
+  {NowIntro && <NowIntro />}
+
+  {
+    (
+      <ul class="updates">
+        {updates.slice(0, numEntries).map((update, index) => (
+          <li>
+            <NowUpdate isLatest={index === 0} {update} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    numHidden && archiveUrl ? (
+      <p>
+        <Anchor
+          url={{ dest: archiveUrl, label: `${numHidden} older ${word}` }}
+        />
+      </p>
+    ) : numHidden ? (
+      <p class="hidden">
+        {numHidden} older {word}
+      </p>
+    ) : undefined
+  }
+</Web>
+
+<style>
+  @layer pf.core {
+    .updates {
+      padding-inline-start: 0;
+      list-style: none;
+    }
+
+    .hidden {
+      color: var(--pf-color-fg-subtle);
+    }
+  }
+</style>
