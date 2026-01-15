@@ -1,0 +1,21 @@
+---
+---
+
+import projectContext from 'virtual:pf/project-context'
+import { Anchor } from 'virtual:pf/components'
+import { pathWithBase as pathWithBaseRaw } from '@recivi/pf/utils/project_context'
+
+export const pathWithBase = (path) => pathWithBaseRaw(projectContext, path)
+
+export const renderHref = pathWithBase('resume/pdf')
+export const pdfHref = pathWithBase('resume.pdf')
+
+# Résumé
+
+Welcome to my interactive résumé, where you can learn about my education, work
+experience, project and skills.
+
+You can grab this résumé to go as a
+<Anchor url={import.meta.env.DEV ? renderHref : pdfHref}>PDF version</Anchor>.
+
+Click on the org and epic names in the tables below to know more.
