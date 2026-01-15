@@ -13,7 +13,7 @@ export const resumeSchema = z
     $schema: z
       .url()
       .optional()
-      .default('https://recivi.pages.dev/schemas/recivi-resume.json')
+      .default('https://recivi.dhruvkb.dev/schemas/recivi-resume.json')
       .register(primaryRegistry, {
         description:
           'the URL to the JSON schema that should be used to validate this document',
