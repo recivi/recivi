@@ -1,0 +1,98 @@
+---
+title: Colophon
+description: >-
+  Read about the ideology, design and technology behind this site.
+navIndex: 4
+---
+
+import projectContext from 'virtual:pf/project-context'
+import { Anchor, Brand } from 'virtual:pf/components'
+import { pathWithBase as pathWithBaseRaw } from '@recivi/pf/utils/project_context'
+
+export const pathWithBase = (path) => pathWithBaseRaw(projectContext, path)
+
+export const renderHref = pathWithBase('resume/pdf')
+export const pdfHref = pathWithBase('resume.pdf')
+
+# Colophon
+
+> _A colophon is a nobby designer word for 'how this site was made'._
+>
+> — [Maggie Appleton](https://maggieappleton.com/colophon)
+
+## Ideology
+
+This site subscribes to many [IndieWeb](https://indieweb.org/) tenets such as
+data and domain ownership, open-source tools and longevity of plain text files.
+It also works with [RelMeAuth](https://microformats.org/wiki/RelMeAuth) to verify domain ownership on platforms like Mastodon.
+
+The site also focuses on progressive enhancement, using a limited amount of CSS
+and little to no JavaScript. Even with both of those turned off, the experience
+of using the site remains mostly intact.
+
+## Design
+
+### Color palette
+
+The site's color palette comes from [Catppuccin](https://catppuccin.com/),
+specifically the Mocha and Latte variants for the dark and light modes
+respectively. Catppuccin is a pastel color scheme that is easy on the eyes, and
+has ports for almost every application and platform, making it easy to use
+consistently for everything.
+
+### Typography
+
+This site uses the user's default `sans-serif` and `monospace` fonts. This decision has so many benefits:
+
+- Not having to load web fonts makes the site faster to load, reduces bandwidth
+  usage, prevents flash of unstyled text and alleviates privacy concerns.
+- It doesn't patronise the user and instead gives them back their rightful
+  control over their reading experience.
+- In some cases like for people with dyslexia or reading difficulties, it might
+  even improve accessibility.
+
+## Technology
+
+There is very little coding or scaffolding needed for this site. Most of the  source code is content, written in <Brand
+  icon={{ name: 'mdx', title: 'MDX' }}
+  anchor={{ url: 'https://mdxjs.com/' }}
+  name="MDX"
+/>, which is just plain ol' Markdown but with the ability to embed components.
+
+This is possible because of both <Brand
+  icon={{ name: 'astro', title: 'Astro' }}
+  anchor={{ url: 'https://astro.build' }}
+  name="Astro"
+/> which supports MDX, handles routing etc. and the <Brand
+  icon={{ pack: "pf", name: "recivi", title: "Récivi" }}
+  anchor={{ url: "https://recivi.dhruvkb.dev" }}
+  name="Récivi PF"
+/> integration that does the rest of the heavy lifting for the site:
+
+- It comes with all the utilities, components, layouts and pages that a
+  portfolio site could possibly need.
+
+- It provides some very neat features like favicon support, SEO meta tags, and
+  Open Graph tags (including OG images) out of the box.
+
+- It also builds both the
+  <Anchor url={pathWithBase('resume')}>interactive résumé</Anchor> as well as a
+  print-friendly
+  <Anchor url={import.meta.env.DEV ? renderHref : pdfHref}>PDF version</Anchor>
+  automatically.
+
+- It gets all the necessary information from a single résumé data file that
+  contains my personal and professional information.
+
+## Credits
+
+The <Brand
+  icon={{ pack: "pf", name: "recivi", title: "Récivi" }}
+  anchor={{ url: "https://recivi.dhruvkb.dev" }}
+  name="Récivi PF"
+/> integration was developed with a lot of ideas, and a little bit of code,
+borrowed from the <Brand
+  icon={{ pack: "custom", name: "starlight", title: "Starlight" }}
+  anchor={{ url: "https://starlight.astro.build" }}
+  name="Starlight"
+/> integration that helps in building documentation sites.
