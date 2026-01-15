@@ -47,26 +47,28 @@ const defaultContent = (await Astro.slots.render('default')).trim()
     x-data="{ activeCategories: [] }">
     {BlogIntro && <BlogIntro />}
 
-    <h2>Categories</h2>
     {
       showCategories ? (
-        categories.length ? (
-          <fieldset class="categories">
-            <legend class="sr-only">Categories</legend>
-            {categories.map((category) => (
-              <label>
-                <input
-                  type="checkbox"
-                  value={category}
-                  x-model="activeCategories"
-                />
-                {category}
-              </label>
-            ))}
-          </fieldset>
-        ) : (
-          <p>∅ There are no categories.</p>
-        )
+        <div class="requires-js">
+          <h2>Categories</h2>
+          {categories.length ? (
+            <fieldset class="categories">
+              <legend class="sr-only">Categories</legend>
+              {categories.map((category) => (
+                <label>
+                  <input
+                    type="checkbox"
+                    value={category}
+                    x-model="activeCategories"
+                  />
+                  {category}
+                </label>
+              ))}
+            </fieldset>
+          ) : (
+            <p>∅ There are no categories.</p>
+          )}
+        </div>
       ) : undefined
     }
 
