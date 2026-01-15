@@ -1,0 +1,33 @@
+---
+// Render an animated maneki-neko.
+
+import type { BaseProps } from '@recivi/pf/component_props/base'
+
+type Props = BaseProps
+const { class: className, ...attrs } = Astro.props
+---
+
+<span class:list={['maneki-neko', className]} {...attrs}>
+  <span aria-hidden="true">^•ﻌ•^<span id="hand">𐒡</span></span>
+  <span class="sr-only">Hello!</span>
+</span>
+
+<style>
+  @layer pf.components {
+    .maneki-neko {
+      @media not (prefers-reduced-motion: reduce) {
+        #hand {
+          display: inline-block;
+          transform-origin: bottom left;
+          animation: wave 2s infinite;
+        }
+      }
+    }
+
+    @keyframes wave {
+      50% {
+        transform: rotate(20deg);
+      }
+    }
+  }
+</style>
