@@ -26,6 +26,17 @@ const layers = `@layer ${config.css.layers.join(', ')};`
     <!-- This is a hack to prevent layer order from deviating. -->
     <style is:inline set:html={layers}></style>
 
+    <noscript>
+      <style>
+        @layer pf.utils {
+          /* util to hide elements that require JavaScript to function */
+          .requires-js {
+            display: none;
+          }
+        }
+      </style>
+    </noscript>
+
     <!-- Add extra head elements here. -->
     <slot name="head" />
   </head>
