@@ -78,7 +78,6 @@
   blockquote {
     border-inline-start: 1px solid var(--pf-color-border);
     padding-inline-start: 1rem;
-    font-style: italic;
   }
 
   small {
