@@ -4,6 +4,7 @@
 import { render } from 'astro:content'
 
 import type { NowUpdateProps } from '../component_props/NowUpdate'
+import Icon from './Icon.astro'
 import PfDate from './PfDate.astro'
 
 type Props = NowUpdateProps
@@ -17,6 +18,16 @@ const { Content } = await render(update)
   <div>
     <PfDate class="date" date={data.pubDate} />
     <strong>{data.title}</strong>
+    {
+      data.isDraft ? (
+        <Icon
+          class="draft"
+          name="pencil"
+          pack="lucide"
+          title="Draft, hidden in prod"
+        />
+      ) : undefined
+    }
   </div>
 
   <Content />
@@ -57,6 +68,10 @@ const { Content } = await render(update)
           border-color: var(--pf-color-accent);
           background-color: var(--pf-color-accent);
         }
+      }
+
+      .draft {
+        color: var(--pf-color-yellow);
       }
 
       .date {
