@@ -20,7 +20,9 @@ const NowIntro = nowIntro && (await render(nowIntro)).Content
 
 const { numEntries, archiveUrl } = config.pages.now
 
-const updates = (await getCollection('now', isNotDraft)).toReversed()
+const updates = (await getCollection('now', isNotDraft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+)
 const numHidden = Math.max(updates.length - numEntries, 0)
 
 const word = numHidden === 1 ? 'update' : 'updates'

@@ -12,11 +12,9 @@ import Anchor from './Anchor.astro'
 type Props = BaseProps
 const { class: className, ...attrs } = Astro.props
 
-const pages = await getCollection(
-  'pages',
-  (page) => isNotDraft(page) && page.data.navIndex,
+const pages = (
+  await getCollection('pages', (page) => isNotDraft(page) && page.data.navIndex)
 )
-const navPages = pages
   .sort((a, b) => a.data.navIndex - b.data.navIndex)
   .map((page) => ({
     url: {
@@ -32,7 +30,7 @@ const navPages = pages
 <nav class:list={['pf-nav', className]} {...attrs}>
   <ul class="linear">
     {
-      navPages.map((page) => (
+      pages.map((page) => (
         <li>
           <Anchor {...page} />
         </li>
