@@ -1,0 +1,114 @@
+---
+title: Kitchen sink
+description: >-
+  This is a test page to test all the features of a blog post.
+pubDate: 1970-01-01
+categories:
+  - test
+  - portfolio
+  - blog
+isDraft: true # DO NOT UNDRAFT THIS!
+---
+
+import { Brand } from 'virtual:pf/components';
+
+This is blog entry 0000. Hello there!
+
+## Markdown
+
+### Styling
+
+This is some regular text. This is **bold**, _italic_ and ~strikethrough~.
+Subscripts like H<sub>2</sub>O and superscripts like a<sup>2</sup> +
+b<sup>2</sup> = c<sup>2</sup> can be achieved with raw HTML.
+
+### Lists
+
+#### Unordered list
+
+These are some links in an unordered list[^unordered]:
+
+- [internal link](/resume/)
+- [external link](https://dhruvkb.dev)
+- non-web links like
+  - [phone](tel:+911234567890)
+  - [email](mailto:user@domain.tld)
+- [download link](/resume.pdf)
+
+[^unordered]: This is a footnote for the unordered list.
+
+##### Task list
+
+This is a task list.
+
+- [x] Chop the apples.
+- [ ] Peel the bananas.
+
+#### Ordered list
+
+This is an ordered list[^ordered]:
+
+1. First you chop the apples.
+   1. Take the apple.
+   2. Take the knife.
+   3. Apply knife to apple.
+2. Then you peel the bananas.
+
+[^ordered]: Avoid going into the double digits as that'll break the alignment.
+
+### Misc
+
+These are two nested block quotes:
+
+> > _You miss 100% of the shots you don't take._
+> >
+> > — Wayne Gretzky
+>
+> — Michael Scott
+
+This is an `inline code sample` and a code block:
+
+```python
+def say_hello(name: str) -> bool:
+    """This is a docstring."""
+    num_var, boolean_var, none_var = (1, True, None,)
+    print(f"Hello, {name}!")
+    return True
+
+say_hello("World") # Call function ``say_hello`` with the string argument ``"World"`` to print a greeting to the console.
+```
+
+This is an embedded image: You can use standard Markdown syntax or you can use
+the `Image` component from `astro:assets`
+
+![Stones saying "Oof"](@/assets/images/oof.jpg)
+
+This is a horizontal rule:
+
+---
+
+Here is a table:
+
+|   | A  | B  |
+|---|----|----|
+| 1 | A1 | B1 |
+| 2 | A2 | B2 |
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+You can use HTML tags, e.g. keyboard tags `<kbd>` inline such as
+<kbd>⌘ Cmd</kbd> + <kbd>C</kbd>.
+
+<Brand
+  icon={{ name: "astro", title: "Astro" }}
+  anchor={{ url: "https://astro.build" }}
+  name="Astro" /> components, like
+`Brand`, work inside MDX.
