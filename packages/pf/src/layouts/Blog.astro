@@ -20,7 +20,9 @@ const BlogIntro = blogIntro && (await render(blogIntro)).Content
 
 const { showCategories } = config.pages.blog
 
-const posts = (await getCollection('blog', isNotDraft)).toReversed()
+const posts = (await getCollection('blog', isNotDraft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+)
 const postsTable = getPostsTable(posts)
 
 const categories = await getCategories()
