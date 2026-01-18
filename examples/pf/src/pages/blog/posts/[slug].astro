@@ -1,0 +1,126 @@
+---
+import { getCollection, render } from 'astro:content'
+import {
+  Anchor,
+  Breadcrumbs,
+  Elements,
+  PfDate,
+  Table,
+  Toc,
+} from 'virtual:pf/components'
+
+import { pageSchema } from '@recivi/pf/content'
+import Blog from '@recivi/pf/layouts/Blog.astro'
+import { getPostsTable, isNotDraft } from '@recivi/pf/utils/collections'
+import { getArticleMetaTags } from '@recivi/pf/utils/metas'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', isNotDraft)
+  return posts.map((post) => ({
+    params: { slug: post.id.substring(5) },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props
+const { Content, headings } = await render(post)
+
+const relatedPosts = (
+  await getCollection(
+    'blog',
+    (item) =>
+      isNotDraft(item) &&
+      item.data.series &&
+      item.data.series === post.data.series,
+  )
+).toReversed()
+const relatedPostsTable = getPostsTable(relatedPosts)
+
+const frontmatter = post.data
+const pageFrontmatter = pageSchema.parse({
+  ...post.data,
+  title: `Post: ${post.data.title}`,
+})
+---
+
+<Blog frontmatter={pageFrontmatter}>
+  <Elements slot="metas" items={getArticleMetaTags(frontmatter)} tag="meta" />
+
+  <Breadcrumbs
+    slot="primary-header"
+    crumbs={[
+      { url: { dest: '/', label: 'Home' } },
+      { url: { dest: '/blog', label: 'Blog' } },
+      'Posts',
+      post.data.title,
+    ]}
+  />
+
+  <div slot="extra-header">Table of contents</div>
+
+  <Toc slot="extra" {headings} />
+
+  <h1>{post.data.title}</h1>
+  <dl>
+    <dt>Published:</dt>
+    <dd>
+      <PfDate date={post.data.pubDate} />
+    </dd>
+    <dt>Categories:</dt>
+    <dd>
+      <ul class="categories">
+        {post.data.categories.map((category) => <li>{category}</li>)}
+      </ul>
+    </dd>
+    {
+      post.data.series ? (
+        <Fragment>
+          <dt>Series:</dt>
+          <dd>
+            <Anchor url={{ dest: '#series', label: 'Series' }}>
+              {post.data.series}
+            </Anchor>
+          </dd>
+        </Fragment>
+      ) : undefined
+    }
+  </dl>
+  <hr />
+
+  <Content />
+
+  {
+    post.data.series ? (
+      <Fragment>
+        <hr />
+        <h2 id="series">Series</h2>
+        <p>
+          This post is part of the "{post.data.series}" series. If you liked it,
+          you might also like the other posts in this series.
+        </p>
+        <Table table={relatedPostsTable} />
+      </Fragment>
+    ) : undefined
+  }
+</Blog>
+
+<style>
+  .categories {
+    display: inline-flex;
+    gap: 0.5rem;
+    margin-block: 0;
+    padding-inline-start: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:not(:last-child)::after {
+        content: '·';
+        color: var(--pf-color-fg-subtle);
+      }
+    }
+  }
+</style>
