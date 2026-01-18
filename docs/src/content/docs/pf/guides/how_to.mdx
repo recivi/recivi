@@ -4,6 +4,8 @@ description: >-
   Various how-to guides for using Récivi.
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 This guide answers some common questions on how to use and customise the PF
 portfolio site to your liking.
 
@@ -29,6 +31,50 @@ new `.mdx` or `.astro` file will be automatically routed by Astro.
 To remove a page like "Now" or "Colophon", delete the corresponding `.mdx` file
 from the `src/pages/` directory. For the blog and resume pages, delete the
 corresponding directory from the `src/pages/` directory.
+
+## ...make the blog posts appear on the home page?
+
+To make the blog posts appear on the home page, follow these steps:
+
+<Steps>
+1. Remove or rename the existing `src/pages/index.mdx` file. If you rename it,
+   you can keep it as a separate page on a different URL.
+
+2. Move the contents of `src/pages/blog/` out into the `src/pages/` directory.
+
+3. Update the configuration in `astro.config.ts`, specifically `nav.dynamicPages`.
+
+   ```typescript
+   import { defineConfig } from 'astro/config';
+
+   export default defineConfig({
+     // ... rest of the config
+     integrations: [
+       pf({
+         nav: {
+           dynamicPages: {
+             blogPost: '/posts/{slug}'
+           },
+         },
+       }),
+     ],
+   });
+   ```
+
+4. Update the frontmatter of the new `src/pages/index.mdx` page:
+
+   - Update the title of the page to "Home" (optional).
+   - Remove the `navIndex` field to
+     [remove it](http://localhost:4322/pf/guides/how_to/#remove-a-page-from-the-navigation-menu)
+     from the navigation menu.
+
+5. If you kept the old home page, update its frontmatter:
+
+   - Change the title from 'Home' to something else, like "About".
+   - Add the `navIndex` field to
+     [add it](http://localhost:4322/pf/guides/how_to/#add-a-page-to-the-navigation-menu)
+     to the navigation menu.
+</Steps>
 
 ---
 
