@@ -1,0 +1,37 @@
+---
+import { Breadcrumbs, EpicDetails } from 'virtual:pf/components'
+import reciviData from 'virtual:recivi/data'
+
+import { pageSchema } from '@recivi/pf/content'
+import Resume from '@recivi/pf/layouts/Resume.astro'
+
+export async function getStaticPaths() {
+  const epics = reciviData.creations
+  return epics.map((epic) => ({
+    params: { slug: epic.slug },
+    props: { epic },
+  }))
+}
+
+const { epic } = Astro.props
+
+const frontmatter = pageSchema.parse({
+  title: `Epic: ${epic.name}`,
+  description: `Know more about my work on ${epic.name}.`,
+  banRobots: true,
+})
+---
+
+<Resume {frontmatter}>
+  <Breadcrumbs
+    slot="primary-header"
+    crumbs={[
+      { url: { dest: '/', label: 'Home' } },
+      { url: { dest: '/resume', label: 'Résumé' } },
+      'Epics',
+      epic.name,
+    ]}
+  />
+
+  <EpicDetails {epic} />
+</Resume>
