@@ -45,20 +45,13 @@ To make the blog posts appear on the home page, follow these steps:
 3. Update the configuration in `astro.config.ts`, specifically `nav.dynamicPages`.
 
    ```typescript
-   import { defineConfig } from 'astro/config';
-
-   export default defineConfig({
-     // ... rest of the config
-     integrations: [
-       pf({
-         nav: {
-           dynamicPages: {
-             blogPost: '/posts/{slug}'
-           },
-         },
-       }),
-     ],
-   });
+   pf({
+     nav: {
+       dynamicPages: {
+         blogPost: '/posts/{slug}'
+       },
+     },
+   })
    ```
 
 4. Update the frontmatter of the new `src/pages/index.mdx` page:
