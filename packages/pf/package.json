@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.12",
+    "@astrojs/rss": "^4.0.15",
     "@iconify-json/lucide": "^1.2.78",
     "@iconify-json/simple-icons": "^1.2.61",
     "@recivi/schema": "workspace:",

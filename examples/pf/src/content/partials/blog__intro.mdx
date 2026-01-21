@@ -1,8 +1,18 @@
 ---
 ---
 
+import projectContext from 'virtual:pf/project-context'
+import { Anchor, Icon } from 'virtual:pf/components'
+import { pathWithBase as pathWithBaseRaw } from '@recivi/pf/utils/project_context'
+
+export const pathWithBase = (path) => pathWithBaseRaw(projectContext, path)
+
 # Blog
 
 Welcome to my blog, where you can read some of my long-form blog posts.
+
+You can subscribe to the
+<Anchor url={pathWithBase('rss.xml')}><Icon name="rss"/>RSS feed</Anchor> to get
+updates on new posts.
 
 Click on a category to see only the posts that belong to that category.

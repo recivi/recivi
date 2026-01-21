@@ -17,6 +17,12 @@ const blogSchema = z.object({
    * requires JavaScript.
    */
   showCategories: z.boolean().optional().default(true),
+  /**
+   * the slug to locate the blog index page; If you have changed the blog to be
+   * at a different URL, update this value so that RSS description is populated
+   * correctly.
+   */
+  slug: z.string().optional().default('blog'),
 })
 
 const resumeSchema = z.object({
