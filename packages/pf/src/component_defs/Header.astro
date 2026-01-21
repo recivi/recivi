@@ -3,7 +3,7 @@
 
 import config from 'virtual:pf/config'
 import projectContext from 'virtual:pf/project-context'
-import resumeDate from 'virtual:recivi/data'
+import resumeData from 'virtual:recivi/data'
 
 import type { BaseProps } from '../component_props/base'
 import Anchor from './Anchor.astro'
@@ -12,7 +12,7 @@ import Nav from './Nav.astro'
 type Props = BaseProps
 const { class: className, ...attrs } = Astro.props
 
-const siteTitle = config.title ?? resumeDate.bio.name
+const siteTitle = config.title ?? resumeData.bio.name
 ---
 
 <header class:list={['pf-header', className]} {...attrs}>
