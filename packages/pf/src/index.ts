@@ -84,6 +84,10 @@ export default function (options: Options): AstroIntegration {
             pattern: 'og_render/[...path]',
             entrypoint: '@recivi/pf/routes/og_render.astro',
           })
+          params.injectRoute({
+            pattern: 'rss.xml',
+            entrypoint: '@recivi/pf/routes/rss.ts',
+          })
         }
         if (
           parsedOptions.favicon.isEnabled &&
