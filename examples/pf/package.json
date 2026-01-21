@@ -17,7 +17,7 @@
     "@astrojs/check": "^0.9.5",
     "@recivi/pf": "^0.0.3",
     "@recivi/schema": "^0.0.3",
-    "astro": "^5.16.7",
+    "astro": "^5.16.12",
     "sharp": "^0.32.6"
   },
   "devDependencies": {
