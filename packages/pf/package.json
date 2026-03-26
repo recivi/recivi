@@ -49,12 +49,12 @@
     "vfile": "^6.0.3"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.12",
-    "@astrojs/rss": "^4.0.15",
+    "@astrojs/mdx": "^5.0.2",
+    "@astrojs/rss": "^4.0.17",
     "@iconify-json/lucide": "^1.2.78",
     "@iconify-json/simple-icons": "^1.2.61",
     "@recivi/schema": "workspace:",
-    "astro-integration-kit": "^0.19.1",
+    "astro-integration-kit": "^0.20.0",
     "magic-string": "^0.30.21",
     "piccolore": "^0.1.3",
     "puppeteer": "^24.34.0",

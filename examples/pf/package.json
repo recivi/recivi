@@ -14,10 +14,10 @@
     "tunnel": "tsx src/scripts/tunnel.ts"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.5",
+    "@astrojs/check": "^0.9.8",
     "@recivi/pf": "^0.0.3",
     "@recivi/schema": "^0.0.3",
-    "astro": "^5.16.12",
+    "astro": "^6.0.8",
     "sharp": "^0.32.6"
   },
   "devDependencies": {
