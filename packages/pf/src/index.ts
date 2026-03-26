@@ -113,8 +113,8 @@ export default function (options: Options): AstroIntegration {
               layoutNames.map((layoutName) => [
                 `virtual:pf/custom-css/${layoutName}`,
                 parsedOptions.css.customCss[layoutName]
-                  ?.map((file) => `import '${file}';`)
-                  .join('\n') ?? '',
+                  .map((file) => `import '${file}';`)
+                  .join('\n'),
               ]),
             ),
 

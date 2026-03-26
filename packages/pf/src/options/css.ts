@@ -22,6 +22,7 @@ export const layoutNames = [
   'Root',
   'Web',
 ] as const
+type LayoutName = (typeof layoutNames)[number]
 
 // Keep the above list synced with the actual layouts.
 const allLayouts = await getAllLayouts()
@@ -31,9 +32,15 @@ allLayouts.forEach((layout, idx) => {
   }
 })
 
-const customCssSchema = z.record(
-  z.enum(layoutNames),
-  z.array(z.string()).optional().default([]),
+// `z.object` ensures that every layout named above has an entry. We are not
+// using `z.record` because we want to allow missing keys in the input.
+const customCssSchema = z.object(
+  Object.fromEntries(
+    layoutNames.map((name) => [
+      name,
+      z.array(z.string()).optional().default([]),
+    ]),
+  ) as Record<LayoutName, z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>>,
 )
 
 export const cssSchema = z
@@ -42,7 +49,7 @@ export const cssSchema = z
      * the paths to extra CSS files to include in the site; The files must be
      * located in `src/` and paths should be relative to the config file.
      */
-    customCss: customCssSchema.optional().default({}),
+    customCss: customCssSchema.optional().prefault({}),
     /**
      * additional CSS layers to include after the default layers; Use this
      * option to append layers to the default layer order.

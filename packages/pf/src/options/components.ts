@@ -39,18 +39,13 @@ allComponents.forEach((component, idx) => {
   }
 })
 
-type ComponentPaths = Record<ComponentName, string>
-
-export const componentsSchema = z
-  .record(z.enum(componentNames), z.string())
-  .optional()
-  .default({})
-  .transform((val): ComponentPaths => {
-    const defaultValues = Object.fromEntries(
-      componentNames.map((name) => [
-        name,
-        `@recivi/pf/component_defs/${name}.astro`,
-      ]),
-    ) as ComponentPaths
-    return { ...defaultValues, ...val }
-  })
+// `z.object` ensures that every layout named above has an entry. We are not
+// using `z.record` because we want to allow missing keys in the input.
+export const componentsSchema = z.object(
+  Object.fromEntries(
+    componentNames.map((name) => [
+      name,
+      z.string().optional().default(`@recivi/pf/component_defs/${name}.astro`),
+    ]),
+  ) as Record<ComponentName, z.ZodDefault<z.ZodOptional<z.ZodString>>>,
+)

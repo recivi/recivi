@@ -14,5 +14,5 @@ export const navSchema = z.object({
       /** the URL template for org pages; Use "{slug}" as a placeholder. */
       resumeOrg: slugString.optional().default('/resume/orgs/{slug}'),
     })
-    .default({}),
+    .prefault({}),
 })
