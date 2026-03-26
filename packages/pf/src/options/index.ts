@@ -36,31 +36,31 @@ export const optionsSchema = z.object({
   locale: localeSchema.optional().default({ bcp47: 'en' }),
 
   /** configuration to use icons in the site */
-  icons: iconsSchema.optional().default({}),
+  icons: iconsSchema.optional().prefault({}),
 
   /** configuration for favicons in the site */
-  favicon: faviconSchema.optional().default({}),
+  favicon: faviconSchema.optional().prefault({}),
 
   /** configuration for generating a print-friendly résumé PDF */
-  resumePdf: resumePdfSchema.optional().default({}),
+  resumePdf: resumePdfSchema.optional().prefault({}),
 
   /** configuration for navigation within the site */
-  nav: navSchema.optional().default({}),
+  nav: navSchema.optional().prefault({}),
 
   /** options for theming the site */
-  theme: themeSchema.optional().default({}),
+  theme: themeSchema.optional().prefault({}),
 
   /** options for adding elements to the document `<head>` */
-  head: headSchema.optional().default({}),
+  head: headSchema.optional().prefault({}),
 
   /** options for customizing the site's CSS */
-  css: cssSchema.optional().default({}),
+  css: cssSchema.optional().prefault({}),
 
   /** configuration for included pages */
-  pages: pagesSchema.optional().default({}),
+  pages: pagesSchema.optional().prefault({}),
 
   /** custom component overrides */
-  components: componentsSchema,
+  components: componentsSchema.optional().prefault({}),
 })
 
 export type Options = z.input<typeof optionsSchema>

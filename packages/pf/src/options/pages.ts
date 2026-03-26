@@ -44,11 +44,11 @@ const resumeSchema = z.object({
 
 export const pagesSchema = z.object({
   /** configuration for the "Now" page */
-  now: nowSchema.optional().default({}),
+  now: nowSchema.optional().prefault({}),
 
   /** configuration for the "Blog" page */
-  blog: blogSchema.optional().default({}),
+  blog: blogSchema.optional().prefault({}),
 
   /** configuration for the "Résumé" page */
-  resume: resumeSchema.optional().default({}),
+  resume: resumeSchema.optional().prefault({}),
 })

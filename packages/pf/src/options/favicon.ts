@@ -19,5 +19,5 @@ export const faviconSchema = z.object({
       manifestIconsPrefix: z.string().optional().default('icon-'),
     })
     .optional()
-    .default({}),
+    .prefault({}),
 })

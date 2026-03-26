@@ -5,7 +5,7 @@ const tagSchema = z.object({
   tag: z.string(),
   /** a mapping of attribute names and values for the tag */
   attrs: z
-    .record(z.union([z.string(), z.boolean(), z.undefined()]))
+    .record(z.string(), z.union([z.string(), z.boolean(), z.undefined()]))
     .optional()
     .default({}),
   /** the inner HTML content of the tag */
