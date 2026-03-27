@@ -1,17 +1,19 @@
 /**
- * Convert Zod schema to reference pages and place them in the docs.
+ * Convert Zod schema to a JSON Schema schema and place it in the docs.
  *
- * Also see the `reference.ts` script in the `packages/pf` package.
+ * Also see the `reference.ts` script in the `packages/schema` package.
  */
 
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
-import chalk from 'chalk'
-import { z } from 'zod'
+import { z } from 'astro/zod'
+import colors from 'piccolore'
 
-import { resumeSchema } from '@/index' // Import from the barrel file.
-import { primaryRegistry } from '@/registries/primary'
+import { optionsSchema } from '../options/index'
+import { primaryRegistry } from '../registries/primary'
+
+const { blue, bold, green } = colors
 
 interface JsonSchema {
   id: string
@@ -31,13 +33,13 @@ import Schema from '@/components/Schema.astro'
 <Schema
   schemaString='${Buffer.from(JSON.stringify(schema)).toString('base64')}'
   isRoot={true}
-  hrefFmt='/schema/reference/{ref}/' />
+  hrefFmt='/pf/reference/{ref}/' />
 `
   writeFileSync(filePath, content, { encoding: 'utf-8' })
   console.log(
-    chalk.green('ZTR'),
-    chalk.bold(`${schema.id.toLocaleLowerCase()}.mdx`),
-    chalk.green(schema.id),
+    green('ZTR'),
+    bold(`${schema.id.toLocaleLowerCase()}.mdx`),
+    green(schema.id),
   )
 }
 
@@ -46,25 +48,28 @@ Entrypoint
 ==========
 */
 
-console.log(chalk.blue('ZTR'), 'Zod to reference start')
+console.log(blue('ZTR'), 'Zod to reference start')
 
 const referenceDir = resolve(
   import.meta.filename,
-  '../../../../../docs/src/content/docs/schema/reference/',
+  '../../../../../docs/src/content/docs/pf/reference/',
 )
 rmSync(referenceDir, { recursive: true, force: true })
 mkdirSync(referenceDir, { recursive: true })
 
-const jsonSchema = z.toJSONSchema(resumeSchema, {
+const jsonSchema = z.toJSONSchema(optionsSchema, {
   metadata: primaryRegistry,
   reused: 'ref',
   cycles: 'ref',
   io: 'input',
 })
 for (const schemaDef of Object.values(jsonSchema.$defs ?? {})) {
-  generateMarkdownPage(schemaDef as JsonSchema)
+  const def = schemaDef as Record<string, unknown>
+  if (def.id) {
+    generateMarkdownPage(def as unknown as JsonSchema)
+  }
 }
 delete jsonSchema.$defs
 generateMarkdownPage(jsonSchema as JsonSchema)
 
-console.log(chalk.green('ZTR'), '⚡️ Zod to reference success')
+console.log(green('ZTR'), '⚡️ Zod to reference success')

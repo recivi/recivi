@@ -2,7 +2,7 @@ import { icons as iconsLucide } from '@iconify-json/lucide'
 import { icons as iconsSi } from '@iconify-json/simple-icons'
 import { z } from 'astro/zod'
 
-import reciviSvg from '../assets/icons/recivi.svg?raw'
+import { primaryRegistry } from '../registries/primary'
 import { innerSvg } from '../utils/markup'
 
 export const iconsSchema = z
@@ -76,6 +76,10 @@ export const iconsSchema = z
       val.packs['simple-icons'] = iconsSi.icons
     }
     if (!('pf' in val.packs)) {
+      const reciviSvg = import.meta.glob('../assets/icons/recivi.svg', {
+        as: 'raw',
+        eager: true,
+      })['../assets/icons/recivi.svg'] as string
       val.packs.pf = { recivi: { body: innerSvg(reciviSvg) } }
     }
     return val
