@@ -1,5 +1,6 @@
 import { z } from 'astro/zod'
 
+import { primaryRegistry } from '../registries/primary'
 import { getAllComponents } from '../utils/layouts'
 
 // If a component is changed, you should also update `virtual.d.ts`.
@@ -41,11 +42,19 @@ allComponents.forEach((component, idx) => {
 
 // `z.object` ensures that every layout named above has an entry. We are not
 // using `z.record` because we want to allow missing keys in the input.
-export const componentsSchema = z.object(
-  Object.fromEntries(
-    componentNames.map((name) => [
-      name,
-      z.string().optional().default(`@recivi/pf/component_defs/${name}.astro`),
-    ]),
-  ) as Record<ComponentName, z.ZodDefault<z.ZodOptional<z.ZodString>>>,
-)
+export const componentsSchema = z
+  .object(
+    Object.fromEntries(
+      componentNames.map((name) => [
+        name,
+        z
+          .string()
+          .optional()
+          .default(`@recivi/pf/component_defs/${name}.astro`),
+      ]),
+    ) as Record<ComponentName, z.ZodDefault<z.ZodOptional<z.ZodString>>>,
+  )
+  .register(primaryRegistry, {
+    id: 'components',
+    description: 'the custom component overrides for the site',
+  })

@@ -11,7 +11,10 @@ export const iconsSchema = z
      * whether to show icons on the site; Setting this to `false`
      * converts the `Icon` component into a no-op.
      */
-    isEnabled: z.boolean().optional().default(true),
+    isEnabled: z.boolean().optional().default(true).register(primaryRegistry, {
+      description:
+        'whether to show icons on the site; Setting this to `false` converts the `Icon` component into a no-op.',
+    }),
     /**
      * a record of custom icon packs to use; You can use Iconify icons
      * as the value of this record.
@@ -26,12 +29,18 @@ export const iconsSchema = z
           /** the contents of the icon */
           z.object({
             /** the SVG body of the icon */
-            body: z.string(),
+            body: z.string().register(primaryRegistry, {
+              description: 'the SVG body of the icon',
+            }),
           }),
         ),
       )
       .optional()
-      .default({}),
+      .default({})
+      .register(primaryRegistry, {
+        description:
+          'a record of custom icon packs to use; You can use Iconify icons as the value of this record.',
+      }),
     /** a record of icon aliases to use */
     aliases: z
       .record(
@@ -40,13 +49,24 @@ export const iconsSchema = z
         /** the reference for the actual icon to show */
         z.object({
           /** the name the icon pack */
-          pack: z.string().optional(),
+          pack: z.string().optional().register(primaryRegistry, {
+            description: 'the name of the icon pack',
+          }),
           /** the name of the icon */
-          name: z.string(),
+          name: z.string().register(primaryRegistry, {
+            description: 'the name of the icon',
+          }),
         }),
       )
       .optional()
-      .default({}),
+      .default({})
+      .register(primaryRegistry, {
+        description: 'a record of icon aliases to use',
+      }),
+  })
+  .register(primaryRegistry, {
+    id: 'icons',
+    description: 'configuration to use icons in the site',
   })
   .transform((val) => {
     if (!('lucide' in val.packs)) {

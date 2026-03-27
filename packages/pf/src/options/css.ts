@@ -1,5 +1,6 @@
 import { z } from 'astro/zod'
 
+import { primaryRegistry } from '../registries/primary'
 import { getAllLayouts } from '../utils/layouts'
 
 const layerNames = [
@@ -49,17 +50,26 @@ export const cssSchema = z
      * the paths to extra CSS files to include in the site; The files must be
      * located in `src/` and paths should be relative to the config file.
      */
-    customCss: customCssSchema.optional().prefault({}),
-    /**
-     * additional CSS layers to include after the default layers; Use this
-     * option to append layers to the default layer order.
-     */
-    addedLayers: z.array(z.string()).optional(),
-    /**
-     * the order of the CSS layers; Use this option to completely replace the
-     * default layer order.
-     */
-    layers: z.array(z.string()).optional(),
+    customCss: customCssSchema
+      .optional()
+      .prefault({})
+      .register(primaryRegistry, {
+        description:
+          'the paths to extra CSS files to include in the site; The files must be located in `src/` and paths should be relative to the config file.',
+      }),
+    /** additional CSS layers to append after the default layer order */
+    addedLayers: z.array(z.string()).optional().register(primaryRegistry, {
+      description:
+        'additional CSS layers to append after the default layer order',
+    }),
+    /** the order of the CSS layers, replacing the default order */
+    layers: z.array(z.string()).optional().register(primaryRegistry, {
+      description: 'the order of the CSS layers, replacing the default order',
+    }),
+  })
+  .register(primaryRegistry, {
+    id: 'css',
+    description: "the site's CSS customizations",
   })
   .refine(
     (val) => {
