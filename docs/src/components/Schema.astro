@@ -7,10 +7,17 @@ import { parseLength, parseRange } from '@/utils/schema'
 interface Props {
   name?: string
   schemaString: string
+  hrefFmt: string
   isRoot?: boolean
   isRequired?: boolean
 }
-const { name, schemaString, isRoot = false, isRequired = false } = Astro.props
+const {
+  name,
+  schemaString,
+  hrefFmt,
+  isRoot = false,
+  isRequired = false,
+} = Astro.props
 const schema = JSON.parse(fromBase64(schemaString))
 
 const ref = schema.$ref?.split('/').at(-1)
@@ -55,7 +62,7 @@ function schemaStr(value: unknown) {
     ref ? (
       <div>
         Type:
-        <a href={`/reference/${ref.toLocaleLowerCase()}`}>
+        <a href={hrefFmt.replace('{ref}', ref.toLocaleLowerCase())}>
           <code>{ref}</code>
         </a>
       </div>
@@ -103,13 +110,15 @@ function schemaStr(value: unknown) {
     schema.type === 'object' && (
       <details>
         <summary>Properties</summary>
-        {Object.entries(schema.properties).map(([key, value]) => (
-          <Astro.self
-            isRequired={schema.required?.includes(key)}
-            name={key}
-            schemaString={schemaStr(value)}
-          />
-        ))}
+        {schema.properties &&
+          Object.entries(schema.properties).map(([key, value]) => (
+            <Astro.self
+              isRequired={schema.required?.includes(key)}
+              name={key}
+              schemaString={schemaStr(value)}
+              {hrefFmt}
+            />
+          ))}
       </details>
     )
   }
@@ -118,12 +127,15 @@ function schemaStr(value: unknown) {
     schema.type === 'array' && (
       <details open>
         <summary>Item</summary>
-        {schema.items && <Astro.self schemaString={schemaStr(schema.items)} />}
+        {schema.items && (
+          <Astro.self schemaString={schemaStr(schema.items)} {hrefFmt} />
+        )}
         {schema.prefixItems &&
           schema.prefixItems.map((item: unknown, index: number) => (
             <Astro.self
               name={`Item ${index + 1}`}
               schemaString={schemaStr(item)}
+              {hrefFmt}
             />
           ))}
       </details>
@@ -138,6 +150,7 @@ function schemaStr(value: unknown) {
           <Astro.self
             name={`Variant ${index + 1}`}
             schemaString={schemaStr(item)}
+            {hrefFmt}
           />
         ))}
       </details>

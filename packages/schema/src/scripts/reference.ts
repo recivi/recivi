@@ -28,7 +28,8 @@ import Schema from '@/components/Schema.astro'
 
 <Schema
   schemaString='${Buffer.from(JSON.stringify(schema)).toString('base64')}'
-  isRoot={true} />
+  isRoot={true}
+  hrefFmt='/schema/reference/{ref}/' />
 `
   writeFileSync(filePath, content, { encoding: 'utf-8' })
   console.log(
