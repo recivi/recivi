@@ -1,54 +1,108 @@
 import { z } from 'astro/zod'
 
-const nowSchema = z.object({
-  /** number of entries to show on the "Now" page */
-  numEntries: z.number().optional().default(3),
+import { primaryRegistry } from '../registries/primary'
 
-  /**
-   * a URL to where older "Now" updates can be found; Leave this blank if you
-   * want older updates to become unreachable.
-   */
-  archiveUrl: z.string().optional(),
-})
+const nowSchema = z
+  .object({
+    /** number of entries to show on the "Now" page */
+    numEntries: z.number().optional().default(3).register(primaryRegistry, {
+      description: 'number of entries to show on the "Now" page',
+    }),
 
-const blogSchema = z.object({
-  /**
-   * whether to show category filter on the blog index page; This feature
-   * requires JavaScript.
-   */
-  showCategories: z.boolean().optional().default(true),
-  /**
-   * the slug to locate the blog index page; If you have changed the blog to be
-   * at a different URL, update this value so that RSS description is populated
-   * correctly.
-   */
-  slug: z.string().optional().default('blog'),
-})
+    /** the URL at which older "Now" updates can be found */
+    archiveUrl: z.string().optional().register(primaryRegistry, {
+      description: 'the URL at which older "Now" updates can be found',
+    }),
+  })
+  .register(primaryRegistry, {
+    id: 'now',
+    description: 'the settings for the "Now" page',
+  })
 
-const resumeSchema = z.object({
-  /** whether to show the "Education" section */
-  showEducation: z.boolean().optional().default(true),
+const blogSchema = z
+  .object({
+    /** whether to show the category filter on the blog index page; This requires JavaScript. */
+    showCategories: z
+      .boolean()
+      .optional()
+      .default(true)
+      .register(primaryRegistry, {
+        description:
+          'whether to show the category filter on the blog index page; This requires JavaScript.',
+      }),
+    /** the slug of the blog index page; This is used to populate the RSS description correctly when the blog is served at a custom URL. */
+    slug: z.string().optional().default('blog').register(primaryRegistry, {
+      description:
+        'the slug of the blog index page; This is used to populate the RSS description correctly when the blog is served at a custom URL.',
+    }),
+  })
+  .register(primaryRegistry, {
+    id: 'blog',
+    description: 'the settings for the "Blog" page',
+  })
 
-  /** whether to show the "Work" section */
-  showWork: z.boolean().optional().default(true),
+const resumeSchema = z
+  .object({
+    /** whether to show the "Education" section */
+    showEducation: z
+      .boolean()
+      .optional()
+      .default(true)
+      .register(primaryRegistry, {
+        description: 'whether to show the "Education" section',
+      }),
 
-  /** whether to show the "Creations" section */
-  showCreations: z.boolean().optional().default(true),
+    /** whether to show the "Work" section */
+    showWork: z.boolean().optional().default(true).register(primaryRegistry, {
+      description: 'whether to show the "Work" section',
+    }),
 
-  /** whether to show the "Skills" section */
-  showSkills: z.boolean().optional().default(true),
+    /** whether to show the "Creations" section */
+    showCreations: z
+      .boolean()
+      .optional()
+      .default(true)
+      .register(primaryRegistry, {
+        description: 'whether to show the "Creations" section',
+      }),
 
-  /** whether to show the "Languages" section */
-  showLanguages: z.boolean().optional().default(true),
-})
+    /** whether to show the "Skills" section */
+    showSkills: z.boolean().optional().default(true).register(primaryRegistry, {
+      description: 'whether to show the "Skills" section',
+    }),
 
-export const pagesSchema = z.object({
-  /** configuration for the "Now" page */
-  now: nowSchema.optional().prefault({}),
+    /** whether to show the "Languages" section */
+    showLanguages: z
+      .boolean()
+      .optional()
+      .default(true)
+      .register(primaryRegistry, {
+        description: 'whether to show the "Languages" section',
+      }),
+  })
+  .register(primaryRegistry, {
+    id: 'resume',
+    description: 'the settings for the "Résumé" page',
+  })
 
-  /** configuration for the "Blog" page */
-  blog: blogSchema.optional().prefault({}),
+export const pagesSchema = z
+  .object({
+    /** the settings for the "Now" page */
+    now: nowSchema.optional().prefault({}).register(primaryRegistry, {
+      description: 'the settings for the "Now" page',
+    }),
 
-  /** configuration for the "Résumé" page */
-  resume: resumeSchema.optional().prefault({}),
-})
+    /** the settings for the "Blog" page */
+    blog: blogSchema.optional().prefault({}).register(primaryRegistry, {
+      description: 'the settings for the "Blog" page',
+    }),
+
+    /** the settings for the "Résumé" page */
+    resume: resumeSchema.optional().prefault({}).register(primaryRegistry, {
+      description: 'the settings for the "Résumé" page',
+    }),
+  })
+  .register(primaryRegistry, {
+    id: 'pages',
+    description: 'the settings for the included pages',
+  })
