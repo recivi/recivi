@@ -1,5 +1,6 @@
 import starlight from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
+import starlightLinksValidator from 'starlight-links-validator'
 
 // https://astro.build/config
 export default defineConfig({
@@ -75,6 +76,7 @@ export default defineConfig({
         Footer: './src/components/Footer.astro',
         SocialIcons: './src/components/SocialIcons.astro',
       },
+      plugins: [starlightLinksValidator()],
     }),
   ],
 })
