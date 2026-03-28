@@ -44,6 +44,26 @@ function prettyStr(value: unknown) {
 function schemaStr(value: unknown) {
   return toBase64(JSON.stringify(value))
 }
+
+/**
+ * Convert a very small subset of Markdown to HTML using a rudimentary
+ * regex-based string-replacement-based approach.
+ *
+ * Only supports inline code for now.
+ *
+ * @param text the Markdown text to convert
+ * @returns the converted HTML string
+ */
+function rudimentaryMd(text: string): string {
+  if (!text) {
+    return 'no description'
+  }
+
+  return text
+    .replace('<', '&lt;') // escape HTML
+    .replace('>', '&gt;') // escape HTML
+    .replace(/`([^`]+)`/g, '<code>$1</code>') // inline code
+}
 ---
 
 <div>
@@ -56,7 +76,7 @@ function schemaStr(value: unknown) {
     )
   }
 
-  <div class="mt-0">{schema.description}</div>
+  <div class="mt-0" set:html={rudimentaryMd(schema.description)} />
 
   {
     ref ? (
