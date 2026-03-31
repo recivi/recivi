@@ -35,7 +35,8 @@
   "scripts": {
     "check": "astro check",
     "astro": "astro",
-    "test": "tsx --test"
+    "test": "tsx --test",
+    "reference": "tsx src/scripts/reference.ts"
   },
   "peerDependencies": {
     "astro": "catalog:"

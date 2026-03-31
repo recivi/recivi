@@ -59,7 +59,7 @@ mkdirSync(referenceDir, { recursive: true })
 
 const jsonSchema = z.toJSONSchema(optionsSchema, {
   metadata: primaryRegistry,
-  reused: 'ref',
+  reused: 'inline',
   cycles: 'ref',
   io: 'input',
 })
