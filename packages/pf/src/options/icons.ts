@@ -77,7 +77,8 @@ export const iconsSchema = z
     }
     if (!('pf' in val.packs)) {
       const reciviSvg = import.meta.glob('../assets/icons/recivi.svg', {
-        as: 'raw',
+        query: '?raw',
+        import: 'default',
         eager: true,
       })['../assets/icons/recivi.svg'] as string
       val.packs.pf = { recivi: { body: innerSvg(reciviSvg) } }
