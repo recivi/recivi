@@ -32,7 +32,8 @@
     "reference": "pnpm barrel && tsx src/scripts/reference.ts",
     "build": "pnpm barrel && tsdown src/index.ts",
     "test": "tsx --test",
-    "types": "tsc --noEmit"
+    "types": "tsc --noEmit",
+    "prepack": "pnpm build"
   },
   "peerDependencies": {
     "zod": "^4.1.0"
