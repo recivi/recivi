@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/recivi/.github/main/profile/readme_assets/logo.png" height="40" width="40" align="left"> Récivi
+# <img src="https://github.com/recivi/.github/raw/main/profile/readme_assets/logo.png" alt="" align="left" width="40" height="40"> Récivi
 
 <a href="https://recivi.dhruvkb.dev/"><img src="https://img.shields.io/badge/docs-recivi.dhruvkb.dev-blue" alt="Documentation"/></a>
 
