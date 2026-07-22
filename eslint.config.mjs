@@ -1,108 +1,26 @@
-import { fileURLToPath } from 'node:url'
+import skipFormatting from "eslint-config-prettier/flat";
+import pluginAstro from "eslint-plugin-astro";
+import pluginOxlint from "eslint-plugin-oxlint";
+import { globalIgnores } from "eslint/config";
+import tseslint from "typescript-eslint";
 
-import { includeIgnoreFile } from '@eslint/compat'
-import js from '@eslint/js'
-import astro from 'eslint-plugin-astro'
-import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import globals from 'globals'
-import ts from 'typescript-eslint'
+export default tseslint.config(
+	{ name: "app/files-to-lint", files: ["**/*.{astro,ts}"] },
 
-const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
+	globalIgnores(["**/dist/**", "**/.astro/**"]),
 
-export default [
-  // Translates `.gitignore` into `ignores` glob patterns.
-  includeIgnoreFile(gitignorePath),
+	// Astro must come after `typescript-eslint`: the latter has no `files`
+	// filter and sets the parser for every file, so it would clobber the Astro
+	// parser on `.astro` files unless Astro is applied last.
+	...tseslint.configs.recommended,
 
-  {
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-      },
-      globals: {
-        ...globals.node, // to use `process`, `console` etc.
-      },
-    },
-  },
+	// `eslint-plugin-astro` automatically enables the TypeScript parser for Astro
+	// files if it can require `@typescript-eslint/parser` from the project root.
+	// So ensure that this package is listed as a direct dev dependency.
+	...pluginAstro.configs.recommended,
 
-  js.configs.recommended,
+	...pluginOxlint.buildFromOxlintConfigFile(".oxlintrc.json"),
 
-  ...ts.configs.strictTypeChecked,
-  ...ts.configs.stylistic,
-  {
-    rules: {
-      // Not included in any config group.
-      '@typescript-eslint/consistent-type-imports': 'error',
-      // Copied from https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslintrc/strict-type-checked.ts
-      '@typescript-eslint/restrict-template-expressions': [
-        'error',
-        {
-          allowBoolean: false,
-          allowAny: false,
-          allowNullish: false,
-          allowRegExp: false,
-        },
-      ],
-    },
-  },
-
-  {
-    plugins: {
-      'simple-import-sort': simpleImportSort,
-    },
-    rules: {
-      'simple-import-sort/imports': [
-        'error',
-        {
-          groups: [
-            ['^\\u0000'], // side effect imports
-            ['^node:'], // Node.js built-ins
-            ['^astro:', '^virtual:'], // Virtual modules
-            ['^@?\\w'], // packages
-            ['^@/'], // TS config path aliases
-            ['^'], // catch-all
-            ['^\\.'], // relative imports
-          ],
-        },
-      ],
-      'simple-import-sort/exports': 'error',
-    },
-  },
-
-  ...astro.configs.recommended,
-
-  // Type definitions
-  {
-    files: ['packages/pf/src/index.ts'],
-    rules: {
-      '@typescript-eslint/triple-slash-reference': 'off',
-    },
-  },
-
-  // `.d.ts` files use `import()` syntax.
-  {
-    files: ['**/*.d.ts'],
-    rules: {
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        { disallowTypeAnnotations: false },
-      ],
-    },
-  },
-
-  // Tool configs in root are not covered by `tsconfig.json`.
-  {
-    files: [
-      'eslint.config.mjs',
-      'prettier.config.mjs',
-      'lint-staged.config.mjs',
-    ],
-    ...ts.configs.disableTypeChecked,
-  },
-
-  // Astro files do not support type-checked linting.
-  // https://github.com/ota-meshi/eslint-plugin-astro/issues/447
-  {
-    files: ['**/*.astro'],
-    ...ts.configs.disableTypeChecked,
-  },
-]
+	// Disable formatting rules to avoid conflicts with Prettier (and also Oxfmt).
+	skipFormatting,
+);

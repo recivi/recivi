@@ -1,12 +1,19 @@
+minimumReleaseAge: 0
+
 packages:
-  - 'packages/**/*'
-  - 'examples/**/*'
-  - 'docs'
+  - "packages/**/*"
+  - "examples/**/*"
+  - "docs"
+
+allowBuilds:
+  esbuild: true
+  puppeteer: true
+  sharp: true
 
 catalog:
   astro: ^6.1.1
   sharp: ^0.32.6
-  '@astrojs/check': ^0.9.8
+  "@astrojs/check": ^0.9.8
 
 # The following make it possible to use workspace packages in examples
 # without having to use "workspace:" specifiers for the dependency.

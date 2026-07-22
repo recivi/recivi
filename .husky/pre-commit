@@ -1,6 +1,0 @@
-# Lint staged files
-pnpx lint-staged
-
-# Run Typescript and Astro checks
-pnpm --recursive types
-pnpm --recursive check
