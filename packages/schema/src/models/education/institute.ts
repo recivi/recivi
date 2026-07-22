@@ -6,6 +6,7 @@ import { type Url, urlSchema } from '@/models/base/url'
 import { type Cert, certSchema } from '@/models/education/cert'
 import type { PartialWithUndefined } from '@/models/utils/partial'
 import { primaryRegistry } from '@/registries/primary'
+import { slugify } from '@/utils/slugify'
 
 export const instituteSchema = z
   .object({
@@ -39,6 +40,7 @@ export const instituteSchema = z
         description: 'a list of certifications earned at the institute',
       }),
   })
+  .transform((obj) => ({ ...obj, slug: obj.id ?? slugify(obj.name) }))
   .register(primaryRegistry, {
     id: 'Institute',
     description:
