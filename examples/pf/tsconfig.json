@@ -1,10 +1,13 @@
 {
-  "extends": "astro/tsconfigs/strictest",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  },
-  "exclude": ["dist"]
+	// `astro/tsconfigs/strictest` extends `astro/tsconfigs/base`.
+	"extends": "astro/tsconfigs/strictest",
+
+	// Fields "include" and "exclude" are already in `astro/tsconfigs/base`.
+
+	"compilerOptions": {
+		// Path mapping for cleaner imports.
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	}
 }
