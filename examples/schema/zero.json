@@ -1,6 +1,6 @@
 {
-  "$schema": "https://recivi.dhruvkb.dev/schemas/recivi-resume.json",
-  "bio": {
-    "name": "Dhruv Bhanushali"
-  }
+	"$schema": "https://recivi.dhruvkb.dev/schemas/recivi-resume.json",
+	"bio": {
+		"name": "Dhruv Bhanushali"
+	}
 }
