@@ -1,8 +1,8 @@
-import type { Org } from '@recivi/schema'
+import type { Org } from "@recivi/schema";
 
-import type { BaseProps } from './base'
+import type { BaseProps } from "./base";
 
 export interface OrgCardProps extends BaseProps {
-  /** the org to render with all roles */
-  org: Org
+	/** the org to render with all roles */
+	org: Org;
 }

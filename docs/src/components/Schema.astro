@@ -1,29 +1,29 @@
 ---
-import { Code } from '@astrojs/starlight/components'
+import { Code } from "@astrojs/starlight/components";
 
-import { fromBase64, toBase64 } from '@/utils/base64'
-import { parseLength, parseRange } from '@/utils/schema'
+import { fromBase64, toBase64 } from "@/utils/base64";
+import { parseLength, parseRange } from "@/utils/schema";
 
 interface Props {
-  name?: string
-  schemaString: string
-  hrefFmt: string
-  isRoot?: boolean
-  isRequired?: boolean
+	name?: string;
+	schemaString: string;
+	hrefFmt: string;
+	isRoot?: boolean;
+	isRequired?: boolean;
 }
 const {
-  name,
-  schemaString,
-  hrefFmt,
-  isRoot = false,
-  isRequired = false,
-} = Astro.props
-const schema = JSON.parse(fromBase64(schemaString))
+	name,
+	schemaString,
+	hrefFmt,
+	isRoot = false,
+	isRequired = false,
+} = Astro.props;
+const schema = JSON.parse(fromBase64(schemaString));
 
-const ref = schema.$ref?.split('/').at(-1)
+const ref = schema.$ref?.split("/").at(-1);
 
-const range = parseRange(schema)
-const length = parseLength(schema)
+const range = parseRange(schema);
+const length = parseLength(schema);
 
 /**
  * Convert a value to a pretty-printed JSON string.
@@ -32,7 +32,7 @@ const length = parseLength(schema)
  * @returns a pretty-printed JSON string
  */
 function prettyStr(value: unknown) {
-  return JSON.stringify(value, null, 2)
+	return JSON.stringify(value, null, 2);
 }
 
 /**
@@ -42,7 +42,7 @@ function prettyStr(value: unknown) {
  * @returns a base64-encoded schema string
  */
 function schemaStr(value: unknown) {
-  return toBase64(JSON.stringify(value))
+	return toBase64(JSON.stringify(value));
 }
 
 /**
@@ -55,152 +55,153 @@ function schemaStr(value: unknown) {
  * @returns the converted HTML string
  */
 function rudimentaryMd(text: string): string {
-  if (!text) {
-    return 'no description'
-  }
+	if (!text) {
+		return "no description";
+	}
 
-  return text
-    .replace('<', '&lt;') // escape HTML
-    .replace('>', '&gt;') // escape HTML
-    .replace(/`([^`]+)`/g, '<code>$1</code>') // inline code
+	// Escape HTML and replace inline Markdown code with HTML code tags.
+	return text
+		.replace("<", "&lt;")
+		.replace(">", "&gt;")
+		.replaceAll(/`([^`]+)`/gu, "<code>$1</code>");
 }
 ---
 
 <div>
-  {
-    !isRoot && (
-      <p>
-        <strong>{name ?? schema.id}</strong>
-        {isRequired && <span class="required-asterisk">*</span>}
-      </p>
-    )
-  }
+	{
+		!isRoot && (
+			<p>
+				<strong>{name ?? schema.id}</strong>
+				{isRequired && <span class="required-asterisk">*</span>}
+			</p>
+		)
+	}
 
-  <div class="mt-0" set:html={rudimentaryMd(schema.description)} />
+	<div class="mt-0" set:html={rudimentaryMd(schema.description)} />
 
-  {
-    ref ? (
-      <div>
-        Type:
-        <a href={hrefFmt.replace('{ref}', ref.toLocaleLowerCase())}>
-          <code>{ref}</code>
-        </a>
-      </div>
-    ) : schema.type ? (
-      <div>
-        Type:
-        <code>{schema.type}</code>
-      </div>
-    ) : undefined
-  }
-  {isRequired && <div class="mt-0">Required: yes</div>}
-  {schema.format && <div class="mt-0">Format: {schema.format}</div>}
-  {length && <div class="mt-0">Length: {length}</div>}
-  {
-    schema.default && (
-      <div class="mt-0">
-        Default: <code>{prettyStr(schema.default)}</code>
-      </div>
-    )
-  }
-  {
-    range && (
-      <div class="mt-0">
-        Range:
-        <span class="math" set:html={range} />
-      </div>
-    )
-  }
-  {
-    schema.enum && (
-      <details>
-        <summary>Valid options</summary>
-        <ul>
-          {schema.enum.map((option: string) => (
-            <li>
-              <code>{prettyStr(option)}</code>
-            </li>
-          ))}
-        </ul>
-      </details>
-    )
-  }
+	{
+		ref ? (
+			<div>
+				Type:
+				<a href={hrefFmt.replace("{ref}", ref.toLocaleLowerCase())}>
+					<code>{ref}</code>
+				</a>
+			</div>
+		) : schema.type ? (
+			<div>
+				Type:
+				<code>{schema.type}</code>
+			</div>
+		) : undefined
+	}
+	{isRequired && <div class="mt-0">Required: yes</div>}
+	{schema.format && <div class="mt-0">Format: {schema.format}</div>}
+	{length && <div class="mt-0">Length: {length}</div>}
+	{
+		schema.default && (
+			<div class="mt-0">
+				Default: <code>{prettyStr(schema.default)}</code>
+			</div>
+		)
+	}
+	{
+		range && (
+			<div class="mt-0">
+				Range:
+				<span class="math" set:html={range} />
+			</div>
+		)
+	}
+	{
+		schema.enum && (
+			<details>
+				<summary>Valid options</summary>
+				<ul>
+					{schema.enum.map((option: string) => (
+						<li>
+							<code>{prettyStr(option)}</code>
+						</li>
+					))}
+				</ul>
+			</details>
+		)
+	}
 
-  {
-    schema.type === 'object' && (
-      <details>
-        <summary>Properties</summary>
-        {schema.properties &&
-          Object.entries(schema.properties).map(([key, value]) => (
-            <Astro.self
-              isRequired={schema.required?.includes(key)}
-              name={key}
-              schemaString={schemaStr(value)}
-              {hrefFmt}
-            />
-          ))}
-      </details>
-    )
-  }
+	{
+		schema.type === "object" && (
+			<details>
+				<summary>Properties</summary>
+				{schema.properties &&
+					Object.entries(schema.properties).map(([key, value]) => (
+						<Astro.self
+							isRequired={schema.required?.includes(key)}
+							name={key}
+							schemaString={schemaStr(value)}
+							{hrefFmt}
+						/>
+					))}
+			</details>
+		)
+	}
 
-  {
-    schema.type === 'array' && (
-      <details open>
-        <summary>Item</summary>
-        {schema.items && (
-          <Astro.self schemaString={schemaStr(schema.items)} {hrefFmt} />
-        )}
-        {schema.prefixItems &&
-          schema.prefixItems.map((item: unknown, index: number) => (
-            <Astro.self
-              name={`Item ${index + 1}`}
-              schemaString={schemaStr(item)}
-              {hrefFmt}
-            />
-          ))}
-      </details>
-    )
-  }
+	{
+		schema.type === "array" && (
+			<details open>
+				<summary>Item</summary>
+				{schema.items && (
+					<Astro.self schemaString={schemaStr(schema.items)} {hrefFmt} />
+				)}
+				{schema.prefixItems &&
+					schema.prefixItems.map((item: unknown, index: number) => (
+						<Astro.self
+							name={`Item ${index + 1}`}
+							schemaString={schemaStr(item)}
+							{hrefFmt}
+						/>
+					))}
+			</details>
+		)
+	}
 
-  {
-    schema.anyOf && (
-      <details>
-        <summary>Any of</summary>
-        {schema.anyOf.map((item: unknown, index: number) => (
-          <Astro.self
-            name={`Variant ${index + 1}`}
-            schemaString={schemaStr(item)}
-            {hrefFmt}
-          />
-        ))}
-      </details>
-    )
-  }
+	{
+		schema.anyOf && (
+			<details>
+				<summary>Any of</summary>
+				{schema.anyOf.map((item: unknown, index: number) => (
+					<Astro.self
+						name={`Variant ${index + 1}`}
+						schemaString={schemaStr(item)}
+						{hrefFmt}
+					/>
+				))}
+			</details>
+		)
+	}
 
-  {
-    schema.examples && (
-      <details>
-        <summary>Examples</summary>
-        {schema.examples.map((example: unknown) => (
-          <Code code={prettyStr(example)} lang="json" />
-        ))}
-      </details>
-    )
-  }
+	{
+		schema.examples && (
+			<details>
+				<summary>Examples</summary>
+				{schema.examples.map((example: unknown) => (
+					<Code code={prettyStr(example)} lang="json" />
+				))}
+			</details>
+		)
+	}
 </div>
 
 <style>
-  /* hack to increase specificity */
-  :is(.mt-0):is(.mt-0) {
-    margin-top: 0;
-  }
+	/* hack to increase specificity */
+	:is(.mt-0):is(.mt-0) {
+		margin-top: 0;
+	}
 
-  .required-asterisk {
-    color: var(--sl-color-text-accent);
-  }
+	.required-asterisk {
+		color: var(--sl-color-text-accent);
+	}
 
-  .math {
-    /* Transitional family */
-    font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
-  }
+	.math {
+		/* Transitional family */
+		font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
+	}
 </style>

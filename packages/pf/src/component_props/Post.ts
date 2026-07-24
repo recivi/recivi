@@ -1,10 +1,10 @@
-import type { CollectionEntry } from 'astro:content'
+import type { CollectionEntry } from "astro:content";
 
-import type { BaseProps } from './base'
+import type { BaseProps } from "./base";
 
 export interface PostProps extends BaseProps {
-  /** the post collection entry */
-  post: CollectionEntry<'blog'>
+	/** the post collection entry */
+	post: CollectionEntry<"blog">;
 }
 
 /**
@@ -14,5 +14,5 @@ export interface PostProps extends BaseProps {
  * @return whether value matches the `PostProps` interface
  */
 export function isPostProps(val: unknown): val is PostProps {
-  return val !== null && typeof val === 'object' && 'post' in val
+	return val !== null && typeof val === "object" && "post" in val;
 }

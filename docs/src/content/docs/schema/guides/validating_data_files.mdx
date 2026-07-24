@@ -4,18 +4,17 @@ description: >-
   How to validate a résumé data file against the Récivi schema?
 ---
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
-This guide is for people who want to validate their new résumé data files
-against the Récivi schema. This validation is necessary to ensure that the
-résumé is correct and will be properly parsed by other tools built on top of
-Récivi.
+This guide is for people who want to validate their new résumé data files against the Récivi schema.
+This validation is necessary to ensure that the résumé is correct and will be properly parsed by
+other tools built on top of Récivi.
 
 ## With VS Code
 
-Using VS Code to write a résumé data file is recommended because you can get
-immediate validation while writing the file and access to inline help and
-documentation. VS Code comes with support for JSON schemas out of the box.
+Using VS Code to write a résumé data file is recommended because you can get immediate validation
+while writing the file and access to inline help and documentation. VS Code comes with support for
+JSON schemas out of the box.
 
 ### Pre-requisites
 
@@ -30,12 +29,11 @@ documentation. VS Code comes with support for JSON schemas out of the box.
 2. Create a new file and save it with a `.json` extension.
    ![](@/assets/guides/validating_data_files/new_file.png)
 
-3. Define the `$schema` key in your JSON file and set it to the Récivi schema
-   URL.
+3. Define the `$schema` key in your JSON file and set it to the Récivi schema URL.
 
    ```json
    {
-     "$schema": "https://recivi.dhruvkb.dev/schemas/recivi-resume.json",
+     "$schema": "https://recivi.dhruvkb.dev/schemas/recivi-resume.json"
    }
    ```
 
@@ -60,8 +58,8 @@ documentation. VS Code comes with support for JSON schemas out of the box.
 
 ## Manual
 
-You can write the résumé files without linting in the editor and use a separate
-service to validate it.
+You can write the résumé files without linting in the editor and use a separate service to validate
+it.
 
 ### Pre-requisites
 
@@ -74,11 +72,9 @@ service to validate it.
 
 1. Write the résumé data file in the text editor of your choice.
 
-2. Visit [JSONSchema.dev](https://jsonschema.dev/) in the web browser of your
-   choice.
+2. Visit [JSONSchema.dev](https://jsonschema.dev/) in the web browser of your choice.
 
-3. Copy the schema from
-   [its URL](https://recivi.dhruvkb.dev/schemas/recivi-resume.json) into the
+3. Copy the schema from [its URL](https://recivi.dhruvkb.dev/schemas/recivi-resume.json) into the
    editor pane on the left.
 
 4. Copy your data file into the editor pane on the right.

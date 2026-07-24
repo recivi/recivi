@@ -5,7 +5,7 @@
  * @returns the input string with HTML tags removed
  */
 export function stripHtmlTags(input: string): string {
-  return input.replace(/<\/?[^>]+(>|$)/g, '')
+	return input.replaceAll(/<\/?[^>]+(>|$)/gu, "");
 }
 
 /**
@@ -19,5 +19,5 @@ export function stripHtmlTags(input: string): string {
  * @returns the SVG string with the `<svg>` and `</svg>` tags stripped
  */
 export function innerSvg(svg: string): string {
-  return svg.replace(/<\/?svg[^>]*>/g, '')
+	return svg.replaceAll(/<\/?svg[^>]*>/gu, "");
 }

@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath } from "node:url";
 
 /**
  * Determine if the given text is a URL.
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url'
  * @returns whether the text is a URL
  */
 export function isUrl(text: string): boolean {
-  return /^https?:\/\//.test(text)
+	return /^https?:\/\//u.test(text);
 }
 
 /**
@@ -22,7 +22,7 @@ export function isUrl(text: string): boolean {
  * @returns whether the text is a local file path
  */
 export function isLocalFile(text: string): boolean {
-  return !isUrl(text)
+	return !isUrl(text);
 }
 
 /**
@@ -33,9 +33,9 @@ export function isLocalFile(text: string): boolean {
  * @returns the absolute path
  */
 export function getAbsolutePath(path: string, base: URL): string {
-  if (path.startsWith('/')) {
-    // Path is already absolute, so no change is needed.
-    return path
-  }
-  return fileURLToPath(new URL(path, base))
+	if (path.startsWith("/")) {
+		// Path is already absolute, so no change is needed.
+		return path;
+	}
+	return fileURLToPath(new URL(path, base));
 }

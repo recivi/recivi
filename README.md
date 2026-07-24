@@ -2,8 +2,8 @@
 
 <a href="https://recivi.dhruvkb.dev/"><img src="https://img.shields.io/badge/docs-recivi.dhruvkb.dev-blue" alt="Documentation"/></a>
 
-[Récivi](https://recivi.dhruvkb.dev/) is a new kind of résumé for computers and
-humans, in that order.
+[Récivi](https://recivi.dhruvkb.dev/) is a new kind of résumé for computers and humans, in that
+order.
 
 Récivi consists of the following packages:
 

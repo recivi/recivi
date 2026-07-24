@@ -4,33 +4,33 @@ description: >-
   Various how-to guides for using Récivi.
 ---
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
-This guide answers some common questions on how to use and customise the PF
-portfolio site to your liking.
+This guide answers some common questions on how to use and customise the PF portfolio site to your
+liking.
 
 ## ...add a page to the navigation menu?
 
-Only pages with a `navIndex` field in the frontmatter are shown in the site's
-navigation menu. To add a page to the navigation menu, add a `navIndex` field to
-the frontmatter of the page with a number value indicating its position in the
-menu. Lower numbers appear first.
+Only pages with a `navIndex` field in the frontmatter are shown in the site's navigation menu. To
+add a page to the navigation menu, add a `navIndex` field to the frontmatter of the page with a
+number value indicating its position in the menu. Lower numbers appear first.
 
 ## ...remove a page from the navigation menu?
 
-To remove a page from the navigation menu, remove the `navIndex` field from the frontmatter of the page.
+To remove a page from the navigation menu, remove the `navIndex` field from the frontmatter of the
+page.
 
 ## ...add a page to the site?
 
-Pages follow Astro's file-based routing. To add new pages, you must create the
-directory structure inside the `src/pages/` directory matching the URL path. Any
-new `.mdx` or `.astro` file will be automatically routed by Astro.
+Pages follow Astro's file-based routing. To add new pages, you must create the directory structure
+inside the `src/pages/` directory matching the URL path. Any new `.mdx` or `.astro` file will be
+automatically routed by Astro.
 
 ## ...remove a page from the site?
 
-To remove a page like "Now" or "Colophon", delete the corresponding `.mdx` file
-from the `src/pages/` directory. For the blog and resume pages, delete the
-corresponding directory from the `src/pages/` directory.
+To remove a page like "Now" or "Colophon", delete the corresponding `.mdx` file from the
+`src/pages/` directory. For the blog and resume pages, delete the corresponding directory from the
+`src/pages/` directory.
 
 ## ...make the blog posts appear on the home page?
 
@@ -48,28 +48,28 @@ To make the blog posts appear on the home page, follow these steps:
    pf({
      nav: {
        dynamicPages: {
-         blogPost: '/posts/{slug}'
+         blogPost: "/posts/{slug}",
        },
      },
-   })
+   });
    ```
 
 4. Update the frontmatter of the new `src/pages/index.mdx` page:
 
    - Update the title of the page to "Home" (optional).
    - Remove the `navIndex` field to
-     [remove it](/pf/guides/how_to/#remove-a-page-from-the-navigation-menu)
-     from the navigation menu.
+     [remove it](/pf/guides/how_to/#remove-a-page-from-the-navigation-menu) from the navigation
+     menu.
 
 5. If you kept the old home page, update its frontmatter:
 
    - Change the title from 'Home' to something else, like "About".
-   - Add the `navIndex` field to
-     [add it](/pf/guides/how_to/#add-a-page-to-the-navigation-menu)
-     to the navigation menu.
+   - Add the `navIndex` field to [add it](/pf/guides/how_to/#add-a-page-to-the-navigation-menu) to
+     the navigation menu.
+
 </Steps>
 
 ---
 
-Look at the configuration reference to learn more about the knobs available to
-customise the portfolio site.
+Look at the configuration reference to learn more about the knobs available to customise the
+portfolio site.

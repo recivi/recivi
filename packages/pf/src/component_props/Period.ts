@@ -1,10 +1,10 @@
-import type { Period } from '@recivi/schema'
+import type { Period } from "@recivi/schema";
 
-import type { BaseProps } from './base'
+import type { BaseProps } from "./base";
 
 export interface PeriodProps extends BaseProps {
-  /** the period to render */
-  period: Period
+	/** the period to render */
+	period: Period;
 }
 
 /**
@@ -14,5 +14,5 @@ export interface PeriodProps extends BaseProps {
  * @return whether value matches the `PeriodProps` interface
  */
 export function isPeriodProps(val: unknown): val is PeriodProps {
-  return val !== null && typeof val === 'object' && 'period' in val
+	return val !== null && typeof val === "object" && "period" in val;
 }

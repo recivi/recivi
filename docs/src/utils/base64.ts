@@ -5,7 +5,7 @@
  * @returns the encoded string
  */
 export function toBase64(input: string): string {
-  return Buffer.from(input).toString('base64')
+	return Buffer.from(input).toString("base64");
 }
 
 /**
@@ -15,5 +15,5 @@ export function toBase64(input: string): string {
  * @returns the decoded string
  */
 export function fromBase64(input: string): string {
-  return Buffer.from(input, 'base64').toString()
+	return Buffer.from(input, "base64").toString();
 }

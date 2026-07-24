@@ -1,10 +1,17 @@
 export function slugify(input: string): string {
-  return input
-    .normalize('NFD') // Decompose accented characters
-    .replace(/[\u0300-\u036f]/g, '') // Remove accent marks
-    .toLowerCase()
-    .replace(/[^a-z0-9_]/g, '') // Remove non-alphanumeric chars except space and hyphen
-    .trim()
-    .replace(/\s+/g, '_') // Replace spaces with underscores
-    .replace(/_+/g, '_') // Replace multiple underscores with a single one
+	return (
+		input
+			// Decompose accented characters.
+			.normalize("NFD")
+			// Remove accent marks.
+			.replaceAll(/[\u0300-\u036F]/gu, "")
+			.toLowerCase()
+			// Remove non-alphanumeric characters except underscores.
+			.replaceAll(/[^a-z0-9_]/gu, "")
+			.trim()
+			// Replace spaces with underscores.
+			.replaceAll(/\s+/gu, "_")
+			// Replace multiple underscores with a single one.
+			.replaceAll(/_+/gu, "_")
+	);
 }

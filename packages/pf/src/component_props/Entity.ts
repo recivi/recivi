@@ -1,12 +1,12 @@
-import type { Epic, Institute, Org } from '@recivi/schema'
+import type { Epic, Institute, Org } from "@recivi/schema";
 
-import type { BaseProps } from './base'
+import type { BaseProps } from "./base";
 
 export interface EntityProps extends BaseProps {
-  /** the entity to render */
-  entity: Org | Epic | Institute
-  /** whether the entity should use internal links */
-  useInternalLink?: boolean
+	/** the entity to render */
+	entity: Org | Epic | Institute;
+	/** whether the entity should use internal links */
+	useInternalLink?: boolean;
 }
 
 /**
@@ -16,5 +16,5 @@ export interface EntityProps extends BaseProps {
  * @return whether value matches the `EntityProps` interface
  */
 export function isEntityProps(val: unknown): val is EntityProps {
-  return val !== null && typeof val === 'object' && 'entity' in val
+	return val !== null && typeof val === "object" && "entity" in val;
 }

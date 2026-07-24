@@ -1,4 +1,4 @@
-import config from 'virtual:pf/config'
+import config from "virtual:pf/config";
 
 /**
  * Convert a JS `Date` instance to Récivi's date format. This returns
@@ -9,7 +9,7 @@ import config from 'virtual:pf/config'
  * @returns the Récivi representation of the given date
  */
 export function jsDateToRcvDate(date: Date): [number, number, number] {
-  return [date.getFullYear(), date.getMonth() + 1, date.getDate()]
+	return [date.getFullYear(), date.getMonth() + 1, date.getDate()];
 }
 
 /**
@@ -22,16 +22,16 @@ export function jsDateToRcvDate(date: Date): [number, number, number] {
  * @returns the readable date
  */
 export function getReadableDate(
-  year: number,
-  month: number | undefined,
-  day: number | undefined,
+	year: number,
+	month: number | undefined,
+	day: number | undefined,
 ): string {
-  const dateObj = new Date(year, (month ?? 1) - 1, day ?? 1)
-  return Intl.DateTimeFormat(config.locale.bcp47, {
-    year: 'numeric',
-    month: month ? 'long' : undefined,
-    day: day ? 'numeric' : undefined,
-  }).format(dateObj)
+	const dateObj = new Date(year, (month ?? 1) - 1, day ?? 1);
+	return Intl.DateTimeFormat(config.locale.bcp47, {
+		year: "numeric",
+		month: month ? "long" : undefined,
+		day: day ? "numeric" : undefined,
+	}).format(dateObj);
 }
 
 /**
@@ -44,16 +44,16 @@ export function getReadableDate(
  * @returns the array of string parts for the displayed date
  */
 export function getDisplayDate(
-  year: number,
-  month: number | undefined,
-  day: number | undefined,
+	year: number,
+	month: number | undefined,
+	day: number | undefined,
 ): (string | undefined)[] {
-  const dateObj = new Date(year, (month ?? 1) - 1, day ?? 1)
-  const parts = Intl.DateTimeFormat(config.locale.bcp47, {
-    year: 'numeric',
-    month: month ? '2-digit' : undefined,
-    day: day ? '2-digit' : undefined,
-  }).formatToParts(dateObj)
-  const keys = ['year', 'month', 'day']
-  return keys.map((key) => parts.find((part) => part.type === key)?.value)
+	const dateObj = new Date(year, (month ?? 1) - 1, day ?? 1);
+	const parts = Intl.DateTimeFormat(config.locale.bcp47, {
+		year: "numeric",
+		month: month ? "2-digit" : undefined,
+		day: day ? "2-digit" : undefined,
+	}).formatToParts(dateObj);
+	const keys = ["year", "month", "day"];
+	return keys.map((key) => parts.find((part) => part.type === key)?.value);
 }

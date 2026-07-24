@@ -1,5 +1,5 @@
-import { readdir } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { readdir } from "node:fs/promises";
+import { resolve } from "node:path";
 
 /**
  * Get a list of all files in the given directory inside `src/`.
@@ -8,8 +8,8 @@ import { resolve } from 'node:path'
  * @returns the list of files
  */
 function getSrcFiles(dir: string) {
-  const resolvedDir = resolve(import.meta.filename, '../../', dir)
-  return readdir(resolvedDir)
+	const resolvedDir = resolve(import.meta.filename, "../../", dir);
+	return readdir(resolvedDir);
 }
 
 /**
@@ -20,11 +20,11 @@ function getSrcFiles(dir: string) {
  * @returns the list of Astro files without the extension
  */
 async function getAstroFiles(dir: string) {
-  const allFiles = await getSrcFiles(dir)
-  return allFiles
-    .filter((file) => file.endsWith('.astro'))
-    .map((file) => file.replace(/\.astro$/, ''))
-    .sort()
+	const allFiles = await getSrcFiles(dir);
+	return allFiles
+		.filter((file) => file.endsWith(".astro"))
+		.map((file) => file.replace(/\.astro$/u, ""))
+		.toSorted();
 }
 
 /**
@@ -33,7 +33,7 @@ async function getAstroFiles(dir: string) {
  * @returns the list of layout names
  */
 export function getAllLayouts() {
-  return getAstroFiles('layouts')
+	return getAstroFiles("layouts");
 }
 
 /**
@@ -43,5 +43,5 @@ export function getAllLayouts() {
  * @returns the list of component names
  */
 export function getAllComponents() {
-  return getAstroFiles('component_defs')
+	return getAstroFiles("component_defs");
 }

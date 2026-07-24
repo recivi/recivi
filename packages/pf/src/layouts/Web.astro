@@ -17,144 +17,144 @@
  * - Extra pane header is ignored if "extra" slot is not provided.
  */
 
-import 'virtual:pf/custom-css/Web'
-import '../styles/web.css'
+import "virtual:pf/custom-css/Web";
+import "../styles/web.css";
 
-import { Elements, Footer, Header } from 'virtual:pf/components'
-import config from 'virtual:pf/config'
+import { Elements, Footer, Header } from "virtual:pf/components";
+import config from "virtual:pf/config";
 
-import type { z } from 'astro/zod'
+import type { z } from "astro/zod";
 
-import type { pageSchema } from '../content'
-import { getIconLinkTags } from '../utils/links'
+import type { pageSchema } from "../content";
+import { getIconLinkTags } from "../utils/links";
 import {
-  getCommonMetaTags,
-  getFullPageTitle,
-  getThemeMetaTags,
-  getWebsiteMetaTags,
-} from '../utils/metas'
-import Root from './Root.astro'
+	getCommonMetaTags,
+	getFullPageTitle,
+	getThemeMetaTags,
+	getWebsiteMetaTags,
+} from "../utils/metas";
+import Root from "./Root.astro";
 
 interface Props {
-  frontmatter: z.infer<typeof pageSchema>
+	frontmatter: z.infer<typeof pageSchema>;
 }
-const { frontmatter } = Astro.props
+const { frontmatter } = Astro.props;
 
-const hasSecondary = Astro.slots.has('secondary')
-const hasExtra = Astro.slots.has('extra')
+const hasSecondary = Astro.slots.has("secondary");
+const hasExtra = Astro.slots.has("extra");
 
-const iconLinkTags = await getIconLinkTags()
+const iconLinkTags = await getIconLinkTags();
 ---
 
 <Root {...Astro.props}>
-  <Fragment slot="head">
-    <title>{getFullPageTitle(frontmatter.title)}</title>
+	<Fragment slot="head">
+		<title>{getFullPageTitle(frontmatter.title)}</title>
 
-    <!-- icons -->
-    <Elements items={iconLinkTags} tag="link" />
+		<!-- icons -->
+		<Elements items={iconLinkTags} tag="link" />
 
-    <!-- generators -->
-    <meta name="generator" content={Astro.generator} />
-    <meta name="generator" content="Récivi" />
+		<!-- generators -->
+		<meta name="generator" content={Astro.generator} />
+		<meta name="generator" content="Récivi" />
 
-    <!-- metadata -->
-    <Elements
-      items={[
-        ...getThemeMetaTags(),
-        ...getCommonMetaTags(frontmatter, Astro.site, Astro.url),
-        ...getWebsiteMetaTags(frontmatter),
-      ]}
-      tag="meta"
-    />
-    <slot name="metas">
-      <meta property="og:type" content="website" />
-    </slot>
+		<!-- metadata -->
+		<Elements
+			items={[
+				...getThemeMetaTags(),
+				...getCommonMetaTags(frontmatter, Astro.site, Astro.url),
+				...getWebsiteMetaTags(frontmatter),
+			]}
+			tag="meta"
+		/>
+		<slot name="metas">
+			<meta property="og:type" content="website" />
+		</slot>
 
-    <!-- custom head tags -->
-    {
-      config.head.elements.map(({ tag: Tag, attrs, content }) => (
-        <Tag {...attrs} set:html={content} />
-      ))
-    }
+		<!-- custom head tags -->
+		{
+			config.head.elements.map(({ tag: Tag, attrs, content }) => (
+				<Tag {...attrs} set:html={content} />
+			))
+		}
 
-    <slot name="head" />
-  </Fragment>
+		<slot name="head" />
+	</Fragment>
 
-  <!-- DEFAULT SLOT -->
-  <main class:list={[{ 'sec-yes': hasSecondary, 'ext-yes': hasExtra }]}>
-    <!-- Left pane, if it fits and content is provided -->
-    {
-      hasSecondary ? (
-        <div class="secondary">
-          <Header />
+	<!-- DEFAULT SLOT -->
+	<main class:list={[{ "sec-yes": hasSecondary, "ext-yes": hasExtra }]}>
+		<!-- Left pane, if it fits and content is provided -->
+		{
+			hasSecondary ? (
+				<div class="secondary">
+					<Header />
 
-          <div class="content">
-            <slot name="secondary" />
-          </div>
+					<div class="content">
+						<slot name="secondary" />
+					</div>
 
-          <Footer />
-        </div>
-      ) : undefined
-    }
+					<Footer />
+				</div>
+			) : undefined
+		}
 
-    <!-- Center pane, always present -->
-    <div class="primary">
-      <div class="secondary-header">
-        <Header />
-      </div>
-      {
-        Astro.slots.has('primary-header') ? (
-          <div class="primary-header">
-            <slot name="primary-header" />
-          </div>
-        ) : undefined
-      }
+		<!-- Center pane, always present -->
+		<div class="primary">
+			<div class="secondary-header">
+				<Header />
+			</div>
+			{
+				Astro.slots.has("primary-header") ? (
+					<div class="primary-header">
+						<slot name="primary-header" />
+					</div>
+				) : undefined
+			}
 
-      <div class="content">
-        <slot>
-          <p>
-            You must provide some content to the <code>Web</code>
-            layout!
-          </p>
-        </slot>
-      </div>
+			<div class="content">
+				<slot>
+					<p>
+						You must provide some content to the <code>Web</code>
+						layout!
+					</p>
+				</slot>
+			</div>
 
-      {
-        Astro.slots.has('primary-footer') ? (
-          <div class="primary-footer">
-            <slot name="primary-footer" />
-          </div>
-        ) : undefined
-      }
-      <div class="secondary-footer">
-        <Footer />
-      </div>
-    </div>
+			{
+				Astro.slots.has("primary-footer") ? (
+					<div class="primary-footer">
+						<slot name="primary-footer" />
+					</div>
+				) : undefined
+			}
+			<div class="secondary-footer">
+				<Footer />
+			</div>
+		</div>
 
-    <!-- Right pane, if it fits and content is provided -->
-    {
-      hasExtra ? (
-        <div class="extra">
-          {Astro.slots.has('extra-header') ? (
-            <div class="extra-header">
-              <slot name="extra-header" />
-            </div>
-          ) : undefined}
+		<!-- Right pane, if it fits and content is provided -->
+		{
+			hasExtra ? (
+				<div class="extra">
+					{Astro.slots.has("extra-header") ? (
+						<div class="extra-header">
+							<slot name="extra-header" />
+						</div>
+					) : undefined}
 
-          <div class="content">
-            <slot name="extra" />
-          </div>
-        </div>
-      ) : undefined
-    }
+					<div class="content">
+						<slot name="extra" />
+					</div>
+				</div>
+			) : undefined
+		}
 
-    <!-- Filler pane to take up remaining space -->
-    <div class="void"></div>
-  </main>
+		<!-- Filler pane to take up remaining space -->
+		<div class="void"></div>
+	</main>
 </Root>
 
 <style>
-  /*
+	/*
    * A full-width flexible-width primary pane is present below 640px.
    * ┌─┐
    * |P|
@@ -185,159 +185,159 @@ const iconLinkTags = await getIconLinkTags()
    * └───┴───┴─┴─
    */
 
-  @layer pf.core {
-    body {
-      display: flex;
-      flex-direction: column;
-      container: body / inline-size;
-      margin-inline-start: env(safe-area-inset-left);
-      margin-inline-end: env(safe-area-inset-right);
-      border-inline-start: min(env(safe-area-inset-left), 1px) solid
-        var(--pf-color-border);
-      min-block-size: 100dvh; /* Ensure body takes full viewport height. */
-    }
+	@layer pf.core {
+		body {
+			display: flex;
+			flex-direction: column;
+			container: body / inline-size;
+			margin-inline-start: env(safe-area-inset-left);
+			margin-inline-end: env(safe-area-inset-right);
+			border-inline-start: min(env(safe-area-inset-left), 1px) solid
+				var(--pf-color-border);
+			min-block-size: 100dvh; /* Ensure body takes full viewport height. */
+		}
 
-    main {
-      display: grid;
-      grid-template-columns: 100vw;
-      grid-template-areas: 'primary';
-      flex: 1;
-      min-block-size: 0;
+		main {
+			display: grid;
+			grid-template-columns: 100vw;
+			grid-template-areas: "primary";
+			flex: 1;
+			min-block-size: 0;
 
-      .secondary,
-      .extra,
-      .void {
-        /* Panes are hidden until added to the grid template areas. */
-        display: none;
-      }
+			.secondary,
+			.extra,
+			.void {
+				/* Panes are hidden until added to the grid template areas. */
+				display: none;
+			}
 
-      @container body (inline-size >= 640px) {
-        grid-template-columns: 640px 1fr;
-        grid-template-areas: 'primary void';
+			@container body (inline-size >= 640px) {
+				grid-template-columns: 640px 1fr;
+				grid-template-areas: "primary void";
 
-        .void {
-          display: block;
-        }
-      }
+				.void {
+					display: block;
+				}
+			}
 
-      @container body (inline-size = 640px) {
-        .void {
-          /* The void should not have a border if it is 0px wide. */
-          border-inline-start: none;
-        }
-      }
+			@container body (inline-size = 640px) {
+				.void {
+					/* The void should not have a border if it is 0px wide. */
+					border-inline-start: none;
+				}
+			}
 
-      &.ext-yes {
-        @container body (inline-size >= 961px) {
-          grid-template-columns: 640px 321px 1fr;
-          grid-template-areas: 'primary extra void';
+			&.ext-yes {
+				@container body (inline-size >= 961px) {
+					grid-template-columns: 640px 321px 1fr;
+					grid-template-areas: "primary extra void";
 
-          .extra {
-            display: block;
-          }
-        }
+					.extra {
+						display: block;
+					}
+				}
 
-        @container body (inline-size = 961px) {
-          .void {
-            /* The void should not have a border if it is 0px wide. */
-            border-inline-start: none;
-          }
-        }
-      }
+				@container body (inline-size = 961px) {
+					.void {
+						/* The void should not have a border if it is 0px wide. */
+						border-inline-start: none;
+					}
+				}
+			}
 
-      &.sec-yes {
-        @container body (inline-size >= 1281px) {
-          grid-template-columns: 641px 640px 1fr;
-          grid-template-areas: 'secondary primary void';
+			&.sec-yes {
+				@container body (inline-size >= 1281px) {
+					grid-template-columns: 641px 640px 1fr;
+					grid-template-areas: "secondary primary void";
 
-          .secondary {
-            display: block;
-          }
-          /* `.extra` is currently visible when it shouldn't be. */
-          .extra {
-            display: none;
-          }
-          /* Secondary pane already shows the secondary header */
-          .primary > .secondary-header,
-          .primary > .secondary-footer {
-            display: none;
-          }
-        }
+					.secondary {
+						display: block;
+					}
+					/* `.extra` is currently visible when it shouldn't be. */
+					.extra {
+						display: none;
+					}
+					/* Secondary pane already shows the secondary header */
+					.primary > .secondary-header,
+					.primary > .secondary-footer {
+						display: none;
+					}
+				}
 
-        @container body (inline-size = 1281px) {
-          .void {
-            /* The void should not have a border if it is 0px wide. */
-            border-inline-start: none;
-          }
-        }
-      }
+				@container body (inline-size = 1281px) {
+					.void {
+						/* The void should not have a border if it is 0px wide. */
+						border-inline-start: none;
+					}
+				}
+			}
 
-      &.sec-yes.ext-yes {
-        @container body (inline-size >= 1602px) {
-          grid-template-columns: 641px 640px 321px 1fr;
-          grid-template-areas: 'secondary primary extra void';
+			&.sec-yes.ext-yes {
+				@container body (inline-size >= 1602px) {
+					grid-template-columns: 641px 640px 321px 1fr;
+					grid-template-areas: "secondary primary extra void";
 
-          /* `.secondary` is already visible as it should be. */
-          .extra {
-            display: block;
-          }
-        }
-      }
+					/* `.secondary` is already visible as it should be. */
+					.extra {
+						display: block;
+					}
+				}
+			}
 
-      @container body (inline-size = 1602px) {
-        .void {
-          /* The void should not have a border if it is 0px wide. */
-          border-inline-start: none;
-        }
-      }
-    }
+			@container body (inline-size = 1602px) {
+				.void {
+					/* The void should not have a border if it is 0px wide. */
+					border-inline-start: none;
+				}
+			}
+		}
 
-    .primary {
-      grid-area: primary;
-    }
-    .secondary {
-      grid-area: secondary;
-      border-inline-end: 1px solid var(--pf-color-border);
-    }
-    .extra {
-      grid-area: extra;
-      border-inline-start: 1px solid var(--pf-color-border);
-    }
-    .void {
-      grid-area: void;
-      /* Extend into unsafe area. */
-      margin-right: calc(-1 * env(safe-area-inset-right));
-      border-inline-start: 1px solid var(--pf-color-border);
-      background-image: radial-gradient(
-        circle at center,
-        var(--pf-color-bg-highlight) 1px,
-        transparent 1px
-      );
-      background-size: 1rem 1rem;
-    }
+		.primary {
+			grid-area: primary;
+		}
+		.secondary {
+			grid-area: secondary;
+			border-inline-end: 1px solid var(--pf-color-border);
+		}
+		.extra {
+			grid-area: extra;
+			border-inline-start: 1px solid var(--pf-color-border);
+		}
+		.void {
+			grid-area: void;
+			/* Extend into unsafe area. */
+			margin-right: calc(-1 * env(safe-area-inset-right));
+			border-inline-start: 1px solid var(--pf-color-border);
+			background-image: radial-gradient(
+				circle at center,
+				var(--pf-color-bg-highlight) 1px,
+				transparent 1px
+			);
+			background-size: 1rem 1rem;
+		}
 
-    /* Make secondary and extra panes scrollable on their own. */
-    .secondary,
-    .extra {
-      position: sticky;
-      inset-block-start: 0;
-      block-size: 100dvh;
-      overflow-y: auto;
-    }
+		/* Make secondary and extra panes scrollable on their own. */
+		.secondary,
+		.extra {
+			position: sticky;
+			inset-block-start: 0;
+			block-size: 100dvh;
+			overflow-y: auto;
+		}
 
-    .primary-header,
-    .extra-header {
-      border-block-end: 1px solid var(--pf-color-border);
-      padding: 1rem;
-    }
+		.primary-header,
+		.extra-header {
+			border-block-end: 1px solid var(--pf-color-border);
+			padding: 1rem;
+		}
 
-    .primary-footer {
-      border-block-start: 1px solid var(--pf-color-border);
-      padding: 1rem;
-    }
+		.primary-footer {
+			border-block-start: 1px solid var(--pf-color-border);
+			padding: 1rem;
+		}
 
-    .content {
-      padding-inline: 1rem;
-    }
-  }
+		.content {
+			padding-inline: 1rem;
+		}
+	}
 </style>

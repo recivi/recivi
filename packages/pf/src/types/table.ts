@@ -1,10 +1,10 @@
-import type { Renderer, RendererRegistry } from './renderers'
+import type { Renderer, RendererRegistry } from "./renderers";
 
 /** information about a column in the table */
 export interface ColumnSpec {
-  title: string
-  renderer: Renderer
-  class?: string
+	title: string;
+	renderer: Renderer;
+	class?: string;
 }
 
 /**
@@ -13,22 +13,22 @@ export interface ColumnSpec {
  * column's renderer component.
  */
 type RowData<ColumnSpecMap extends Record<string, ColumnSpec>> = {
-  [K in keyof ColumnSpecMap]: ColumnSpecMap[K]['renderer'] extends infer R
-    ? R extends Renderer
-      ? RendererRegistry[R]
-      : never
-    : never
-}
+	[K in keyof ColumnSpecMap]: ColumnSpecMap[K]["renderer"] extends infer R
+		? R extends Renderer
+			? RendererRegistry[R]
+			: never
+		: never;
+};
 
 /**
  * a row in the table; The `RowData` generic type is intentionally broad as we
  * cannot know at the time what the column spec will be. We will use a narrower
  * type for `RowData` when defining the table.
  */
-interface Row<RowData extends Record<string, unknown>> {
-  groupId: string
-  data: RowData
-  attrs?: Record<string, string | undefined>
+interface Row<Data extends Record<string, unknown>> {
+	groupId: string;
+	data: Data;
+	attrs?: Record<string, string | undefined>;
 }
 
 /**
@@ -36,9 +36,9 @@ interface Row<RowData extends Record<string, unknown>> {
  * column specifications must be designated as the expanding column.
  */
 export interface Table<ColumnSpecMap extends Record<string, ColumnSpec>> {
-  columnSpecs: ColumnSpecMap
-  rows: Row<RowData<ColumnSpecMap>>[]
-  expandingColumn: keyof ColumnSpecMap
+	columnSpecs: ColumnSpecMap;
+	rows: Row<RowData<ColumnSpecMap>>[];
+	expandingColumn: keyof ColumnSpecMap;
 }
 
 /**
@@ -50,13 +50,13 @@ export interface Table<ColumnSpecMap extends Record<string, ColumnSpec>> {
  * @returns the well-defined table
  */
 export function defineTable<ColumnSpecMap extends Record<string, ColumnSpec>>(
-  columnSpecs: ColumnSpecMap,
-  rows: Row<RowData<ColumnSpecMap>>[],
-  expandingColumn: keyof ColumnSpecMap,
+	columnSpecs: ColumnSpecMap,
+	rows: Row<RowData<ColumnSpecMap>>[],
+	expandingColumn: keyof ColumnSpecMap,
 ): Table<ColumnSpecMap> {
-  return {
-    columnSpecs,
-    rows,
-    expandingColumn,
-  }
+	return {
+		columnSpecs,
+		rows,
+		expandingColumn,
+	};
 }

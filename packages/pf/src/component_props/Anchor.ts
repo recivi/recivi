@@ -1,10 +1,10 @@
-import type { Url } from '@recivi/schema'
+import type { Url } from "@recivi/schema";
 
-import type { BaseProps } from './base'
+import type { BaseProps } from "./base";
 
 export interface AnchorProps extends BaseProps {
-  /** the URL to link to */
-  url: Url
+	/** the URL to link to */
+	url: Url;
 }
 
 /**
@@ -14,5 +14,5 @@ export interface AnchorProps extends BaseProps {
  * @return whether value matches the `AnchorProps` interface
  */
 export function isAnchorProps(val: unknown): val is AnchorProps {
-  return val !== null && typeof val === 'object' && 'url' in val
+	return val !== null && typeof val === "object" && "url" in val;
 }

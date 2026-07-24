@@ -2,46 +2,46 @@
 // Sets the basic HTML structure and includes core CSS files that are applicable
 // across all media.
 
-import 'virtual:pf/custom-css/Root'
-import '../styles/core.css'
-import '../styles/props.css'
-import '../styles/reset.css'
-import '../styles/universal.css'
-import '../styles/utils.css'
+import "virtual:pf/custom-css/Root";
+import "../styles/core.css";
+import "../styles/props.css";
+import "../styles/reset.css";
+import "../styles/universal.css";
+import "../styles/utils.css";
 
-import config from 'virtual:pf/config'
+import config from "virtual:pf/config";
 
-const layers = `@layer ${config.css.layers.join(', ')};`
+const layers = `@layer ${config.css.layers.join(", ")};`;
 ---
 
 <!doctype html>
 <html lang={config.locale.bcp47} dir={config.locale.dir} {...Astro.props}>
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="viewport-fit=cover, width=device-width, initial-scale=1.0"
-    />
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="viewport-fit=cover, width=device-width, initial-scale=1.0"
+		/>
 
-    <!-- This is a hack to prevent layer order from deviating. -->
-    <style is:inline set:html={layers}></style>
+		<!-- This is a hack to prevent layer order from deviating. -->
+		<style is:inline set:html={layers}></style>
 
-    <noscript>
-      <style>
-        @layer pf.utils {
-          /* util to hide elements that require JavaScript to function */
-          .requires-js {
-            display: none;
-          }
-        }
-      </style>
-    </noscript>
+		<noscript>
+			<style>
+				@layer pf.utils {
+					/* util to hide elements that require JavaScript to function */
+					.requires-js {
+						display: none;
+					}
+				}
+			</style>
+		</noscript>
 
-    <!-- Add extra head elements here. -->
-    <slot name="head" />
-  </head>
+		<!-- Add extra head elements here. -->
+		<slot name="head" />
+	</head>
 
-  <body>
-    <slot />
-  </body>
+	<body>
+		<slot />
+	</body>
 </html>

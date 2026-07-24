@@ -5,29 +5,23 @@ description: >-
 ogTitle: ^•ﻌ•^𐒡
 ---
 
-import reciviData from 'virtual:recivi/data';
-import { Comms } from 'virtual:pf/components';
-import { getArrayDisplay } from '@recivi/pf/recivi/intl';
-import { getAddressDisplay } from '@recivi/pf/recivi/address';
+import reciviData from "virtual:recivi/data";
+import { Comms } from "virtual:pf/components";
+import { getArrayDisplay } from "@recivi/pf/recivi/intl";
+import { getAddressDisplay } from "@recivi/pf/recivi/address";
 
-import ManekiNeko from '@/components/ManekiNeko.astro';
+import ManekiNeko from "@/components/ManekiNeko.astro";
 
-export const {name, labels, residence, origin} = reciviData.bio
+export const { name, labels, residence, origin } = reciviData.bio;
 
 # <ManekiNeko/>
 
-Hello! I am **{
-	name
-}**, a {
-	labels && getArrayDisplay(labels)
-} {
-	residence && `based in ${getAddressDisplay(residence)}`
-} {
-	origin && `(originally from ${getAddressDisplay(origin)})`
+Hello! I am **{ name }**, a { labels && getArrayDisplay(labels) }{ residence &&
+` based in ${getAddressDisplay(residence)}` }{ origin && ` (originally from ${getAddressDisplay(origin)})`
 }.
 
 ## Contact
 
 You can get in touch with me through any of these channels:
 
-<Comms/>
+<Comms />

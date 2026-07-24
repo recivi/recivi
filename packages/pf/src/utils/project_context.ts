@@ -3,9 +3,9 @@
  * they are used in `index.ts` before the virtual modules have been defined.
  */
 
-import { stat } from 'node:fs/promises'
+import { stat } from "node:fs/promises";
 
-import type { ProjectContext } from '../types/project_context'
+import type { ProjectContext } from "../types/project_context";
 
 /**
  * Check if a file with the given name exists in the public directory.
@@ -14,15 +14,15 @@ import type { ProjectContext } from '../types/project_context'
  * @returns whether the file exists in the public directory
  */
 export async function publicFileExists(
-  projectContext: Pick<ProjectContext, 'publicDir'>,
-  filename: string,
+	projectContext: Pick<ProjectContext, "publicDir">,
+	filename: string,
 ): Promise<boolean> {
-  try {
-    await stat(new URL(filename, projectContext.publicDir))
-    return true
-  } catch {
-    return false
-  }
+	try {
+		await stat(new URL(filename, projectContext.publicDir));
+		return true;
+	} catch {
+		return false;
+	}
 }
 
 /**
@@ -34,15 +34,15 @@ export async function publicFileExists(
  * @returns the path without the base prefix
  */
 export function pathWithoutBase(
-  projectContext: Pick<ProjectContext, 'base'>,
-  path: string,
+	projectContext: Pick<ProjectContext, "base">,
+	path: string,
 ): string {
-  const { base } = projectContext
-  let remaining = path
-  if (remaining.startsWith(base)) {
-    remaining = remaining.substring(base.length)
-  }
-  return remaining.startsWith('/') ? remaining : `/${remaining}`
+	const { base } = projectContext;
+	let remaining = path;
+	if (remaining.startsWith(base)) {
+		remaining = remaining.slice(base.length);
+	}
+	return remaining.startsWith("/") ? remaining : `/${remaining}`;
 }
 
 /**
@@ -54,16 +54,12 @@ export function pathWithoutBase(
  * @param path the path to prefix with the base
  * @returns the path prefixed with the base
  */
-export function pathWithBase(
-  projectContext: Pick<ProjectContext, 'base'>,
-  path: string,
-): string {
-  const { base } = projectContext
-  if (base.endsWith('/')) {
-    return `${base}${path}`
-  } else {
-    return `${base}/${path}`
-  }
+export function pathWithBase(projectContext: Pick<ProjectContext, "base">, path: string): string {
+	const { base } = projectContext;
+	if (base.endsWith("/")) {
+		return `${base}${path}`;
+	}
+	return `${base}/${path}`;
 }
 
 /**
@@ -80,17 +76,17 @@ export function pathWithBase(
  * @returns the path with the correct trailing slash
  */
 export function fixTrailingSlash(
-  projectContext: Pick<ProjectContext, 'trailingSlash'>,
-  path: string | URL,
+	projectContext: Pick<ProjectContext, "trailingSlash">,
+	path: string | URL,
 ): string {
-  const { trailingSlash } = projectContext
+	const { trailingSlash } = projectContext;
 
-  const pathStr = path.toString()
-  if (trailingSlash === 'always' && !pathStr.endsWith('/')) {
-    return `${pathStr}/`
-  }
-  if (trailingSlash === 'never' && pathStr.endsWith('/')) {
-    return pathStr.slice(0, -1)
-  }
-  return pathStr
+	const pathStr = path.toString();
+	if (trailingSlash === "always" && !pathStr.endsWith("/")) {
+		return `${pathStr}/`;
+	}
+	if (trailingSlash === "never" && pathStr.endsWith("/")) {
+		return pathStr.slice(0, -1);
+	}
+	return pathStr;
 }

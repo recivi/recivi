@@ -3,5 +3,5 @@
  * does not make the properties optional!
  */
 export type WithUndefinedValues<T> = {
-  [K in keyof T]: T[K] | undefined
-}
+	[K in keyof T]: T[K] | undefined;
+};

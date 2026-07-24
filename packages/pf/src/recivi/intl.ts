@@ -1,4 +1,4 @@
-import config from 'virtual:pf/config'
+import config from "virtual:pf/config";
 
 /**
  * Combine the array of strings into a single string for display.
@@ -10,8 +10,9 @@ import config from 'virtual:pf/config'
  * @returns the string representation of the array
  */
 export function getArrayDisplay(array: string[]): string {
-  return new Intl.ListFormat(config.locale.bcp47, {
-    style: 'long',
-    type: 'conjunction', // means "and"
-  }).format(array)
+	return new Intl.ListFormat(config.locale.bcp47, {
+		style: "long",
+		// Join the last item with "and".
+		type: "conjunction",
+	}).format(array);
 }

@@ -1,8 +1,8 @@
-import type { AstroConfig } from 'astro'
+import type { AstroConfig } from "astro";
 
 export interface ProjectContext extends Pick<
-  AstroConfig,
-  'site' | 'base' | 'trailingSlash' | 'root' | 'srcDir' | 'publicDir' | 'build'
+	AstroConfig,
+	"site" | "base" | "trailingSlash" | "root" | "srcDir" | "publicDir" | "build"
 > {
-  hasManifestIcons: boolean
+	hasManifestIcons: boolean;
 }

@@ -1,6 +1,5 @@
-import reciviData from 'virtual:recivi/data'
-
-import type { Epic, Org, Role } from '@recivi/schema'
+import type { Epic, Org, Role } from "@recivi/schema";
+import reciviData from "virtual:recivi/data";
 
 /**
  * Get the org linked to the given epic.
@@ -9,9 +8,9 @@ import type { Epic, Org, Role } from '@recivi/schema'
  * @returns the org where at least one role links to the epic
  */
 export function getLinkedOrg(epic: Epic): Org | undefined {
-  return reciviData.work.find((org) =>
-    org.roles.some((role) => epic.id && role.epicIds.includes(epic.id)),
-  )
+	return reciviData.work.find((org) =>
+		org.roles.some((role) => epic.id && role.epicIds.includes(epic.id)),
+	);
 }
 
 /**
@@ -21,7 +20,5 @@ export function getLinkedOrg(epic: Epic): Org | undefined {
  * @returns all epics linked to the role
  */
 export function getLinkedEpics(role: Role): Epic[] {
-  return reciviData.creations.filter(
-    (epic) => epic.id && role.epicIds.includes(epic.id),
-  )
+	return reciviData.creations.filter((epic) => epic.id && role.epicIds.includes(epic.id));
 }

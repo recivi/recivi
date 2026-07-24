@@ -1,7 +1,7 @@
-import type { CollectionEntry } from 'astro:content'
-import { getCollection } from 'astro:content'
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
-import { defineTable } from '../types/table'
+import { defineTable } from "../types/table";
 
 /**
  * Check that a given entry from a content collection is not a draft.
@@ -13,7 +13,7 @@ import { defineTable } from '../types/table'
  * @returns whether the entry is not a draft or whether we are in dev mode
  */
 export function isNotDraft(item: { data: { isDraft?: boolean } }): boolean {
-  return !item.data.isDraft || import.meta.env.DEV
+	return !item.data.isDraft || import.meta.env.DEV;
 }
 
 /**
@@ -25,14 +25,14 @@ export function isNotDraft(item: { data: { isDraft?: boolean } }): boolean {
  * @returns all unique categories
  */
 export async function getCategories(): Promise<string[]> {
-  const posts = await getCollection('blog', isNotDraft)
-  const categorySet = new Set<string>()
-  posts.forEach((post) => {
-    post.data.categories.forEach((category) => {
-      categorySet.add(category)
-    })
-  })
-  return Array.from(categorySet).toSorted()
+	const posts = await getCollection("blog", isNotDraft);
+	const categorySet = new Set<string>();
+	posts.forEach((post) => {
+		post.data.categories.forEach((category) => {
+			categorySet.add(category);
+		});
+	});
+	return Array.from(categorySet).toSorted();
 }
 
 /**
@@ -41,29 +41,29 @@ export async function getCategories(): Promise<string[]> {
  * @param posts a list of blog posts to include in the table
  * @returns the complete data needed to render a table of blog posts
  */
-export function getPostsTable(posts: CollectionEntry<'blog'>[]) {
-  return defineTable(
-    {
-      publish: { title: 'Published', renderer: 'PfDate' },
-      post: { title: 'Title & Tags', renderer: 'Post' },
-    },
-    posts.map((post) => {
-      return {
-        groupId: post.data.pubDate.getFullYear().toString(),
-        data: {
-          publish: { date: post.data.pubDate },
-          post: { post },
-        },
-        attrs: {
-          'x-data': JSON.stringify({ categories: post.data.categories }),
-          'x-bind:class': [
-            'activeCategories.length',
-            '!categories.some((item) => activeCategories.includes(item))',
-            '"inactive"',
-          ].join(' && '),
-        },
-      }
-    }),
-    'post',
-  )
+export function getPostsTable(posts: CollectionEntry<"blog">[]) {
+	return defineTable(
+		{
+			publish: { title: "Published", renderer: "PfDate" },
+			post: { title: "Title & Tags", renderer: "Post" },
+		},
+		posts.map((post) => {
+			return {
+				groupId: post.data.pubDate.getFullYear().toString(),
+				data: {
+					publish: { date: post.data.pubDate },
+					post: { post },
+				},
+				attrs: {
+					"x-data": JSON.stringify({ categories: post.data.categories }),
+					"x-bind:class": [
+						"activeCategories.length",
+						"!categories.some((item) => activeCategories.includes(item))",
+						'"inactive"',
+					].join(" && "),
+				},
+			};
+		}),
+		"post",
+	);
 }
