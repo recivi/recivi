@@ -6,8 +6,8 @@
 
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { styleText } from "node:util";
 
-import chalk from "chalk";
 import { z } from "zod";
 
 // Import from the barrel file.
@@ -36,9 +36,9 @@ import Schema from '@/components/Schema.astro'
 `;
 	writeFileSync(filePath, content, { encoding: "utf-8" });
 	console.log(
-		chalk.green("ZTR"),
-		chalk.bold(`${schema.id.toLocaleLowerCase()}.mdx`),
-		chalk.green(schema.id),
+		styleText("green", "ZTR"),
+		styleText("bold", `${schema.id.toLocaleLowerCase()}.mdx`),
+		styleText("green", schema.id),
 	);
 }
 
@@ -47,7 +47,7 @@ Entrypoint
 ==========
 */
 
-console.log(chalk.blue("ZTR"), "Zod to reference start");
+console.log(styleText("blue", "ZTR"), "Zod to reference start");
 
 const referenceDir = resolve(
 	import.meta.filename,
@@ -68,4 +68,4 @@ for (const schemaDef of Object.values(jsonSchema.$defs ?? {})) {
 delete jsonSchema.$defs;
 generateMarkdownPage(jsonSchema as JsonSchema);
 
-console.log(chalk.green("ZTR"), "⚡️ Zod to reference success");
+console.log(styleText("green", "ZTR"), "⚡️ Zod to reference success");

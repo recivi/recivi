@@ -6,14 +6,12 @@
 
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { styleText } from "node:util";
 
 import { z } from "astro/zod";
-import colors from "piccolore";
 
 import { optionsSchema } from "../options/index";
 import { primaryRegistry } from "../registries/primary";
-
-const { blue, bold, green } = colors;
 
 interface JsonSchema {
 	id: string;
@@ -36,7 +34,11 @@ import Schema from '@/components/Schema.astro'
   hrefFmt='/pf/reference/{ref}/' />
 `;
 	writeFileSync(filePath, content, { encoding: "utf-8" });
-	console.log(green("ZTR"), bold(`${schema.id.toLocaleLowerCase()}.mdx`), green(schema.id),);
+	console.log(
+		styleText("green", "ZTR"),
+		styleText("bold", `${schema.id.toLocaleLowerCase()}.mdx`),
+		styleText("green", schema.id),
+	);
 }
 
 /*
@@ -44,7 +46,7 @@ Entrypoint
 ==========
 */
 
-console.log(blue("ZTR"), "Zod to reference start");
+console.log(styleText("blue", "ZTR"), "Zod to reference start");
 
 const referenceDir = resolve(
 	import.meta.filename,
@@ -68,4 +70,4 @@ for (const schemaDef of Object.values(jsonSchema.$defs ?? {})) {
 delete jsonSchema.$defs;
 generateMarkdownPage(jsonSchema as JsonSchema);
 
-console.log(green("ZTR"), "⚡️ Zod to reference success");
+console.log(styleText("green", "ZTR"), "⚡️ Zod to reference success");

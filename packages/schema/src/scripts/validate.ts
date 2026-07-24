@@ -4,8 +4,8 @@
 
 import { readFileSync } from "node:fs";
 import { isAbsolute, resolve } from "node:path";
+import { styleText } from "node:util";
 
-import chalk from "chalk";
 import { Command } from "commander";
 import { ZodError } from "zod";
 
@@ -25,7 +25,7 @@ function resolveFilePath(file: string): string {
 		return file;
 	}
 	const resolvedFile = resolve(process.cwd(), file);
-	console.log(chalk.blue("VAL"), `Resolved: ${resolvedFile}`);
+	console.log(styleText("blue", "VAL"), `Resolved: ${resolvedFile}`);
 	return resolvedFile;
 }
 
@@ -51,18 +51,26 @@ function isValidResume(file: string): boolean {
 		const content = readTextFile(file);
 		resumeSchema.parse(JSON.parse(content));
 
-		console.log(chalk.green("VAL"), chalk.bold(file), chalk.green("Valid"));
+		console.log(styleText("green", "VAL"), styleText("bold", file), styleText("green", "Valid"));
 		return true;
 	} catch (error) {
 		if (error instanceof ZodError) {
-			console.log(chalk.red("VAL"), chalk.bold(file), chalk.red("Invalid, see errors below:"));
+			console.log(
+				styleText("red", "VAL"),
+				styleText("bold", file),
+				styleText("red", "Invalid, see errors below:"),
+			);
 
 			error.issues.forEach((err) => {
 				const errorText = `\n${JSON.stringify(err, null, 2)}`;
-				console.log(chalk.red(errorText.replaceAll("\n", chalk.dim("\n..."))));
+				console.log(styleText("red", errorText.replaceAll("\n", styleText("dim", "\n..."))));
 			});
 		} else {
-			console.log(chalk.red("VAL"), chalk.bold(file), chalk.red(error));
+			console.log(
+				styleText("red", "VAL"),
+				styleText("bold", file),
+				styleText("red", String(error)),
+			);
 		}
 	}
 	return false;
@@ -78,19 +86,19 @@ function isValidResume(file: string): boolean {
  * @param files the names of the files to validate
  */
 function main(files: string[]) {
-	console.log(chalk.blue("VAL"), "Validation start");
+	console.log(styleText("blue", "VAL"), "Validation start");
 
 	const validities = files.map((file) => {
-		console.log(chalk.blue("VAL"), `Validating file: ${file}`);
+		console.log(styleText("blue", "VAL"), `Validating file: ${file}`);
 		return isValidResume(file);
 	});
 
 	if (validities.includes(false)) {
 		// At least one file was invalid.
-		console.log(chalk.red("VAL"), "× Validation failure");
+		console.log(styleText("red", "VAL"), "× Validation failure");
 		process.exit(1);
 	} else {
-		console.log(chalk.green("VAL"), "⚡️ Validation success");
+		console.log(styleText("green", "VAL"), "⚡️ Validation success");
 	}
 }
 

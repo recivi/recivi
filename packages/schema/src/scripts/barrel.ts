@@ -4,8 +4,8 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { styleText } from "node:util";
 
-import chalk from "chalk";
 import { globSync } from "glob";
 
 const EXPORT_TYPE_RE = /export (?:interface|type) (?<name>\w+)/u;
@@ -13,7 +13,7 @@ const EXPORT_ZOD_RE = /export const (?<name>\w+Schema)/u;
 
 const srcPath = resolve(import.meta.filename, "../../");
 
-console.log(chalk.blue("BRL"), "Barrel start");
+console.log(styleText("blue", "BRL"), "Barrel start");
 
 const allTsFiles = globSync(`${srcPath}/models/**/*.ts`);
 let typesCount = 0;
@@ -42,6 +42,14 @@ const fileExports = allTsFiles.flatMap((tsFile) => {
 const barrelPath = join(srcPath, "index.ts");
 writeFileSync(barrelPath, fileExports.join("\n"), { encoding: "utf-8" });
 
-console.log(chalk.green("BRL"), chalk.bold("src/index.ts"), chalk.green(`${typesCount} types`));
-console.log(chalk.green("BRL"), chalk.bold("src/index.ts"), chalk.green(`${schemasCount} schemas`));
-console.log(chalk.green("BRL"), "⚡️ Barrel success");
+console.log(
+	styleText("green", "BRL"),
+	styleText("bold", "src/index.ts"),
+	styleText("green", `${typesCount} types`),
+);
+console.log(
+	styleText("green", "BRL"),
+	styleText("bold", "src/index.ts"),
+	styleText("green", `${schemasCount} schemas`),
+);
+console.log(styleText("green", "BRL"), "⚡️ Barrel success");

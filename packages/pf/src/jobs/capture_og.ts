@@ -1,13 +1,11 @@
 import { mkdir, rm } from "node:fs/promises";
+import { styleText } from "node:util";
 
 import { type AstroIntegration, preview } from "astro";
-import colors from "piccolore";
 import puppeteer from "puppeteer";
 
 import type { ProjectContext } from "../types/project_context";
 import { fixTrailingSlash, pathWithBase } from "../utils/project_context";
-
-const { bgGreen, blue, black, green, yellow, dim } = colors;
 
 type Params = Parameters<NonNullable<AstroIntegration["hooks"]["astro:build:done"]>>[0];
 
@@ -17,7 +15,7 @@ export async function captureOgImages(
 	pages: Params["pages"],
 	logger: Params["logger"],
 ) {
-	logger.info(bgGreen(black(" generating Open Graph images ")));
+	logger.info(styleText("bgGreen", styleText("black", " generating Open Graph images ")));
 
 	// Start Astro preview server.
 	const server = await preview({ logLevel: "error" });
@@ -33,13 +31,13 @@ export async function captureOgImages(
 
 		const fixedPathname = fixTrailingSlash(projectContext, pathWithBase(projectContext, pathname),);
 		const url = `${baseUrl}${fixedPathname}`;
-		logger.info(`${blue("▶")} ${url}`);
+		logger.info(`${styleText("blue", "▶")} ${url}`);
 
 		// Open the OG image rendering page via Puppeteer.
 		await page.goto(url, { waitUntil: "networkidle0" });
 		const bodyEl = await page.waitForSelector("body");
 		if (!bodyEl) {
-			logger.warn(`  ${yellow("└─ skipped")}: no <body>`);
+			logger.warn(`  ${styleText("yellow", "└─ skipped")}: no <body>`);
 			continue;
 		}
 
@@ -53,12 +51,12 @@ export async function captureOgImages(
 		await bodyEl.screenshot({
 			path: screenshotPath.pathname,
 		});
-		logger.info(`  ${blue("└─")} ${dim(screenshotPath.pathname)}`);
+		logger.info(`  ${styleText("blue", "└─")} ${styleText("dim", screenshotPath.pathname)}`);
 	}
 	// Delete the `og_render` directory.
 	await rm(new URL("og_render/", dir), { recursive: true, force: true });
 
-	logger.info(green("✓ Completed."));
+	logger.info(styleText("green", "✓ Completed."));
 
 	// Clean up.
 	await browser.close();

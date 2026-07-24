@@ -5,10 +5,11 @@
  */
 /// <reference path="./virtual.d.ts"/>
 
+import { styleText } from "node:util";
+
 import mdx from "@astrojs/mdx";
 import type { AstroIntegration } from "astro";
 import { addVirtualImports } from "astro-integration-kit";
-import colors from "piccolore";
 
 import { captureOgImages } from "./jobs/capture_og";
 import { watchDatafile } from "./jobs/watch_datafile";
@@ -19,8 +20,6 @@ import { defaultLayout } from "./remark/default_layout";
 import type { ProjectContext } from "./types/project_context";
 import { getAbsolutePath, isLocalFile } from "./utils/paths";
 import { publicFileExists } from "./utils/project_context";
-
-const { blue } = colors;
 
 /**
  * Set up the Récivi PF Astro integration with the given configuration.
@@ -42,7 +41,7 @@ export default function (options: Options): AstroIntegration {
 		name: "@recivi/pf",
 		hooks: {
 			"astro:config:setup": async (params) => {
-				params.logger.debug(`${blue("astro:config:setup")} hook called`);
+				params.logger.debug(`${styleText("blue", "astro:config:setup")} hook called`);
 
 				// Preserve config root for use in other hooks.
 				configRoot = params.config.root;
@@ -142,7 +141,7 @@ export default function (options: Options): AstroIntegration {
 				});
 			},
 			"astro:server:setup": (params) => {
-				params.logger.debug(`${blue("astro:server:setup")} hook called`);
+				params.logger.debug(`${styleText("blue", "astro:server:setup")} hook called`);
 
 				let { reciviDataFile } = parsedOptions;
 				if (isLocalFile(reciviDataFile) && !isWatchingDatafile) {
@@ -153,7 +152,7 @@ export default function (options: Options): AstroIntegration {
 				}
 			},
 			"astro:build:done": async (params) => {
-				params.logger.debug(`${blue("astro:build:done")} hook called`);
+				params.logger.debug(`${styleText("blue", "astro:build:done")} hook called`);
 
 				// Generate Open Graph images.
 				if (projectContext.site) {

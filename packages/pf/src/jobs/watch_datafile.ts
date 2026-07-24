@@ -1,7 +1,6 @@
-import type { AstroIntegration } from "astro";
-import colors from "piccolore";
+import { styleText } from "node:util";
 
-const { green } = colors;
+import type { AstroIntegration } from "astro";
 
 type Params = Parameters<NonNullable<AstroIntegration["hooks"]["astro:server:setup"]>>[0];
 
@@ -17,7 +16,7 @@ export function watchDatafile(
 	server: Params["server"],
 	logger: Params["logger"],
 ) {
-	logger.info(green("watching for data file changes..."));
+	logger.info(styleText("green", "watching for data file changes..."));
 
 	let restartTimeout: NodeJS.Timeout | undefined = undefined;
 	server.watcher.on("change", (path) => {
