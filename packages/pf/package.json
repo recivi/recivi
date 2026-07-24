@@ -44,7 +44,6 @@
 		"@iconify-json/lucide": "^1.2.100",
 		"@iconify-json/simple-icons": "^1.2.75",
 		"@recivi/schema": "workspace:^",
-		"piccolore": "^0.1.3",
 		"puppeteer": "^24.40.0",
 		"sharp": "catalog:"
 	},

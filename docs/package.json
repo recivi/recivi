@@ -1,5 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/package.json",
+	"name": "docs",
 	"private": true,
 	"scripts": {
 		"dev": "astro dev --host",
