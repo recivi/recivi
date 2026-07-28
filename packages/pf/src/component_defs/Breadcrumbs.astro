@@ -1,8 +1,9 @@
 ---
 // Render a breadcrumb navigation trail.
 
+import { Anchor } from "virtual:pf/components";
+
 import type { BreadcrumbsProps } from "../component_props/Breadcrumbs";
-import Anchor from "./Anchor.astro";
 
 type Props = BreadcrumbsProps;
 const { crumbs, class: className, ...attrs } = Astro.props as Props;

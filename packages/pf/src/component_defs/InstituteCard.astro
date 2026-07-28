@@ -1,9 +1,9 @@
 ---
 // Render a card displaying institute and certs information.
 
+import { Entity, PfDate } from "virtual:pf/components";
+
 import type { InstituteCardProps } from "../component_props/InstituteCard";
-import Entity from "./Entity.astro";
-import PfDate from "./PfDate.astro";
 
 type Props = InstituteCardProps;
 const { institute, class: className, ...attrs } = Astro.props;

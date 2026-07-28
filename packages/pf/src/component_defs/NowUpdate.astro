@@ -2,10 +2,9 @@
 // Render an update for the "Now" page.
 
 import { render } from "astro:content";
+import { Icon, PfDate } from "virtual:pf/components";
 
 import type { NowUpdateProps } from "../component_props/NowUpdate";
-import Icon from "./Icon.astro";
-import PfDate from "./PfDate.astro";
 
 type Props = NowUpdateProps;
 const { update, isLatest, class: className, ...attrs } = Astro.props;

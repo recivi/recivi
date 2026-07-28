@@ -32,6 +32,7 @@
 		"./utils/*": "./src/utils/*.ts"
 	},
 	"scripts": {
+		"barrel": "tsx src/scripts/barrel.ts",
 		"check": "astro check",
 		"astro": "astro",
 		"test": "tsx --test",

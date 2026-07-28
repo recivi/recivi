@@ -2,9 +2,9 @@
 // Render the footer with debug information and, optionally, credits.
 
 import config from "virtual:pf/config";
+import { Brand } from "virtual:pf/components";
 
 import type { BaseProps } from "../component_props/base";
-import Brand from "./Brand.astro";
 
 type Props = BaseProps;
 const { class: className, ...attrs } = Astro.props;

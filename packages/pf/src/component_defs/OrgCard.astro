@@ -1,9 +1,9 @@
 ---
 // Render a card displaying org and roles information.
 
+import { Entity, Period } from "virtual:pf/components";
+
 import type { OrgCardProps } from "../component_props/OrgCard";
-import Entity from "./Entity.astro";
-import Period from "./Period.astro";
 
 type Props = OrgCardProps;
 const { org, class: className, ...attrs } = Astro.props;

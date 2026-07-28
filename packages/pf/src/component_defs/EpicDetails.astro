@@ -1,11 +1,10 @@
 ---
 // Render a detailed page for an epic and its projects.
 
+import { Anchor, Entity, TechStack } from "virtual:pf/components";
+
 import type { EpicDetailsProps } from "../component_props/EpicDetails";
 import { getLinkedOrg } from "../recivi/relations";
-import Anchor from "./Anchor.astro";
-import Entity from "./Entity.astro";
-import TechStack from "./TechStack.astro";
 
 type Props = EpicDetailsProps;
 const {

@@ -1,6 +1,15 @@
 ---
 // Render tabular data.
 
+import {
+	Anchor,
+	Entity,
+	Period,
+	PfDate,
+	Post,
+	TechStack,
+} from "virtual:pf/components";
+
 import { isAnchorProps } from "../component_props/Anchor";
 import { isEntityProps } from "../component_props/Entity";
 import { isPeriodProps } from "../component_props/Period";
@@ -9,12 +18,6 @@ import { isPostProps } from "../component_props/Post";
 import type { TableProps } from "../component_props/Table";
 import { isTechStackProps } from "../component_props/TechStack";
 import type { ColumnSpec } from "../types/table";
-import Anchor from "./Anchor.astro";
-import Entity from "./Entity.astro";
-import Period from "./Period.astro";
-import PfDate from "./PfDate.astro";
-import Post from "./Post.astro";
-import TechStack from "./TechStack.astro";
 
 const {
 	table: { rows, columnSpecs, expandingColumn },

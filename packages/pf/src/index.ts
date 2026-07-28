@@ -1,9 +1,11 @@
-/**
- * These triple-slash directives defines dependencies to various declaration files that will be
- * loaded when a user imports the PF integration in their Astro configuration file. These
- * directives must be first at the top of the file and can only be preceded by this comment
- */
+// This triple-slash directive defines dependencies to various declaration files that
+// will be loaded when a user imports the PF integration in their Astro project.
+// Directives can only be present at the top of a file and can only be preceded by other
+// directives or comments.
+//
+// oxlint-disable typescript/triple-slash-reference
 /// <reference path="./virtual.d.ts"/>
+/// <reference path="./components.d.ts"/>
 
 import { styleText } from "node:util";
 

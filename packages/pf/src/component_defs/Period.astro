@@ -2,8 +2,9 @@
 // Render a period between two dates.
 // This component is also a table renderer.
 
+import { PfDate } from "virtual:pf/components";
+
 import type { PeriodProps } from "../component_props/Period";
-import PfDate from "./PfDate.astro";
 
 type Props = PeriodProps;
 const { period, class: className, ...attrs } = Astro.props;

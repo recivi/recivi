@@ -1,10 +1,9 @@
 ---
 // Render a card displaying epic and projects information.
 
+import { Anchor, Entity, TechStack } from "virtual:pf/components";
+
 import type { EpicCardProps } from "../component_props/EpicCard";
-import Anchor from "./Anchor.astro";
-import Entity from "./Entity.astro";
-import TechStack from "./TechStack.astro";
 
 type Props = EpicCardProps;
 const { epic, class: className, ...attrs } = Astro.props;

@@ -1,10 +1,9 @@
 ---
 import projectContext from "virtual:pf/project-context";
+import { Anchor, Comms } from "virtual:pf/components";
 import reciviData from "virtual:recivi/data";
 
 import type { BaseProps } from "../component_props/base";
-import Anchor from "./Anchor.astro";
-import Comms from "./Comms.astro";
 
 type Props = BaseProps;
 const { class: className, ...attrs } = Astro.props;

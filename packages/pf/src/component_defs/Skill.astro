@@ -1,10 +1,11 @@
 ---
 // Renders a skill and its sub-skills.
 
+import { Brand } from "virtual:pf/components";
+
 import type { Skill } from "@recivi/schema";
 
 import type { SkillProps } from "../component_props/Skill";
-import Brand from "./Brand.astro";
 
 type Props = SkillProps;
 const { skill, class: className, ...attrs } = Astro.props;

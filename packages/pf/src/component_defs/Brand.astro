@@ -1,9 +1,9 @@
 ---
 // Render a brand logo, name and link.
 
+import { Anchor, Icon } from "virtual:pf/components";
+
 import type { BrandProps } from "../component_props/Brand";
-import Anchor from "./Anchor.astro";
-import Icon from "./Icon.astro";
 
 type Props = BrandProps;
 const { icon, anchor, name, class: className, ...attrs } = Astro.props;

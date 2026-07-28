@@ -1,6 +1,8 @@
 ---
 // Render a detailed page for an org and its roles.
 
+import { Anchor, Entity, Period } from "virtual:pf/components";
+
 import {
 	getRoleLocationDisplay,
 	getRoleTypeDisplay,
@@ -9,9 +11,6 @@ import {
 import type { OrgDetailsProps } from "../component_props/OrgDetails";
 import { getAddressDisplay } from "../recivi/address";
 import { getLinkedEpics } from "../recivi/relations";
-import Anchor from "./Anchor.astro";
-import Entity from "./Entity.astro";
-import Period from "./Period.astro";
 
 type Props = OrgDetailsProps;
 const {
