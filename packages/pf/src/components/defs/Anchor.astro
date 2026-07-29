@@ -9,8 +9,6 @@ import type { AnchorProps } from "../props/Anchor";
 type Props = AnchorProps;
 const { url, class: className, ...attrs } = Astro.props;
 
-const href = typeof url === "string" ? url : url.dest;
-
 /**
  * Normalize the path as per the value of the `trailingSlash` configuration.
  *
@@ -40,12 +38,21 @@ function removeBase(path: string) {
 	return path;
 }
 
+const dest = typeof url === "string" ? url : url.dest;
+
 const currentPathname = Astro.url.pathname;
 const currentPath = normalizePath(removeBase(currentPathname));
-const targetPath = normalizePath(removeBase(href));
+const targetPath = normalizePath(removeBase(dest));
 
 const isExactActive = currentPath === targetPath;
 const isActive = currentPath.startsWith(targetPath);
+
+// Respect the user's preferred format for phone numbers.
+const readableDest =
+	["tel:", "wa.me"].some((sub) => dest.includes(sub)) && typeof url !== "string"
+		? url.label
+		: /(https?:\/\/|mailto:|tel:)(www\.)?(wa\.me\/)?(?<label>.*)/u.exec(dest)
+				?.groups?.label;
 ---
 
 <a
@@ -57,13 +64,14 @@ const isActive = currentPath.startsWith(targetPath);
 			exact: isExactActive,
 		},
 	]}
-	{href}
+	href={dest}
 	{...attrs}
-	><slot>
-		<span class="label">{typeof url === "object" ? url.label : "link"}</span
-		><span class="dest">{typeof url === "object" ? url.dest : url}</span>
-	</slot></a
 >
+	<slot>
+		<span class="web-only">{typeof url === "string" ? "link" : url.label}</span>
+		<span class="dest print-only">{readableDest}</span>
+	</slot>
+</a>
 
 <style>
 	@layer pf.components {
@@ -73,21 +81,8 @@ const isActive = currentPath.startsWith(targetPath);
 			}
 
 			.dest {
-				display: none;
 				font-size: calc(1em * pow(var(--pf-font-size-scale), -1));
 				font-family: var(--pf-font-family-monospace);
-			}
-		}
-
-		:root[data-media="print"] {
-			.pf-anchor {
-				.label {
-					display: none;
-				}
-
-				.dest {
-					display: inline;
-				}
 			}
 		}
 	}
