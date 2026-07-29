@@ -13,12 +13,12 @@ const { icon, anchor, name, class: className, ...attrs } = Astro.props;
 	{
 		anchor ? (
 			<Anchor {...anchor}>
-				{icon ? <Icon class="icon" {...icon} /> : undefined}
+				{icon ? <Icon {...icon} class={["icon", icon.class]} /> : undefined}
 				{name}
 			</Anchor>
 		) : (
 			<Fragment>
-				{icon ? <Icon class="icon" {...icon} /> : undefined}
+				{icon ? <Icon {...icon} class={["icon", icon.class]} /> : undefined}
 				{name}
 			</Fragment>
 		)
@@ -29,10 +29,10 @@ const { icon, anchor, name, class: className, ...attrs } = Astro.props;
 	@layer pf.components {
 		.pf-brand {
 			display: inline-block;
-		}
 
-		.icon {
-			margin-inline-end: 0.25em;
+			.icon {
+				margin-inline-end: 0.25em;
+			}
 		}
 	}
 </style>
