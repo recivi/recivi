@@ -18,3 +18,8 @@ declare module "virtual:pf/project-context" {
 	const Context: import("./types/project_context").ProjectContext;
 	export default Context;
 }
+
+declare module "virtual:pf/custom-css/*" {
+	const css: string;
+	export default css;
+}
