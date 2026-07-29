@@ -12,6 +12,7 @@ type Props = EntityProps;
 const {
 	entity,
 	useInternalLink = false,
+	useShortName = false,
 	class: className,
 	...attrs
 } = Astro.props;
@@ -34,7 +35,10 @@ const anchor = useInternalLink
 const brand: BrandProps = {
 	icon: entity.id ? { name: entity.id, title: entity.name } : undefined,
 	anchor,
-	name: entity.name,
+	name:
+		useShortName && "shortName" in entity && entity.shortName
+			? entity.shortName
+			: entity.name,
 };
 ---
 
