@@ -54,6 +54,10 @@ const readableDate = getReadableDate(year, month, day);
 			.sep {
 				color: var(--pf-color-fg-subtle);
 			}
+
+			:root[data-media="print"] & {
+				font-size: calc(1em * pow(var(--pf-font-size-scale), -1));
+			}
 		}
 	}
 </style>
