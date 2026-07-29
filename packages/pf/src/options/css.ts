@@ -14,7 +14,7 @@ const layerNames = [
 	"utils",
 ] as const;
 
-export const layoutNames = ["Blog", "Now", "Og", "Print", "Resume", "Root", "Web",] as const;
+export const layoutNames = ["Blog", "Now", "Og", "Print", "Resume", "Root", "Web"] as const;
 type LayoutName = (typeof layoutNames)[number];
 
 // Keep the above list synced with the actual layouts.
@@ -29,7 +29,7 @@ allLayouts.forEach((layout, idx) => {
 // using `z.record` because we want to allow missing keys in the input.
 const customCssSchema = z.object(
 	Object.fromEntries(
-		layoutNames.map((name) => [name, z.array(z.string()).optional().default([]),]),
+		layoutNames.map((name) => [name, z.array(z.string()).optional().default([])]),
 	) as Record<LayoutName, z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>>,
 );
 
