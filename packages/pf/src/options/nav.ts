@@ -28,6 +28,14 @@ export const navSchema = z
 					description:
 						'the URL template for organisation pages; This should include the "{slug}" placeholder.',
 				}),
+				/** the URL template for institute pages; This should include the "{slug}" placeholder. */
+				resumeInstitute: slugString
+					.optional()
+					.default("/resume/institutes/{slug}")
+					.register(primaryRegistry, {
+						description:
+							'the URL template for institute pages; This should include the "{slug}" placeholder.',
+					}),
 			})
 			.prefault({})
 			.register(primaryRegistry, {

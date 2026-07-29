@@ -22,7 +22,9 @@ const internalDest =
 		? config.nav.dynamicPages.resumeOrg.replace("{slug}", entity.slug)
 		: "projects" in entity
 			? config.nav.dynamicPages.resumeEpic.replace("{slug}", entity.slug)
-			: undefined;
+			: "certs" in entity
+				? config.nav.dynamicPages.resumeInstitute.replace("{slug}", entity.slug)
+				: undefined;
 
 const anchor = useInternalLink
 	? internalDest
