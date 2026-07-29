@@ -32,7 +32,7 @@ if (!isSuccessful) {
 				<Fragment set:html={iconContent} />
 			</svg>
 		) : (
-			<div class="pf-icon" />
+			<div class:list={["pf-icon", className]} />
 		)
 	) : undefined
 }
