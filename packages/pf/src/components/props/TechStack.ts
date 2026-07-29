@@ -5,6 +5,8 @@ import type { BaseProps } from "./base";
 export interface TechStackProps extends BaseProps {
 	/** a list of technologies to render */
 	technologies: Tech[];
+	/** whether to show the names of the technologies */
+	showNames?: boolean;
 }
 
 /**

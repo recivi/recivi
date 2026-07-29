@@ -7,22 +7,31 @@ import { Icon } from "virtual:pf/components";
 import type { TechStackProps } from "../props/TechStack";
 
 type Props = TechStackProps;
-const { technologies, class: className, ...attrs } = Astro.props;
+const {
+	technologies,
+	showNames = false,
+	class: className,
+	...attrs
+} = Astro.props;
 ---
 
 <ul class:list={["pf-tech-stack", className]} {...attrs}>
 	{
-		technologies.map((technology) => (
-			<li>
-				{technology.id ? (
-					<Icon name={technology.id} title={technology.name} />
-				) : (
-					<div class="letter" title={technology.name}>
-						{technology.name[0]}
-					</div>
-				)}
-			</li>
-		))
+		technologies
+			// Either the technology will show an icon or a name.
+			.filter((technology) => technology.id || showNames)
+			.map((technology) => (
+				<li>
+					{technology.id ? (
+						<Icon
+							class="web-only"
+							name={technology.id}
+							title={technology.name}
+						/>
+					) : undefined}
+					{showNames ? technology.name : undefined}
+				</li>
+			))
 	}
 </ul>
 
@@ -30,6 +39,7 @@ const { technologies, class: className, ...attrs } = Astro.props;
 	@layer pf.components {
 		.pf-tech-stack {
 			display: inline-flex;
+			flex-wrap: wrap;
 			gap: 0.5rem;
 			margin-block: 0;
 			padding-inline-start: 0;
@@ -42,10 +52,6 @@ const { technologies, class: className, ...attrs } = Astro.props;
 				&:not(:last-child)::after {
 					content: "·";
 					color: var(--pf-color-fg-subtle);
-				}
-
-				.letter {
-					font-weight: 600;
 				}
 			}
 		}
