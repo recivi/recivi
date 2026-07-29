@@ -1,4 +1,4 @@
-import type { LinkTag, MetaTag } from "../types/tags";
+import type { LinkTag, MetaTag } from "../../types/tags";
 import type { BaseProps } from "./base";
 
 export type ElementsProps = BaseProps &

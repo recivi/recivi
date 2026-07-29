@@ -29,7 +29,7 @@ function getComponentMapping(allFiles: string[]): Record<string, string> {
 	);
 }
 
-const allCompFiles = globSync(`${srcPath}/component_defs/*.astro`);
+const allCompFiles = globSync(`${srcPath}/components/defs/*.astro`);
 const allCompExports = getComponentMapping(allCompFiles);
 const barrelPath = join(srcPath, "components.d.ts");
 const content = `declare module "virtual:pf/components" {

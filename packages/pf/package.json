@@ -23,8 +23,8 @@
 	"exports": {
 		".": "./src/index.ts",
 		"./content": "./src/content.ts",
-		"./component_defs/*": "./src/component_defs/*",
-		"./component_props/*": "./src/component_props/*.ts",
+		"./components/defs/*": "./src/components/defs/*",
+		"./components/props/*": "./src/components/props/*.ts",
 		"./layouts/*": "./src/layouts/*",
 		"./routes/*": "./src/routes/*",
 		"./recivi/*": "./src/recivi/*.ts",

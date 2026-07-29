@@ -2,12 +2,12 @@
 // Render a date.
 // This component is also a table renderer.
 
-import type { PfDateProps } from "../component_props/PfDate";
+import type { PfDateProps } from "../props/PfDate";
 import {
 	getDisplayDate,
 	getReadableDate,
 	jsDateToRcvDate,
-} from "../recivi/date";
+} from "../../recivi/date";
 
 type Props = PfDateProps;
 const { class: className, ...attrs } = Astro.props;

@@ -47,7 +47,7 @@ export const componentsSchema = z
 		Object.fromEntries(
 			componentNames.map((name) => [
 				name,
-				z.string().optional().default(`@recivi/pf/component_defs/${name}.astro`),
+				z.string().optional().default(`@recivi/pf/components/defs/${name}.astro`),
 			]),
 		) as Record<ComponentName, z.ZodDefault<z.ZodOptional<z.ZodString>>>,
 	)

@@ -1,9 +1,9 @@
-import type { AnchorProps } from "../component_props/Anchor";
-import type { EntityProps } from "../component_props/Entity";
-import type { PeriodProps } from "../component_props/Period";
-import type { PfDateProps } from "../component_props/PfDate";
-import type { PostProps } from "../component_props/Post";
-import type { TechStackProps } from "../component_props/TechStack";
+import type { AnchorProps } from "../components/props/Anchor";
+import type { EntityProps } from "../components/props/Entity";
+import type { PeriodProps } from "../components/props/Period";
+import type { PfDateProps } from "../components/props/PfDate";
+import type { PostProps } from "../components/props/Post";
+import type { TechStackProps } from "../components/props/TechStack";
 import type { WithUndefinedValues } from "./utils";
 
 /**

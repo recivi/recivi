@@ -37,11 +37,11 @@ export function getAllLayouts() {
 }
 
 /**
- * Get a list of all component names from Astro files in the `component_defs`
+ * Get a list of all component names from Astro files in the `components/defs`
  * directory.
  *
  * @returns the list of component names
  */
 export function getAllComponents() {
-	return getAstroFiles("component_defs");
+	return getAstroFiles("components/defs");
 }
