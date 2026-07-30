@@ -1,8 +1,10 @@
 @layer pf.utils {
 	/*
 	 * This class was taken from Tailwind CSS.
-	 * - `inset-block-start` and
-	 * `inset-inline-start` were added to prevent it from breaking scroll.
+	 *
+	 * `inset-block-start` and `inset-inline-start` were added to prevent
+	 * it from breaking scroll.
+	 *
 	 * Additionally, an exception was made for `#footnote-label` to allow
 	 * footnote heading to be visible and linkable.
 	 */
@@ -18,5 +20,13 @@
 		block-size: 1px;
 		overflow: hidden;
 		white-space: nowrap;
+	}
+
+	:root:not([data-media="print"]) .print-only {
+		display: none;
+	}
+
+	:root[data-media="print"] .web-only {
+		display: none;
 	}
 }
