@@ -40,6 +40,8 @@ Thumbs.db
 # -----------------------
 # Modules
 node_modules/
+# pnpm
+.pnpm-store/
 # Tool cache
 *.tsbuildinfo
 .eslintcache
