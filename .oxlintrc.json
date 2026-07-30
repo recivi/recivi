@@ -9,5 +9,9 @@
 		"suspicious": "error",
 		"pedantic": "error",
 		"perf": "error"
+	},
+	"rules": {
+		// Allow `TODO` comments as they are a crucial part of the dev process.
+		"eslint/no-warning-comments": "off"
 	}
 }
