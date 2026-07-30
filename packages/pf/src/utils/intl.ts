@@ -11,7 +11,7 @@ import config from "virtual:pf/config";
  */
 export function getArrayDisplay(array: string[]): string {
 	return new Intl.ListFormat(config.locale.bcp47, {
-		style: "long",
+		style: "short",
 		// Join the last item with "and".
 		type: "conjunction",
 	}).format(array);
