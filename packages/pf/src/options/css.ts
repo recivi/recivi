@@ -1,7 +1,7 @@
 import { z } from "astro/zod";
 
 import { primaryRegistry } from "../registries/primary";
-import { getAllLayouts } from "../utils/layouts";
+import { getAllLayouts } from "../utils/src_files";
 
 const layerNames = [
 	"props",
