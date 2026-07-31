@@ -12,14 +12,13 @@ const { period, class: className, ...attrs } = Astro.props;
 
 <span class:list={["pf-period", className]} {...attrs}>
 	<PfDate date={period.start} />
-	<span>&ndash;</span>
+	<span>&nbsp;&ndash;&nbsp;</span>
 	{
 		period.end ? (
 			<PfDate date={period.end} />
 		) : (
 			<span class="present">
-				<span class="dot">•</span>
-				<em>Now</em>
+				<em>Present</em>
 			</span>
 		)
 	}
@@ -29,27 +28,12 @@ const { period, class: className, ...attrs } = Astro.props;
 	@layer pf.components {
 		.pf-period {
 			.present {
-				display: inline-flex;
 				font-family: var(--pf-font-family-monospace);
-			}
+				color: var(--pf-color-fg-subtle);
 
-			.dot {
-				animation: pulse 2s infinite;
-				color: var(--pf-color-red);
-			}
-		}
-
-		:root[data-media="print"] {
-			.pf-period {
-				.dot {
-					animation: none;
+				:root[data-media="print"] & {
+					font-size: calc(1em * pow(var(--pf-font-size-scale), -1));
 				}
-			}
-		}
-
-		@keyframes pulse {
-			50% {
-				opacity: 0.5;
 			}
 		}
 	}
