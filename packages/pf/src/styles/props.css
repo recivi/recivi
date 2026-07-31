@@ -23,7 +23,7 @@
 	:root[data-media="print"] {
 		--pf-font-family: serif;
 		--pf-font-family-monospace: monospace;
-		--pf-font-size-base: 13px;
+		--pf-font-size-base: 10pt;
 		--pf-font-size-scale: 1.1;
 
 		--pf-margin-block: 0.5rem;
