@@ -44,4 +44,4 @@ const brand: BrandProps = {
 };
 ---
 
-<Brand class:list={["pf-entity", className]} {...brand} {...attrs} />
+<Brand {...brand} {...attrs} class={["pf-entity", className, brand.class]} />
