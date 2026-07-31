@@ -7,8 +7,6 @@ export interface OrgDetailsProps extends BaseProps {
 	org: Org;
 	/** the number by which to offset the heading level */
 	headingOffset?: number;
-	/** whether to render description or summary */
-	isVerbose?: boolean;
 	/** optional tag to filter roles by */
 	filterTag?: string | undefined;
 }
