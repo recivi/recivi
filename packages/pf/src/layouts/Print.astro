@@ -3,6 +3,7 @@ import "virtual:pf/custom-css/Print";
 import "../styles/print.css";
 
 import { Letterhead } from "virtual:pf/components";
+import config from "virtual:pf/config";
 
 import { getFullPageTitle } from "../utils/metas";
 import Root from "./Root.astro";
@@ -12,11 +13,22 @@ interface Props {
 	title?: string;
 }
 const { title = "Untitled" } = Astro.props;
+
+const creditsCss = config.showCredits
+	? `@layer pf.props {
+	:root {
+		--pf-print-credits-left: "Built with Récivi";
+		--pf-print-credits-right: "https://recivi.dhruvkb.dev";
+	}
+}`
+	: "";
 ---
 
 <Root data-media="print" {...Astro.props}>
 	<Fragment slot="head">
 		<title>{getFullPageTitle(title)}</title>
+
+		{creditsCss ? <style is:inline set:html={creditsCss} /> : undefined}
 
 		<slot name="head" />
 	</Fragment>
