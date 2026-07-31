@@ -62,6 +62,15 @@
 		--pf-color-anchor-visited: #8839ef; /* mauve */
 	}
 
+	:root[data-media="print"],
+	:root[data-media="print"] ::selection {
+		/* print theme */
+
+		--pf-color-fg: black;
+
+		--pf-color-bg: white;
+	}
+
 	@media (prefers-color-scheme: dark) {
 		:root:not([data-media="print"]),
 		:root:not([data-media="print"]) ::selection {
