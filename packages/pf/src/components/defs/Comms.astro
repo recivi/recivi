@@ -1,82 +1,69 @@
 ---
 // Render all communication channels as a list.
 
-import { Brand } from "virtual:pf/components";
-import projectContext from "virtual:pf/project-context";
+import { Anchor, Brand } from "virtual:pf/components";
 import reciviData from "virtual:recivi/data";
 
-import type { BrandProps } from "../props/Brand";
+import {
+	webToComm,
+	emailToComm,
+	phoneToComm,
+	profileToComm,
+} from "../../utils/comms";
 import type { CommsProps } from "../props/Comms";
 
 type Props = CommsProps;
-const {
-	filterTag,
-	includeWeb = false,
-	class: className,
-	...attrs
-} = Astro.props;
+const { filterTag, class: className, ...attrs } = Astro.props;
 
 const { contact: { emails = [], phones = [] } = {}, profiles = [] } =
 	reciviData.bio;
 
-const allComms: BrandProps[] = [
-	...emails.map(
-		// TODO: Determine why `email` needs to be typed manually.
-		(email) => ({
-			// Users can alias "mail" to whatever icon they want.
-			icon: { pack: "lucide", name: "mail", title: "Email address" },
-			anchor: { url: { dest: `mailto:${email}`, label: email }, rel: "me" },
-			name: email,
-		}),
-	),
-	...phones.map(({ countryCode: cc, number }) => ({
-		// Users can alias "phone" to whatever icon they want.
-		icon: { pack: "lucide", name: "phone", title: "Phone number" },
-		anchor: {
-			url: {
-				dest: `tel:+${cc}${number}`,
-				label: `+${cc} ${number}`,
-			},
-			rel: "me",
-		},
-		name: `+${cc} ${number}`,
-	})),
-	...profiles
-		.filter((profile) => !filterTag || profile.tags.includes(filterTag))
-		.map((profile) => ({
-			icon: profile.site.id
-				? { name: profile.site.id, title: profile.site.name }
-				: undefined,
-			anchor: {
-				url: {
-					dest:
-						typeof profile.url === "string" ? profile.url : profile.url.dest,
-					label: profile.username ?? profile.site.name,
-				},
-				rel: "me",
-			},
-			name: profile.username ?? profile.site.name,
-		})),
-];
-
-const { site, base } = projectContext;
-if (includeWeb && site) {
-	const href = base === "/" ? site : new URL(base, site).href;
-	allComms.splice(0, 0, {
-		icon: { pack: "lucide", name: "globe", title: "Website" },
-		anchor: {
-			url: { dest: href, label: href },
-			rel: "me",
-		},
-		/* We can skip the protocol only if it is "https://". */
-		name: href.replace(/^https:\/\//u, ""),
-	});
-}
+const siteComm = webToComm();
+const emailComms = emails.map((email) => emailToComm(email));
+const phoneComms = phones.map((phone) => phoneToComm(phone));
+const profileComms = profiles
+	.filter((profile) => !filterTag || profile.tags.includes(filterTag))
+	.map((profile) => profileToComm(profile));
 ---
 
-<ul class:list={["pf-comms", className]} {...attrs}>
+<div class:list={["pf-comms", "print-only", className]} {...attrs}>
+	<div class="row">
+		{
+			siteComm ? (
+				<span class="comm">
+					<strong>Website:&nbsp;</strong>
+					<Anchor {...siteComm.anchor} />
+				</span>
+			) : undefined
+		}
+		{
+			[emailComms, phoneComms].map((commSet) => (
+				<span class="comm">
+					<strong>{commSet[0]?.title}:&nbsp;</strong>
+					{commSet.map((comm, idx, allComms) => (
+						<Fragment>
+							<Anchor {...comm.anchor} />
+							{idx < allComms.length - 1 ? ", " : undefined}
+						</Fragment>
+					))}
+				</span>
+			))
+		}
+	</div>
+	<div class="row">
+		{
+			profileComms.map((comm) => (
+				<span class="comm">
+					<strong>{comm.title}:&nbsp;</strong>
+					<Anchor {...comm.anchor} />
+				</span>
+			))
+		}
+	</div>
+</div>
+<ul class:list={["pf-comms", "web-only", className]} {...attrs}>
 	{
-		allComms.map((comm) => (
+		[...emailComms, ...phoneComms, ...profileComms].map((comm) => (
 			<li>
 				<Brand {...comm} />
 			</li>
@@ -86,18 +73,27 @@ if (includeWeb && site) {
 
 <style>
 	@layer pf.components {
-		.pf-comms {
-			columns: 2;
-			padding-inline-start: 0;
-			list-style: none;
+		:root:not([data-media="print"]) {
+			.pf-comms {
+				columns: 2;
+				padding-inline-start: 0;
+				list-style: none;
+
+				.pf-icon {
+					color: var(--pf-color-accent);
+				}
+			}
 		}
 
 		:root[data-media="print"] {
 			.pf-comms {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				gap: 1rem;
+				.row {
+					.comm:not(:first-of-type)::before {
+						content: "·";
+						color: var(--pf-color-fg-subtle);
+						margin-inline: 0.5rem;
+					}
+				}
 			}
 		}
 	}
