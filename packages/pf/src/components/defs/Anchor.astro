@@ -4,6 +4,9 @@
 
 import projectContext from "virtual:pf/project-context";
 
+import { urlReadableDest } from "@recivi/schema/display";
+import { urlDest, urlLabel } from "@recivi/schema/utils";
+
 import type { AnchorProps } from "../props/Anchor";
 
 type Props = AnchorProps;
@@ -38,7 +41,7 @@ function removeBase(path: string) {
 	return path;
 }
 
-const dest = typeof url === "string" ? url : url.dest;
+const dest = urlDest(url);
 
 const currentPathname = Astro.url.pathname;
 const currentPath = normalizePath(removeBase(currentPathname));
@@ -46,13 +49,6 @@ const targetPath = normalizePath(removeBase(dest));
 
 const isExactActive = currentPath === targetPath;
 const isActive = currentPath.startsWith(targetPath);
-
-// Respect the user's preferred format for phone numbers.
-const readableDest =
-	["tel:", "wa.me"].some((sub) => dest.includes(sub)) && typeof url !== "string"
-		? url.label
-		: /(https?:\/\/|mailto:|tel:)(www\.)?(wa\.me\/)?(?<label>.*)/u.exec(dest)
-				?.groups?.label;
 ---
 
 <a
@@ -68,8 +64,8 @@ const readableDest =
 	{...attrs}
 >
 	<slot>
-		<span class="web-only">{typeof url === "string" ? "link" : url.label}</span>
-		<span class="dest print-only">{readableDest}</span>
+		<span class="web-only">{urlLabel(url)}</span>
+		<span class="dest print-only">{urlReadableDest(url)}</span>
 	</slot>
 </a>
 
