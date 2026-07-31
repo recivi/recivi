@@ -2,12 +2,12 @@
 // Render a date.
 // This component is also a table renderer.
 
+import config from "virtual:pf/config";
+
+import { jsDateToRcvDate } from "@recivi/schema/utils";
+import { formatDate } from "@recivi/schema/display";
+
 import type { PfDateProps } from "../props/PfDate";
-import {
-	getDisplayDate,
-	getReadableDate,
-	jsDateToRcvDate,
-} from "../../recivi/date";
 
 type Props = PfDateProps;
 const { class: className, ...attrs } = Astro.props;
@@ -21,29 +21,19 @@ if (date instanceof Date) {
 	date = [date.year, date.month, date.day];
 }
 
-const year = date[0];
-const month = date[1];
-const day = date[2];
-
-// Date parts to be displayed.
-const displayDate = getDisplayDate(year, month, day);
-
-// Full date to be used as tooltip.
-const readableDate = getReadableDate(year, month, day);
+const formatDateForUsage = (usage: "display" | "reading") => {
+	return formatDate(date, config.locale.bcp47, { usage });
+};
+const displayDate = formatDateForUsage("display");
+const readableDate = formatDateForUsage("reading");
 ---
 
-<span class:list={["pf-date", className]} title={readableDate} {...attrs}>
-	{
-		displayDate
-			.filter((part) => part !== undefined)
-			.map((part, index) => (
-				<Fragment>
-					{index ? <span class="sep">-</span> : undefined}
-					<span>{part}</span>
-				</Fragment>
-			))
-	}
-</span>
+<span
+	class:list={["pf-date", className]}
+	title={readableDate}
+	{...attrs}
+	set:html={displayDate.replace(/\D/g, '<span class="sep">$&</span>')}
+/>
 
 <style>
 	@layer pf.components {
