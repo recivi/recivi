@@ -56,10 +56,10 @@ export const pageSchema = baseSchema
 			.describe("the Open Graph title of the page, if different from the title"),
 	})
 	.transform((val) => {
-		if (!val.ogTitle) {
-			return { ...val, ogTitle: val.title };
-		}
-		return val;
+		return {
+			...val,
+			ogTitle: val.ogTitle ?? val.title,
+		};
 	});
 
 /** schema for partial content pieces */
