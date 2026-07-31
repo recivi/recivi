@@ -7,84 +7,44 @@ import reciviData from "virtual:recivi/data";
 import Og from "@recivi/pf/layouts/Og.astro";
 import { experimental_AstroContainer } from "astro/container";
 
-import type { EntityProps } from "../components/props/Entity";
-import { isNotDraft } from "../utils/collections";
-import { stripHtmlTags } from "../utils/markup";
-
-interface Props {
-	title: EntityProps | string;
-	description: string;
-	breadcrumbs?: string;
-	right?: string;
-}
+import { isNotDraft } from "../../utils/collections";
+import { entityToOg } from "../helpers/OgRender";
+import type { OgRenderProps } from "../props/OgRender";
 
 export async function getStaticPaths() {
-	const paths = [];
 	const container = await experimental_AstroContainer.create();
-
-	// Site pages
 	const pages = await getCollection("pages", isNotDraft);
-	paths.push(
+	const posts = await getCollection("blog", isNotDraft);
+	const { education, work, creations } = reciviData;
+
+	return [
 		...pages.map((page) => ({
 			params: { path: page.id },
-			props: { title: page.data.ogTitle, description: page.data.description },
+			props: {
+				title: page.data.ogTitle,
+				description: page.data.description,
+			} satisfies OgRenderProps,
 		})),
-	);
-
-	// Blog posts
-	const posts = await getCollection("blog", isNotDraft);
-	paths.push(
-		...(await Promise.all(
-			posts.map(async (post) => {
-				const slug = post.id.slice(5);
-				return {
-					params: {
-						path: config.nav.dynamicPages.blogPost.replace("{slug}", slug),
-					},
-					props: {
-						title: post.data.title,
-						description: post.data.description,
-						breadcrumbs: `Blog`,
-						right: await container.renderToString(PfDate, {
-							props: { date: post.data.pubDate },
-						}),
-					} satisfies Props,
-				};
-			}),
-		)),
-	);
-
-	// Orgs
-	paths.push(
-		...reciviData.work.map((org) => ({
+		...posts.map((post) => ({
 			params: {
-				path: config.nav.dynamicPages.resumeOrg.replace("{slug}", org.slug),
+				path: config.nav.dynamicPages.blogPost.replace(
+					"{slug}",
+					post.id.slice(5),
+				),
 			},
 			props: {
-				title: { entity: org, useInternalLink: true },
-				description: stripHtmlTags(org.description ?? ""),
-				breadcrumbs: `Résumé`,
-				right: "Organization",
-			} satisfies Props,
+				title: post.data.title,
+				description: post.data.description,
+				breadcrumbs: `Blog`,
+				right: container.renderToString(PfDate, {
+					props: { date: post.data.pubDate },
+				}),
+			} satisfies OgRenderProps,
 		})),
-	);
-
-	// Epics
-	paths.push(
-		...reciviData.creations.map((epic) => ({
-			params: {
-				path: config.nav.dynamicPages.resumeEpic.replace("{slug}", epic.slug),
-			},
-			props: {
-				title: { entity: epic, useInternalLink: true },
-				description: stripHtmlTags(epic.description ?? ""),
-				breadcrumbs: `Résumé`,
-				right: "Epic",
-			} satisfies Props,
-		})),
-	);
-
-	return paths;
+		...education.map((institute) => entityToOg(institute, "Education")),
+		...work.map((org) => entityToOg(org, "Organization")),
+		...creations.map((epic) => entityToOg(epic, "Epic")),
+	];
 }
 
 const { title, description, breadcrumbs, right } = Astro.props;

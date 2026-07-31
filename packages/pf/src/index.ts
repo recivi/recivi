@@ -82,7 +82,7 @@ export default function (options: Options): AstroIntegration {
 					// Add a route to handle all Open Graph image requests.
 					params.injectRoute({
 						pattern: "og_render/[...path]",
-						entrypoint: "@recivi/pf/routes/og_render.astro",
+						entrypoint: "@recivi/pf/routes/defs/OgRender.astro",
 					});
 					params.injectRoute({
 						pattern: "rss.xml",
