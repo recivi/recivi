@@ -30,8 +30,8 @@
 
 		--pf-print-preview-scale: calc(110 / 96); /* Mac screen is 110ppi. */
 		--pf-print-page-size: A4;
-		--pf-print-margin-block: 5mm;
-		--pf-print-margin-inline: 10mm;
+		--pf-print-margin-block: 15mm;
+		--pf-print-margin-inline: 15mm;
 		--pf-print-inline-size: 210mm;
 		--pf-print-block-size: 297mm;
 	}
