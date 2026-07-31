@@ -28,6 +28,10 @@
 			"types": "./dist/index.d.mts",
 			"default": "./dist/index.mjs"
 		},
+		"./utils": {
+			"types": "./dist/utils.d.mts",
+			"default": "./dist/utils.mjs"
+		},
 		"./display": {
 			"types": "./dist/display.d.mts",
 			"default": "./dist/display.mjs"
@@ -38,7 +42,7 @@
 		"validate": "pnpm barrel && tsx src/scripts/validate.ts",
 		"schema": "pnpm barrel && tsx src/scripts/schema.ts",
 		"reference": "pnpm barrel && tsx src/scripts/reference.ts",
-		"build": "pnpm barrel && tsdown src/index.ts src/display.ts",
+		"build": "pnpm barrel && tsdown src/index.ts src/display.ts src/utils.ts",
 		"test": "tsx --test",
 		"types": "tsc --noEmit",
 		"prepack": "pnpm build"
