@@ -3,6 +3,18 @@
 		size: var(--pf-print-page-size);
 		margin-inline: var(--pf-print-margin-inline);
 		margin-block: var(--pf-print-margin-block);
+
+		@bottom-left {
+			content: var(--pf-print-credits-left);
+			color: var(--pf-color-fg-subtle);
+		}
+
+		@bottom-right {
+			content: var(--pf-print-credits-right);
+			font-family: var(--pf-font-family-monospace);
+			font-size: calc(1em * pow(var(--pf-font-size-scale), -1));
+			color: var(--pf-color-fg-subtle);
+		}
 	}
 
 	html {
