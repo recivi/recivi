@@ -20,6 +20,14 @@ export const instituteSchema = z
 		shortName: z.string().optional().register(primaryRegistry, {
 			description: "a short informal name for the institute; This can be an abbreviation.",
 		}),
+		summary: z.string().optional().register(primaryRegistry, {
+			description:
+				"a short description or introduction of the institute; This is used where space is limited such as a résumé.",
+		}),
+		description: z.string().optional().register(primaryRegistry, {
+			description:
+				"long-form description of the institute; This is used where space is not constrained.",
+		}),
 		url: urlSchema.optional().register(primaryRegistry, {
 			description:
 				"the public facing URL to access the institute website; This should be a place where more information about the institute can be found.",

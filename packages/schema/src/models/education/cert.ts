@@ -53,6 +53,13 @@ export const certSchema = z
 			description:
 				"the date on which the certificate is set to become invalid; This is to be left blank if the certificate does not expire.",
 		}),
+		summary: z.string().optional().register(primaryRegistry, {
+			description: "a short description or introduction of the role",
+		}),
+		description: z.string().optional().register(primaryRegistry, {
+			description:
+				"long-form description of the role; This is used where space is not constrained.",
+		}),
 		tags: z.array(tagSchema).optional().default([]).register(primaryRegistry, {
 			description:
 				"tags to apply to this certificate; The use of tags is left up to the application (for example, the portfolio uses tags for PDF résumés).",
