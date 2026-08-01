@@ -3,7 +3,40 @@
  * types.
  */
 
-import type { Url, Date } from "@/index";
+import type { Url, Date, Institute, Org, Epic } from "@/index";
+
+// Entities
+// ========
+
+/**
+ * Determine if the given entity matches interface `Institute`.
+ *
+ * @param entity the entity to check
+ * @returns `true` if the entity matches `Institute`, `false` otherwise
+ */
+export function isInstitute(entity: Institute | Org | Epic): entity is Institute {
+	return "certs" in entity;
+}
+
+/**
+ * Determine if the given entity matches interface `Org`.
+ *
+ * @param entity the entity to check
+ * @returns `true` if the entity matches `Org`, `false` otherwise
+ */
+export function isOrg(entity: Institute | Org | Epic): entity is Org {
+	return "roles" in entity;
+}
+
+/**
+ * Determine if the given entity matches interface `Epic`.
+ *
+ * @param entity the entity to check
+ * @returns `true` if the entity matches `Epic`, `false` otherwise
+ */
+export function isEpic(entity: Institute | Org | Epic): entity is Epic {
+	return "projects" in entity;
+}
 
 // Dates
 // =====
