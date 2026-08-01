@@ -62,11 +62,11 @@ const pageFrontmatter = pageSchema.parse({
 
 	<h1>{post.data.title}</h1>
 	<dl>
-		<dt>Published:</dt>
+		<dt>Published</dt>
 		<dd>
 			<PfDate date={post.data.pubDate} />
 		</dd>
-		<dt>Categories:</dt>
+		<dt>Categories</dt>
 		<dd>
 			<ul class="categories">
 				{post.data.categories.map((category) => <li>{category}</li>)}
@@ -75,7 +75,7 @@ const pageFrontmatter = pageSchema.parse({
 		{
 			post.data.series ? (
 				<Fragment>
-					<dt>Series:</dt>
+					<dt>Series</dt>
 					<dd>
 						<Anchor url={{ dest: "#series", label: "Series" }}>
 							{post.data.series}
