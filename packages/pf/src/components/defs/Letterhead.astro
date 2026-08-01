@@ -26,7 +26,7 @@ const href = site ? new URL(base, site).href : undefined;
 		}
 	</h1>
 	{reciviData.bio.summary ? <p>{reciviData.bio.summary}</p> : undefined}
-	<Comms filterTag="resume_pdf" includeWeb={true} />
+	<Comms filterTag="resume_pdf" />
 </header>
 
 <style>
