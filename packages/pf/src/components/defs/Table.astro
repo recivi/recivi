@@ -49,7 +49,7 @@ const {
 					<tr class:list={[{ "last-of-group": isLastSibling }]} {...row.attrs}>
 						{Object.entries(columnSpecs).map(
 							([columnId, { renderer, class: className }]) => {
-								const cellValue = row.data[columnId];
+								const value = row.data[columnId];
 								return (
 									<td
 										class:list={[
@@ -57,26 +57,25 @@ const {
 											className,
 										]}
 									>
-										{cellValue === undefined && import.meta.env.DEV ? (
+										{value === undefined && import.meta.env.DEV ? (
 											<span class="dev" title="Only visible during dev">
 												und
 											</span>
-										) : renderer === "Anchor" && isAnchorProps(cellValue) ? (
-											<Anchor {...cellValue}>link</Anchor>
-										) : renderer === "PfDate" && isPfDateProps(cellValue) ? (
-											<PfDate {...cellValue} />
-										) : renderer === "Entity" && isEntityProps(cellValue) ? (
-											<Entity {...cellValue} />
-										) : renderer === "Period" && isPeriodProps(cellValue) ? (
-											<Period {...cellValue} />
-										) : renderer === "TechStack" &&
-										  isTechStackProps(cellValue) ? (
-											<TechStack {...cellValue} />
-										) : renderer === "Post" && isPostProps(cellValue) ? (
-											<Post {...cellValue} />
+										) : renderer === "Anchor" && isAnchorProps(value) ? (
+											<Anchor {...value}>link</Anchor>
+										) : renderer === "PfDate" && isPfDateProps(value) ? (
+											<PfDate {...value} />
+										) : renderer === "Entity" && isEntityProps(value) ? (
+											<Entity {...value} />
+										) : renderer === "Period" && isPeriodProps(value) ? (
+											<Period {...value} />
+										) : renderer === "TechStack" && isTechStackProps(value) ? (
+											<TechStack {...value} />
+										) : renderer === "Post" && isPostProps(value) ? (
+											<Post {...value} />
 										) : (
 											// Renderer is 'Text'.
-											cellValue
+											value
 										)}
 									</td>
 								);
