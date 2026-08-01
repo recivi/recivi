@@ -51,6 +51,12 @@ const Heading = `h${1 + headingOffset}`;
 	</dl>
 
 	{
+		cert.description ? (
+			<p class="web-only" set:html={cert.description} />
+		) : undefined
+	}
+
+	{
 		cert.courses.length ? (
 			<ul class="courses web-only">
 				{cert.courses.map((course) => (
