@@ -4,6 +4,7 @@
  */
 
 import { stat } from "node:fs/promises";
+import { join } from "node:path";
 
 import type { ProjectContext } from "../types/project_context";
 
@@ -18,7 +19,7 @@ export async function publicFileExists(
 	filename: string,
 ): Promise<boolean> {
 	try {
-		await stat(new URL(filename, projectContext.publicDir));
+		await stat(join(projectContext.publicDir, filename));
 		return true;
 	} catch {
 		return false;
