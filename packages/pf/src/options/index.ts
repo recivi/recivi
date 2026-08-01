@@ -9,7 +9,6 @@ import { iconsSchema } from "./icons";
 import { localeSchema } from "./locale";
 import { navSchema } from "./nav";
 import { pagesSchema } from "./pages";
-import { resumePdfSchema } from "./resume_pdf";
 import { themeSchema } from "./theme";
 
 /*
@@ -56,11 +55,6 @@ export const optionsSchema = z
 		/** the site's favicon settings */
 		favicon: faviconSchema.optional().prefault({}).register(primaryRegistry, {
 			description: "the site's favicon settings",
-		}),
-
-		/** the PDF generation settings for the résumé */
-		resumePdf: resumePdfSchema.optional().prefault({}).register(primaryRegistry, {
-			description: "the PDF generation settings for the résumé",
 		}),
 
 		/** the site's navigation settings */
