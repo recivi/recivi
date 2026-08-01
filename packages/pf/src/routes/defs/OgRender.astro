@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { Entity, PfDate } from "virtual:pf/components";
 import config from "virtual:pf/config";
+import nav from "virtual:pf/nav";
 import reciviData from "virtual:recivi/data";
 
 import Og from "@recivi/pf/layouts/Og.astro";
@@ -25,26 +26,27 @@ export async function getStaticPaths() {
 				description: page.data.description,
 			} satisfies OgRenderProps,
 		})),
-		...posts.map((post) => ({
-			params: {
-				path: config.nav.dynamicPages.blogPost.replace(
-					"{slug}",
-					post.id.slice(5),
-				),
-			},
-			props: {
-				title: post.data.title,
-				description: post.data.description,
-				breadcrumbs: `Blog`,
-				right: container.renderToString(PfDate, {
-					props: { date: post.data.pubDate },
-				}),
-			} satisfies OgRenderProps,
-		})),
+		...posts.map((post) =>
+			nav.blogPost
+				? {
+						params: {
+							path: nav.blogPost.replace("{slug}", post.id.slice(5)),
+						},
+						props: {
+							title: post.data.title,
+							description: post.data.description,
+							breadcrumbs: `Blog`,
+							right: container.renderToString(PfDate, {
+								props: { date: post.data.pubDate },
+							}),
+						} satisfies OgRenderProps,
+					}
+				: undefined,
+		),
 		...education.map((institute) => entityToOg(institute, "Education")),
 		...work.map((org) => entityToOg(org, "Organization")),
 		...creations.map((epic) => entityToOg(epic, "Epic")),
-	];
+	].filter((item) => item !== undefined);
 }
 
 const { title, description, breadcrumbs, right } = Astro.props;

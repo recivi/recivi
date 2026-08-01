@@ -1,3 +1,4 @@
+import nav from "virtual:pf/nav";
 import reciviData from "virtual:recivi/data";
 
 import { defineTable } from "../types/table";
@@ -25,8 +26,11 @@ export function getCertsTable() {
 				return {
 					groupId: institute.id ?? institute.name,
 					data: {
-						// Remove the icon from the table entry.
-						institute: { entity: { ...institute, id: undefined } },
+						// Remove the icon for institutes as most don't have one.
+						institute: {
+							entity: { ...institute, id: undefined },
+							useInternalLink: nav.resumeInstitute !== undefined,
+						},
 						degree,
 						issue: { date: cert.issue },
 					},
@@ -56,7 +60,7 @@ export function getRolesTable() {
 				return {
 					groupId: org.id ?? org.name,
 					data: {
-						org: { entity: org, useInternalLink: true },
+						org: { entity: org, useInternalLink: nav.resumeOrg !== undefined },
 						role: role.name,
 						epic: epic ? { entity: epic } : undefined,
 						period: role.period ? { period: role.period } : undefined,
@@ -88,7 +92,7 @@ export function getProjectsTable() {
 				return {
 					groupId: epic.id ?? epic.name,
 					data: {
-						epic: { entity: epic, useInternalLink: true },
+						epic: { entity: epic, useInternalLink: nav.resumeEpic !== undefined },
 						project: project.name,
 						link: project.url ? { url: project.url } : undefined,
 						org: org ? { entity: org } : undefined,

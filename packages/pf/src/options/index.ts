@@ -7,7 +7,6 @@ import { faviconSchema } from "./favicon";
 import { headSchema } from "./head";
 import { iconsSchema } from "./icons";
 import { localeSchema } from "./locale";
-import { navSchema } from "./nav";
 import { pagesSchema } from "./pages";
 import { themeSchema } from "./theme";
 
@@ -55,11 +54,6 @@ export const optionsSchema = z
 		/** the site's favicon settings */
 		favicon: faviconSchema.optional().prefault({}).register(primaryRegistry, {
 			description: "the site's favicon settings",
-		}),
-
-		/** the site's navigation settings */
-		nav: navSchema.optional().prefault({}).register(primaryRegistry, {
-			description: "the site's navigation settings",
 		}),
 
 		/** the site's theme settings */

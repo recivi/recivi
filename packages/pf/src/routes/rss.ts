@@ -2,6 +2,7 @@ import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
 import { getCollection, getEntry } from "astro:content";
 import config from "virtual:pf/config";
+import nav from "virtual:pf/nav";
 import projectContext from "virtual:pf/project-context";
 import resumeData from "virtual:recivi/data";
 
@@ -20,7 +21,7 @@ export const GET: APIRoute = async ({ site }) => {
 			title: data.title,
 			description: data.description,
 			pubDate: data.pubDate,
-			link: config.nav.dynamicPages.blogPost.replace("{slug}", slug),
+			link: nav.blogPost?.replace("{slug}", slug),
 		};
 	});
 

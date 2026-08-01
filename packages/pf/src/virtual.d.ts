@@ -19,6 +19,16 @@ declare module "virtual:pf/project-context" {
 	export default Context;
 }
 
+declare module "virtual:pf/nav" {
+	const nav: {
+		blogPost?: string;
+		resumeEpic?: string;
+		resumeOrg?: string;
+		resumeInstitute?: string;
+	};
+	export default nav;
+}
+
 declare module "virtual:pf/custom-css/*" {
 	const css: string;
 	export default css;

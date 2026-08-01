@@ -1,18 +1,15 @@
 import type { Org, Epic, Institute } from "@recivi/schema";
-import { isInstitute, isOrg, isEpic } from "@recivi/schema/utils";
-import config from "virtual:pf/config";
+import { isInstitute } from "@recivi/schema/utils";
 
+import { getDynamicPage } from "../../utils/dynamic_pages";
 import { stripHtmlTags } from "../../utils/markup";
 import type { OgRenderProps } from "../props/OgRender";
 
 export function entityToOg(entity: Org | Epic | Institute, right: string) {
-	const internalDest = isOrg(entity)
-		? config.nav.dynamicPages.resumeOrg.replace("{slug}", entity.slug)
-		: isEpic(entity)
-			? config.nav.dynamicPages.resumeEpic.replace("{slug}", entity.slug)
-			: isInstitute(entity)
-				? config.nav.dynamicPages.resumeInstitute.replace("{slug}", entity.slug)
-				: undefined;
+	const internalDest = getDynamicPage(entity);
+	if (!internalDest) {
+		return;
+	}
 
 	// Remove the icon for institutes as most don't have one.
 	if (isInstitute(entity)) {

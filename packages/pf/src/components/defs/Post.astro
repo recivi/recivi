@@ -2,7 +2,7 @@
 // Render a blog post listing entry.
 // This component is also a table renderer.
 
-import config from "virtual:pf/config";
+import nav from "virtual:pf/nav";
 import { Anchor, Icon } from "virtual:pf/components";
 
 import type { PostProps } from "../props/Post";
@@ -14,13 +14,17 @@ const {
 	...attrs
 } = Astro.props;
 
-function getDest(postId: string): string {
-	return config.nav.dynamicPages.blogPost.replace("{slug}", postId.slice(5));
-}
+const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
 ---
 
 <div class:list={["pf-post", className]} {...attrs}>
-	<Anchor url={{ dest: getDest(id), label: data.title }}>{data.title}</Anchor>
+	{
+		dest ? (
+			<Anchor url={{ dest, label: data.title }}>{data.title}</Anchor>
+		) : (
+			<span>{data.title}</span>
+		)
+	}
 	{
 		data.isDraft ? (
 			<Icon

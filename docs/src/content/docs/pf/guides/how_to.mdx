@@ -42,26 +42,14 @@ To make the blog posts appear on the home page, follow these steps:
 
 2. Move the contents of `src/pages/blog/` out into the `src/pages/` directory.
 
-3. Update the configuration in `astro.config.ts`, specifically `nav.dynamicPages`.
-
-   ```typescript
-   pf({
-     nav: {
-       dynamicPages: {
-         blogPost: "/posts/{slug}",
-       },
-     },
-   });
-   ```
-
-4. Update the frontmatter of the new `src/pages/index.mdx` page:
+3. Update the frontmatter of the new `src/pages/index.mdx` page:
 
    - Update the title of the page to "Home" (optional).
    - Remove the `navIndex` field to
      [remove it](/pf/guides/how_to/#remove-a-page-from-the-navigation-menu) from the navigation
      menu.
 
-5. If you kept the old home page, update its frontmatter:
+4. If you kept the old home page, update its frontmatter:
 
    - Change the title from 'Home' to something else, like "About".
    - Add the `navIndex` field to [add it](/pf/guides/how_to/#add-a-page-to-the-navigation-menu) to
