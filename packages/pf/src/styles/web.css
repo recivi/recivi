@@ -31,7 +31,7 @@
 	figure,
 	table,
 	hr {
-		margin-block: var(--pf-margin-block);
+		margin-block: calc(4 * var(--pf-spacing));
 	}
 
 	/* Headings */

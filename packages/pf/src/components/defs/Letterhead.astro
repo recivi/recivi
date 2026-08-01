@@ -34,8 +34,7 @@ const href = site ? new URL(base, site).href : undefined;
 		.pf-letterhead {
 			display: flex;
 			flex-direction: column;
-			gap: var(--pf-margin-block);
-			margin-block-end: var(--pf-margin-block);
+			margin-block-end: calc(2 * var(--pf-spacing));
 			text-align: center;
 
 			& > * {
