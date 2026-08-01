@@ -95,7 +95,7 @@ export function getProjectsTable() {
 						epic: { entity: epic, useInternalLink: nav.resumeEpic !== undefined },
 						project: project.name,
 						link: project.url ? { url: project.url } : undefined,
-						org: org ? { entity: org } : undefined,
+						org: org ? { entity: org, useShortName: true } : undefined,
 						tech: { technologies: project.technologies },
 					},
 				};
