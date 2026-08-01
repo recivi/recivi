@@ -1,0 +1,80 @@
+---
+import { Period } from "virtual:pf/components";
+
+import type { CertDetailsProps } from "../props/CertDetails";
+
+type Props = CertDetailsProps;
+const { cert, headingOffset = 0, class: className, ...attrs } = Astro.props;
+
+const Heading = `h${1 + headingOffset}`;
+---
+
+<div class:list={["pf-cert-details", className]} {...attrs}>
+	<div class="cert-header">
+		<Heading>{cert.name}</Heading>
+		{cert.field ? <span class="print-only">({cert.field})</span> : undefined}
+		<span class="meta print-only">
+			<Period period={cert.period} />
+		</span>
+	</div>
+
+	<dl class="web-only">
+		{
+			cert.period ? (
+				<Fragment>
+					<dt>Period</dt>
+					<dd>
+						<Period period={cert.period} />
+					</dd>
+				</Fragment>
+			) : undefined
+		}
+		{
+			cert.field ? (
+				<Fragment>
+					<dt>Field</dt>
+					<dd>{cert.field}</dd>
+				</Fragment>
+			) : undefined
+		}
+		{
+			cert.score ? (
+				<Fragment>
+					<dt>Score</dt>
+					<dd>
+						{cert.score}
+						{cert.maxScore ? ` / ${cert.maxScore}` : undefined}
+					</dd>
+				</Fragment>
+			) : undefined
+		}
+	</dl>
+
+	{
+		cert.courses.length ? (
+			<ul class="courses web-only">
+				{cert.courses.map((course) => (
+					<li>{course}</li>
+				))}
+			</ul>
+		) : undefined
+	}
+</div>
+
+<style>
+	@layer pf.components {
+		.pf-cert-details {
+			margin-block: calc(2 * var(--pf-spacing));
+
+			.cert-header {
+				display: flex;
+				align-items: center;
+				gap: var(--pf-spacing);
+
+				.meta {
+					margin-inline-start: auto;
+				}
+			}
+		}
+	}
+</style>

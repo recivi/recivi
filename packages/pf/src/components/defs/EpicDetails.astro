@@ -1,7 +1,7 @@
 ---
 // Render a detailed page for an epic and its projects.
 
-import { Anchor, Entity, TechStack } from "virtual:pf/components";
+import { Anchor, Entity, ProjectDetails } from "virtual:pf/components";
 
 import type { EpicDetailsProps } from "../props/EpicDetails";
 import { getLinkedOrg } from "../../recivi/relations";
@@ -11,36 +11,35 @@ const {
 	epic,
 	filterTag,
 	headingOffset = 0,
-	isVerbose = true,
 	class: className,
 	...attrs
 } = Astro.props;
 
 const linkedOrg = getLinkedOrg(epic);
 
-const H1 = `h${1 + headingOffset}`;
-const H2 = `h${2 + headingOffset}`;
+const Heading = `h${1 + headingOffset}`;
 ---
 
 <div class:list={["pf-epic-details", className]} {...attrs}>
 	<div class="epic-header">
-		<H1>
+		<Heading>
 			<Entity entity={epic} />
-		</H1>
-		{
-			!isVerbose && linkedOrg ? (
-				<span class="meta">
-					Built at <Entity entity={linkedOrg} useInternalLink />
-				</span>
-			) : undefined
-		}
+			{
+				linkedOrg ? (
+					<span class="meta print-only">
+						&nbsp;(by <Entity entity={linkedOrg} />)
+					</span>
+				) : undefined
+			}
+		</Heading>
+		{epic.url ? <Anchor class="meta print-only" url={epic.url} /> : undefined}
 	</div>
 
-	<dl>
+	<dl class="web-only">
 		{
 			epic.url ? (
 				<Fragment>
-					<dt>URL:</dt>
+					<dt>URL</dt>
 					<dd>
 						<Anchor url={epic.url} />
 					</dd>
@@ -48,9 +47,9 @@ const H2 = `h${2 + headingOffset}`;
 			) : undefined
 		}
 		{
-			isVerbose && linkedOrg ? (
+			linkedOrg ? (
 				<Fragment>
-					<dt>Built at:</dt>
+					<dt>Org</dt>
 					<dd>
 						<Entity entity={linkedOrg} useInternalLink />
 					</dd>
@@ -60,60 +59,18 @@ const H2 = `h${2 + headingOffset}`;
 	</dl>
 
 	{
-		isVerbose && epic.description ? (
-			<p set:html={epic.description} />
-		) : epic.summary ? (
-			<p set:html={epic.summary} />
+		epic.description ? (
+			<p class="web-only" set:html={epic.description} />
 		) : undefined
 	}
+
+	{epic.summary ? <p class="print-only" set:html={epic.summary} /> : undefined}
 
 	{
 		epic.projects
 			.filter((project) => !filterTag || project.tags.includes(filterTag))
 			.map((project) => (
-				<div class="project">
-					<div class="project-header">
-						<H2>{project.name}</H2>
-						{!isVerbose && project.technologies.length ? (
-							<span class="meta">
-								<TechStack technologies={project.technologies} />
-							</span>
-						) : undefined}
-					</div>
-
-					<dl>
-						{project.url ? (
-							<Fragment>
-								<dt>URL:</dt>
-								<dd>
-									<Anchor url={project.url} />
-								</dd>
-							</Fragment>
-						) : undefined}
-						{isVerbose && project.technologies.length ? (
-							<Fragment>
-								<dt>Tech:</dt>
-								<dd>
-									<TechStack technologies={project.technologies} />
-								</dd>
-							</Fragment>
-						) : undefined}
-					</dl>
-
-					{isVerbose && project.description ? (
-						<p set:html={project.description} />
-					) : project.summary ? (
-						<p set:html={project.summary} />
-					) : undefined}
-
-					{project.highlights?.length ? (
-						<ul class="highlights">
-							{project.highlights?.map((highlight) => (
-								<li set:html={highlight} />
-							))}
-						</ul>
-					) : undefined}
-				</div>
+				<ProjectDetails {project} headingOffset={headingOffset + 1} />
 			))
 	}
 </div>
@@ -123,28 +80,14 @@ const H2 = `h${2 + headingOffset}`;
 		.pf-epic-details {
 			/* Don't break page inside an org details block. */
 			break-inside: avoid-page;
+			margin-block-end: calc(2 * var(--pf-spacing));
 		}
 
-		.project-header,
 		.epic-header {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			gap: 0.5rem;
-
-			& > * {
-				/* Use `gap` and prevent child elements from combining margins. */
-				margin-block: 0;
-			}
-
-			h1,
-			h2,
-			h3,
-			h4,
-			h5,
-			h6 {
-				flex-grow: 1;
-			}
+			gap: calc(2 * var(--pf-spacing));
 
 			.meta {
 				color: var(--pf-color-fg-subtle);

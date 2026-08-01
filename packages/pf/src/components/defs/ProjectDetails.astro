@@ -1,0 +1,95 @@
+---
+import { Anchor, TechStack } from "virtual:pf/components";
+
+import type { ProjectDetailsProps } from "../props/ProjectDetails";
+
+type Props = ProjectDetailsProps;
+const { project, headingOffset = 0, class: className, ...attrs } = Astro.props;
+
+const Heading = `h${1 + headingOffset}`;
+---
+
+<div class:list={["pf-project-details", className]} {...attrs}>
+	<div class="project-header">
+		<Heading>{project.name}</Heading>
+		{
+			project.technologies.length ? (
+				<TechStack
+					class="meta print-only"
+					technologies={project.technologies}
+					showNames
+				/>
+			) : undefined
+		}
+	</div>
+
+	<dl class="web-only">
+		{
+			project.url ? (
+				<Fragment>
+					<dt>URL</dt>
+					<dd>
+						<Anchor url={project.url} />
+					</dd>
+				</Fragment>
+			) : undefined
+		}{
+			project.role ? (
+				<Fragment>
+					<dt>Role</dt>
+					<dd>{project.role}</dd>
+				</Fragment>
+			) : undefined
+		}
+		{
+			project.technologies.length ? (
+				<Fragment>
+					<dt>Tech</dt>
+					<dd>
+						<TechStack technologies={project.technologies} showNames />
+					</dd>
+				</Fragment>
+			) : undefined
+		}
+	</dl>
+
+	{
+		project.description ? (
+			<p class="web-only" set:html={project.description} />
+		) : undefined
+	}
+
+	{
+		project.summary ? (
+			<p class="print-only" set:html={project.summary} />
+		) : undefined
+	}
+
+	{
+		project.highlights?.length ? (
+			<ul class="highlights">
+				{project.highlights?.map((highlight) => (
+					<li set:html={highlight} />
+				))}
+			</ul>
+		) : undefined
+	}
+</div>
+
+<style>
+	@layer pf.components {
+		.pf-project-details {
+			margin-block: calc(2 * var(--pf-spacing));
+
+			.project-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				.meta {
+					color: var(--pf-color-fg-subtle);
+				}
+			}
+		}
+	}
+</style>

@@ -1,0 +1,102 @@
+---
+import { Entity, Period } from "virtual:pf/components";
+
+import { formatRoleLocation, formatRoleType } from "@recivi/schema/display";
+
+import type { RoleDetailsProps } from "../props/RoleDetails";
+import { getLinkedEpics } from "../../recivi/relations";
+type Props = RoleDetailsProps;
+const { role, headingOffset = 0, class: className, ...attrs } = Astro.props;
+
+const Heading = `h${1 + headingOffset}`;
+---
+
+<div class:list={["pf-role-details", className]} {...attrs}>
+	<div class="role-header">
+		<Heading>{role.name}</Heading>
+		{
+			role.period ? (
+				<span class="meta print-only">
+					<Period period={role.period} />
+				</span>
+			) : undefined
+		}
+	</div>
+
+	<dl class="web-only">
+		{
+			role.period ? (
+				<Fragment>
+					<dt>Period</dt>
+					<dd>
+						<Period period={role.period} />
+					</dd>
+				</Fragment>
+			) : undefined
+		}
+		{
+			role.location ? (
+				<Fragment>
+					<dt>Location</dt>
+					<dd>{formatRoleLocation(role.location)}</dd>
+				</Fragment>
+			) : undefined
+		}
+		{
+			role.type ? (
+				<Fragment>
+					<dt>Type</dt>
+					<dd>{formatRoleType(role.type)}</dd>
+				</Fragment>
+			) : undefined
+		}
+		{
+			getLinkedEpics(role).length ? (
+				<Fragment>
+					<dt>Epics</dt>
+					<dd>
+						<ul class="linear">
+							{getLinkedEpics(role).map((epic) => (
+								<li>
+									<Entity entity={epic} useInternalLink />
+								</li>
+							))}
+						</ul>
+					</dd>
+				</Fragment>
+			) : undefined
+		}
+	</dl>
+
+	{
+		role.description ? (
+			<p class="web-only" set:html={role.description} />
+		) : undefined
+	}
+
+	{role.summary ? <p class="print-only" set:html={role.summary} /> : undefined}
+
+	{
+		role.highlights?.length ? (
+			<ul class="highlights">
+				{role.highlights?.map((highlight) => (
+					<li set:html={highlight} />
+				))}
+			</ul>
+		) : undefined
+	}
+</div>
+
+<style>
+	@layer pf.components {
+		.pf-role-details {
+			margin-block: calc(2 * var(--pf-spacing));
+
+			.role-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+		}
+	}
+</style>

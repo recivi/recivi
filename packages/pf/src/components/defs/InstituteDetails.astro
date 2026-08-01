@@ -1,0 +1,95 @@
+---
+// Render a detailed page for an epic and its projects.
+
+import { Anchor, CertDetails, Entity } from "virtual:pf/components";
+
+import { formatAddress } from "@recivi/schema/display";
+
+import type { InstituteDetailsProps } from "../props/InstituteDetails";
+
+type Props = InstituteDetailsProps;
+const {
+	institute,
+	filterTag,
+	headingOffset = 0,
+	class: className,
+	...attrs
+} = Astro.props;
+
+const Heading = `h${1 + headingOffset}`;
+---
+
+<div class:list={["pf-institute-details", className]} {...attrs}>
+	<div class="institute-header">
+		<Heading>
+			<Entity entity={{ ...institute, id: undefined }} />
+		</Heading>
+		{
+			institute.address ? (
+				<div class="print-only">
+					{formatAddress(institute.address, { useFlag: false })}
+				</div>
+			) : undefined
+		}
+	</div>
+
+	<dl class="web-only">
+		{
+			institute.url ? (
+				<Fragment>
+					<dt>URL</dt>
+					<dd>
+						<Anchor url={institute.url} />
+					</dd>
+				</Fragment>
+			) : undefined
+		}
+		{
+			institute.address ? (
+				<Fragment>
+					<dt>Address</dt>
+					<dd>{formatAddress(institute.address)}</dd>
+				</Fragment>
+			) : undefined
+		}
+	</dl>
+
+	{
+		institute.description ? (
+			<p class="web-only" set:html={institute.description} />
+		) : undefined
+	}
+
+	{
+		institute.summary ? (
+			<p class="print-only" set:html={institute.summary} />
+		) : undefined
+	}
+
+	{
+		institute.certs
+			.filter((cert) => !filterTag || cert.tags.includes(filterTag))
+			.map((cert) => <CertDetails {cert} headingOffset={headingOffset + 1} />)
+	}
+</div>
+
+<style>
+	@layer pf.components {
+		.pf-institute-details {
+			/* Don't break page inside an org details block. */
+			break-inside: avoid-page;
+			margin-block-end: calc(2 * var(--pf-spacing));
+		}
+
+		.institute-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: calc(2 * var(--pf-spacing));
+
+			.meta {
+				color: var(--pf-color-fg-subtle);
+			}
+		}
+	}
+</style>

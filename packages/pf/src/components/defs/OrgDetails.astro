@@ -1,133 +1,65 @@
 ---
 // Render a detailed page for an org and its roles.
 
-import { Anchor, Entity, Period } from "virtual:pf/components";
+import { Anchor, Entity, RoleDetails } from "virtual:pf/components";
 
-import {
-	getRoleLocationDisplay,
-	getRoleTypeDisplay,
-} from "@recivi/pf/recivi/enums";
+import { formatAddress } from "@recivi/schema/display";
 
 import type { OrgDetailsProps } from "../props/OrgDetails";
-import { getAddressDisplay } from "../../recivi/address";
-import { getLinkedEpics } from "../../recivi/relations";
 
 type Props = OrgDetailsProps;
 const {
 	org,
 	filterTag,
 	headingOffset = 0,
-	isVerbose = true,
 	class: className,
 	...attrs
 } = Astro.props;
 
-const H1 = `h${1 + headingOffset}`;
-const H2 = `h${2 + headingOffset}`;
+const Heading = `h${1 + headingOffset}`;
 ---
 
 <div class:list={["pf-org-details", className]} {...attrs}>
 	<div class="org-header">
-		<H1>
+		<Heading>
 			<Entity entity={org} />
-		</H1>
+		</Heading>
+		{org.url ? <Anchor class="meta print-only" url={org.url} /> : undefined}
 	</div>
 
-	<dl>
-		{
-			isVerbose && org.address ? (
-				<Fragment>
-					<dt>{isVerbose ? "Address" : "Addr"}:</dt>
-					<dd>{getAddressDisplay(org.address)}</dd>
-				</Fragment>
-			) : undefined
-		}
+	<dl class="web-only">
 		{
 			org.url ? (
 				<Fragment>
-					<dt>URL:</dt>
+					<dt>URL</dt>
 					<dd>
 						<Anchor url={org.url} />
 					</dd>
 				</Fragment>
 			) : undefined
 		}
+		{
+			org.address ? (
+				<Fragment>
+					<dt>Address</dt>
+					<dd>{formatAddress(org.address)}</dd>
+				</Fragment>
+			) : undefined
+		}
 	</dl>
 
 	{
-		isVerbose && org.description ? (
-			<p set:html={org.description} />
-		) : org.summary ? (
-			<p set:html={org.summary} />
+		org.description ? (
+			<p class="web-only" set:html={org.description} />
 		) : undefined
 	}
+
+	{org.summary ? <p class="print-only" set:html={org.summary} /> : undefined}
 
 	{
 		org.roles
 			.filter((role) => !filterTag || role.tags.includes(filterTag))
-			.map((role) => (
-				<div class="role">
-					<div class="role-header">
-						<H2>{role.name}</H2>
-						{!isVerbose && role.period ? (
-							<span class="meta">
-								<Period period={role.period} />
-							</span>
-						) : undefined}
-					</div>
-
-					<dl>
-						{isVerbose && role.period ? (
-							<Fragment>
-								<dt>Period:</dt>
-								<dd>
-									<Period period={role.period} />
-								</dd>
-							</Fragment>
-						) : undefined}
-						{isVerbose && role.location ? (
-							<Fragment>
-								<dt>Location:</dt>
-								<dd>{getRoleLocationDisplay(role.location)}</dd>
-							</Fragment>
-						) : undefined}
-						{isVerbose && role.type ? (
-							<Fragment>
-								<dt>Type:</dt>
-								<dd>{getRoleTypeDisplay(role.type)}</dd>
-							</Fragment>
-						) : undefined}
-						{isVerbose && getLinkedEpics(role).length ? (
-							<Fragment>
-								<dt>Epics:</dt>
-								<dd>
-									<ul class="linear">
-										{getLinkedEpics(role).map((epic) => (
-											<li>
-												<Entity entity={epic} useInternalLink />
-											</li>
-										))}
-									</ul>
-								</dd>
-							</Fragment>
-						) : undefined}
-					</dl>
-
-					{isVerbose && role.description ? (
-						<p set:html={role.description} />
-					) : role.summary ? (
-						<p set:html={role.summary} />
-					) : undefined}
-
-					{role.highlights?.length ? (
-						<ul class="highlights">
-							{role.highlights?.map((highlight) => (
-								<li set:html={highlight} />
-							))}
-						</ul>
-					) : undefined}
-				</div>
-			))
+			.map((role) => <RoleDetails {role} headingOffset={headingOffset + 1} />)
 	}
 </div>
 
@@ -136,28 +68,14 @@ const H2 = `h${2 + headingOffset}`;
 		.pf-org-details {
 			/* Don't break page inside an org details block. */
 			break-inside: avoid-page;
+			margin-block-end: calc(2 * var(--pf-spacing));
 		}
 
-		.org-header,
-		.role-header {
+		.org-header {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			gap: 0.5rem;
-
-			& > * {
-				/* Use `gap` and prevent child elements from combining margins. */
-				margin-block: 0;
-			}
-
-			h1,
-			h2,
-			h3,
-			h4,
-			h5,
-			h6 {
-				flex-grow: 1;
-			}
+			gap: calc(2 * var(--pf-spacing));
 
 			.meta {
 				color: var(--pf-color-fg-subtle);
