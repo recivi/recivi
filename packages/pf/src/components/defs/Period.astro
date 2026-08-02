@@ -32,12 +32,9 @@ const { period, class: className, ...attrs } = Astro.props;
 
 			.present {
 				font-family: var(--pf-font-family-monospace);
+				font-size: 0.9em;
 				color: var(--pf-color-fg-subtle);
 				font-style: italic;
-
-				:root[data-media="print"] & {
-					font-size: calc(1em * pow(var(--pf-font-size-scale), -1));
-				}
 			}
 		}
 	}

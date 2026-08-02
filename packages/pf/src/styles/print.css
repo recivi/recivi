@@ -12,7 +12,7 @@
 		@bottom-right {
 			content: var(--pf-print-credits-right);
 			font-family: var(--pf-font-family-monospace);
-			font-size: calc(1em * pow(var(--pf-font-size-scale), -1));
+			font-size: 0.9em;
 			color: var(--pf-color-fg-subtle);
 		}
 	}

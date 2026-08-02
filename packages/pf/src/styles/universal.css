@@ -163,6 +163,7 @@
 	kbd,
 	samp {
 		font-family: var(--pf-font-family-monospace);
+		font-size: 0.9em;
 	}
 
 	pre {
@@ -170,6 +171,11 @@
 		border-radius: calc(2 * var(--pf-spacing));
 		padding: calc(2 * var(--pf-spacing));
 		overflow-x: auto;
+
+		code {
+			/* Avoid scaling down the font-size twice. */
+			font-size: 1em;
+		}
 	}
 
 	kbd,
@@ -177,7 +183,6 @@
 		border: 1px solid var(--pf-color-border);
 		border-radius: var(--pf-spacing);
 		padding: calc(0.5 * var(--pf-spacing));
-		font-size: calc(1em * pow(var(--pf-font-size-scale), -1));
 	}
 
 	kbd {
