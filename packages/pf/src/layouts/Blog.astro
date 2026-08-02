@@ -53,10 +53,10 @@ const defaultContent = (await Astro.slots.render("default")).trim();
 				<div class="requires-js">
 					<h2>Categories</h2>
 					{categories.length ? (
-						<fieldset class="categories">
+						<fieldset class="categories-fieldset">
 							<legend class="sr-only">Categories</legend>
 							{categories.map((category) => (
-								<label>
+								<label class="category-field">
 									<input
 										type="checkbox"
 										value={category}
@@ -104,12 +104,12 @@ const defaultContent = (await Astro.slots.render("default")).trim();
 
 <style>
 	@layer pf.core {
-		.categories {
+		.categories-fieldset {
 			display: flex;
 			flex-wrap: wrap;
 			gap: var(--pf-spacing);
 
-			label {
+			.category-field {
 				border: 1px solid var(--pf-color-border);
 				border-radius: var(--pf-spacing);
 				padding: calc(0.5 * var(--pf-spacing)) var(--pf-spacing);
