@@ -1,0 +1,26 @@
+---
+// Render the list of languages from Récivi data.
+
+import { Language } from "virtual:pf/components";
+import reciviData from "virtual:recivi/data";
+
+import { formatLanguages } from "@recivi/schema/display";
+
+import type { BaseProps } from "../props/base";
+
+type Props = BaseProps;
+const { class: className, ...attrs } = Astro.props;
+---
+
+<ul class:list={["pf-language-list", "web-only", className]} {...attrs}>
+	{
+		reciviData.languages.map((language) => (
+			<li>
+				<Language {language} />
+			</li>
+		))
+	}
+</ul>
+<div class:list={["pf-language-list", "print-only", className]} {...attrs}>
+	{formatLanguages(reciviData.languages)}
+</div>

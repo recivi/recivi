@@ -1,0 +1,40 @@
+---
+import type { LanguageProps } from "../props/Language";
+import { LANGUAGE_PROFICIENCIES } from "@recivi/schema";
+import { formatLanguageName, formatProficiency } from "@recivi/schema/display";
+
+type Props = LanguageProps;
+const { language, class: className, ...attrs } = Astro.props;
+
+const MODES = ["listen", "speak", "read", "write"] as const;
+---
+
+<span class:list={["pf-language", className]} {...attrs}>
+	{formatLanguageName(language.name)}
+	<div>
+		{
+			LANGUAGE_PROFICIENCIES.filter((level) => level !== "no").map((level) => {
+				const modes = MODES.filter((mode) => language[mode] === level);
+				return modes.length ? (
+					<span class="map">
+						{modes.map((mode) => mode[0]?.toUpperCase()).join("")}
+						:&nbsp;
+						{formatProficiency(level)}
+					</span>
+				) : undefined;
+			})
+		}
+	</div>
+</span>
+
+<style>
+	@layer pf.components {
+		.pf-language {
+			.map:not(:first-of-type)::before {
+				content: "·";
+				color: var(--pf-color-fg-subtle);
+				margin-inline: calc(2 * var(--pf-spacing));
+			}
+		}
+	}
+</style>

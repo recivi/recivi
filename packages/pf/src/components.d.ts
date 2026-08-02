@@ -15,6 +15,8 @@ declare module "virtual:pf/components" {
 	export const Icon: typeof import("./components/defs/Icon.astro").default;
 	export const InstituteCard: typeof import("./components/defs/InstituteCard.astro").default;
 	export const InstituteDetails: typeof import("./components/defs/InstituteDetails.astro").default;
+	export const Language: typeof import("./components/defs/Language.astro").default;
+	export const LanguageList: typeof import("./components/defs/LanguageList.astro").default;
 	export const Letterhead: typeof import("./components/defs/Letterhead.astro").default;
 	export const Nav: typeof import("./components/defs/Nav.astro").default;
 	export const NowUpdate: typeof import("./components/defs/NowUpdate.astro").default;
@@ -26,6 +28,7 @@ declare module "virtual:pf/components" {
 	export const ProjectDetails: typeof import("./components/defs/ProjectDetails.astro").default;
 	export const RoleDetails: typeof import("./components/defs/RoleDetails.astro").default;
 	export const Skill: typeof import("./components/defs/Skill.astro").default;
+	export const SkillList: typeof import("./components/defs/SkillList.astro").default;
 	export const Table: typeof import("./components/defs/Table.astro").default;
 	export const TechStack: typeof import("./components/defs/TechStack.astro").default;
 	export const Toc: typeof import("./components/defs/Toc.astro").default;

@@ -5,8 +5,9 @@ import { getEntry, render } from "astro:content";
 import {
 	EpicCard,
 	InstituteCard,
+	LanguageList,
 	OrgCard,
-	Skill,
+	SkillList,
 	Table,
 } from "virtual:pf/components";
 import config from "virtual:pf/config";
@@ -17,7 +18,6 @@ import type { z } from "astro/zod";
 import type { pageSchema } from "../content";
 import {
 	getCertsTable,
-	getLanguagesTable,
 	getProjectsTable,
 	getRolesTable,
 } from "../recivi/table";
@@ -34,7 +34,6 @@ const ResumeIntro = resumeIntro && (await render(resumeIntro)).Content;
 const certsTable = getCertsTable();
 const rolesTable = getRolesTable();
 const projectsTable = getProjectsTable();
-const languagesTable = getLanguagesTable();
 
 // Rendered via `set:html` instead of forwarding slot.
 const defaultContent = (await Astro.slots.render("default")).trim();
@@ -91,13 +90,7 @@ const defaultContent = (await Astro.slots.render("default")).trim();
 			config.pages.resume.showSkills && reciviData.skills.length ? (
 				<Fragment>
 					<h2>Skills</h2>
-					<ul>
-						{reciviData.skills.map((skill) => (
-							<li>
-								<Skill {skill} />
-							</li>
-						))}
-					</ul>
+					<SkillList />
 				</Fragment>
 			) : undefined
 		}
@@ -106,16 +99,7 @@ const defaultContent = (await Astro.slots.render("default")).trim();
 			config.pages.resume.showLanguages && reciviData.languages.length ? (
 				<Fragment>
 					<h2>Languages</h2>
-					<ul class="resume-section-small">
-						{reciviData.languages.map((language) => (
-							<li>
-								{typeof language.name === "string"
-									? language.name
-									: language.name.name}
-							</li>
-						))}
-					</ul>
-					<Table class="resume-section-big" table={languagesTable} />
+					<LanguageList />
 				</Fragment>
 			) : undefined
 		}

@@ -2,7 +2,6 @@ import nav from "virtual:pf/nav";
 import reciviData from "virtual:recivi/data";
 
 import { defineTable } from "../types/table";
-import { getLanguageProficiencyDisplay } from "./enums";
 import { getLinkedEpics, getLinkedOrg } from "./relations";
 
 /**
@@ -102,36 +101,5 @@ export function getProjectsTable() {
 			}),
 		),
 		"tech",
-	);
-}
-
-/**
- * Get the table for the "Languages" section.
- *
- * @returns the table for the "Languages" section
- */
-export function getLanguagesTable() {
-	return defineTable(
-		{
-			language: { title: "Language", renderer: "Text" },
-			speak: { title: "Speak", renderer: "Text" },
-			listen: { title: "Listen", renderer: "Text" },
-			write: { title: "Write", renderer: "Text" },
-			read: { title: "Read", renderer: "Text" },
-		},
-		reciviData.languages.map((language) => {
-			const languageName = typeof language.name === "string" ? language.name : language.name.name;
-			return {
-				groupId: languageName,
-				data: {
-					language: languageName,
-					speak: getLanguageProficiencyDisplay(language.speak),
-					listen: getLanguageProficiencyDisplay(language.listen),
-					write: getLanguageProficiencyDisplay(language.write),
-					read: getLanguageProficiencyDisplay(language.read),
-				},
-			};
-		}),
-		"language",
 	);
 }

@@ -1,0 +1,26 @@
+---
+// Render the list of skills from Récivi data.
+
+import { Skill } from "virtual:pf/components";
+import reciviData from "virtual:recivi/data";
+
+import { formatSkills } from "@recivi/schema/display";
+
+import type { BaseProps } from "../props/base";
+
+type Props = BaseProps;
+const { class: className, ...attrs } = Astro.props;
+---
+
+<ul class:list={["pf-skill-list", "web-only", className]} {...attrs}>
+	{
+		reciviData.skills.map((skill) => (
+			<li>
+				<Skill {skill} />
+			</li>
+		))
+	}
+</ul>
+<div class:list={["pf-skill-list", "print-only", className]} {...attrs}>
+	{formatSkills(reciviData.skills)}
+</div>
