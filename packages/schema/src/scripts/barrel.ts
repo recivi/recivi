@@ -10,6 +10,7 @@ import { globSync } from "glob";
 
 const EXPORT_TYPE_RE = /export (?:interface|type) (?<name>\w+)/u;
 const EXPORT_ZOD_RE = /export const (?<name>\w+Schema)/u;
+const EXPORT_CONST_RE = /export const (?<name>[A-Z_]+)/u;
 
 const srcPath = resolve(import.meta.filename, "../../");
 
@@ -24,6 +25,11 @@ const fileExports = allTsFiles.flatMap((tsFile) => {
 	const importPath = `@${tsFile.split(/schema\/src/u)[1].replace(/\.ts$/u, "")}`;
 	const lines = code.split("\n");
 
+	const constants = lines
+		.map((line) => EXPORT_CONST_RE.exec(line)?.groups?.name)
+		.filter((val) => val !== undefined)
+		.map((name) => `export { ${name} } from '${importPath}'`);
+
 	const types = lines
 		.map((line) => EXPORT_TYPE_RE.exec(line)?.groups?.name)
 		.filter((val) => val !== undefined)
@@ -36,7 +42,7 @@ const fileExports = allTsFiles.flatMap((tsFile) => {
 		.map((name) => `export { ${name} } from '${importPath}'`);
 	schemasCount += schemas.length;
 
-	return types.concat(schemas);
+	return constants.concat(types).concat(schemas);
 });
 
 const barrelPath = join(srcPath, "index.ts");
