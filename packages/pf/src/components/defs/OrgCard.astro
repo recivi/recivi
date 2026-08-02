@@ -9,12 +9,12 @@ type Props = OrgCardProps;
 const { org, class: className, ...attrs } = Astro.props;
 ---
 
-<div class:list={["pf-org-entry", className]} {...attrs}>
+<div class:list={["pf-org-card", className]} {...attrs}>
 	<Entity entity={org} useInternalLink />
 	<ul class="roles-list">
 		{
 			org.roles.map((role) => (
-				<li>
+				<li class="role">
 					{role.name}
 					{role.period ? (
 						<Period class="period" period={role.period} />
@@ -27,7 +27,7 @@ const { org, class: className, ...attrs } = Astro.props;
 
 <style>
 	@layer pf.components {
-		.pf-org-entry {
+		.pf-org-card {
 			display: flex;
 			flex-direction: column;
 			gap: var(--pf-spacing);
@@ -44,7 +44,7 @@ const { org, class: className, ...attrs } = Astro.props;
 				padding-inline-start: 0;
 				list-style: none;
 
-				li {
+				.role {
 					display: flex;
 					justify-content: space-between;
 					gap: calc(4 * var(--pf-spacing));

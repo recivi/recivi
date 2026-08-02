@@ -9,7 +9,7 @@ type Props = InstituteCardProps;
 const { institute, class: className, ...attrs } = Astro.props;
 ---
 
-<div class:list={["pf-institute-entry", className]} {...attrs}>
+<div class:list={["pf-institute-card", className]} {...attrs}>
 	<Entity entity={{ ...institute, id: undefined }} />
 	<ul class="certs-list">
 		{
@@ -19,7 +19,7 @@ const { institute, class: className, ...attrs } = Astro.props;
 					degree = `${degree} (${cert.field})`;
 				}
 				return (
-					<li>
+					<li class="cert">
 						{degree}
 						<PfDate class="date" date={cert.issue} />
 					</li>
@@ -31,7 +31,7 @@ const { institute, class: className, ...attrs } = Astro.props;
 
 <style>
 	@layer pf.components {
-		.pf-institute-entry {
+		.pf-institute-card {
 			display: flex;
 			flex-direction: column;
 			gap: var(--pf-spacing);
@@ -48,7 +48,7 @@ const { institute, class: className, ...attrs } = Astro.props;
 				padding-inline-start: 0;
 				list-style: none;
 
-				li {
+				.cert {
 					display: flex;
 					justify-content: space-between;
 					gap: calc(4 * var(--pf-spacing));
