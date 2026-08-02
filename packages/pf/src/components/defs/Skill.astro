@@ -26,7 +26,7 @@ const { skill, class: className, ...attrs } = Astro.props;
 					skill.name
 				)}
 				{skill.subSkills.length ? (
-					<ul class="sub-skills">
+					<ul class="sub-skills linear">
 						{skill.subSkills?.map((subSkill: Skill) => (
 							<li>
 								<Astro.self skill={subSkill} />
@@ -43,18 +43,11 @@ const { skill, class: className, ...attrs } = Astro.props;
 	@layer pf.components {
 		.pf-skill {
 			.sub-skills {
-				display: inline-flex;
-				margin-block: 0;
-				padding-inline-start: 0;
 				color: var(--pf-color-fg-subtle);
 
-				li {
-					display: flex;
-
-					&::before {
-						content: "·";
-						margin-inline: calc(2 * var(--pf-spacing));
-					}
+				&::before {
+					content: "·";
+					margin-inline: calc(2 * var(--pf-spacing));
 				}
 			}
 		}

@@ -27,18 +27,18 @@ const profileComms = profiles
 ---
 
 <div class:list={["pf-comms", "print-only", className]} {...attrs}>
-	<div class="row">
+	<ul class="linear">
 		{
 			siteComm ? (
-				<span class="comm">
+				<li>
 					<strong>Website:&nbsp;</strong>
 					<Anchor {...siteComm.anchor} />
-				</span>
+				</li>
 			) : undefined
 		}
 		{
 			[emailComms, phoneComms].map((commSet) => (
-				<span class="comm">
+				<li>
 					<strong>{commSet[0]?.title}:&nbsp;</strong>
 					{commSet.map((comm, idx, allComms) => (
 						<Fragment>
@@ -46,20 +46,20 @@ const profileComms = profiles
 							{idx < allComms.length - 1 ? ", " : undefined}
 						</Fragment>
 					))}
-				</span>
+				</li>
 			))
 		}
-	</div>
-	<div class="row">
+	</ul>
+	<ul class="linear">
 		{
 			profileComms.map((comm) => (
-				<span class="comm">
+				<li>
 					<strong>{comm.title}:&nbsp;</strong>
 					<Anchor {...comm.anchor} />
-				</span>
+				</li>
 			))
 		}
-	</div>
+	</ul>
 </div>
 <ul class:list={["pf-comms", "web-only", className]} {...attrs}>
 	{
@@ -73,27 +73,13 @@ const profileComms = profiles
 
 <style>
 	@layer pf.components {
-		:root:not([data-media="print"]) {
-			.pf-comms {
-				columns: 2;
-				padding-inline-start: 0;
-				list-style: none;
+		.pf-comms.web-only {
+			columns: 2;
+			padding-inline-start: 0;
+			list-style: none;
 
-				.pf-icon {
-					color: var(--pf-color-accent);
-				}
-			}
-		}
-
-		:root[data-media="print"] {
-			.pf-comms {
-				.row {
-					.comm:not(:first-of-type)::before {
-						content: "·";
-						color: var(--pf-color-fg-subtle);
-						margin-inline: calc(2 * var(--pf-spacing));
-					}
-				}
+			.pf-icon {
+				color: var(--pf-color-accent);
 			}
 		}
 	}

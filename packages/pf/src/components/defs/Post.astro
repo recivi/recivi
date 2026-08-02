@@ -35,18 +35,21 @@ const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
 			/>
 		) : undefined
 	}
-	<ul>
-		{
-			data.categories.map((category) => (
-				<li
-					x-data={JSON.stringify({ category })}
-					x-bind:class="activeCategories.includes(category) && 'active'"
-				>
-					{category}
-				</li>
-			))
-		}
-	</ul>
+	<div>
+		<ul class="categories-list linear">
+			{
+				data.categories.map((category) => (
+					<li
+						class="category"
+						x-data={JSON.stringify({ category })}
+						x-bind:class="activeCategories.includes(category) && 'active'"
+					>
+						{category}
+					</li>
+				))
+			}
+		</ul>
+	</div>
 </div>
 
 <style>
@@ -56,24 +59,12 @@ const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
 				color: var(--pf-color-yellow);
 			}
 
-			ul {
-				display: flex;
-				margin-block: 0;
-				padding-inline-start: 0;
-				list-style: none;
+			.categories-list {
+				color: var(--pf-color-fg-subtle);
 
-				li {
-					display: flex;
-					align-items: center;
-					color: var(--pf-color-fg-subtle);
-
+				.category {
 					&.active {
 						color: var(--pf-color-accent);
-					}
-
-					&:not(:last-child)::after {
-						content: "·";
-						margin-inline: calc(2 * var(--pf-spacing));
 					}
 				}
 			}

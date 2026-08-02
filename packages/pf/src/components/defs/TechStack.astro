@@ -15,13 +15,13 @@ const {
 } = Astro.props;
 ---
 
-<ul class:list={["pf-tech-stack", className]} {...attrs}>
+<ul class:list={["pf-tech-stack", "linear", className]} {...attrs}>
 	{
 		technologies
 			// Either the technology will show an icon or a name.
 			.filter((technology) => technology.id || showNames)
 			.map((technology) => (
-				<li>
+				<li class="technology">
 					{technology.id ? (
 						<Icon
 							class="web-only"
@@ -38,20 +38,8 @@ const {
 <style>
 	@layer pf.components {
 		.pf-tech-stack {
-			display: inline-flex;
-			flex-wrap: wrap;
-			margin-block: 0;
-			padding-inline-start: 0;
-
-			li {
-				display: flex;
+			.technology {
 				align-items: center;
-
-				&:not(:last-child)::after {
-					content: "·";
-					color: var(--pf-color-fg-subtle);
-					margin-inline: calc(2 * var(--pf-spacing));
-				}
 			}
 		}
 	}
