@@ -20,10 +20,10 @@
 	dl {
 		display: grid;
 		grid-template-columns: auto 1fr;
-		gap: var(--pf-spacing) calc(2 * var(--pf-spacing));
+		gap: 0 calc(2 * var(--pf-spacing));
 
 		dt {
-			font-weight: 500;
+			color: var(--pf-color-fg-subtle);
 		}
 
 		&:not(:has(dt)) {
