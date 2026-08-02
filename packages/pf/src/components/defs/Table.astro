@@ -91,8 +91,8 @@ const {
 <style>
 	@layer pf.components {
 		.pf-table {
-			margin-inline: -1rem;
-			inline-size: calc(100% + 2rem);
+			margin-inline: calc(-4 * var(--pf-spacing));
+			inline-size: calc(100% + 2 * 4 * var(--pf-spacing));
 
 			th,
 			td {

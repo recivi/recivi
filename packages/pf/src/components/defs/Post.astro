@@ -58,7 +58,6 @@ const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
 
 			ul {
 				display: flex;
-				gap: 0.5rem;
 				margin-block: 0;
 				padding-inline-start: 0;
 				list-style: none;
@@ -66,7 +65,6 @@ const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
 				li {
 					display: flex;
 					align-items: center;
-					gap: 0.5rem;
 					color: var(--pf-color-fg-subtle);
 
 					&.active {
@@ -75,6 +73,7 @@ const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
 
 					&:not(:last-child)::after {
 						content: "·";
+						margin-inline: calc(2 * var(--pf-spacing));
 					}
 				}
 			}

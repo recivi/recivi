@@ -44,18 +44,16 @@ const { skill, class: className, ...attrs } = Astro.props;
 		.pf-skill {
 			.sub-skills {
 				display: inline-flex;
-				gap: 0.5em;
-				margin-inline-start: 0.5em;
 				margin-block: 0;
 				padding-inline-start: 0;
 				color: var(--pf-color-fg-subtle);
 
 				li {
 					display: flex;
-					gap: 0.5rem;
 
 					&::before {
 						content: "·";
+						margin-inline: calc(2 * var(--pf-spacing));
 					}
 				}
 			}

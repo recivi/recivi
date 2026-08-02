@@ -78,8 +78,7 @@ const { title, description, breadcrumbs, right } = Astro.props;
 	@layer pf.component {
 		.header,
 		main {
-			padding-inline: 2rem;
-			padding-block: 1rem;
+			padding: calc(4 * var(--pf-spacing)) calc(8 * var(--pf-spacing));
 		}
 
 		.header {
@@ -99,7 +98,7 @@ const { title, description, breadcrumbs, right } = Astro.props;
 		}
 
 		.title {
-			margin-block-end: 1rem;
+			margin-block-end: calc(4 * var(--pf-spacing));
 			color: var(--pf-color-accent);
 			font-weight: 600;
 			font-size: var(--pf-font-size-l1);

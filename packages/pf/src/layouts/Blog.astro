@@ -107,12 +107,12 @@ const defaultContent = (await Astro.slots.render("default")).trim();
 		.categories {
 			display: flex;
 			flex-wrap: wrap;
-			gap: 0.25rem;
+			gap: var(--pf-spacing);
 
 			label {
 				border: 1px solid var(--pf-color-border);
-				border-radius: 0.25rem;
-				padding: 0.125em 0.25em;
+				border-radius: var(--pf-spacing);
+				padding: calc(0.5 * var(--pf-spacing)) var(--pf-spacing);
 
 				&:has(input:checked) {
 					border-color: var(--pf-color-accent);

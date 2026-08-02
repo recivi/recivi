@@ -50,7 +50,7 @@
 	/* Use a standard padding amount for lists. */
 	ul,
 	ol {
-		padding-inline-start: 1.5rem;
+		padding-inline-start: calc(6 * var(--pf-spacing));
 	}
 
 	/* Erase fieldset styles */

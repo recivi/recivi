@@ -32,9 +32,9 @@ const { class: className, ...attrs } = Astro.props;
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-between;
-			gap: 0.5rem 1rem;
+			gap: calc(2 * var(--pf-spacing)) calc(4 * var(--pf-spacing));
 			border-block-start: 1px solid var(--pf-color-border);
-			padding: 1rem;
+			padding: calc(4 * var(--pf-spacing));
 			color: var(--pf-color-fg-subtle);
 		}
 	}

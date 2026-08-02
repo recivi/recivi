@@ -36,8 +36,8 @@ const { Content } = await render(update);
 	@layer pf.components {
 		.pf-now-update {
 			position: relative;
-			margin-inline-start: 0.5ex;
-			padding-inline-start: 1rem;
+			margin-inline-start: calc(2 * var(--pf-spacing));
+			padding-inline-start: calc(4 * var(--pf-spacing));
 
 			&::before {
 				position: absolute;

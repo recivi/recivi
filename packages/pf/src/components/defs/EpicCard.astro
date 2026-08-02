@@ -32,11 +32,11 @@ const { epic, class: className, ...attrs } = Astro.props;
 		.pf-epic-entry {
 			display: flex;
 			flex-direction: column;
-			gap: 0.25rem;
-			margin-inline: -1rem;
+			gap: var(--pf-spacing);
+			margin-inline: calc(-4 * var(--pf-spacing));
 			border-block-end: 1px dashed var(--pf-color-border);
-			padding-inline: 1rem;
-			padding-block: 0.25rem;
+			padding-inline: calc(4 * var(--pf-spacing));
+			padding-block: var(--pf-spacing);
 
 			& > * {
 				margin: 0;
@@ -49,7 +49,7 @@ const { epic, class: className, ...attrs } = Astro.props;
 				li {
 					display: flex;
 					justify-content: space-between;
-					gap: 1rem;
+					gap: calc(4 * var(--pf-spacing));
 
 					.tech-stack {
 						color: var(--pf-color-fg-subtle);

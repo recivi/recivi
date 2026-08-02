@@ -80,7 +80,7 @@
 		&::after {
 			display: inline-block;
 			transition: transform 100ms ease-in-out;
-			margin-inline-start: 0.125rem;
+			margin-inline-start: calc(0.5 * var(--pf-spacing));
 		}
 
 		&::before {
@@ -111,13 +111,13 @@
 		/* back links */
 		&[data-rel="parent"] {
 			--link-prefix: "←";
-			--link-affix-translate-x: -0.25rem;
+			--link-affix-translate-x: calc(-1 * var(--pf-spacing));
 		}
 
 		/* download links */
 		&[href$=".pdf"] {
 			--link-suffix: "↓";
-			--link-affix-translate-y: 0.25rem;
+			--link-affix-translate-y: var(--pf-spacing);
 		}
 
 		/* links outside the site */
