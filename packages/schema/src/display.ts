@@ -224,19 +224,19 @@ export function matchesTag(tags: Tag[], filterTag?: string): boolean {
 // ======
 
 /**
- * Flatten a skill into display lines. A formal skill with
- * sub-skills is rendered as "Skill: (SubSkill1, SubSkill2, ..., & SubSkillN)".
+ * Format a list of skills into a display string. A formal skill with sub-skills
+ * is flattened as "Skill: (SubSkill1, SubSkill2, ..., & SubSkillN)".
  *
- * @param skill the skill to flatten
+ * @param skills the list of skills to format
  * @param bcp47 the BCP 47 locale tag for formatting
- * @returns the list of display lines
+ * @returns the display string
  */
-export function flattenSkills(skills: Skill[], bcp47: string = "en"): string {
+export function formatSkills(skills: Skill[], bcp47: string = "en"): string {
 	return new Intl.ListFormat(bcp47, { style: "short", type: "conjunction" }).format(
 		skills.map((skill) => {
 			if (typeof skill === "string") return skill;
 			if (skill.subSkills.length === 0) return skill.name;
-			return `${skill.name}: (${flattenSkills(skill.subSkills, bcp47)})`;
+			return `${skill.name} (${formatSkills(skill.subSkills, bcp47)})`;
 		}),
 	);
 }
