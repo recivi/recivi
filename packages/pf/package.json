@@ -33,10 +33,10 @@
 	},
 	"scripts": {
 		"barrel": "tsx src/scripts/barrel.ts",
-		"check": "astro check",
-		"astro": "astro",
-		"test": "tsx --test",
-		"reference": "tsx src/scripts/reference.ts"
+		"reference": "pnpm barrel && tsx src/scripts/reference.ts",
+		"check": "pnpm barrel && astro check",
+		"astro": "pnpm barrel && astro",
+		"test": "tsx --test"
 	},
 	"dependencies": {
 		"@astrojs/markdown-satteri": "^0.3.4",
