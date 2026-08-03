@@ -34,7 +34,7 @@ const creditsCss = config.showCredits
 	</Fragment>
 
 	<!-- DEFAULT SLOT -->
-	<main>
+	<main data-pf-print-content>
 		<div class="header">
 			<Letterhead />
 		</div>
@@ -44,6 +44,12 @@ const creditsCss = config.showCredits
 		</div>
 	</main>
 </Root>
+
+<script>
+	import { paginatePrintPreview } from "../utils/print_preview";
+
+	void paginatePrintPreview();
+</script>
 
 <style>
 	/*
