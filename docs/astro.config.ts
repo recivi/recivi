@@ -45,7 +45,7 @@ export default defineConfig({
 						},
 						{
 							label: "Reference",
-							autogenerate: { directory: "schema/reference" },
+							items: [{ autogenerate: { directory: "schema/reference" } }],
 							collapsed: true,
 						},
 					],
@@ -59,7 +59,7 @@ export default defineConfig({
 						},
 						{
 							label: "Reference",
-							autogenerate: { directory: "pf/reference" },
+							items: [{ autogenerate: { directory: "pf/reference" } }],
 							collapsed: true,
 						},
 					],
