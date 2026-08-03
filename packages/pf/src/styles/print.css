@@ -18,19 +18,10 @@
 	}
 
 	html {
-		background-color: white; /* Not the default web background! */
-		color: var(--pf-color-fg);
-		font-size: var(--pf-font-size-base);
-		font-family: var(--pf-font-family);
-
 		@media screen {
 			transform: scale(var(--pf-print-preview-scale));
 			transform-origin: top left;
 		}
-	}
-
-	::selection {
-		background-color: var(--pf-color-selection);
 	}
 
 	body {

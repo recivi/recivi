@@ -1,4 +1,15 @@
 @layer pf.universal {
+	html {
+		background-color: var(--pf-color-bg);
+		color: var(--pf-color-fg);
+		font-size: var(--pf-font-size-base);
+		font-family: var(--pf-font-family);
+	}
+
+	::selection {
+		background-color: var(--pf-color-selection);
+	}
+
 	/* Headings */
 
 	h1,
