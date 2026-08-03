@@ -1,3 +1,4 @@
+import { satteri } from "@astrojs/markdown-satteri";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import starlightLinksValidator from "starlight-links-validator";
@@ -7,9 +8,10 @@ export default defineConfig({
 	devToolbar: {
 		enabled: false,
 	},
-	// https://daringfireball.net/projects/smartypants/
 	markdown: {
-		smartypants: false,
+		processor: satteri({
+			features: { smartPunctuation: false },
+		}),
 	},
 	integrations: [
 		starlight({
