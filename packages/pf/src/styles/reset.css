@@ -9,6 +9,8 @@
 	/* Remove default margin on all elements. */
 	* {
 		margin: 0;
+		padding: 0;
+		border: none;
 	}
 
 	/* Enable keyword animations. */
