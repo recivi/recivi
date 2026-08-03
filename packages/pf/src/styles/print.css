@@ -37,10 +37,6 @@
 			padding-block: var(--pf-print-margin-block);
 			position: relative;
 
-			[data-pf-print-page-break-offset] {
-				margin-block-start: var(--pf-print-page-break-offset);
-			}
-
 			&::before {
 				content: "";
 				position: absolute;
@@ -64,6 +60,12 @@
 				background-repeat: repeat-y;
 				pointer-events: none;
 			}
+		}
+	}
+
+	[data-pf-print-page-break-offset] {
+		@media screen {
+			margin-block-start: var(--pf-print-page-break-offset);
 		}
 	}
 
