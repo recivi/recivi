@@ -1,5 +1,8 @@
 ---
-import { Code } from "@astrojs/starlight/components";
+// The look and feel of this component mirrors the `DocBlock` component in pls,
+// which documents a hand-authored config schema. Keep the two visually in sync.
+// https://github.com/pls-rs/pls/blob/main/docs/src/components/DocBlock.astro
+import { Badge, Code } from "@astrojs/starlight/components";
 
 import { fromBase64, toBase64 } from "@/utils/base64";
 import { parseLength, parseRange } from "@/utils/schema";
@@ -67,49 +70,48 @@ function rudimentaryMd(text: string): string {
 }
 ---
 
-<div>
+<div class="schema-block">
 	{
 		!isRoot && (
-			<p>
-				<strong>{name ?? schema.id}</strong>
-				{isRequired && <span class="required-asterisk">*</span>}
-			</p>
+			<div class="header">
+				{(name ?? schema.id) && <div class="name">{name ?? schema.id}</div>}
+				{ref ? (
+					<a
+						class="type-link"
+						href={hrefFmt.replace("{ref}", ref.toLocaleLowerCase())}
+					>
+						<Badge text={ref} />
+					</a>
+				) : (
+					schema.type && <Badge text={schema.type} />
+				)}
+				{isRequired && <Badge text="required" variant="caution" />}
+			</div>
 		)
 	}
 
-	<div class="mt-0" set:html={rudimentaryMd(schema.description)} />
+	<div class="description" set:html={rudimentaryMd(schema.description)} />
 
 	{
-		ref ? (
-			<div>
-				Type:
-				<a href={hrefFmt.replace("{ref}", ref.toLocaleLowerCase())}>
-					<code>{ref}</code>
-				</a>
-			</div>
-		) : schema.type ? (
-			<div>
-				Type:
-				<code>{schema.type}</code>
-			</div>
-		) : undefined
+		schema.format && (
+			<p class="meta">
+				Format: <code>{schema.format}</code>
+			</p>
+		)
 	}
-	{isRequired && <div class="mt-0">Required: yes</div>}
-	{schema.format && <div class="mt-0">Format: {schema.format}</div>}
-	{length && <div class="mt-0">Length: {length}</div>}
+	{length && <p class="meta">Length: {length}</p>}
 	{
 		schema.default && (
-			<div class="mt-0">
+			<p class="meta">
 				Default: <code>{prettyStr(schema.default)}</code>
-			</div>
+			</p>
 		)
 	}
 	{
 		range && (
-			<div class="mt-0">
-				Range:
-				<span class="math" set:html={range} />
-			</div>
+			<p class="meta">
+				Range: <span class="math" set:html={range} />
+			</p>
 		)
 	}
 	{
@@ -191,13 +193,27 @@ function rudimentaryMd(text: string): string {
 </div>
 
 <style>
-	/* hack to increase specificity */
-	:is(.mt-0):is(.mt-0) {
-		margin-top: 0;
+	div.header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.5rem;
 	}
 
-	.required-asterisk {
-		color: var(--sl-color-text-accent);
+	/* Field names are literal schema keys, so render them in the same mono face
+	 * used for inline code, matching the type badge. */
+	div.name {
+		font-weight: 600;
+		color: var(--sl-color-white);
+		font-family: var(--__sl-font-mono);
+	}
+
+	a.type-link {
+		text-decoration: none;
+	}
+
+	p.meta {
+		margin-top: 0;
 	}
 
 	.math {
