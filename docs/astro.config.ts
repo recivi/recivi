@@ -71,6 +71,9 @@ export default defineConfig({
 				Footer: "./src/components/Footer.astro",
 				SocialIcons: "./src/components/SocialIcons.astro",
 			},
+			editLink: {
+				baseUrl: "https://github.com/recivi/recivi/edit/main/docs/",
+			},
 			plugins: [starlightLinksValidator()],
 		}),
 	],
