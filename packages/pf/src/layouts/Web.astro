@@ -3,7 +3,6 @@
  * It exposes these slots:
  * - "metas"
  * - "head"
- * - "secondary"
  * - "primary-header"
  * - "default"
  * - "primary-footer"
@@ -11,7 +10,6 @@
  * - "extra"
  *
  * Note:
- * - Secondary pane has fixed header and footer content, not slots.
  * - Primary pane content is the "default" slot.
  * - Extra pane does not have a footer.
  * - Extra pane header is ignored if "extra" slot is not provided.
@@ -40,7 +38,6 @@ interface Props {
 }
 const { frontmatter } = Astro.props;
 
-const hasSecondary = Astro.slots.has("secondary");
 const hasExtra = Astro.slots.has("extra");
 
 const iconLinkTags = await getIconLinkTags();
@@ -81,22 +78,7 @@ const iconLinkTags = await getIconLinkTags();
 	</Fragment>
 
 	<!-- DEFAULT SLOT -->
-	<main class:list={[{ "sec-yes": hasSecondary, "ext-yes": hasExtra }]}>
-		<!-- Left pane, if it fits and content is provided -->
-		{
-			hasSecondary ? (
-				<div class="secondary">
-					<Header />
-
-					<div class="content">
-						<slot name="secondary" />
-					</div>
-
-					<Footer />
-				</div>
-			) : undefined
-		}
-
+	<main class:list={[{ "ext-yes": hasExtra }]}>
 		<!-- Center pane, always present -->
 		<div class="primary">
 			<div class="secondary-header">
@@ -155,34 +137,23 @@ const iconLinkTags = await getIconLinkTags();
 
 <style>
 	/*
-	 * A full-width flexible-width primary pane is present below 640px.
-	 * ┌─┐
+	 * If width < 640px, the primary pane is as wide as screen.
+	 * ┌…┐
 	 * |P|
-	 * └─┘
+	 * └…┘
 	 *
-	 * The primary pane caps at a width of 640px. If neither secondary nor
-	 * extra panes are present, the layout does not change above 640px.
+	 * If width >= 640px, the primary pane is 640px wide, and a void pane takes up
+	 * the rest of the space, which may be zero.
 	 * ┌───┬─
 	 * │ P │V
 	 * └───┴─
 	 *
-	 * If only the extra pane is present, it appears at 960px. The layout does not
-	 * change above 960px.
+	 * If width >= 961px and an extra pane is present, the primary pane is 640px
+	 * wide, the extra pane is 321px wide and the void pane takes up the rest of
+	 * the space, which may be zero.
 	 * ┌───┬─┬─
 	 * │ P │E│V
 	 * └───┴─┴─
-	 *
-	 * If only the secondary pane is present, it appears at 1280px. The layout
-	 * does not change above 1280px.
-	 * ┌───┬───┬─
-	 * │ S │ P │V
-	 * └───┴───┴─
-	 *
-	 * If both secondary and extra panes are present, they show one at a time, as
-	 * seen above, and then both appear at 1600px.
-	 * ┌───┬───┬─┬─
-	 * │ S │ P │E│V
-	 * └───┴───┴─┴─
 	 */
 
 	@layer pf.core {
@@ -204,7 +175,6 @@ const iconLinkTags = await getIconLinkTags();
 			flex: 1;
 			min-block-size: 0;
 
-			.secondary,
 			.extra,
 			.void {
 				/* Panes are hidden until added to the grid template areas. */
@@ -244,65 +214,17 @@ const iconLinkTags = await getIconLinkTags();
 					}
 				}
 			}
-
-			&.sec-yes {
-				@container body (inline-size >= 1281px) {
-					grid-template-columns: 641px 640px 1fr;
-					grid-template-areas: "secondary primary void";
-
-					.secondary {
-						display: block;
-					}
-					/* `.extra` is currently visible when it shouldn't be. */
-					.extra {
-						display: none;
-					}
-					/* Secondary pane already shows the secondary header */
-					.primary > .secondary-header,
-					.primary > .secondary-footer {
-						display: none;
-					}
-				}
-
-				@container body (inline-size = 1281px) {
-					.void {
-						/* The void should not have a border if it is 0px wide. */
-						border-inline-start: none;
-					}
-				}
-			}
-
-			&.sec-yes.ext-yes {
-				@container body (inline-size >= 1602px) {
-					grid-template-columns: 641px 640px 321px 1fr;
-					grid-template-areas: "secondary primary extra void";
-
-					/* `.secondary` is already visible as it should be. */
-					.extra {
-						display: block;
-					}
-				}
-			}
-
-			@container body (inline-size = 1602px) {
-				.void {
-					/* The void should not have a border if it is 0px wide. */
-					border-inline-start: none;
-				}
-			}
 		}
 
 		.primary {
 			grid-area: primary;
 		}
-		.secondary {
-			grid-area: secondary;
-			border-inline-end: 1px solid var(--pf-color-border);
-		}
+
 		.extra {
 			grid-area: extra;
 			border-inline-start: 1px solid var(--pf-color-border);
 		}
+
 		.void {
 			grid-area: void;
 			/* Extend into unsafe area. */
@@ -316,8 +238,7 @@ const iconLinkTags = await getIconLinkTags();
 			background-size: 1rem 1rem;
 		}
 
-		/* Make secondary and extra panes scrollable on their own. */
-		.secondary,
+		/* Make the extra panes scrollable on its own. */
 		.extra {
 			position: sticky;
 			inset-block-start: 0;
