@@ -29,4 +29,16 @@
 	:root[data-media="print"] .web-only {
 		display: none;
 	}
+
+	@media (width < 640px) {
+		.over-640px {
+			display: none;
+		}
+	}
+
+	@media (width >= 640px) {
+		.under-640px {
+			display: none;
+		}
+	}
 }
