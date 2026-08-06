@@ -71,13 +71,14 @@ async function createProjectContext(
 	options: ParsedOptions,
 ): Promise<ProjectContext> {
 	const { site, base, trailingSlash } = params.config;
+	const build = { format: params.config.build.format };
 	const publicDir = fileURLToPath(params.config.publicDir);
 	const prefix = options.favicon.fileNames.manifestIconsPrefix;
 	const iconChecks = [192, 512].map((size) =>
 		publicFileExists({ publicDir }, `${prefix}${size}.png`),
 	);
 	const hasManifestIcons = (await Promise.all(iconChecks)).some(Boolean);
-	return { site, base, trailingSlash, publicDir, hasManifestIcons };
+	return { site, base, trailingSlash, build, publicDir, hasManifestIcons };
 }
 
 /**

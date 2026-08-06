@@ -6,6 +6,8 @@ import type { AstroConfig } from "astro";
 // don't extend that because it is a `URL` going in, but a `string` coming out.
 
 export interface ProjectContext extends Pick<AstroConfig, "site" | "base" | "trailingSlash"> {
+	/** build settings that affect public page paths */
+	build: Pick<AstroConfig["build"], "format">;
 	/** the path to the project's public directory */
 	publicDir: string;
 	/** whether the site has any of the icons that require `manifest.webmanifest` */
