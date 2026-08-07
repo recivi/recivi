@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content";
 import { Entity, PfDate } from "virtual:pf/components";
 import config from "virtual:pf/config";
 import nav from "virtual:pf/nav";
@@ -7,6 +6,7 @@ import reciviData from "virtual:recivi/data";
 
 import Og from "@recivi/pf/layouts/Og.astro";
 import { experimental_AstroContainer } from "astro/container";
+import { getCollection } from "astro:content";
 
 import { isNotDraft } from "../../utils/collections";
 import { entityToOg } from "../helpers/OgRender";

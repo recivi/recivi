@@ -3,8 +3,8 @@ import { Entity, Period } from "virtual:pf/components";
 
 import { formatRoleLocation, formatRoleType } from "@recivi/schema/display";
 
-import type { RoleDetailsProps } from "../props/RoleDetails";
 import { getLinkedEpics } from "../../recivi/relations";
+import type { RoleDetailsProps } from "../props/RoleDetails";
 type Props = RoleDetailsProps;
 const { role, headingOffset = 0, class: className, ...attrs } = Astro.props;
 

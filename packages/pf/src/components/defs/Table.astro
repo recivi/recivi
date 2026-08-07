@@ -10,6 +10,7 @@ import {
 	TechStack,
 } from "virtual:pf/components";
 
+import type { ColumnSpec } from "../../types/table";
 import { isAnchorProps } from "../props/Anchor";
 import { isEntityProps } from "../props/Entity";
 import { isPeriodProps } from "../props/Period";
@@ -17,7 +18,6 @@ import { isPfDateProps } from "../props/PfDate";
 import { isPostProps } from "../props/Post";
 import type { TableProps } from "../props/Table";
 import { isTechStackProps } from "../props/TechStack";
-import type { ColumnSpec } from "../../types/table";
 
 const {
 	table: { rows, columnSpecs, expandingColumn },

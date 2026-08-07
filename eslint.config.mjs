@@ -1,6 +1,7 @@
 import skipFormatting from "eslint-config-prettier/flat";
 import pluginAstro from "eslint-plugin-astro";
 import pluginOxlint from "eslint-plugin-oxlint";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 import { globalIgnores } from "eslint/config";
 import tseslint from "typescript-eslint";
 
@@ -18,6 +19,23 @@ export default tseslint.config(
 	// files if it can require `@typescript-eslint/parser` from the project root.
 	// So ensure that this package is listed as a direct dev dependency.
 	...pluginAstro.configs.recommended,
+
+	{
+		files: ["**/*.astro"],
+		plugins: {
+			"simple-import-sort": simpleImportSort,
+		},
+		rules: {
+			"simple-import-sort/imports": [
+				"error",
+				{
+					// Reference: https://github.com/lydell/eslint-plugin-simple-import-sort#custom-grouping
+					groups: [["^\\u0000"], ["^virtual:"], ["^node:"], ["^@?\\w"], ["^"], ["^\\."]],
+				},
+			],
+			"simple-import-sort/exports": "error",
+		},
+	},
 
 	...pluginOxlint.buildFromOxlintConfigFile(".oxlintrc.json"),
 

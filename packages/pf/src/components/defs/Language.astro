@@ -1,7 +1,8 @@
 ---
-import type { LanguageProps } from "../props/Language";
 import { LANGUAGE_PROFICIENCIES } from "@recivi/schema";
 import { formatLanguageName, formatProficiency } from "@recivi/schema/display";
+
+import type { LanguageProps } from "../props/Language";
 
 type Props = LanguageProps;
 const { language, class: className, ...attrs } = Astro.props;

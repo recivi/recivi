@@ -1,13 +1,14 @@
 ---
 // Render all pages as a list of navigation links.
 
-import { getCollection } from "astro:content";
-import projectContext from "virtual:pf/project-context";
 import { Anchor } from "virtual:pf/components";
+import projectContext from "virtual:pf/project-context";
 
-import type { BaseProps } from "../props/base";
+import { getCollection } from "astro:content";
+
 import { isNotDraft } from "../../utils/collections";
 import { fixTrailingSlash, pathWithBase } from "../../utils/project_context";
+import type { BaseProps } from "../props/base";
 
 type Props = BaseProps;
 const { class: className, ...attrs } = Astro.props;
