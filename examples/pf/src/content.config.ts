@@ -5,8 +5,6 @@ import {
 	nowSchema,
 	pageLoader,
 	pageSchema,
-	partialLoader,
-	partialSchema,
 } from "@recivi/pf/content";
 import { defineCollection } from "astro:content";
 
@@ -18,13 +16,9 @@ const blog = defineCollection({
 	loader: blogLoader(),
 	schema: blogSchema,
 });
-const partials = defineCollection({
-	loader: partialLoader(),
-	schema: partialSchema,
-});
 const pages = defineCollection({
 	loader: pageLoader(),
 	schema: pageSchema,
 });
 
-export const collections = { now, blog, partials, pages };
+export const collections = { now, blog, pages };

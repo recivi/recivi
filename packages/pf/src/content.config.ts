@@ -5,16 +5,7 @@
 
 import { defineCollection } from "astro:content";
 
-import {
-	blogLoader,
-	blogSchema,
-	nowLoader,
-	nowSchema,
-	pageLoader,
-	pageSchema,
-	partialLoader,
-	partialSchema,
-} from "./content";
+import { blogLoader, blogSchema, nowLoader, nowSchema, pageLoader, pageSchema } from "./content";
 
 const now = defineCollection({
 	loader: nowLoader(),
@@ -24,13 +15,9 @@ const blog = defineCollection({
 	loader: blogLoader(),
 	schema: blogSchema,
 });
-const partials = defineCollection({
-	loader: partialLoader(),
-	schema: partialSchema,
-});
 const pages = defineCollection({
 	loader: pageLoader(),
 	schema: pageSchema,
 });
 
-export const collections = { now, blog, partials, pages };
+export const collections = { now, blog, pages };

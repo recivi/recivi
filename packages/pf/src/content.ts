@@ -62,9 +62,6 @@ export const pageSchema = baseSchema
 		};
 	});
 
-/** schema for partial content pieces */
-export const partialSchema = z.object({});
-
 /**
  * Get a load function for a given collection name.
  *
@@ -109,15 +106,6 @@ export function blogLoader(): Loader {
  */
 export function pageLoader(): Loader {
 	return { name: "pages", load: getLoadFn("pages") };
-}
-
-/**
- * Get a loader for partial content pieces used on some pages.
- *
- * @returns the content loader for page partials
- */
-export function partialLoader(): Loader {
-	return { name: "partials", load: getLoadFn("content", "partials") };
 }
 
 /*
