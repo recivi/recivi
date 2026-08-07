@@ -1,0 +1,13 @@
+---
+import { EpicCard, Table } from "virtual:pf/components";
+import reciviData from "virtual:recivi/data";
+
+import { getProjectsTable } from "@recivi/pf/recivi/table";
+
+const projectsTable = getProjectsTable();
+---
+
+<div class="under-640px">
+	{reciviData.creations.map((epic) => <EpicCard {epic} />)}
+</div>
+<Table class="over-640px" table={projectsTable} />

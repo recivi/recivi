@@ -5,6 +5,7 @@ declare module "virtual:pf/components" {
 	export const Brand: typeof import("./components/defs/Brand.astro").default;
 	export const Breadcrumbs: typeof import("./components/defs/Breadcrumbs.astro").default;
 	export const CertDetails: typeof import("./components/defs/CertDetails.astro").default;
+	export const CertsTable: typeof import("./components/defs/CertsTable.astro").default;
 	export const Comms: typeof import("./components/defs/Comms.astro").default;
 	export const Elements: typeof import("./components/defs/Elements.astro").default;
 	export const Entity: typeof import("./components/defs/Entity.astro").default;
@@ -26,7 +27,9 @@ declare module "virtual:pf/components" {
 	export const PfDate: typeof import("./components/defs/PfDate.astro").default;
 	export const Post: typeof import("./components/defs/Post.astro").default;
 	export const ProjectDetails: typeof import("./components/defs/ProjectDetails.astro").default;
+	export const ProjectsTable: typeof import("./components/defs/ProjectsTable.astro").default;
 	export const RoleDetails: typeof import("./components/defs/RoleDetails.astro").default;
+	export const RolesTable: typeof import("./components/defs/RolesTable.astro").default;
 	export const Skill: typeof import("./components/defs/Skill.astro").default;
 	export const SkillList: typeof import("./components/defs/SkillList.astro").default;
 	export const Table: typeof import("./components/defs/Table.astro").default;

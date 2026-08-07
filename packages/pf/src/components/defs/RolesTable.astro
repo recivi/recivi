@@ -1,0 +1,13 @@
+---
+import { OrgCard, Table } from "virtual:pf/components";
+import reciviData from "virtual:recivi/data";
+
+import { getRolesTable } from "@recivi/pf/recivi/table";
+
+const rolesTable = getRolesTable();
+---
+
+<div class="under-640px">
+	{reciviData.work.map((org) => <OrgCard {org} />)}
+</div>
+<Table class="over-640px" table={rolesTable} />

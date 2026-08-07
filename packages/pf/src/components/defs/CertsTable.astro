@@ -1,0 +1,13 @@
+---
+import { InstituteCard, Table } from "virtual:pf/components";
+import reciviData from "virtual:recivi/data";
+
+import { getCertsTable } from "@recivi/pf/recivi/table";
+
+const certsTable = getCertsTable();
+---
+
+<div class="under-640px">
+	{reciviData.education.map((institute) => <InstituteCard {institute} />)}
+</div>
+<Table class="over-640px" table={certsTable} />
