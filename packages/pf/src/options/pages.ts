@@ -37,38 +37,6 @@ const blogSchema = z
 		description: 'the settings for the "Blog" page',
 	});
 
-const resumeSchema = z
-	.object({
-		/** whether to show the "Education" section */
-		showEducation: z.boolean().optional().default(true).register(primaryRegistry, {
-			description: 'whether to show the "Education" section',
-		}),
-
-		/** whether to show the "Work" section */
-		showWork: z.boolean().optional().default(true).register(primaryRegistry, {
-			description: 'whether to show the "Work" section',
-		}),
-
-		/** whether to show the "Creations" section */
-		showCreations: z.boolean().optional().default(true).register(primaryRegistry, {
-			description: 'whether to show the "Creations" section',
-		}),
-
-		/** whether to show the "Skills" section */
-		showSkills: z.boolean().optional().default(true).register(primaryRegistry, {
-			description: 'whether to show the "Skills" section',
-		}),
-
-		/** whether to show the "Languages" section */
-		showLanguages: z.boolean().optional().default(true).register(primaryRegistry, {
-			description: 'whether to show the "Languages" section',
-		}),
-	})
-	.register(primaryRegistry, {
-		id: "resume",
-		description: 'the settings for the "Résumé" page',
-	});
-
 export const pagesSchema = z
 	.object({
 		/** the settings for the "Now" page */
@@ -79,11 +47,6 @@ export const pagesSchema = z
 		/** the settings for the "Blog" page */
 		blog: blogSchema.optional().prefault({}).register(primaryRegistry, {
 			description: 'the settings for the "Blog" page',
-		}),
-
-		/** the settings for the "Résumé" page */
-		resume: resumeSchema.optional().prefault({}).register(primaryRegistry, {
-			description: 'the settings for the "Résumé" page',
 		}),
 	})
 	.register(primaryRegistry, {
