@@ -21,6 +21,7 @@ declare module "virtual:pf/components" {
 	export const Letterhead: typeof import("./components/defs/Letterhead.astro").default;
 	export const Nav: typeof import("./components/defs/Nav.astro").default;
 	export const NowUpdate: typeof import("./components/defs/NowUpdate.astro").default;
+	export const NowUpdates: typeof import("./components/defs/NowUpdates.astro").default;
 	export const OrgCard: typeof import("./components/defs/OrgCard.astro").default;
 	export const OrgDetails: typeof import("./components/defs/OrgDetails.astro").default;
 	export const Period: typeof import("./components/defs/Period.astro").default;

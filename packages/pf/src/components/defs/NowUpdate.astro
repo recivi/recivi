@@ -71,10 +71,12 @@ const { Content } = await render(update);
 			}
 
 			.draft {
+				margin-inline-start: var(--pf-spacing);
 				color: var(--pf-color-yellow);
 			}
 
 			.date {
+				margin-inline-end: calc(2 * var(--pf-spacing));
 				color: var(--pf-color-fg-subtle);
 			}
 		}

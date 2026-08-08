@@ -21,6 +21,7 @@ export const componentNames = [
 	"Letterhead",
 	"Nav",
 	"NowUpdate",
+	"NowUpdates",
 	"OrgCard",
 	"OrgDetails",
 	"Period",
