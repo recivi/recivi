@@ -1,7 +1,7 @@
 /*
- * This file contains TypeScript types for virtual modules provided by
- * the Récivi PF Astro integration. The contents of these modules are
- * defined in the `index.ts` file.
+ * This file contains TypeScript types for virtual modules provided by the
+ * Récivi PF Astro integration. The contents of these modules are defined by
+ * `index.ts` and its supporting `integration` modules.
  */
 
 declare module "virtual:pf/config" {
@@ -21,7 +21,9 @@ declare module "virtual:pf/project-context" {
 
 declare module "virtual:pf/nav" {
 	const nav: {
+		blogIndex?: string;
 		blogPost?: string;
+		resumeIndex?: string;
 		resumeEpic?: string;
 		resumeOrg?: string;
 		resumeInstitute?: string;

@@ -14,6 +14,7 @@ import mdx from "@astrojs/mdx";
 import type { AstroIntegration } from "astro";
 
 import { componentNames } from "./components/index";
+import { reloadPfNav } from "./integration/navigation";
 import { generateOg } from "./jobs/generate_og";
 import { generatePdf } from "./jobs/generate_pdf";
 import { type Options, optionsSchema, type ParsedOptions } from "./options";
@@ -29,7 +30,6 @@ import { getVirtualImport, type MutableVirtualImport } from "./vite/virtual_impo
 type Hooks = AstroIntegration["hooks"];
 type ConfigSetupParams = Parameters<NonNullable<Hooks["astro:config:setup"]>>[0];
 type ServerSetupParams = Parameters<NonNullable<Hooks["astro:server:setup"]>>[0];
-type RoutesResolvedParams = Parameters<NonNullable<Hooks["astro:routes:resolved"]>>[0];
 
 /**
  * Resolve some options that use relative paths to their absolute paths.
@@ -220,26 +220,6 @@ async function reloadReciviData(
 		}
 		params.server.hot.send({ type: "full-reload" });
 	}
-}
-
-/**
- * Identify the dynamic routes for blog posts and resume subpages, and update
- * the associated virtual module.
- *
- * @param params the parameters provided by the Astro integration hook
- * @param virtualPfNav the virtual import plugin for the PF navigation module
- */
-function reloadPfNav(params: RoutesResolvedParams, virtualPfNav: MutableVirtualImport) {
-	const findRoute = (slugName: string) =>
-		params.routes.find((route) => route.params.includes(slugName))?.pattern;
-
-	const navInfo = {
-		blogPost: findRoute("postSlug"),
-		resumeEpic: findRoute("epicSlug"),
-		resumeOrg: findRoute("orgSlug"),
-		resumeInstitute: findRoute("instituteSlug"),
-	};
-	virtualPfNav.update(`export default ${JSON.stringify(navInfo)}`);
 }
 
 function createHooks(options: ParsedOptions): AstroIntegration["hooks"] {
