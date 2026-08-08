@@ -39,12 +39,17 @@ const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
 		<ul class="categories-list linear">
 			{
 				data.categories.map((category) => (
-					<li
-						class="category"
-						x-data={JSON.stringify({ category })}
-						x-bind:class="activeCategories.includes(category) && 'active'"
-					>
-						{category}
+					<li class="category">
+						<span x-show="false">{category}</span>
+						<template x-if="true">
+							<button
+								x-data={JSON.stringify({ category })}
+								x-bind:class="{ 'active': activeCategories.includes(category) }"
+								x-on:click="() => { activeCategories = toggle(activeCategories, category) }"
+							>
+								{category}
+							</button>
+						</template>
 					</li>
 				))
 			}
@@ -63,8 +68,15 @@ const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
 				color: var(--pf-color-fg-subtle);
 
 				.category {
-					&.active {
-						color: var(--pf-color-accent);
+					button {
+						color: inherit;
+						font: inherit;
+						background: none;
+						cursor: pointer;
+
+						&.active {
+							color: var(--pf-color-accent);
+						}
 					}
 				}
 			}

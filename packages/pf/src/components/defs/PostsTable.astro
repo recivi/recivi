@@ -1,0 +1,106 @@
+---
+import { Table } from "virtual:pf/components";
+import config from "virtual:pf/config";
+
+import { getCollection } from "astro:content";
+
+import {
+	getCategories,
+	getPostsTable,
+	isNotDraft,
+} from "../../utils/collections";
+
+const { class: className, ...attrs } = Astro.props;
+
+const { showCategories } = config.pages.blog;
+
+const posts = (await getCollection("blog", isNotDraft)).toSorted(
+	(a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+const postsTable = getPostsTable(posts);
+
+const categories = await getCategories();
+---
+
+{
+	showCategories ? (
+		<Fragment>
+			<script is:inline src="https://unpkg.com/alpinejs" defer />
+		</Fragment>
+	) : undefined
+}
+<div
+	class:list={["pf-posts-table", className]}
+	{...attrs}
+	x-data="{ activeCategories: [] }"
+>
+	{
+		showCategories ? (
+			<div class="requires-js">
+				{categories.length ? (
+					<fieldset class="categories-fieldset">
+						<legend class="sr-only">Categories</legend>
+						{categories.map((category) => (
+							<label class="category-field">
+								<input
+									type="checkbox"
+									value={category}
+									x-model="activeCategories"
+								/>
+								{category}
+							</label>
+						))}
+					</fieldset>
+				) : (
+					<p>∅ There are no categories.</p>
+				)}
+			</div>
+		) : undefined
+	}
+	{
+		posts.length ? (
+			<Table table={postsTable} />
+		) : (
+			<p>∅ There are no blog posts.</p>
+		)
+	}
+</div>
+
+<script is:inline>
+	/**
+	 * Toggle an item in an array. If the item is present, it is removed; if it is absent, it is added.
+	 *
+	 * @param {Array} array the array to toggle the item in
+	 * @param {*} item the item to toggle
+	 * @returns {Array} a new array with the item added or removed
+	 */
+	function toggle(array, item) {
+		return array.includes(item)
+			? array.filter((i) => i !== item)
+			: [...array, item];
+	}
+</script>
+
+<style>
+	@layer pf.components {
+		.categories-fieldset {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--pf-spacing);
+
+			.category-field {
+				border: 1px solid var(--pf-color-border);
+				border-radius: var(--pf-spacing);
+				padding: calc(0.5 * var(--pf-spacing)) var(--pf-spacing);
+
+				&:has(input:checked) {
+					border-color: var(--pf-color-accent);
+				}
+
+				input {
+					display: none;
+				}
+			}
+		}
+	}
+</style>

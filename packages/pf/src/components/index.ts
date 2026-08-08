@@ -26,6 +26,7 @@ export const componentNames = [
 	"Period",
 	"PfDate",
 	"Post",
+	"PostsTable",
 	"ProjectDetails",
 	"ProjectsTable",
 	"RoleDetails",

@@ -26,6 +26,7 @@ declare module "virtual:pf/components" {
 	export const Period: typeof import("./components/defs/Period.astro").default;
 	export const PfDate: typeof import("./components/defs/PfDate.astro").default;
 	export const Post: typeof import("./components/defs/Post.astro").default;
+	export const PostsTable: typeof import("./components/defs/PostsTable.astro").default;
 	export const ProjectDetails: typeof import("./components/defs/ProjectDetails.astro").default;
 	export const ProjectsTable: typeof import("./components/defs/ProjectsTable.astro").default;
 	export const RoleDetails: typeof import("./components/defs/RoleDetails.astro").default;
