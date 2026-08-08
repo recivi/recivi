@@ -1,11 +1,26 @@
 ---
-layout: "@recivi/pf/layouts/Now.astro"
-
 title: Now
 description: >-
   Find out what I'm currently up to, and what I was recently up to.
 navIndex: 3
 ---
 
-{/** Unlike `blog/index.mdx` and `resume/index.mdx`, any content placed here will be ignored. There
-is no right pane for the "Now" page. **/}
+import { NowUpdates } from "virtual:pf/components";
+
+import { getCollection } from "astro:content";
+
+import { isNotDraft } from "@recivi/pf/utils/collections";
+
+export const shownCount = 3;
+export const totalCount = (await getCollection("now")).filter(isNotDraft).length;
+export const hiddenCount = totalCount - shownCount;
+
+# Now
+
+Welcome to the "Now" page, where you can find out what I'm currently up to, and what I was recently
+up to.
+
+<NowUpdates limit={shownCount} />
+
+There { !hiddenCount ? undefined : hiddenCount >= 2 ? `are ${hiddenCount} older updates` :
+`is 1 older update` } not shown here.

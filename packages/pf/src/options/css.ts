@@ -14,7 +14,7 @@ const layerNames = [
 	"utils",
 ] as const;
 
-export const layoutNames = ["Now", "Og", "Print", "Root", "Web"] as const;
+export const layoutNames = ["Og", "Print", "Root", "Web"] as const;
 type LayoutName = (typeof layoutNames)[number];
 
 // Keep the above list synced with the actual layouts.
