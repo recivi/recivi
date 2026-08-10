@@ -4,6 +4,8 @@
 
 import { Brand } from "virtual:pf/components";
 
+import { isInstitute } from "@recivi/schema/utils";
+
 import { getDynamicPage } from "../../utils/dynamic_pages";
 import type { BrandProps } from "../props/Brand";
 import type { EntityProps } from "../props/Entity";
@@ -17,6 +19,13 @@ const {
 	...attrs
 } = Astro.props;
 
+// Most institutes don't have a logo and even if they do, it won't be in any
+// ready-made icon packs like Lucide or Simple Icons.
+const icon =
+	!isInstitute(entity) && entity.id
+		? { name: entity.id, title: entity.name }
+		: undefined;
+
 const internalDest = getDynamicPage(entity);
 
 const anchor = useInternalLink
@@ -28,7 +37,7 @@ const anchor = useInternalLink
 		: undefined;
 
 const brand: BrandProps = {
-	icon: entity.id ? { name: entity.id, title: entity.name } : undefined,
+	icon,
 	anchor,
 	name:
 		useShortName && "shortName" in entity && entity.shortName
