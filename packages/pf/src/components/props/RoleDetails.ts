@@ -1,6 +1,6 @@
 import type { Role } from "@recivi/schema";
 
-import type { BaseProps } from "./base";
+import type { BaseProps } from "../../types/props";
 
 export interface RoleDetailsProps extends BaseProps {
 	/** the role to render */

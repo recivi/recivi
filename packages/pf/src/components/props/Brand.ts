@@ -1,5 +1,5 @@
+import type { BaseProps } from "../../types/props";
 import type { AnchorProps } from "./Anchor";
-import type { BaseProps } from "./base";
 import type { IconProps } from "./Icon";
 
 export interface BrandProps extends BaseProps {

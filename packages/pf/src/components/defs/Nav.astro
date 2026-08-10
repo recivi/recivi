@@ -6,9 +6,9 @@ import projectContext from "virtual:pf/project-context";
 
 import { getCollection } from "astro:content";
 
+import type { BaseProps } from "../../types/props";
 import { isNotDraft } from "../../utils/collections";
 import { fixTrailingSlash, pathWithBase } from "../../utils/project_context";
-import type { BaseProps } from "../props/base";
 
 type Props = BaseProps;
 const { class: className, ...attrs } = Astro.props;

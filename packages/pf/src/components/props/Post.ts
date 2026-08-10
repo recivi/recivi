@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 
-import type { BaseProps } from "./base";
+import type { BaseProps } from "../../types/props";
 
 export interface PostProps extends BaseProps {
 	/** the post collection entry */

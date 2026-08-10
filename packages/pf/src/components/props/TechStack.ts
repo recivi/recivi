@@ -1,6 +1,6 @@
 import type { Tech } from "@recivi/schema";
 
-import type { BaseProps } from "./base";
+import type { BaseProps } from "../../types/props";
 
 export interface TechStackProps extends BaseProps {
 	/** a list of technologies to render */

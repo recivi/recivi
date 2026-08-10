@@ -1,6 +1,6 @@
 import type { Institute } from "@recivi/schema";
 
-import type { BaseProps } from "./base";
+import type { BaseProps } from "../../types/props";
 
 export interface InstituteDetailsProps extends BaseProps {
 	/** the institute to render with all projects */

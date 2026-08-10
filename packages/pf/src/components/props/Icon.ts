@@ -1,4 +1,4 @@
-import type { BaseProps } from "./base";
+import type { BaseProps } from "../../types/props";
 
 export interface IconProps extends BaseProps {
 	/**

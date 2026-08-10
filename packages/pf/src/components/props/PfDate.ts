@@ -1,6 +1,6 @@
 import type { Date as RcvDate } from "@recivi/schema";
 
-import type { BaseProps } from "./base";
+import type { BaseProps } from "../../types/props";
 
 export interface PfDateProps extends BaseProps {
 	/**

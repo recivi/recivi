@@ -1,5 +1,5 @@
+import type { BaseProps } from "../../types/props";
 import type { ColumnSpec, Table } from "../../types/table";
-import type { BaseProps } from "./base";
 
 export interface TableProps<ColumnSpecMap extends Record<string, ColumnSpec>> extends BaseProps {
 	/** the table data to render */

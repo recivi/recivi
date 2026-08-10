@@ -1,6 +1,6 @@
 import type { Epic } from "@recivi/schema";
 
-import type { BaseProps } from "./base";
+import type { BaseProps } from "../../types/props";
 
 export interface EpicCardProps extends BaseProps {
 	/** the epic to render with all projects */

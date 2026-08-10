@@ -1,6 +1,6 @@
 import type { Epic, Institute, Org } from "@recivi/schema";
 
-import type { BaseProps } from "./base";
+import type { BaseProps } from "../../types/props";
 
 export interface EntityProps extends BaseProps {
 	/** the entity to render */

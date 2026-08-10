@@ -1,5 +1,5 @@
+import type { BaseProps } from "../../types/props";
 import type { LinkTag, MetaTag } from "../../types/tags";
-import type { BaseProps } from "./base";
 
 interface LinkElementsProps {
 	tag: "link";
