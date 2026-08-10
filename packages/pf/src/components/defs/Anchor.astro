@@ -2,8 +2,6 @@
 // Render an anchor link.
 // This component is also a table renderer.
 
-import projectContext from "virtual:pf/project-context";
-
 import { urlReadableDest } from "@recivi/schema/display";
 import { urlDest, urlLabel } from "@recivi/schema/utils";
 
@@ -12,53 +10,18 @@ import type { AnchorProps } from "../props/Anchor";
 type Props = AnchorProps;
 const { url, class: className, ...attrs } = Astro.props;
 
-/**
- * Normalize the path as per the value of the `trailingSlash` configuration.
- *
- * @param path the path to normalize
- * @returns the normalized path
- */
-function normalizePath(path: string) {
-	if (projectContext.trailingSlash === "never") {
-		return path.endsWith("/") && path !== "/" ? path.slice(0, -1) : path;
-	}
-	return path.endsWith("/") ? path : `${path}/`;
-}
-
-/**
- * Remove the base path from a URL, if present.
- *
- * @param path the path to process
- * @returns the path without the base path
- */
-function removeBase(path: string) {
-	const base = projectContext.base || "/";
-
-	if (base !== "/" && path.startsWith(base)) {
-		return path.slice(base.length) || "/";
-	}
-
-	return path;
-}
-
 const dest = urlDest(url);
 
-const currentPathname = Astro.url.pathname;
-const currentPath = normalizePath(removeBase(currentPathname));
-const targetPath = normalizePath(removeBase(dest));
-
-const isExactActive = currentPath === targetPath;
-const isActive = currentPath.startsWith(targetPath);
+const currentPath = Astro.url.pathname;
+const isExactActive = currentPath === dest;
+const isActive = currentPath.startsWith(dest);
 ---
 
 <a
 	class:list={[
 		"pf-anchor",
 		className,
-		{
-			active: isActive,
-			exact: isExactActive,
-		},
+		{ active: isActive, exact: isExactActive },
 	]}
 	href={dest}
 	{...attrs}
