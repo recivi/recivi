@@ -1,7 +1,6 @@
 ---
 import { Entity, PfDate } from "virtual:pf/components";
 import config from "virtual:pf/config";
-import nav from "virtual:pf/nav";
 import reciviData from "virtual:recivi/data";
 
 import Og from "@recivi/pf/layouts/Og.astro";
@@ -9,6 +8,7 @@ import { experimental_AstroContainer } from "astro/container";
 import { getCollection } from "astro:content";
 
 import { isNotDraft } from "../../utils/collections";
+import { getBlogPostUrl } from "../../utils/dynamic_pages";
 import { entityToOg } from "../helpers/OgRender";
 import type { OgRenderProps } from "../props/OgRender";
 
@@ -26,12 +26,11 @@ export async function getStaticPaths() {
 				description: page.data.description,
 			} satisfies OgRenderProps,
 		})),
-		...posts.map((post) =>
-			nav.blogPost
+		...posts.map((post) => {
+			const path = getBlogPostUrl(post.id.slice(5));
+			return path
 				? {
-						params: {
-							path: nav.blogPost.replace("{slug}", post.id.slice(5)),
-						},
+						params: { path },
 						props: {
 							title: post.data.title,
 							description: post.data.description,
@@ -41,8 +40,8 @@ export async function getStaticPaths() {
 							}),
 						} satisfies OgRenderProps,
 					}
-				: undefined,
-		),
+				: undefined;
+		}),
 		...education.map((institute) => entityToOg(institute, "Education")),
 		...work.map((org) => entityToOg(org, "Organization")),
 		...creations.map((epic) => entityToOg(epic, "Epic")),

@@ -1,12 +1,14 @@
 import type { Org, Epic, Institute } from "@recivi/schema";
 import { isInstitute } from "@recivi/schema/utils";
+import projectContext from "virtual:pf/project-context";
 
-import { getDynamicPage } from "../../utils/dynamic_pages";
+import { getResumeEntityUrl } from "../../utils/dynamic_pages";
 import { stripHtmlTags } from "../../utils/markup";
+import { unprefixBase } from "../../utils/project_context";
 import type { OgRenderProps } from "../props/OgRender";
 
 export function entityToOg(entity: Org | Epic | Institute, right: string) {
-	const internalDest = getDynamicPage(entity);
+	const internalDest = getResumeEntityUrl(entity);
 	if (!internalDest) {
 		return;
 	}
@@ -18,7 +20,7 @@ export function entityToOg(entity: Org | Epic | Institute, right: string) {
 
 	return {
 		params: {
-			path: internalDest,
+			path: unprefixBase(projectContext, internalDest),
 		},
 		props: {
 			// We use internal link to hide the ↗ arrow.

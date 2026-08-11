@@ -6,7 +6,7 @@ import { preview, type AstroIntegration } from "astro";
 import puppeteer, { type Browser, type ElementHandle, type Page } from "puppeteer";
 
 import type { ProjectContext } from "../types/project_context";
-import { fixTrailingSlash, pathWithBase } from "../utils/project_context";
+import { prefixBase } from "../utils/project_context";
 
 type BuildDoneParams = Parameters<NonNullable<AstroIntegration["hooks"]["astro:build:done"]>>[0];
 
@@ -82,8 +82,7 @@ async function capturePage(
 	try {
 		await job.preparePage?.(page);
 
-		const path = fixTrailingSlash(projectContext, pathWithBase(projectContext, pathname));
-		const url = `${baseUrl}${path}`;
+		const url = `${baseUrl}${prefixBase(projectContext, pathname)}`;
 		await page.goto(url, { waitUntil: "networkidle0" });
 
 		const body = await page.waitForSelector("body");
@@ -91,8 +90,8 @@ async function capturePage(
 			throw new Error(`Could not find <body> at ${url}`);
 		}
 
-		// Remove the existing render page so the the generated file can replace it.
-		const outputPath = join(dir, fixTrailingSlash({ trailingSlash: "never" }, pathname));
+		// Replace the temporary directory page with the captured file.
+		const outputPath = join(dir, pathname.slice(0, -1));
 		await rm(outputPath, { recursive: true, force: true });
 		await job.capture({ page, body, outputPath });
 

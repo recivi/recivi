@@ -3,8 +3,8 @@
 // This component is also a table renderer.
 
 import { Anchor, Icon } from "virtual:pf/components";
-import nav from "virtual:pf/nav";
 
+import { getBlogPostUrl } from "../../utils/dynamic_pages";
 import type { PostProps } from "../props/Post";
 
 type Props = PostProps;
@@ -14,7 +14,7 @@ const {
 	...attrs
 } = Astro.props;
 
-const dest = nav.blogPost?.replace("[postSlug]", id.slice(5));
+const dest = getBlogPostUrl(id.slice(5));
 ---
 
 <div class:list={["pf-post", className]} {...attrs}>

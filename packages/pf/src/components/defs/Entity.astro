@@ -6,7 +6,7 @@ import { Brand } from "virtual:pf/components";
 
 import { isInstitute } from "@recivi/schema/utils";
 
-import { getDynamicPage } from "../../utils/dynamic_pages";
+import { getResumeEntityUrl } from "../../utils/dynamic_pages";
 import type { BrandProps } from "../props/Brand";
 import type { EntityProps } from "../props/Entity";
 
@@ -26,7 +26,7 @@ const icon =
 		? { name: entity.id, title: entity.name }
 		: undefined;
 
-const internalDest = getDynamicPage(entity);
+const internalDest = getResumeEntityUrl(entity);
 
 const anchor = useInternalLink
 	? internalDest

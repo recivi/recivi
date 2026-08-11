@@ -4,7 +4,7 @@ import config from "virtual:pf/config";
 import projectContext from "virtual:pf/project-context";
 import reciviData from "virtual:recivi/data";
 
-import { pathWithBase, publicFileExists } from "../utils/project_context";
+import { prefixBase, publicFileExists } from "../utils/project_context";
 
 export const GET: APIRoute = async () => {
 	const { base } = projectContext;
@@ -20,7 +20,7 @@ export const GET: APIRoute = async () => {
 	)
 		.filter(({ exists }) => exists)
 		.map(({ size }) => ({
-			src: pathWithBase(projectContext, `icon-${size}.png`),
+			src: prefixBase(projectContext, `icon-${size}.png`),
 			sizes: `${size}x${size}`,
 			type: "image/png",
 		}));

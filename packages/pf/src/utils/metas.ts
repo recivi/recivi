@@ -5,7 +5,7 @@ import reciviData from "virtual:recivi/data";
 
 import type { blogSchema, pageSchema } from "../content";
 import type { MetaTag } from "../types/tags";
-import { fixTrailingSlash, pathWithBase, pathWithoutBase } from "./project_context";
+import { prefixBase, unprefixBase } from "./project_context";
 
 /**
  * Get the content for the page's `<title>` tag.
@@ -108,19 +108,19 @@ export function getThemeMetaTags(): MetaTag[] {
 /**
  * Get the URL of Open Graph image for the given page URL.
  *
+ * TODO: Account for the "file" build format.
+ *
  * @param page the URL of the page to map to the Open Graph image URL
  * @returns the URL to the Open Graph image
  */
 function getOgImage(page: URL): MetaTag {
-	let { pathname } = page;
-	pathname = pathWithoutBase(projectContext, pathname);
+	let pathname = unprefixBase(projectContext, page.pathname);
 	if (pathname === "/") {
 		pathname = "/index";
 	} else {
-		pathname = fixTrailingSlash({ trailingSlash: "never" }, pathname);
+		pathname = pathname.replace(/\/$/u, "");
 	}
-	let ogPathname = `og${pathname}.png`;
-	ogPathname = pathWithBase(projectContext, ogPathname);
+	const ogPathname = prefixBase(projectContext, `/og${pathname}.png`);
 	const ogUrl = new URL(ogPathname, page);
 	return { property: "og:image", content: ogUrl.href };
 }

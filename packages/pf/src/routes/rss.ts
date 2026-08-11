@@ -2,9 +2,9 @@ import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
 import { getCollection, getEntry } from "astro:content";
 import config from "virtual:pf/config";
-import nav from "virtual:pf/nav";
-import projectContext from "virtual:pf/project-context";
 import resumeData from "virtual:recivi/data";
+
+import { getBlogPostUrl } from "../utils/dynamic_pages";
 
 export const GET: APIRoute = async ({ site }) => {
 	if (!site) {
@@ -21,7 +21,7 @@ export const GET: APIRoute = async ({ site }) => {
 			title: data.title,
 			description: data.description,
 			pubDate: data.pubDate,
-			link: nav.blogPost?.replace("{slug}", slug),
+			link: getBlogPostUrl(slug),
 		};
 	});
 
@@ -30,6 +30,5 @@ export const GET: APIRoute = async ({ site }) => {
 		title,
 		description,
 		items,
-		trailingSlash: projectContext.trailingSlash !== "never",
 	});
 };
