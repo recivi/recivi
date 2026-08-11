@@ -1,7 +1,7 @@
 import { z } from "astro/zod";
 
+import { layoutNames, type LayoutName } from "../layouts";
 import { primaryRegistry } from "../registries/primary";
-import { getAllLayouts } from "../utils/src_files";
 
 const layerNames = [
 	"props",
@@ -13,17 +13,6 @@ const layerNames = [
 	"overrides",
 	"utils",
 ] as const;
-
-export const layoutNames = ["Og", "Print", "Root", "Web"] as const;
-type LayoutName = (typeof layoutNames)[number];
-
-// Keep the above list synced with the actual layouts.
-const allLayouts = await getAllLayouts();
-allLayouts.forEach((layout, idx) => {
-	if (layoutNames[idx] !== layout) {
-		throw new Error(`Layout names mismatch occurred.`);
-	}
-});
 
 // `z.object` ensures that every layout named above has an entry. We are not
 // using `z.record` because we want to allow missing keys in the input.

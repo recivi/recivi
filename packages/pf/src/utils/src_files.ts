@@ -33,7 +33,7 @@ async function getAstroFiles(dir: string) {
  * @returns the list of layout names
  */
 export function getAllLayouts() {
-	return getAstroFiles("layouts");
+	return getAstroFiles("layouts/defs");
 }
 
 /**

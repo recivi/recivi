@@ -1,18 +1,16 @@
 ---
 import "virtual:pf/custom-css/Print";
-import "../styles/print.css";
+import "../../styles/print.css";
 
 import { Letterhead } from "virtual:pf/components";
 import config from "virtual:pf/config";
 
-import { getFullPageTitle } from "../utils/metas";
+import { getFullPageTitle } from "../../utils/metas";
+import type { PrintProps } from "../props/Print";
 import Root from "./Root.astro";
 
-interface Props {
-	/** a title for the page */
-	title?: string;
-}
-const { title = "Untitled" } = Astro.props;
+type Props = PrintProps;
+const { title = "Print" } = Astro.props;
 
 const creditsCss = config.showCredits
 	? `@layer pf.props {
@@ -46,7 +44,7 @@ const creditsCss = config.showCredits
 </Root>
 
 <script>
-	import { paginatePrintPreview } from "../utils/print_preview";
+	import { paginatePrintPreview } from "../../utils/print_preview";
 
 	void paginatePrintPreview();
 </script>

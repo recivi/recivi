@@ -3,19 +3,29 @@
 // across all media.
 
 import "virtual:pf/custom-css/Root";
-import "../styles/core.css";
-import "../styles/props.css";
-import "../styles/reset.css";
-import "../styles/universal.css";
-import "../styles/utils.css";
+import "../../styles/core.css";
+import "../../styles/props.css";
+import "../../styles/reset.css";
+import "../../styles/universal.css";
+import "../../styles/utils.css";
 
 import config from "virtual:pf/config";
+
+import type { BaseProps } from "../../types/props";
+
+type Props = BaseProps;
+const { class: className, ...attrs } = Astro.props;
 
 const layers = `@layer ${config.css.layers.join(", ")};`;
 ---
 
 <!doctype html>
-<html lang={config.locale.bcp47} dir={config.locale.dir} {...Astro.props}>
+<html
+	lang={config.locale.bcp47}
+	dir={config.locale.dir}
+	class:list={[className]}
+	{...attrs}
+>
 	<head>
 		<meta charset="utf-8" />
 		<meta

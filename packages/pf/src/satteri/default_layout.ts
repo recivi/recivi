@@ -16,7 +16,7 @@ function applyDefaultLayout(node: Readonly<MdastNode>, ctx: MdastVisitorContext)
 		astroData?.frontmatter &&
 		!astroData.frontmatter.layout
 	) {
-		astroData.frontmatter.layout = "@recivi/pf/layouts/Web.astro";
+		astroData.frontmatter.layout = "@recivi/pf/layouts/defs/Web.astro";
 	}
 }
 
