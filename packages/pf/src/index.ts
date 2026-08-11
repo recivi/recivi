@@ -78,6 +78,21 @@ async function createProjectContext(
 		publicFileExists({ publicDir }, `${prefix}${size}.png`),
 	);
 	const hasManifestIcons = (await Promise.all(iconChecks)).some(Boolean);
+	if (
+		(trailingSlash === "always" && build.format === "file") ||
+		(trailingSlash === "never" && build.format === "directory")
+	) {
+		params.logger.warn("`trailingSlash` and `build.format` are mutually incompatible.");
+	}
+	if (build.format === "preserve") {
+		params.logger.warn('Using `build.format: "preserve"` can cause ambiguity in URLs.');
+	}
+	if (trailingSlash !== "ignore") {
+		params.logger.warn('Récivi PF works best with `trailingSlash: "ignore"`.');
+	}
+	if (build.format !== "directory") {
+		params.logger.warn('Récivi PF works best with `build.format: "directory"`.');
+	}
 	return { site, base, trailingSlash, build, publicDir, hasManifestIcons };
 }
 
