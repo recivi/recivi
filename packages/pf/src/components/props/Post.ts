@@ -11,7 +11,7 @@ export interface PostProps extends BaseProps {
  * Validate that the given value matches the `PostProps` interface.
  *
  * @param val the value to validate and type assert
- * @return whether value matches the `PostProps` interface
+ * @returns whether value matches the `PostProps` interface
  */
 export function isPostProps(val: unknown): val is PostProps {
 	return val !== null && typeof val === "object" && "post" in val;

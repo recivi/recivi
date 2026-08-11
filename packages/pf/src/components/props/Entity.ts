@@ -13,7 +13,7 @@ export interface EntityProps extends BaseProps {
  * Validate that the given value matches the `EntityProps` interface.
  *
  * @param val the value to validate and type assert
- * @return whether value matches the `EntityProps` interface
+ * @returns whether value matches the `EntityProps` interface
  */
 export function isEntityProps(val: unknown): val is EntityProps {
 	return val !== null && typeof val === "object" && "entity" in val;
