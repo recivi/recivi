@@ -7,8 +7,8 @@ ogTitle: ^•ﻌ•^𐒡
 
 import reciviData from "virtual:recivi/data";
 import { Comms } from "virtual:pf/components";
-import { getArrayDisplay } from "@recivi/pf/recivi/intl";
-import { getAddressDisplay } from "@recivi/pf/recivi/address";
+import { getArrayDisplay } from "@recivi/pf/utils/intl";
+import { formatAddress } from "@recivi/schema/display";
 
 import ManekiNeko from "@/components/ManekiNeko.astro";
 
@@ -17,7 +17,7 @@ export const { name, labels, residence, origin } = reciviData.bio;
 # <ManekiNeko/>
 
 Hello! I am **{ name }**, a { labels && getArrayDisplay(labels) }{ residence &&
-` based in ${getAddressDisplay(residence)}` }{ origin && ` (originally from ${getAddressDisplay(origin)})`
+` based in ${formatAddress(residence)}` }{ origin && ` (originally from ${formatAddress(origin)})`
 }.
 
 ## Contact
