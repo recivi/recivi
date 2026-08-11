@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import { suite, test } from "node:test";
 
-import { normalizeSlash, prefixBase, unprefixBase } from "../../src/utils/project_context";
+import {
+	getUrlFromPattern,
+	getUrlFromSlug,
+	prefixBase,
+	unprefixBase,
+} from "../../src/utils/project_context";
 
 void suite("prefixBase", () => {
 	const testCases = [
@@ -47,18 +52,62 @@ void suite("unprefixBase", () => {
 	});
 });
 
-void suite("normalizeSlash", () => {
+void suite("getUrlFromSlug", () => {
 	const testCases = [
-		["removes trailing slash if 'never'", { trailingSlash: "never" }, "/path/", "/path"],
-		["does nothing if 'never' and no slash", { trailingSlash: "never" }, "/path", "/path"],
-		["adds trailing slash if 'always'", { trailingSlash: "always" }, "/path", "/path/"],
-		["does nothing if 'always' and slash", { trailingSlash: "always" }, "/path/", "/path/"],
-		["does nothing if 'ignore' and slash", { trailingSlash: "ignore" }, "/path/", "/path/"],
-		["does nothing if 'ignore' and no slash", { trailingSlash: "ignore" }, "/path", "/path"],
+		["/", "ignore", "directory", "index", "/"],
+		["/", "ignore", "directory", "page", "/page/"],
+		["/base", "ignore", "directory", "index", "/base/"],
+		["/base/", "ignore", "directory", "page", "/base/page/"],
+
+		["/", "always", "directory", "index", "/"],
+		["/", "always", "directory", "page", "/page/"],
+		["/base", "always", "directory", "index", "/base/"],
+		["/base/", "always", "directory", "page", "/base/page/"],
+
+		["/", "ignore", "file", "index", "/"],
+		["/", "ignore", "file", "page", "/page.html"],
+		["/base", "ignore", "file", "index", "/base/"],
+		["/base/", "ignore", "file", "page", "/base/page.html"],
+
+		["/", "never", "file", "index", "/"],
+		["/", "never", "file", "page", "/page.html"],
+		["/base", "never", "file", "index", "/base/"],
+		["/base/", "never", "file", "page", "/base/page.html"],
 	] as const;
-	testCases.forEach(([name, projectContext, path, expected]) => {
-		void test(name, () => {
-			assert.equal(normalizeSlash(projectContext, path), expected);
+	testCases.forEach(([base, trailingSlash, buildFormat, pageId, expected]) => {
+		void test(`base: ${base}, trailingSlash: ${trailingSlash}, buildFormat: ${buildFormat}, pageId: ${pageId}`, () => {
+			const projectContext = { base, trailingSlash, build: { format: buildFormat } };
+			assert.equal(getUrlFromSlug(projectContext, pageId), expected);
+		});
+	});
+});
+
+void suite("getUrlFromPattern", () => {
+	const testCases = [
+		["/", "ignore", "directory", "/main", "/main/"],
+		["/", "ignore", "directory", "/main/sub/item", "/main/sub/item/"],
+		["/base", "ignore", "directory", "/main", "/base/main/"],
+		["/base/", "ignore", "directory", "/main/sub/item", "/base/main/sub/item/"],
+
+		["/", "always", "directory", "/main", "/main/"],
+		["/", "always", "directory", "/main/sub/item", "/main/sub/item/"],
+		["/base", "always", "directory", "/main", "/base/main/"],
+		["/base/", "always", "directory", "/main/sub/item", "/base/main/sub/item/"],
+
+		["/", "ignore", "file", "/main", "/main.html"],
+		["/", "ignore", "file", "/main/sub/item", "/main/sub/item.html"],
+		["/base", "ignore", "file", "/main", "/base/main.html"],
+		["/base/", "ignore", "file", "/main/sub/item", "/base/main/sub/item.html"],
+
+		["/", "never", "file", "/main", "/main.html"],
+		["/", "never", "file", "/main/sub/item", "/main/sub/item.html"],
+		["/base", "never", "file", "/main", "/base/main.html"],
+		["/base/", "never", "file", "/main/sub/item", "/base/main/sub/item.html"],
+	] as const;
+	testCases.forEach(([base, trailingSlash, buildFormat, pattern, expected]) => {
+		void test(`base: ${base}, trailingSlash: ${trailingSlash}, buildFormat: ${buildFormat}, pattern: ${pattern}`, () => {
+			const projectContext = { base, trailingSlash, build: { format: buildFormat } };
+			assert.equal(getUrlFromPattern(projectContext, pattern), expected);
 		});
 	});
 });

@@ -64,29 +64,49 @@ export function prefixBase(projectContext: Pick<ProjectContext, "base">, path: s
 }
 
 /**
- * Normalize the trailing slash based on the `trailingSlash` setting.
+ * Convert the given ID of a page to its corresponding URL.
  *
- * - If `trailingSlash` is 'always', ensure the path ends with a slash.
- * - If `trailingSlash` is 'never', ensure the path does not end with a slash.
- * - If `trailingSlash` is 'ignore', leave the path unchanged.
- *
- * It is possible to get the same path back if it is already normalised.
+ * The page ID represents the name of the page file on the filesystem without
+ * the extension. It also resolves index files to the name of the parent directory,
+ * except the root index file which has the ID "index".
  *
  * @param projectContext settings of the Astro project beyond PF's config
- * @param path the path whose trailing slash needs to be fixed
- * @returns the path with the correct trailing slash
+ * @param pageId the ID of the page to map to a URL
+ * @returns the URL corresponding to the page ID
  */
-export function normalizeSlash(
-	projectContext: Pick<ProjectContext, "trailingSlash">,
-	path: string,
+export function getUrlFromSlug(
+	projectContext: Pick<ProjectContext, "base" | "trailingSlash" | "build">,
+	pageId: string,
 ): string {
-	const { trailingSlash } = projectContext;
+	const {
+		build: { format: buildFormat },
+	} = projectContext;
 
-	if (trailingSlash === "always" && !path.endsWith("/")) {
-		return `${path}/`;
-	}
-	if (trailingSlash === "never" && path.endsWith("/")) {
-		return path.slice(0, -1);
-	}
-	return path;
+	const path =
+		pageId === "index" ? "/" : buildFormat === "file" ? `/${pageId}.html` : `/${pageId}/`;
+	return prefixBase(projectContext, path);
+}
+
+/**
+ * Convert a route pattern to its corresponding URL.
+ *
+ * For every route, Astro constructs a route with a pattern that looks like
+ * `/` or `/fragment` or `/fragment/fragment/[param]`. We keep the patterns for
+ * résumé index, résumé entities, blog index and blog posts to generate dynamic
+ * pages.
+ *
+ * @param projectContext settings of the Astro project beyond PF's config
+ * @param pattern the route pattern to map to a URL
+ * @returns the URL corresponding to the route pattern
+ */
+export function getUrlFromPattern(
+	projectContext: Pick<ProjectContext, "base" | "trailingSlash" | "build">,
+	pattern: string,
+): string {
+	const {
+		build: { format: buildFormat },
+	} = projectContext;
+
+	const path = buildFormat === "file" ? `${pattern}.html` : `${pattern}/`;
+	return prefixBase(projectContext, path);
 }
