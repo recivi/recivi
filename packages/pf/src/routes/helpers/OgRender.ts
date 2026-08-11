@@ -1,5 +1,4 @@
 import type { Org, Epic, Institute } from "@recivi/schema";
-import { isInstitute } from "@recivi/schema/utils";
 import projectContext from "virtual:pf/project-context";
 
 import { getResumeEntityUrl } from "../../utils/dynamic_pages";
@@ -13,18 +12,12 @@ export function entityToOg(entity: Org | Epic | Institute, right: string) {
 		return;
 	}
 
-	// Remove the icon for institutes as most don't have one.
-	if (isInstitute(entity)) {
-		entity = { ...entity, id: undefined };
-	}
-
 	return {
 		params: {
 			path: unprefixBase(projectContext, internalDest),
 		},
 		props: {
-			// We use internal link to hide the ↗ arrow.
-			title: { entity, useInternalLink: true },
+			title: { entity },
 			description: stripHtmlTags("description" in entity ? (entity.description ?? "") : ""),
 			breadcrumbs: `Résumé`,
 			right,

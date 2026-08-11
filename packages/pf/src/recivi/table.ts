@@ -25,11 +25,7 @@ export function getCertsTable() {
 				return {
 					groupId: institute.id ?? institute.name,
 					data: {
-						// Remove the icon for institutes as most don't have one.
-						institute: {
-							entity: { ...institute, id: undefined },
-							useInternalLink: nav.resumeInstitute !== undefined,
-						},
+						institute: { entity: institute, useInternalLink: nav.resumeInstitute !== undefined },
 						degree,
 						issue: { date: cert.issue },
 					},
