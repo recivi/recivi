@@ -30,6 +30,7 @@
 		"./routes/*": "./src/routes/*",
 		"./recivi/*": "./src/recivi/*.ts",
 		"./styles/*": "./src/styles/*",
+		"./types/*": "./src/types/*.ts",
 		"./utils/*": "./src/utils/*.ts"
 	},
 	"scripts": {
