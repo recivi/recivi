@@ -9,6 +9,7 @@
 import type {
 	Address,
 	Date,
+	Language,
 	LanguageProficiency,
 	Period,
 	RoleLocation,
@@ -17,7 +18,7 @@ import type {
 	Tag,
 	Url,
 } from "@/index";
-import { urlDest, dateParts } from "@/utils";
+import { urlDest, dateParts, getOverallProficiency } from "@/utils";
 
 // Dates
 // =====
@@ -40,16 +41,8 @@ export function formatDate(
 
 	const formatStyle =
 		usage === "display"
-			? ({
-					year: "numeric",
-					month: "2-digit",
-					day: "2-digit",
-				} as const)
-			: ({
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-				} as const);
+			? ({ year: "numeric", month: "2-digit", day: "2-digit" } as const)
+			: ({ year: "numeric", month: "long", day: "numeric" } as const);
 
 	const [year, month, day] = dateParts(date);
 	const dateObj = new globalThis.Date(year, (month ?? 1) - 1, day ?? 1);
@@ -131,15 +124,9 @@ export function countryFlag(countryCode: string): string {
 export function formatAddress(address: Address, options: { useFlag?: boolean } = {}): string {
 	const { useFlag = true } = options;
 	let text = address.countryCode;
-	if (useFlag) {
-		text = countryFlag(text);
-	}
-	if (address.state) {
-		text = `${address.state}, ${text}`;
-	}
-	if (address.city) {
-		text = `${address.city}, ${text}`;
-	}
+	if (useFlag) text = countryFlag(text);
+	if (address.state) text = `${address.state}, ${text}`;
+	if (address.city) text = `${address.city}, ${text}`;
 	return text;
 }
 
@@ -186,7 +173,7 @@ export function formatRoleLocation(roleLocation: RoleLocation): string {
 
 const LANGUAGE_PROFICIENCY_DISPLAYS: Record<LanguageProficiency, string> = {
 	no: "",
-	not_possible: "",
+	not_possible: "N/A",
 	elementary: "Elementary",
 	limited_working: "Limited working",
 	professional_working: "Professional working",
@@ -252,9 +239,11 @@ export function formatSkills(skills: Skill[], bcp47: string = "en"): string {
  * @param name the language name field (string or object)
  * @returns the display name
  */
-export function formatLanguageName(name: string | { name: string; englishName?: string }): string {
+export function formatLanguageName(name: Language["name"]): string {
 	if (typeof name === "string") return name;
-	return name.englishName ? `${name.name} (${name.englishName})` : name.name;
+	let displayName = name.name;
+	if (name.englishName) displayName = `${displayName}/${name.englishName}`;
+	return displayName;
 }
 
 /**
@@ -287,4 +276,22 @@ export function bestProficiency(proficiencies: {
 		if (levels.has(level)) return formatProficiency(level);
 	}
 	return "";
+}
+
+/**
+ * Format a list of languages into a display string. A language with a narrow
+ * band of proficiencies is shown as "Language (Overall Proficiency)".
+ *
+ * @param languages the list of languages to format
+ * @param bcp47 the BCP 47 locale tag for formatting
+ * @returns the display string
+ */
+export function formatLanguages(languages: Language[], bcp47: string = "en"): string {
+	return new Intl.ListFormat(bcp47, { style: "short", type: "conjunction" }).format(
+		languages.map((language) => {
+			const name = formatLanguageName(language.name);
+			const proficiency = getOverallProficiency(language);
+			return proficiency ? `${name} (${formatProficiency(proficiency)})` : name;
+		}),
+	);
 }

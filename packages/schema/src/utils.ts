@@ -3,7 +3,7 @@
  * types.
  */
 
-import type { Url, Date, Institute, Org, Epic } from "@/index";
+import type { Url, Date, Institute, Org, Epic, LanguageProficiency, Language } from "@/index";
 
 // Entities
 // ========
@@ -93,4 +93,77 @@ export function urlDest(url: Url): string {
  */
 export function urlLabel(url: Url): string {
 	return typeof url === "string" ? url : url.label;
+}
+
+// Language
+// ========
+
+/**
+ * Get the numerical score of a language proficiency level.
+ *
+ * @param proficiency convert the proficiency level to a numerical value
+ * @returns the numerical score of a proficiency level
+ */
+export function getProficiencyScore(proficiency: LanguageProficiency): number {
+	switch (proficiency) {
+		case "no":
+			return 0;
+		case "elementary":
+			return 1;
+		case "limited_working":
+			return 2;
+		case "professional_working":
+			return 3;
+		case "full_professional":
+			return 4;
+		case "native":
+		case "not_possible":
+			return 5;
+		default:
+			throw new Error(`Invalid proficiency level: ${proficiency}`);
+	}
+}
+
+/**
+ * Get the language proficiency level corresponding to a numerical score.
+ *
+ * @param score the numerical score to convert to a proficiency level
+ * @returns the language proficiency level corresponding to the score
+ */
+export function getScoreProficiency(score: number): LanguageProficiency {
+	if (score < 1) return "no";
+	if (score < 2) return "elementary";
+	if (score < 3) return "limited_working";
+	if (score < 4) return "professional_working";
+	if (score < 5) return "full_professional";
+	if (score === 5) return "native";
+	throw new Error(`Invalid score: ${score}`);
+}
+
+/**
+ * Get the overall proficiency of a language based on the proficiency levels of
+ * all its modes (speak, listen, write, read).
+ *
+ * @param language the language for which to calculate the proficiency
+ * @returns the overall proficiency of all modes
+ */
+export function getOverallProficiency(language: Language): LanguageProficiency | undefined {
+	const speakScore = getProficiencyScore(language.speak);
+	const scores = [
+		speakScore,
+		getProficiencyScore(language.listen),
+		getProficiencyScore(language.write),
+		getProficiencyScore(language.read),
+	];
+
+	// If there is too much spread in proficiency levels, we cannot determine an
+	// overall score.
+	if (Math.max(...scores) - Math.min(...scores) >= 2) {
+		return undefined;
+	}
+	let overallScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+	// The overall score cannot be more than one level above that of speaking.
+	overallScore = Math.min(overallScore, speakScore + 1);
+
+	return getScoreProficiency(overallScore);
 }
