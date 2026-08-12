@@ -32,14 +32,20 @@ import type { WebProps } from "../props/Web";
 import Root from "./Root.astro";
 
 type Props = WebProps;
-const { frontmatter, ...rest } = Astro.props;
+const { frontmatter, ...attrs } = Astro.props;
+
+// This page acts as an MDX layout. The following fields must be removed to
+// prevent them from appearing as HTML attributes on the `<html>` element.
+delete attrs.file;
+delete attrs.headings;
+delete attrs.content;
 
 const hasExtra = Astro.slots.has("extra");
 
 const iconLinkTags = await getIconLinkTags();
 ---
 
-<Root {...rest}>
+<Root {...attrs}>
 	<Fragment slot="head">
 		<title>{getFullPageTitle(frontmatter.title)}</title>
 
