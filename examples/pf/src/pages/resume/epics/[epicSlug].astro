@@ -1,37 +1,24 @@
 ---
-import { Breadcrumbs, EpicDetails } from "virtual:pf/components";
+import { EpicDetails } from "virtual:pf/components";
 import reciviData from "virtual:recivi/data";
 
-import { pageSchema } from "@recivi/pf/content";
-import Resume from "@recivi/pf/layouts/Resume.astro";
+import Entity from "@recivi/pf/layouts/defs/Entity.astro";
 
 export function getStaticPaths() {
 	const epics = reciviData.creations;
 	return epics.map((epic) => ({
-		params: { slug: epic.slug },
+		params: { epicSlug: epic.slug },
 		props: { epic },
 	}));
 }
 
 const { epic } = Astro.props;
 
-const frontmatter = pageSchema.parse({
-	title: `Epic: ${epic.name}`,
-	description: `Know more about my work on ${epic.name}.`,
-	banRobots: true,
-});
+const entityType: [string, string] = ["Epic", "Epics"];
+const name = epic.name;
+const description = `Know more about my work on ${epic.name}.`;
 ---
 
-<Resume {frontmatter}>
-	<Breadcrumbs
-		slot="primary-header"
-		crumbs={[
-			{ url: { dest: "/", label: "Home" } },
-			{ url: { dest: "/resume", label: "Résumé" } },
-			"Epics",
-			epic.name,
-		]}
-	/>
-
+<Entity {entityType} {name} {description}>
 	<EpicDetails {epic} />
-</Resume>
+</Entity>

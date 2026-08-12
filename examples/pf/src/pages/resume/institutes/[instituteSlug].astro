@@ -1,0 +1,24 @@
+---
+import { InstituteDetails } from "virtual:pf/components";
+import reciviData from "virtual:recivi/data";
+
+import Entity from "@recivi/pf/layouts/defs/Entity.astro";
+
+export function getStaticPaths() {
+	const institutes = reciviData.education;
+	return institutes.map((institute) => ({
+		params: { instituteSlug: institute.slug },
+		props: { institute },
+	}));
+}
+
+const { institute } = Astro.props;
+
+const entityType: [string, string] = ["Institute", "Institutes"];
+const name = institute.name;
+const description = `Know more about my education at ${institute.name}.`;
+---
+
+<Entity {entityType} {name} {description}>
+	<InstituteDetails {institute} />
+</Entity>

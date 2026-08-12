@@ -1,0 +1,103 @@
+---
+import "virtual:pf/custom-css/Post";
+
+import {
+	Anchor,
+	Breadcrumbs,
+	Elements,
+	PfDate,
+	Table,
+	Toc,
+} from "virtual:pf/components";
+
+import { getCollection } from "astro:content";
+
+import { pageSchema } from "../../content";
+import { getPostsTable, isNotDraft } from "../../utils/collections";
+import { getIndexUrl } from "../../utils/dynamic_pages";
+import { getArticleMetaTags } from "../../utils/metas";
+import type { PostProps } from "../props/Post";
+import Web from "./Web.astro";
+
+type Props = PostProps;
+const { postData, headings } = Astro.props;
+
+const relatedPosts = (
+	await getCollection(
+		"blog",
+		(item) =>
+			isNotDraft(item) &&
+			item.data.series &&
+			item.data.series === postData.series,
+	)
+).toReversed();
+const relatedPostsTable = getPostsTable(relatedPosts);
+
+const frontmatter = pageSchema.parse({
+	...postData,
+	title: `Post: ${postData.title}`,
+});
+
+const navIndex = getIndexUrl("blog");
+---
+
+<Web {frontmatter}>
+	<Elements slot="metas" items={getArticleMetaTags(postData)} tag="meta" />
+
+	<Breadcrumbs
+		slot="primary-header"
+		crumbs={[
+			{ url: { dest: "/", label: "Home" } },
+			navIndex ? { url: { dest: navIndex, label: "Blog" } } : "Blog",
+			"Posts",
+			postData.title,
+		]}
+	/>
+
+	<div slot="extra-header"><strong>Table of contents</strong></div>
+
+	<Toc slot="extra" {headings} />
+
+	<h1>{postData.title}</h1>
+	<dl>
+		<dt>Published</dt>
+		<dd>
+			<PfDate date={postData.pubDate} />
+		</dd>
+		<dt>Categories</dt>
+		<dd>
+			<ul class="linear">
+				{postData.categories.map((category) => <li>{category}</li>)}
+			</ul>
+		</dd>
+		{
+			postData.series ? (
+				<Fragment>
+					<dt>Series</dt>
+					<dd>
+						<Anchor url={{ dest: "#series", label: "Series" }}>
+							{postData.series}
+						</Anchor>
+					</dd>
+				</Fragment>
+			) : undefined
+		}
+	</dl>
+	<hr />
+
+	<slot />
+
+	{
+		postData.series ? (
+			<Fragment>
+				<hr />
+				<h2 id="series">Series</h2>
+				<p>
+					This post is part of the "{postData.series}" series. If you liked it,
+					you might also like the other posts in this series.
+				</p>
+				<Table table={relatedPostsTable} />
+			</Fragment>
+		) : undefined
+	}
+</Web>

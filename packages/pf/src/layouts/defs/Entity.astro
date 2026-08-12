@@ -1,0 +1,40 @@
+---
+import "virtual:pf/custom-css/Entity";
+
+import { Breadcrumbs } from "virtual:pf/components";
+
+import { pageSchema } from "../../content";
+import { getIndexUrl } from "../../utils/dynamic_pages";
+import type { EntityProps } from "../props/Entity";
+import Web from "./Web.astro";
+
+type Props = EntityProps;
+const {
+	entityType: [singular, plural],
+	name,
+	description,
+} = Astro.props;
+
+const frontmatter = pageSchema.parse({
+	title: `${singular}: ${name}`,
+	description,
+	// Banning the robots also means there is no need to add meta-tags.
+	banRobots: true,
+});
+
+const navIndex = getIndexUrl("resume");
+---
+
+<Web {...Astro.props} {frontmatter} mainClass={singular.toLocaleLowerCase()}>
+	<Breadcrumbs
+		slot="primary-header"
+		crumbs={[
+			{ url: { dest: "/", label: "Home" } },
+			navIndex ? { url: { dest: navIndex, label: "Résumé" } } : "Résumé",
+			plural,
+			name,
+		]}
+	/>
+
+	<slot />
+</Web>
