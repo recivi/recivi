@@ -1,4 +1,4 @@
-type Clsx = undefined | string | Record<string, boolean> | Clsx[];
+export type Clsx = undefined | string | Record<string, boolean> | Clsx[];
 
 export interface BaseProps {
 	/** additional CSS classes to apply to the component */
