@@ -249,7 +249,7 @@ function createHooks(options: ParsedOptions): AstroIntegration["hooks"] {
 			({ projectContext, virtualImports } = await configureAstro(params, options));
 
 			const vReciviData = virtualImports["recivi/data"];
-			if (vReciviData) reloadReciviData(params, options, vReciviData);
+			if (vReciviData) await reloadReciviData(params, options, vReciviData);
 		},
 		"astro:routes:resolved": (params) => {
 			const vPfNav = virtualImports["pf/nav"];
