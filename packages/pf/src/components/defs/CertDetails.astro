@@ -56,6 +56,8 @@ const Heading = `h${1 + headingOffset}`;
 		) : undefined
 	}
 
+	{cert.summary ? <p class="print-only" set:html={cert.summary} /> : undefined}
+
 	{
 		cert.courses.length ? (
 			<ul class="courses web-only">
