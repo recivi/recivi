@@ -72,21 +72,9 @@
 	/* Block elements */
 
 	p,
-	h1,
 	h2,
-	h3,
-	h4,
-	h5,
-	h6,
-	ul,
-	ol,
-	dl,
-	pre,
-	blockquote,
-	figure,
-	table,
-	hr {
-		margin-block: calc(2 * var(--pf-spacing));
+	ul {
+		margin-block: var(--pf-spacing);
 	}
 
 	/* Headings */
@@ -100,7 +88,6 @@
 		display: flex;
 		align-items: center;
 		gap: calc(2 * var(--pf-spacing));
-		margin-block-end: calc(2 * var(--pf-spacing));
 
 		&::after {
 			content: "";
