@@ -12,14 +12,16 @@ import { styleText } from "node:util";
 
 import mdx from "@astrojs/mdx";
 import type { AstroIntegration } from "astro";
+import { AstroError } from "astro/errors";
+import { ZodError } from "astro/zod";
 
 import { componentNames } from "./components/index";
 import { reloadPfNav } from "./integration/navigation";
+import { reloadReciviData } from "./integration/recivi";
 import { generateOg } from "./jobs/generate_og";
 import { generatePdf } from "./jobs/generate_pdf";
 import { layoutNames } from "./layouts/index";
 import { type Options, optionsSchema, type ParsedOptions } from "./options";
-import { loadReciviData } from "./recivi/load";
 import { satteriProcessor } from "./satteri/default_layout";
 import type { ProjectContext } from "./types/project_context";
 import { debounce } from "./utils/debounce";
@@ -29,7 +31,6 @@ import { getVirtualImport, type MutableVirtualImport } from "./vite/virtual_impo
 
 type Hooks = AstroIntegration["hooks"];
 type ConfigSetupParams = Parameters<NonNullable<Hooks["astro:config:setup"]>>[0];
-type ServerSetupParams = Parameters<NonNullable<Hooks["astro:server:setup"]>>[0];
 
 /**
  * Resolve some options that use relative paths to their absolute paths.
@@ -198,7 +199,19 @@ function configureMarkdown(params: ConfigSetupParams) {
  * @param options the parsed options for the integration
  * @returns an object containing the project context and virtual imports
  */
-async function configureAstro(params: ConfigSetupParams, options: ParsedOptions) {
+async function configureAstro(params: ConfigSetupParams, rawOptions: Options) {
+	let options: ParsedOptions;
+	try {
+		options = optionsSchema.parse(rawOptions);
+	} catch (error) {
+		if (!(error instanceof ZodError)) throw error;
+
+		const hint = ["Fix the following issues in the configuration:"];
+		error.issues.forEach((issue) => {
+			hint.push(`\t${issue.path.join(".")} - ${issue.message}`);
+		});
+		throw new AstroError("Invalid configuration passed to Récivi PF", hint.join("\n"));
+	}
 	resolveOptions(options, params.config.root);
 	// The `options` have now been mutated to contain absolute paths.
 
@@ -207,37 +220,11 @@ async function configureAstro(params: ConfigSetupParams, options: ParsedOptions)
 	injectRoutes(params, options, projectContext);
 	configureMarkdown(params);
 
-	return { projectContext, virtualImports };
+	return { options, projectContext, virtualImports };
 }
 
-/**
- * Reload the Récivi data file, update the associated virtual module and trigger
- * a full page reload in the Astro dev server.
- *
- * This is used by hooks `astro:config:setup` and `astro:server:setup`.
- *
- * @param params the parameters provided by the Astro integration hook
- * @param options the parsed options for the integration
- * @param reciviDataPlugin the virtual import plugin for the Récivi data module
- */
-async function reloadReciviData(
-	params: ServerSetupParams | ConfigSetupParams,
-	options: ParsedOptions,
-	reciviDataPlugin: MutableVirtualImport,
-) {
-	const reciviData = await loadReciviData(options.reciviDataFile);
-	reciviDataPlugin.update(`export default ${JSON.stringify(reciviData)}`);
-
-	if ("server" in params) {
-		const module = params.server.moduleGraph.getModuleById(reciviDataPlugin.id);
-		if (module) {
-			params.server.moduleGraph.invalidateModule(module);
-		}
-		params.server.hot.send({ type: "full-reload" });
-	}
-}
-
-function createHooks(options: ParsedOptions): AstroIntegration["hooks"] {
+function createHooks(rawOptions: Options): AstroIntegration["hooks"] {
+	let options: ParsedOptions;
 	let projectContext: ProjectContext;
 	let virtualImports: Record<string, MutableVirtualImport>;
 	let isWatchingDatafile = false;
@@ -246,7 +233,7 @@ function createHooks(options: ParsedOptions): AstroIntegration["hooks"] {
 		"astro:config:setup": async (params) => {
 			params.logger.debug(`${styleText("blue", "astro:config:setup")} hook called`);
 
-			({ projectContext, virtualImports } = await configureAstro(params, options));
+			({ options, projectContext, virtualImports } = await configureAstro(params, rawOptions));
 
 			const vReciviData = virtualImports["recivi/data"];
 			if (vReciviData) await reloadReciviData(params, options, vReciviData);
@@ -287,9 +274,8 @@ function createHooks(options: ParsedOptions): AstroIntegration["hooks"] {
  * @returns the configured instance of the Astro integration
  */
 export default function (options: Options): AstroIntegration {
-	const parsedOptions: ParsedOptions = optionsSchema.parse(options);
 	return {
 		name: "@recivi/pf",
-		hooks: createHooks(parsedOptions),
+		hooks: createHooks(options),
 	};
 }

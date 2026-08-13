@@ -21,7 +21,7 @@ export const optionsSchema = z
 		 * local file, it can be a path relative to the config file or an absolute
 		 * path on the filesystem.
 		 */
-		reciviDataFile: z.string().register(primaryRegistry, {
+		reciviDataFile: z.string().trim().nonempty().register(primaryRegistry, {
 			description:
 				"the path or URL to the Récivi-compliant résumé data file; If the path is a local file, it can be a path relative to the config file or an absolute path on the filesystem.",
 		}),
