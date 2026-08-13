@@ -6,46 +6,51 @@ import starlightSvg from "./src/assets/icons/starlight.svg?raw";
 
 export default defineConfig({
 	/*
-	 * It's recommend to set this to a domain only with no subpath.
-	 *
 	 * If this setting is not provided, the meta tags for canonical URL and Open
 	 * Graph images will not be generated.
 	 *
+	 * This field should contain the domain only, with no subpath and no trailing
+	 * slash.
+	 *
 	 * More info: https://docs.astro.build/en/reference/configuration-reference/#site
 	 */
-	// site: '',
+	// site: "",
 
 	/*
-	 * A leading slash is always added automatically, so it's recommended to add
-	 * one and eliminate the confusion.
+	 * The value of `config.base` as read by integrations will also be determined
+	 * by your `trailingSlash` configuration.
 	 *
-	 * The `trailingSlash` setting can modify the base to match.
+	 * This field should contain a subpath, with a leading slash and no trailing
+	 * slash.
 	 *
 	 * More info: https://docs.astro.build/en/reference/configuration-reference/#base
 	 */
-	// base: '/'
+	// base: "/",
 
 	/*
-	 * This setting is confusing because for pre-rendered sites (like Récivi PF),
-	 * the final behavior (including possible redirects) is determined by the
-	 * hosting provider, based on its own rules for directories, files and
-	 * extensions. It's recommended to leave this setting as is.
+	 * This setting only affects the dev server. The prod behavior (including
+	 * possible redirects) is determined by the hosting provider, based on its own
+	 * rules for directories, files and extensions.
+	 *
+	 * It is not advisable to change this field from the default "ignore".
 	 *
 	 * More info: https://docs.astro.build/en/reference/configuration-reference/#trailingslash
 	 */
-	// trailingSlash: 'ignore',
+	// trailingSlash: "ignore",
 
 	build: {
 		/*
-		 * It's recommended to leave this setting as is.
+		 * The directory build format does not have the `.html` extension so it's
+		 * both easier to read and write.
+		 *
+		 * It is not advisable to change this field from the default "directory".
 		 *
 		 * More info: https://docs.astro.build/en/reference/configuration-reference/#buildformat
 		 */
-		// format: 'directory',
+		// format: "directory",
 	},
 
 	devToolbar: { enabled: false },
-	markdown: { smartypants: false }, // https://daringfireball.net/projects/smartypants/
 	integrations: [
 		// Récivi PF integration
 		pf({
@@ -54,7 +59,7 @@ export default defineConfig({
 			 * and production, you can use `import.meta.env.DEV` to conditionally
 			 * specify them here.
 			 */
-			reciviDataFile: "https://github.com/dhruvkb/recivi/raw/main/recivi.json",
+			reciviDataFile: "",
 			icons: {
 				packs: {
 					// See an example of custom icons usage on the "Colophon" page.
