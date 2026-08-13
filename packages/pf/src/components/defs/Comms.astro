@@ -43,7 +43,7 @@ const profileComms = profiles
 					{commSet.map((comm, idx, allComms) => (
 						<Fragment>
 							<Anchor {...comm.anchor} />
-							{idx < allComms.length - 1 ? ", " : undefined}
+							{idx < allComms.length - 1 ? ",\xa0" : undefined}
 						</Fragment>
 					))}
 				</li>
