@@ -1,0 +1,94 @@
+---
+import {
+	EpicDetails,
+	InstituteDetails,
+	LanguageList,
+	OrgDetails,
+	SkillList,
+} from "virtual:pf/components";
+import reciviData from "virtual:recivi/data";
+
+import Print from "@recivi/pf/layouts/defs/Print.astro";
+
+const institutes = reciviData.education.filter((institute) =>
+	institute.certs.some((cert) => cert.tags.includes("resume_pdf")),
+);
+const epics = reciviData.creations.filter((epic) =>
+	epic.projects.some((project) => project.tags.includes("resume_pdf")),
+);
+const orgs = reciviData.work.filter((org) =>
+	org.roles.some((role) => role.tags.includes("resume_pdf")),
+);
+---
+
+<Print>
+	{
+		institutes.length ? (
+			<section>
+				<h2>Education</h2>
+				<div>
+					{institutes.map((institute) => (
+						<InstituteDetails
+							filterTag="resume_pdf"
+							headingOffset={2}
+							{institute}
+						/>
+					))}
+				</div>
+			</section>
+		) : undefined
+	}
+	{
+		orgs.length ? (
+			<section>
+				<h2>Work experience</h2>
+				<div>
+					{orgs.map((org) => (
+						<OrgDetails filterTag="resume_pdf" headingOffset={2} {org} />
+					))}
+				</div>
+			</section>
+		) : undefined
+	}
+	{
+		epics.length ? (
+			<section>
+				<h2>Projects</h2>
+				<div>
+					{epics.map((epic) => (
+						<EpicDetails {epic} filterTag="resume_pdf" headingOffset={2} />
+					))}
+				</div>
+			</section>
+		) : undefined
+	}
+	{
+		reciviData.skills.length ? (
+			<section>
+				<h2>Skills</h2>
+				<SkillList class="list" />
+			</section>
+		) : undefined
+	}
+	{
+		reciviData.languages.length ? (
+			<section>
+				<h2>Human languages</h2>
+				<LanguageList class="list" />
+			</section>
+		) : undefined
+	}
+</Print>
+
+<style>
+	@layer core {
+		h2 {
+			/* Don't leave dangling headings at the bottom of a page. */
+			break-after: avoid-page;
+		}
+
+		.list {
+			margin-block: calc(2 * var(--pf-spacing));
+		}
+	}
+</style>
