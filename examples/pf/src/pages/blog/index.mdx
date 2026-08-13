@@ -8,11 +8,16 @@ navIndex: 2
 import { Anchor, Icon, PostsTable } from "virtual:pf/components";
 import projectContext from "virtual:pf/project-context";
 
+import { prefixBase } from "@recivi/pf/utils/project_context";
+
+export const rssHref = prefixBase(projectContext, "/rss.xml");
+
 # Blog
 
 Welcome to my blog, where you can read some of my long-form blog posts.
 
-You can subscribe to the [<Icon name="rss" />RSS feed](/rss.xml) to get updates on new posts.
+You can subscribe to the <Anchor url={rssHref}><Icon name="rss" />RSS feed</Anchor> to get updates
+on new posts.
 
 Click on a category to see only the posts that belong to that category.
 
