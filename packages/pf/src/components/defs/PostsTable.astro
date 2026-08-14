@@ -37,6 +37,10 @@ const categories = await getCategories();
 	{
 		showCategories ? (
 			<div class="requires-js">
+				<p>
+					Click on a category to see only the posts that belong to that
+					category.
+				</p>
 				{categories.length ? (
 					<fieldset class="categories-fieldset">
 						<legend class="sr-only">Categories</legend>
