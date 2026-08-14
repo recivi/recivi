@@ -6,19 +6,27 @@ navIndex: 1
 ---
 
 import {
+  Anchor,
+  Icon,
   CertsTable,
   RolesTable,
   ProjectsTable,
   SkillList,
   LanguageList,
 } from "virtual:pf/components";
+import projectContext from "virtual:pf/project-context";
+
+import { prefixBase } from "@recivi/pf/utils/project_context";
+
+export const resumePdfHref = prefixBase(projectContext, "/resume/resume.pdf");
 
 # Résumé
 
 Welcome to my interactive résumé, where you can learn about my education, work experience, project
 and skills.
 
-You can grab this résumé to go as a [PDF version](/resume/resume.pdf).
+You can grab this résumé as a <Anchor url={resumePdfHref}><Icon name="file-text" /> PDF
+version</Anchor>.
 
 Click on the institute, org or epic names in the tables below to know more.
 
