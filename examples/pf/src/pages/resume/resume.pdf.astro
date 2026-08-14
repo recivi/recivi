@@ -88,7 +88,11 @@ const orgs = reciviData.work.filter((org) =>
 		}
 
 		.list {
-			margin-block: calc(2 * var(--pf-spacing));
+			margin-block-start: calc(2 * var(--pf-spacing));
+
+			&:not(:last-child) {
+				margin-block-end: calc(2 * var(--pf-spacing));
+			}
 		}
 	}
 </style>
