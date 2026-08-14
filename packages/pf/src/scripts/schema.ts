@@ -6,9 +6,9 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { styleText } from "node:util";
 
-import { z } from "zod";
+import { z } from "astro/zod";
 
-import { resumeSchema as rootSchema } from "../index";
+import { optionsSchema as rootSchema } from "../options/index";
 import { primaryRegistry } from "../registries/primary";
 
 console.log(styleText("blue", "ZTS"), "Zod to JSON Schema start");
@@ -25,7 +25,7 @@ const jsonSchema = z.toJSONSchema(rootSchema, {
 		delete generatedSchema.id;
 	},
 });
-const fileName = "recivi-resume.json";
+const fileName = "recivi-options.json";
 jsonSchema.$id = `https://recivi.pages.dev/schemas/${fileName}`;
 
 for (const [key] of Object.entries(jsonSchema.$defs ?? {})) {

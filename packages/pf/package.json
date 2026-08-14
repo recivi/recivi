@@ -35,7 +35,7 @@
 	},
 	"scripts": {
 		"barrel": "tsx src/scripts/barrel.ts",
-		"reference": "pnpm barrel && tsx src/scripts/reference.ts",
+		"schema": "pnpm barrel && tsx src/scripts/schema.ts",
 		"check": "pnpm barrel && astro check",
 		"astro": "pnpm barrel && astro",
 		"test": "tsx --test"
