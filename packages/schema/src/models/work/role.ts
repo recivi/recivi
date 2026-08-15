@@ -15,6 +15,9 @@ export const roleSchema = z
 		name: z.string().register(primaryRegistry, {
 			description: "the job title of the role",
 		}),
+		teams: z.array(z.string()).optional().default([]).register(primaryRegistry, {
+			description: "a list of teams, squads or departments that the role ",
+		}),
 		summary: z.string().optional().register(primaryRegistry, {
 			description: "a short description or introduction of the role",
 		}),

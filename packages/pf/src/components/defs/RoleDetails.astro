@@ -4,6 +4,7 @@ import { Entity, Period } from "virtual:pf/components";
 import { formatRoleLocation, formatRoleType } from "@recivi/schema/display";
 
 import { getLinkedEpics } from "../../recivi/relations";
+import { getArrayDisplay } from "../../utils/intl";
 import type { RoleDetailsProps } from "../props/RoleDetails";
 type Props = RoleDetailsProps;
 const { role, headingOffset = 0, class: className, ...attrs } = Astro.props;
@@ -13,7 +14,14 @@ const Heading = `h${1 + headingOffset}`;
 
 <div class:list={["pf-role-details", className]} {...attrs}>
 	<div class="role-header">
-		<Heading>{role.name}</Heading>
+		<Heading>
+			{role.name}
+			{
+				role.teams.length ? (
+					<span class="print-only">&nbsp;({getArrayDisplay(role.teams)})</span>
+				) : undefined
+			}
+		</Heading>
 		{
 			role.period ? (
 				<span class="meta print-only">
@@ -24,6 +32,14 @@ const Heading = `h${1 + headingOffset}`;
 	</div>
 
 	<dl class="web-only">
+		{
+			role.teams.length ? (
+				<Fragment>
+					<dt>Teams</dt>
+					<dd>{getArrayDisplay(role.teams)}</dd>
+				</Fragment>
+			) : undefined
+		}
 		{
 			role.period ? (
 				<Fragment>
