@@ -47,7 +47,7 @@
 		"@iconify-json/lucide": "^1.2.100",
 		"@iconify-json/simple-icons": "^1.2.75",
 		"@recivi/schema": "workspace:^",
-		"puppeteer": "^24.40.0",
+		"puppeteer": "^25.7.0",
 		"sharp": "catalog:"
 	},
 	"devDependencies": {
