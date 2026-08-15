@@ -2,130 +2,13 @@ import assert from "node:assert";
 import { test } from "node:test";
 
 import { paginatePrintPreview } from "../../src/utils/print_preview";
-
-/* oxlint-disable max-classes-per-file -- Separate DOM test doubles keep their behavior explicit. */
-
-const offsetAttribute = "data-pf-print-page-break-offset";
-const offsetProperty = "--pf-print-page-break-offset";
-const pageCountProperty = "--pf-print-page-count";
-
-class FakeStyle {
-	readonly #properties = new Map<string, string>();
-
-	getPropertyValue(name: string): string {
-		return this.#properties.get(name) ?? "";
-	}
-
-	removeProperty(name: string): string {
-		const value = this.getPropertyValue(name);
-		this.#properties.delete(name);
-		return value;
-	}
-
-	setProperty(name: string, value: string): void {
-		this.#properties.set(name, value);
-	}
-}
-
-class FakeElement {
-	readonly attributes = new Set<string>();
-	readonly style = new FakeStyle();
-	readonly ownerDocument: FakeDocument;
-	offsetWidth = 100;
-	layoutWidth: number | undefined;
-	baseTop = 0;
-	height = 0;
-	breakInside = "auto";
-	isRuler = false;
-
-	constructor(ownerDocument: FakeDocument) {
-		this.ownerDocument = ownerDocument;
-	}
-
-	append(): void {}
-
-	getBoundingClientRect(): DOMRect {
-		const margin = Number(this.style.getPropertyValue(offsetProperty).replace("px", "")) || 0;
-		const scale = this.ownerDocument.previewScale;
-		const top = (this.baseTop + margin) * scale;
-		const inlineBlockSize = (this.style as unknown as { blockSize?: string }).blockSize;
-		const rulerHeight = inlineBlockSize?.startsWith("var(")
-			? 1000
-			: Number(inlineBlockSize?.replace("px", ""));
-		const height = (this.isRuler ? rulerHeight : this.height) * scale;
-		const width = (this.layoutWidth ?? this.offsetWidth) * scale;
-		return {
-			bottom: top + height,
-			height,
-			left: 0,
-			right: width,
-			top,
-			width,
-			x: 0,
-			y: top,
-			toJSON: () => ({}),
-		};
-	}
-
-	querySelector(): FakeElement | undefined {
-		return this.ownerDocument.content;
-	}
-
-	querySelectorAll(selector: string): FakeElement[] {
-		if (selector === "*") return this.ownerDocument.descendants;
-		if (selector === `[${offsetAttribute}]`) {
-			return this.ownerDocument.descendants.filter((element) =>
-				element.attributes.has(offsetAttribute),
-			);
-		}
-		return [];
-	}
-
-	remove(): void {}
-
-	removeAttribute(name: string): void {
-		this.attributes.delete(name);
-	}
-
-	setAttribute(name: string): void {
-		this.attributes.add(name);
-	}
-}
-
-class FakeDocument {
-	previewScale = 1;
-	serializedScale = 1;
-	readonly fonts = { ready: Promise.resolve() };
-	readonly descendants: FakeElement[] = [];
-	readonly defaultView = {
-		getComputedStyle: (element: FakeElement) => {
-			if (element.isRuler) {
-				const inlineBlockSize = (element.style as unknown as { blockSize?: string }).blockSize;
-				return { blockSize: inlineBlockSize?.startsWith("var(") ? "1000px" : inlineBlockSize };
-			}
-			if (element === this.root) {
-				return {
-					paddingBlockEnd: "100px",
-					paddingBlockStart: "100px",
-					transform: `matrix(${this.serializedScale}, 0, 0, ${this.serializedScale}, 0, 0)`,
-				};
-			}
-			return {
-				breakInside: element.breakInside,
-				marginBlockStart: element.style.getPropertyValue(offsetProperty) || "0px",
-			};
-		},
-		matchMedia: () => ({ matches: true }),
-	};
-	readonly root = new FakeElement(this);
-	readonly content = new FakeElement(this);
-
-	createElement(): FakeElement {
-		const ruler = new FakeElement(this);
-		ruler.isRuler = true;
-		return ruler;
-	}
-}
+import {
+	FakeDocument,
+	FakeElement,
+	offsetAttribute,
+	offsetProperty,
+	pageCountProperty,
+} from "../helpers/print_preview";
 
 test("paginates geometry expressed as computed pixel lengths", async () => {
 	const document = new FakeDocument();
@@ -147,6 +30,70 @@ test("paginates geometry expressed as computed pixel lengths", async () => {
 	assert.strictEqual(document.root.style.getPropertyValue(pageCountProperty), "2");
 	assert.strictEqual(avoided.style.getPropertyValue(offsetProperty), "250px");
 	assert.ok(avoided.attributes.has(offsetAttribute));
+});
+
+test("waits for load before measuring resource-dependent layout", async () => {
+	const document = new FakeDocument();
+	document.readyState = "loading";
+	document.root.height = 1000;
+	document.content.height = 800;
+	let settled = false;
+
+	const pagination = paginatePrintPreview({
+		root: document.root as unknown as HTMLElement,
+		content: document.content as unknown as HTMLElement,
+	}).then((result) => {
+		settled = true;
+		return result;
+	});
+
+	await new Promise<void>((resolve) => {
+		setImmediate(resolve);
+	});
+	assert.strictEqual(settled, false);
+
+	document.content.height = 950;
+	document.dispatchLoad();
+
+	assert.deepStrictEqual(await pagination, { pageCount: 2, shiftedElementCount: 0 });
+});
+
+test("clears previous offsets before repeat pagination", async () => {
+	const document = new FakeDocument();
+	document.root.height = 1000;
+	document.content.height = 950;
+
+	const previous = new FakeElement(document);
+	previous.baseTop = 500;
+	previous.height = 340;
+
+	const heading = new FakeElement(document);
+	heading.baseTop = 850;
+	heading.height = 20;
+	heading.breakAfter = "avoid-page";
+
+	const following = new FakeElement(document);
+	following.baseTop = 880;
+	following.height = 70;
+
+	document.content.append(previous, heading, following);
+	document.root.append(document.content);
+	document.descendants.push(document.content, previous, heading, following);
+
+	const options = {
+		root: document.root as unknown as HTMLElement,
+		content: document.content as unknown as HTMLElement,
+	};
+	const firstResult = await paginatePrintPreview(options);
+	const secondResult = await paginatePrintPreview(options);
+
+	assert.deepStrictEqual(firstResult, { pageCount: 2, shiftedElementCount: 1 });
+	assert.deepStrictEqual(secondResult, firstResult);
+	assert.strictEqual(heading.style.getPropertyValue(offsetProperty), "250px");
+	assert.strictEqual(
+		document.descendants.filter((element) => element.attributes.has(offsetAttribute)).length,
+		1,
+	);
 });
 
 test("does not add a phantom page when transformed content ends at the page boundary", async () => {
