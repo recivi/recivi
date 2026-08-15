@@ -58,21 +58,27 @@ const Heading = `h${1 + headingOffset}`;
 		}
 	</dl>
 
-	{
-		epic.description ? (
-			<p class="web-only" set:html={epic.description} />
-		) : undefined
-	}
+	<div class="content">
+		{
+			epic.description ? (
+				<p class="web-only" set:html={epic.description} />
+			) : undefined
+		}
 
-	{epic.summary ? <p class="print-only" set:html={epic.summary} /> : undefined}
+		{
+			epic.summary ? (
+				<p class="print-only" set:html={epic.summary} />
+			) : undefined
+		}
 
-	{
-		epic.projects
-			.filter((project) => !filterTag || project.tags.includes(filterTag))
-			.map((project) => (
-				<ProjectDetails {project} headingOffset={headingOffset + 1} />
-			))
-	}
+		{
+			epic.projects
+				.filter((project) => !filterTag || project.tags.includes(filterTag))
+				.map((project) => (
+					<ProjectDetails {project} headingOffset={headingOffset + 1} />
+				))
+		}
+	</div>
 </div>
 
 <style>

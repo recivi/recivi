@@ -48,19 +48,21 @@ const Heading = `h${1 + headingOffset}`;
 		}
 	</dl>
 
-	{
-		org.description ? (
-			<p class="web-only" set:html={org.description} />
-		) : undefined
-	}
+	<div class="content">
+		{
+			org.description ? (
+				<p class="web-only" set:html={org.description} />
+			) : undefined
+		}
 
-	{org.summary ? <p class="print-only" set:html={org.summary} /> : undefined}
+		{org.summary ? <p class="print-only" set:html={org.summary} /> : undefined}
 
-	{
-		org.roles
-			.filter((role) => !filterTag || role.tags.includes(filterTag))
-			.map((role) => <RoleDetails {role} headingOffset={headingOffset + 1} />)
-	}
+		{
+			org.roles
+				.filter((role) => !filterTag || role.tags.includes(filterTag))
+				.map((role) => <RoleDetails {role} headingOffset={headingOffset + 1} />)
+		}
+	</div>
 </div>
 
 <style>

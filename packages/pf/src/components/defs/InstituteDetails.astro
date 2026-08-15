@@ -54,23 +54,25 @@ const Heading = `h${1 + headingOffset}`;
 		}
 	</dl>
 
-	{
-		institute.description ? (
-			<p class="web-only" set:html={institute.description} />
-		) : undefined
-	}
+	<div class="content">
+		{
+			institute.description ? (
+				<p class="web-only" set:html={institute.description} />
+			) : undefined
+		}
 
-	{
-		institute.summary ? (
-			<p class="print-only" set:html={institute.summary} />
-		) : undefined
-	}
+		{
+			institute.summary ? (
+				<p class="print-only" set:html={institute.summary} />
+			) : undefined
+		}
 
-	{
-		institute.certs
-			.filter((cert) => !filterTag || cert.tags.includes(filterTag))
-			.map((cert) => <CertDetails {cert} headingOffset={headingOffset + 1} />)
-	}
+		{
+			institute.certs
+				.filter((cert) => !filterTag || cert.tags.includes(filterTag))
+				.map((cert) => <CertDetails {cert} headingOffset={headingOffset + 1} />)
+		}
+	</div>
 </div>
 
 <style>
