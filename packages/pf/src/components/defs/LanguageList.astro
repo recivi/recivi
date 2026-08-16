@@ -5,16 +5,36 @@ import { Language } from "virtual:pf/components";
 import reciviData from "virtual:recivi/data";
 
 import { formatLanguages } from "@recivi/schema/display";
+import {
+	getOverallProficiency,
+	getProficiencyScore,
+} from "@recivi/schema/utils";
 
-import type { BaseProps } from "../../types/props";
+import type { LanguageListProps } from "../props/LanguageList";
 
-type Props = BaseProps;
-const { class: className, ...attrs } = Astro.props;
+type Props = LanguageListProps;
+const {
+	cutoffProficiency = "no",
+	includesAmbiguous = true,
+	class: className,
+	...attrs
+} = Astro.props;
+
+const languages = reciviData.languages.filter((language) => {
+	if (!cutoffProficiency) return true;
+
+	const overall = getOverallProficiency(language);
+	if (!overall) return includesAmbiguous;
+
+	const overallScore = getProficiencyScore(overall);
+	const cutoffScore = getProficiencyScore(cutoffProficiency);
+	return overallScore >= cutoffScore;
+});
 ---
 
 <ul class:list={["pf-language-list", "web-only", className]} {...attrs}>
 	{
-		reciviData.languages.map((language) => (
+		languages.map((language) => (
 			<li>
 				<Language {language} />
 			</li>
@@ -22,5 +42,5 @@ const { class: className, ...attrs } = Astro.props;
 	}
 </ul>
 <div class:list={["pf-language-list", "print-only", className]} {...attrs}>
-	{formatLanguages(reciviData.languages)}
+	{formatLanguages(languages)}
 </div>
