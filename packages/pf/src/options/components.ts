@@ -13,6 +13,6 @@ export const componentsSchema = z
 		) as Record<ComponentName, z.ZodDefault<z.ZodOptional<z.ZodString>>>,
 	)
 	.register(primaryRegistry, {
-		id: "components",
+		id: "Components",
 		description: "the custom component overrides for the site",
 	});

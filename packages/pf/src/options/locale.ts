@@ -15,6 +15,6 @@ export const localeSchema = z
 		}),
 	})
 	.register(primaryRegistry, {
-		id: "locale",
+		id: "Locale",
 		description: "the site's language settings",
 	});

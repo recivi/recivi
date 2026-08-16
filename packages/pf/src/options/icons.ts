@@ -65,7 +65,7 @@ export const iconsSchema = z
 			}),
 	})
 	.register(primaryRegistry, {
-		id: "icons",
+		id: "Icons",
 		description: "configuration to use icons in the site",
 	})
 	.transform((val) => {

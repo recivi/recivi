@@ -22,7 +22,7 @@ const tagSchema = z
 		}),
 	})
 	.register(primaryRegistry, {
-		id: "tag",
+		id: "Tag",
 		description: "an HTML tag to include in the document head",
 	});
 
@@ -34,6 +34,6 @@ export const headSchema = z
 		}),
 	})
 	.register(primaryRegistry, {
-		id: "head",
+		id: "Head",
 		description: "the additional elements in the document `<head>`",
 	});

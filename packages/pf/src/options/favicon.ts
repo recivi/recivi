@@ -36,6 +36,6 @@ export const faviconSchema = z
 			}),
 	})
 	.register(primaryRegistry, {
-		id: "favicon",
+		id: "Favicon",
 		description: "the site's favicon settings",
 	});

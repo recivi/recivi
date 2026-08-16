@@ -42,7 +42,7 @@ export const cssSchema = z
 		}),
 	})
 	.register(primaryRegistry, {
-		id: "css",
+		id: "Css",
 		description: "the site's CSS customizations",
 	})
 	.refine(

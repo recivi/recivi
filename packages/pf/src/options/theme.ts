@@ -27,7 +27,7 @@ const colorSchema = z
 		return val;
 	})
 	.register(primaryRegistry, {
-		id: "color",
+		id: "Color",
 		description: "a color value, either a single hex code or separate light/dark hex codes",
 	});
 
@@ -45,6 +45,6 @@ export const themeSchema = z
 			}),
 	})
 	.register(primaryRegistry, {
-		id: "theme",
+		id: "Theme",
 		description: "the site's theme settings",
 	});

@@ -16,7 +16,7 @@ const blogSchema = z
 		}),
 	})
 	.register(primaryRegistry, {
-		id: "blog",
+		id: "Blog",
 		description: 'the settings for the "Blog" page',
 	});
 
@@ -28,6 +28,6 @@ export const pagesSchema = z
 		}),
 	})
 	.register(primaryRegistry, {
-		id: "pages",
+		id: "Pages",
 		description: "the settings for the included pages",
 	});
