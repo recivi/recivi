@@ -6,7 +6,7 @@
 		font-family: var(--pf-font-family);
 	}
 
-	::selection {
+	:root::selection {
 		background-color: var(--pf-color-selection);
 	}
 

@@ -1,7 +1,5 @@
 @layer pf.props {
-	:root,
-	::backdrop,
-	::selection {
+	:root {
 		/* common styles */
 
 		--pf-font-family: sans-serif;
@@ -34,8 +32,7 @@
 		--pf-print-block-size: 297mm;
 	}
 
-	:root,
-	::selection {
+	:root {
 		/* light theme */
 
 		--pf-color-fg: #4c4f69; /* text */
@@ -60,8 +57,7 @@
 		--pf-color-anchor-visited: #8839ef; /* mauve */
 	}
 
-	:root[data-media="print"],
-	:root[data-media="print"] ::selection {
+	:root[data-media="print"] {
 		/* print theme */
 
 		--pf-color-fg: black;
@@ -70,8 +66,7 @@
 	}
 
 	@media (prefers-color-scheme: dark) {
-		:root:not([data-media="print"]),
-		:root:not([data-media="print"]) ::selection {
+		:root:not([data-media="print"]) {
 			/* dark theme */
 
 			--pf-color-fg: #cdd6f4; /* text */
