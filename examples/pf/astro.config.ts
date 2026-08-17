@@ -1,8 +1,7 @@
 import pf from "@recivi/pf";
-import { innerSvg } from "@recivi/pf/utils/markup";
 import { defineConfig } from "astro/config";
 
-import starlightSvg from "./src/assets/icons/starlight.svg?raw";
+import starlight from "./src/assets/icons/starlight.svg?raw";
 
 export default defineConfig({
 	/*
@@ -64,7 +63,7 @@ export default defineConfig({
 				packs: {
 					// See an example of custom icons usage on the "Colophon" page.
 					custom: {
-						starlight: { body: innerSvg(starlightSvg) },
+						starlight,
 					},
 				},
 				aliases: {

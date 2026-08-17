@@ -3,7 +3,7 @@ import { icons as iconsSi } from "@iconify-json/simple-icons";
 import { z } from "astro/zod";
 
 import { primaryRegistry } from "../registries/primary";
-import { innerSvg } from "../utils/markup";
+import { stripSvgTag } from "../utils/markup";
 
 export const iconsSchema = z
 	.object({
@@ -27,12 +27,17 @@ export const iconsSchema = z
 					/** the name of the icon */
 					z.string(),
 					/** the contents of the icon */
-					z.object({
-						/** the SVG body of the icon */
-						body: z.string().register(primaryRegistry, {
-							description: "the SVG body of the icon",
+					z.union([
+						z.object({
+							/** the SVG body of the icon */
+							body: z.string().register(primaryRegistry, {
+								description: "the SVG body of the icon",
+							}),
 						}),
-					}),
+						z.string().transform((val) => {
+							return { body: stripSvgTag(val) };
+						}),
+					]),
 				),
 			)
 			.optional()
@@ -81,7 +86,7 @@ export const iconsSchema = z
 				import: "default",
 				eager: true,
 			})["../assets/icons/recivi.svg"] as string;
-			val.packs.pf = { recivi: { body: innerSvg(reciviSvg) } };
+			val.packs.pf = { recivi: { body: stripSvgTag(reciviSvg) } };
 		}
 		return val;
 	});

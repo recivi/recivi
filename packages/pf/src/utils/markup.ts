@@ -18,6 +18,6 @@ export function stripHtmlTags(input: string): string {
  * @param svg the input SVG string
  * @returns the SVG string with the `<svg>` and `</svg>` tags stripped
  */
-export function innerSvg(svg: string): string {
+export function stripSvgTag(svg: string): string {
 	return svg.replaceAll(/<\/?svg[^>]*>/gu, "");
 }
