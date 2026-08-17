@@ -86,7 +86,7 @@ function getLoadFn(...paths: string[]): Loader["load"] {
  *
  * @returns the content loader for "Now" updates
  */
-export function nowLoader(): Loader {
+export function getNowLoader(): Loader {
 	return { name: "now", load: getLoadFn("content", "now") };
 }
 
@@ -95,7 +95,7 @@ export function nowLoader(): Loader {
  *
  * @returns the content loader for "Blog" posts
  */
-export function blogLoader(): Loader {
+export function getBlogLoader(): Loader {
 	return { name: "blog", load: getLoadFn("content", "blog") };
 }
 
@@ -104,7 +104,7 @@ export function blogLoader(): Loader {
  *
  * @returns the content loader for site pages
  */
-export function pageLoader(): Loader {
+export function getPageLoader(): Loader {
 	return { name: "pages", load: getLoadFn("pages") };
 }
 
