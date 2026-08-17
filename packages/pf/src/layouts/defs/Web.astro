@@ -32,13 +32,15 @@ import type { WebProps } from "../props/Web";
 import Root from "./Root.astro";
 
 type Props = WebProps;
-const { frontmatter, mainClass, ...attrs } = Astro.props;
+const { frontmatter, main = {}, ...attrs } = Astro.props;
 
 // This page acts as an MDX layout. The following fields must be removed to
 // prevent them from appearing as HTML attributes on the `<html>` element.
 delete attrs.file;
 delete attrs.headings;
 delete attrs.content;
+
+const { class: mainClass, ...mainRest } = main;
 
 const hasExtra = Astro.slots.has("extra");
 
@@ -80,7 +82,7 @@ const iconLinkTags = await getIconLinkTags();
 	</Fragment>
 
 	<!-- DEFAULT SLOT -->
-	<main class:list={[mainClass, { "ext-yes": hasExtra }]}>
+	<main {...mainRest} class:list={[{ "ext-yes": hasExtra }, mainClass]}>
 		<!-- Center pane, always present -->
 		<div class="primary">
 			<div class="secondary-header">

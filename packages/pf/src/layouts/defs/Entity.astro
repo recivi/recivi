@@ -25,7 +25,7 @@ const frontmatter = pageSchema.parse({
 const navIndex = getIndexUrl("resume");
 ---
 
-<Web {frontmatter} mainClass={singular.toLocaleLowerCase()}>
+<Web {frontmatter} main={{ entity: singular.toLocaleLowerCase() }}>
 	<Breadcrumbs
 		slot="primary-header"
 		crumbs={[
