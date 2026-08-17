@@ -2,6 +2,7 @@
 // Render the list of languages from Récivi data.
 
 import { Language } from "virtual:pf/components";
+import config from "virtual:pf/config";
 import reciviData from "virtual:recivi/data";
 
 import { formatLanguages } from "@recivi/schema/display";
@@ -42,5 +43,5 @@ const languages = reciviData.languages.filter((language) => {
 	}
 </ul>
 <div class:list={["pf-language-list", "print-only", className]} {...attrs}>
-	{formatLanguages(languages)}
+	{formatLanguages(languages, config.locale.bcp47)}
 </div>

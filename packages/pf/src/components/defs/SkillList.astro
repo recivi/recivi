@@ -2,6 +2,7 @@
 // Render the list of skills from Récivi data.
 
 import { Skill } from "virtual:pf/components";
+import config from "virtual:pf/config";
 import reciviData from "virtual:recivi/data";
 
 import { formatSkills } from "@recivi/schema/display";
@@ -22,5 +23,5 @@ const { class: className, ...attrs } = Astro.props;
 	}
 </ul>
 <div class:list={["pf-skill-list", "print-only", className]} {...attrs}>
-	{formatSkills(reciviData.skills)}
+	{formatSkills(reciviData.skills, config.locale.bcp47)}
 </div>
