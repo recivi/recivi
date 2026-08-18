@@ -3,35 +3,33 @@
 
 import { Anchor, Icon } from "virtual:pf/components";
 
+import type { HTMLAttributes } from "astro/types";
+
+import type { AnchorProps } from "../props/Anchor";
 import type { BrandProps } from "../props/Brand";
 
 type Props = BrandProps;
 const { icon, anchor, name, class: className, ...attrs } = Astro.props;
+
+const Component = anchor ? Anchor : "span";
+
+// Have to use the escape hatch to silence the type checker.
+const componentAttrs = { ...anchor, ...attrs } as AnchorProps &
+	HTMLAttributes<"span">;
 ---
 
-<span class:list={["pf-brand", className]} {...attrs}>
-	{
-		anchor ? (
-			<Anchor {...anchor}>
-				{icon ? <Icon {...icon} class={["icon", icon.class]} /> : undefined}
-				{name}
-			</Anchor>
-		) : (
-			<Fragment>
-				{icon ? <Icon {...icon} class={["icon", icon.class]} /> : undefined}
-				{name}
-			</Fragment>
-		)
-	}
-</span>
+<Component {...componentAttrs} class:list={["pf-brand", className]}>
+	{icon ? <Icon {...icon} class={["icon", icon.class]} /> : undefined}
+	{name ? <span class="name">{name}</span> : undefined}
+</Component>
 
 <style>
 	@layer pf.components {
 		.pf-brand {
 			display: inline-block;
 
-			.icon {
-				margin-inline-end: var(--pf-spacing);
+			.icon + .name {
+				margin-inline-start: var(--pf-spacing);
 			}
 		}
 	}

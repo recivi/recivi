@@ -4,7 +4,7 @@ import projectContext from "virtual:pf/project-context";
 import type { AnchorProps } from "../components/props/Anchor";
 import type { BrandProps } from "../components/props/Brand";
 
-export interface Comm extends BrandProps {
+export type Comm = BrandProps & {
 	/**
 	 * the title of the communication channel; It is the same as the `title` field
 	 * of the icon, if the icon is not undefined.
@@ -12,7 +12,7 @@ export interface Comm extends BrandProps {
 	title: string;
 	// Make the `anchor` field required and not `undefined`.
 	anchor: AnchorProps;
-}
+};
 
 /**
  * Get a `Comm` instance for a given email address.

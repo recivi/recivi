@@ -2,7 +2,7 @@
 // Render a list of technologies as icons.
 // This component is also a table renderer.
 
-import { Icon } from "virtual:pf/components";
+import { Brand } from "virtual:pf/components";
 
 import type { TechStackProps } from "../props/TechStack";
 
@@ -21,26 +21,20 @@ const {
 			// Either the technology will show an icon or a name.
 			.filter((technology) => technology.id || showNames)
 			.map((technology) => (
-				<li class="technology">
-					{technology.id ? (
-						<Icon
-							class="web-only"
-							name={technology.id}
-							title={technology.name}
-						/>
-					) : undefined}
-					{showNames ? technology.name : undefined}
+				<li>
+					<Brand
+						icon={
+							technology.id
+								? {
+										name: technology.id,
+										title: technology.name,
+										class: "web-only",
+									}
+								: undefined
+						}
+						name={showNames ? technology.name : ""}
+					/>
 				</li>
 			))
 	}
 </ul>
-
-<style>
-	@layer pf.components {
-		.pf-tech-stack {
-			.technology {
-				align-items: center;
-			}
-		}
-	}
-</style>
