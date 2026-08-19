@@ -26,7 +26,13 @@ const {
 } = Astro.props as TableProps<Record<string, ColumnSpec>>;
 ---
 
-<table class:list={["pf-table", className]} {...attrs}>
+<table
+	class:list={["pf-table", className]}
+	{...attrs}
+	x-data="{ hoveredGroupId: undefined }"
+	x-bind:data-has-hovered-group="hoveredGroupId !== undefined"
+	x-on:mouseleave="hoveredGroupId = undefined"
+>
 	<thead>
 		<tr>
 			{
@@ -46,7 +52,13 @@ const {
 				const isLastSibling =
 					idx < allRows.length - 1 && row.groupId !== allRows[idx + 1]?.groupId;
 				return (
-					<tr class:list={[{ "last-of-group": isLastSibling }]} {...row.attrs}>
+					<tr
+						data-row-group-id={row.groupId}
+						{...row.attrs}
+						class:list={[{ "last-of-group": isLastSibling }]}
+						x-bind:data-belongs-to-hovered-group="hoveredGroupId === $el.dataset.rowGroupId"
+						x-on:mouseenter="hoveredGroupId = $el.dataset.rowGroupId"
+					>
 						{Object.entries(columnSpecs).map(
 							([columnId, { renderer, class: className }]) => {
 								const value = row.data[columnId];
