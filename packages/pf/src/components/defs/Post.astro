@@ -44,7 +44,7 @@ const dest = getBlogPostUrl(id.slice(5));
 						<template x-if="true">
 							<button
 								x-data={JSON.stringify({ category })}
-								x-bind:class="{ 'active': activeCategories.includes(category) }"
+								x-bind:data-category-is-selected="activeCategories.includes(category)"
 								x-on:click="() => { activeCategories = toggle(activeCategories, category) }"
 							>
 								{category}
@@ -74,7 +74,7 @@ const dest = getBlogPostUrl(id.slice(5));
 						background: none;
 						cursor: pointer;
 
-						&.active {
+						&[data-category-is-selected] {
 							color: var(--pf-color-accent);
 						}
 					}

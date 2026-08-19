@@ -56,11 +56,10 @@ export function getPostsTable(posts: CollectionEntry<"blog">[]) {
 				},
 				attrs: {
 					"x-data": JSON.stringify({ categories: post.data.categories }),
-					"x-bind:class": [
-						"activeCategories.length",
-						"!categories.some((item) => activeCategories.includes(item))",
-						'"inactive"',
-					].join(" && "),
+					"x-bind:data-matches-no-selected-category":
+						"activeCategories.length > 0 && !categories.some((item) => activeCategories.includes(item))",
+					"x-bind:data-matches-any-selected-category":
+						"activeCategories.length > 0 && categories.some((item) => activeCategories.includes(item))",
 				},
 			};
 		}),

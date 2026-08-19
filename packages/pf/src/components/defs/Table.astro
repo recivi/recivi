@@ -134,8 +134,12 @@ const {
 				border-end-end-radius: 0; /* vs `pf.universal` */
 			}
 
-			tr.inactive td * {
-				opacity: 0.5;
+			tr[data-matches-no-selected-category] {
+				color: var(--pf-color-fg-subtle);
+			}
+
+			tr[data-matches-any-selected-category] {
+				background-color: var(--pf-color-bg-highlight);
 			}
 
 			.last-of-group td {
