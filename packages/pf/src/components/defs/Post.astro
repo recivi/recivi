@@ -45,6 +45,7 @@ const dest = getBlogPostUrl(id.slice(5));
 							<button
 								x-data={JSON.stringify({ category })}
 								x-bind:data-category-is-selected="activeCategories.includes(category)"
+								x-bind:aria-pressed="activeCategories.includes(category)"
 								x-on:click="() => { activeCategories = toggle(activeCategories, category) }"
 							>
 								{category}
