@@ -22,13 +22,6 @@ const postsTable = getPostsTable(posts);
 const categories = await getCategories();
 ---
 
-{
-	showCategories ? (
-		<Fragment>
-			<script is:inline src="https://unpkg.com/alpinejs" defer />
-		</Fragment>
-	) : undefined
-}
 <div
 	class:list={["pf-posts-table", className]}
 	{...attrs}

@@ -36,6 +36,9 @@ const layers = `@layer ${config.css.layers.join(", ")};`;
 		<!-- This is a hack to prevent layer order from deviating. -->
 		<style is:inline set:html={layers}></style>
 
+		<!-- Alpine sprinkles some optional JS-based interactivity into the site. -->
+		<script is:inline src="https://unpkg.com/alpinejs" defer></script>
+
 		<noscript>
 			<style>
 				@layer pf.utils {
