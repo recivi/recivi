@@ -22,7 +22,15 @@ const dest = getBlogPostUrl(id.slice(5));
 		dest ? (
 			<Anchor url={{ dest, label: data.title }}>{data.title}</Anchor>
 		) : (
-			<span>{data.title}</span>
+			<span>
+				{data.title}
+				<Icon
+					class="missing-component"
+					name="square-dashed"
+					pack="lucide"
+					title="Missing `[postSlug].astro`"
+				/>
+			</span>
 		)
 	}
 	{
@@ -63,6 +71,11 @@ const dest = getBlogPostUrl(id.slice(5));
 		.pf-post {
 			.draft {
 				color: var(--pf-color-yellow);
+				margin-inline-start: var(--pf-spacing);
+			}
+
+			.missing-component {
+				color: var(--pf-color-red);
 				margin-inline-start: var(--pf-spacing);
 			}
 
