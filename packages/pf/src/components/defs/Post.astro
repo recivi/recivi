@@ -20,9 +20,11 @@ const dest = getBlogPostUrl(id.slice(5));
 <div class:list={["pf-post", className]} {...attrs}>
 	{
 		dest ? (
-			<Anchor url={{ dest, label: data.title }}>{data.title}</Anchor>
+			<Anchor class="post-title" url={{ dest, label: data.title }}>
+				{data.title}
+			</Anchor>
 		) : (
-			<span>
+			<span class="post-title">
 				{data.title}
 				<Icon
 					class="missing-component"
@@ -93,6 +95,18 @@ const dest = getBlogPostUrl(id.slice(5));
 							color: var(--pf-color-accent);
 						}
 					}
+				}
+			}
+
+			:global([data-matches-some-selected-category]) & {
+				.post-title {
+					color: var(--pf-color-accent);
+				}
+			}
+
+			:global([data-matches-no-selected-category]) & {
+				.post-title {
+					color: var(--pf-color-fg-subtle);
 				}
 			}
 		}

@@ -58,7 +58,7 @@ export function getPostsTable(posts: CollectionEntry<"blog">[]) {
 					"x-data": JSON.stringify({ categories: post.data.categories }),
 					"x-bind:data-matches-no-selected-category":
 						"activeCategories.length > 0 && !categories.some((item) => activeCategories.includes(item))",
-					"x-bind:data-matches-any-selected-category":
+					"x-bind:data-matches-some-selected-category":
 						"activeCategories.length > 0 && categories.some((item) => activeCategories.includes(item))",
 				},
 			};
