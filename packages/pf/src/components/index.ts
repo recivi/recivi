@@ -37,5 +37,6 @@ export const componentNames = [
 	"Table",
 	"TechStack",
 	"Toc",
+	"Void",
 ] as const;
 export type ComponentName = (typeof componentNames)[number];

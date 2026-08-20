@@ -18,7 +18,7 @@
 import "virtual:pf/custom-css/Web";
 import "../../styles/web.css";
 
-import { Elements, Footer, Header } from "virtual:pf/components";
+import { Elements, Footer, Header, Void } from "virtual:pf/components";
 import config from "virtual:pf/config";
 
 import { getIconLinkTags } from "../../utils/links";
@@ -135,7 +135,7 @@ const iconLinkTags = await getIconLinkTags();
 		}
 
 		<!-- Filler pane to take up remaining space -->
-		<div class="void"></div>
+		<Void class="void" />
 	</main>
 </Root>
 
@@ -234,12 +234,6 @@ const iconLinkTags = await getIconLinkTags();
 			/* Extend into unsafe area. */
 			margin-right: calc(-1 * env(safe-area-inset-right));
 			border-inline-start: 1px solid var(--pf-color-border);
-			background-image: radial-gradient(
-				circle at center,
-				var(--pf-color-bg-highlight) 1px,
-				transparent 1px
-			);
-			background-size: 1rem 1rem;
 		}
 
 		/* Make the extra panes scrollable on its own. */

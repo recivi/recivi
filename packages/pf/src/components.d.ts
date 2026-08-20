@@ -37,4 +37,5 @@ declare module "virtual:pf/components" {
 	export const Table: typeof import("./components/defs/Table.astro").default;
 	export const TechStack: typeof import("./components/defs/TechStack.astro").default;
 	export const Toc: typeof import("./components/defs/Toc.astro").default;
+	export const Void: typeof import("./components/defs/Void.astro").default;
 }

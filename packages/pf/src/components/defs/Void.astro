@@ -1,0 +1,21 @@
+---
+import type { BaseProps } from "../../types/props";
+
+type Props = BaseProps;
+const { class: className, ...attrs } = Astro.props;
+---
+
+<div class:list={["pf-void", className]} {...attrs}></div>
+
+<style>
+	@layer pf.components {
+		.pf-void {
+			background-image: radial-gradient(
+				circle at center,
+				var(--pf-color-bg-highlight) 1px,
+				transparent 1px
+			);
+			background-size: 1rem 1rem;
+		}
+	}
+</style>
