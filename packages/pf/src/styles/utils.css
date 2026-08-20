@@ -22,6 +22,10 @@
 		white-space: nowrap;
 	}
 
+	.align-end {
+		text-align: end;
+	}
+
 	:root:not([data-media="print"]) .print-only {
 		display: none;
 	}
