@@ -39,6 +39,12 @@ const layers = `@layer ${config.css.layers.join(", ")};`;
 		<!-- Alpine sprinkles some optional JS-based interactivity into the site. -->
 		<script is:inline src="https://unpkg.com/alpinejs" defer></script>
 
+		{
+			config.head.elements.map(({ tag: Tag, attrs, content }) => (
+				<Tag {...attrs} set:html={content} />
+			))
+		}
+
 		<noscript>
 			<style>
 				@layer pf.utils {

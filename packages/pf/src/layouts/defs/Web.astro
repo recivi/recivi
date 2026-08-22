@@ -19,7 +19,6 @@ import "virtual:pf/custom-css/Web";
 import "../../styles/web.css";
 
 import { Elements, Footer, Header, Void } from "virtual:pf/components";
-import config from "virtual:pf/config";
 
 import { getIconLinkTags } from "../../utils/links";
 import {
@@ -70,13 +69,6 @@ const iconLinkTags = await getIconLinkTags();
 		<slot name="metas">
 			<meta property="og:type" content="website" />
 		</slot>
-
-		<!-- custom head tags -->
-		{
-			config.head.elements.map(({ tag: Tag, attrs, content }) => (
-				<Tag {...attrs} set:html={content} />
-			))
-		}
 
 		<slot name="head" />
 	</Fragment>
