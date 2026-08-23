@@ -1,4 +1,4 @@
-@layer pf.reset {
+@layer pf-reset {
 	/* Use border-box box sizing model. */
 	*,
 	*::before,

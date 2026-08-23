@@ -1,4 +1,4 @@
-@layer pf.core {
+@layer pf-core {
 	@media (prefers-color-scheme: dark) {
 		.astro-code,
 		.astro-code span {

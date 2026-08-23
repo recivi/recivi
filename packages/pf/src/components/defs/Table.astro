@@ -107,7 +107,7 @@ const {
 </table>
 
 <style>
-	@layer pf.components {
+	@layer pf-components {
 		.pf-table {
 			margin-inline: calc(-4 * var(--pf-spacing));
 			inline-size: calc(100% + 2 * 4 * var(--pf-spacing));
@@ -115,7 +115,7 @@ const {
 			tr {
 				th,
 				td {
-					border-inline: none; /* vs `pf.universal` */
+					border-inline: none; /* vs `pf-universal` */
 
 					&.fit {
 						inline-size: 1px;
@@ -124,8 +124,8 @@ const {
 				}
 
 				th {
-					border-start-start-radius: 0; /* vs `pf.universal` */
-					border-start-end-radius: 0; /* vs `pf.universal` */
+					border-start-start-radius: 0; /* vs `pf-universal` */
+					border-start-end-radius: 0; /* vs `pf-universal` */
 					text-transform: lowercase;
 				}
 
@@ -144,8 +144,8 @@ const {
 
 				&:last-child {
 					td {
-						border-end-start-radius: 0; /* vs `pf.universal` */
-						border-end-end-radius: 0; /* vs `pf.universal` */
+						border-end-start-radius: 0; /* vs `pf-universal` */
+						border-end-end-radius: 0; /* vs `pf-universal` */
 					}
 				}
 			}

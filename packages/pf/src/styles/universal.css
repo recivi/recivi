@@ -1,4 +1,4 @@
-@layer pf.universal {
+@layer pf-universal {
 	html {
 		background-color: var(--pf-color-bg);
 		color: var(--pf-color-fg);

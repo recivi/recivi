@@ -54,7 +54,7 @@ export const cssSchema = z
 		{ message: "Cannot specify both `layers` and `addedLayers`." },
 	)
 	.transform((val) => {
-		const defaultLayers = layerNames.flatMap((layer) => [`pf.${layer}`, layer]);
+		const defaultLayers = layerNames.flatMap((layer) => [`pf-${layer}`, layer]);
 
 		const { customCss, layers, addedLayers } = val;
 		if (layers !== undefined) return { customCss, layers };

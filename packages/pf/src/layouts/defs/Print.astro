@@ -13,7 +13,7 @@ type Props = PrintProps;
 const { title = "Print" } = Astro.props;
 
 const creditsCss = config.showCredits
-	? `@layer pf.props {
+	? `@layer pf-props {
 	:root {
 		--pf-print-credits-left: "Built with Récivi";
 		--pf-print-credits-right: "https://recivi.dhruvkb.dev";
@@ -59,7 +59,7 @@ const creditsCss = config.showCredits
 		 *
 		 */
 
-	@layer pf.core {
+	@layer pf-core {
 		main {
 			inline-size: 100%;
 		}

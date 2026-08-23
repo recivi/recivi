@@ -1,4 +1,4 @@
-@layer pf.media {
+@layer pf-media {
 	@page {
 		size: var(--pf-print-page-size);
 		margin-inline: var(--pf-print-margin-inline);

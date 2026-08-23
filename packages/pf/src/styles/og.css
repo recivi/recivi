@@ -1,4 +1,4 @@
-@layer pf.media {
+@layer pf-media {
 	html {
 		background-color: var(--pf-color-bg-secondary);
 		color: var(--pf-color-fg);
