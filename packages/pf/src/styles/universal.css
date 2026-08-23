@@ -71,6 +71,7 @@
 		display: inline-flex;
 		margin-block: 0;
 		padding-inline-start: 0;
+		flex-wrap: wrap;
 
 		li {
 			display: inline-flex;
