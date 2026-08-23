@@ -10,6 +10,8 @@ import {
 	TechStack,
 } from "virtual:pf/components";
 
+import util from "node:util";
+
 import type { ColumnSpec } from "../../types/table";
 import { isAnchorProps } from "../props/Anchor";
 import { isEntityProps } from "../props/Entity";
@@ -62,12 +64,16 @@ const {
 						{Object.entries(columnSpecs).map(
 							([columnId, { renderer, class: className }]) => {
 								const value = row.data[columnId];
+								const prevValue = allRows[idx - 1]?.data[columnId];
+								const isRepeat =
+									idx > 0 && util.isDeepStrictEqual(value, prevValue);
 								return (
 									<td
 										class:list={[
 											{ fit: expandingColumn !== columnId },
 											className,
 										]}
+										data-is-repeat={isRepeat || undefined}
 									>
 										{value === undefined && import.meta.env.DEV ? (
 											<span class="dev" title="Only visible during dev">
