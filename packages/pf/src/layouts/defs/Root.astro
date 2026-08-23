@@ -37,7 +37,10 @@ const layers = `@layer ${config.css.layers.join(", ")};`;
 		<style is:inline set:html={layers}></style>
 
 		<!-- Alpine sprinkles some optional JS-based interactivity into the site. -->
-		<script is:inline src="https://unpkg.com/alpinejs" defer></script>
+		<script
+			is:inline
+			src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+			defer></script>
 
 		{
 			config.head.elements.map(({ tag: Tag, attrs, content }) => (
