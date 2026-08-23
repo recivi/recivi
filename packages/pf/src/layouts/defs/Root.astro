@@ -48,17 +48,6 @@ const layers = `@layer ${config.css.layers.join(", ")};`;
 			))
 		}
 
-		<noscript>
-			<style>
-				@layer pf.utils {
-					/* util to hide elements that require JavaScript to function */
-					.requires-js {
-						display: none;
-					}
-				}
-			</style>
-		</noscript>
-
 		<!-- Add extra head elements here. -->
 		<slot name="head" />
 	</head>

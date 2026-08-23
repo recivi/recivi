@@ -34,6 +34,12 @@
 		display: none;
 	}
 
+	@media (scripting: none) {
+		.requires-js {
+			display: none;
+		}
+	}
+
 	@media (width < 640px) {
 		.over-640px {
 			display: none;
