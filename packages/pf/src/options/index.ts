@@ -7,7 +7,6 @@ import { faviconSchema } from "./favicon";
 import { headSchema } from "./head";
 import { iconsSchema } from "./icons";
 import { localeSchema } from "./locale";
-import { pagesSchema } from "./pages";
 import { themeSchema } from "./theme";
 
 /*
@@ -69,11 +68,6 @@ export const optionsSchema = z
 		/** the site's CSS customizations */
 		css: cssSchema.optional().prefault({}).register(primaryRegistry, {
 			description: "the site's CSS customizations",
-		}),
-
-		/** the settings for the included pages */
-		pages: pagesSchema.optional().prefault({}).register(primaryRegistry, {
-			description: "the settings for the included pages",
 		}),
 
 		/** the custom component overrides for the site */

@@ -1,6 +1,5 @@
 ---
 import { Table } from "virtual:pf/components";
-import config from "virtual:pf/config";
 
 import { getCollection } from "astro:content";
 
@@ -11,8 +10,6 @@ import {
 } from "../../utils/collections";
 
 const { class: className, ...attrs } = Astro.props;
-
-const { showCategories } = config.pages.blog;
 
 const posts = (await getCollection("blog", isNotDraft)).toSorted(
 	(a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
@@ -28,35 +25,33 @@ const categories = await getCategories();
 	x-data="{ activeCategories: [] }"
 >
 	{
-		showCategories ? (
-			<div class="js-enabled-only">
-				<p>
-					Click on a category to highlight the posts that belong to that
-					category.
-				</p>
-				{categories.length ? (
-					<fieldset class="categories-fieldset">
-						<legend class="sr-only">Categories</legend>
-						{categories.map((category) => (
-							<label class="category-field">
-								<input
-									type="checkbox"
-									value={category}
-									x-model="activeCategories"
-								/>
-								{category}
-							</label>
-						))}
-					</fieldset>
-				) : (
-					<p>∅ There are no categories.</p>
-				)}
-			</div>
-		) : undefined
-	}
-	{
 		posts.length ? (
-			<Table table={postsTable} />
+			<Fragment>
+				<div class="js-enabled-only">
+					<p>
+						Click on a category to highlight the posts that belong to that
+						category.
+					</p>
+					{categories.length ? (
+						<fieldset class="categories-fieldset">
+							<legend class="sr-only">Categories</legend>
+							{categories.map((category) => (
+								<label class="category-field">
+									<input
+										type="checkbox"
+										value={category}
+										x-model="activeCategories"
+									/>
+									{category}
+								</label>
+							))}
+						</fieldset>
+					) : (
+						<p>∅ There are no categories.</p>
+					)}
+				</div>
+				<Table table={postsTable} />
+			</Fragment>
 		) : (
 			<p>∅ There are no blog posts.</p>
 		)
