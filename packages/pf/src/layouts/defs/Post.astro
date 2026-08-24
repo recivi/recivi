@@ -96,7 +96,9 @@ const navIndex = getIndexUrl("blog");
 					This post is part of the "{postData.series}" series. If you liked it,
 					you might also like the other posts in this series.
 				</p>
-				<Table table={relatedPostsTable} />
+				<div x-data="{ activeCategories: [] }">
+					<Table table={relatedPostsTable} />
+				</div>
 			</Fragment>
 		) : undefined
 	}

@@ -50,17 +50,12 @@ const dest = getBlogPostUrl(id.slice(5));
 			{
 				data.categories.map((category) => (
 					<li class="category">
-						<span x-show="false">{category}</span>
-						<template x-if="true">
-							<button
-								x-data={JSON.stringify({ category })}
-								x-bind:data-is-selected-category="activeCategories.includes(category)"
-								x-bind:aria-pressed="activeCategories.includes(category)"
-								x-on:click="() => { activeCategories = toggle(activeCategories, category) }"
-							>
-								{category}
-							</button>
-						</template>
+						<span
+							x-data={JSON.stringify({ category })}
+							x-bind:data-is-selected-category="activeCategories.includes(category)"
+						>
+							{category}
+						</span>
 					</li>
 				))
 			}
@@ -85,14 +80,9 @@ const dest = getBlogPostUrl(id.slice(5));
 				color: var(--pf-color-fg-subtle);
 
 				.category {
-					button {
-						color: inherit;
-						font: inherit;
-						background: none;
-						cursor: pointer;
-
+					span {
 						&[data-is-selected-category] {
-							color: var(--pf-color-accent);
+							color: var(--pf-color-fg);
 						}
 					}
 				}
