@@ -14,6 +14,8 @@ const layerNames = [
 	"utils",
 ] as const;
 
+const defaultLayers = layerNames.flatMap((layer) => [`pf-${layer}`, layer]);
+
 // `z.object` ensures that every layout named above has an entry. We are not
 // using `z.record` because we want to allow missing keys in the input.
 const customCssSchema = z.object(
@@ -36,30 +38,12 @@ export const cssSchema = z
 		addedLayers: z.array(z.string()).optional().register(primaryRegistry, {
 			description: "additional CSS layers to append after the default layer order",
 		}),
-		/** the order of the CSS layers, replacing the default order */
-		layers: z.array(z.string()).optional().register(primaryRegistry, {
-			description: "the order of the CSS layers, replacing the default order",
-		}),
 	})
 	.register(primaryRegistry, {
 		id: "Css",
 		description: "the site's CSS customizations",
 	})
-	.refine(
-		(val) => {
-			const hasLayers = val.layers !== undefined;
-			const hasAddedLayers = val.addedLayers !== undefined;
-			return !(hasLayers && hasAddedLayers);
-		},
-		{ message: "Cannot specify both `layers` and `addedLayers`." },
-	)
-	.transform((val) => {
-		const defaultLayers = layerNames.flatMap((layer) => [`pf-${layer}`, layer]);
-
-		const { customCss, layers, addedLayers } = val;
-		if (layers !== undefined) return { customCss, layers };
-
-		if (addedLayers !== undefined) return { customCss, layers: [...defaultLayers, ...addedLayers] };
-
-		return { customCss, layers: defaultLayers };
-	});
+	.transform((val) => ({
+		customCss: val.customCss,
+		layers: [...defaultLayers, ...(val.addedLayers ?? [])],
+	}));
