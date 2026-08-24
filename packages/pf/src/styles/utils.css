@@ -34,8 +34,14 @@
 		display: none;
 	}
 
-	@media (scripting: none) {
-		.requires-js {
+	@media (scripting: enabled) {
+		.js-disabled-only {
+			display: none;
+		}
+	}
+
+	@media (scripting: none) or (scripting: initial-only) {
+		.js-enabled-only {
 			display: none;
 		}
 	}
