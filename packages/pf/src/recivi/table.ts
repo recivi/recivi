@@ -25,7 +25,10 @@ export function getCertsTable() {
 				return {
 					groupId: institute.id ?? institute.name,
 					data: {
-						institute: { entity: institute, useInternalLink: nav.resumeInstitute !== undefined },
+						institute: {
+							entity: institute,
+							useInternalLink: nav.resume.institute.pattern !== undefined,
+						},
 						degree,
 						issue: { date: cert.issue },
 					},
@@ -55,7 +58,7 @@ export function getRolesTable() {
 				return {
 					groupId: org.id ?? org.name,
 					data: {
-						org: { entity: org, useInternalLink: nav.resumeOrg !== undefined },
+						org: { entity: org, useInternalLink: nav.resume.org.pattern !== undefined },
 						role: role.name,
 						epic: epic ? { entity: epic } : undefined,
 						period: role.period ? { period: role.period } : undefined,
@@ -87,7 +90,7 @@ export function getProjectsTable() {
 				return {
 					groupId: epic.id ?? epic.name,
 					data: {
-						epic: { entity: epic, useInternalLink: nav.resumeEpic !== undefined },
+						epic: { entity: epic, useInternalLink: nav.resume.epic.pattern !== undefined },
 						project: project.name,
 						link: project.url ? { url: project.url } : undefined,
 						org: org ? { entity: org, useShortName: true } : undefined,

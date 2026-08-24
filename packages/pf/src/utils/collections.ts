@@ -17,6 +17,24 @@ export function isNotDraft(item: { data: { isDraft?: boolean } }): boolean {
 }
 
 /**
+ * Find the page content entry associated with an Astro route entrypoint.
+ *
+ * @param entrypoint the route entrypoint to match
+ * @returns the matching page entry, if one exists
+ */
+export async function getPageByEntrypoint(
+	entrypoint?: string,
+): Promise<CollectionEntry<"pages"> | undefined> {
+	if (!entrypoint) return undefined;
+
+	const pages = await getCollection(
+		"pages",
+		(item) => isNotDraft(item) && item.filePath === entrypoint,
+	);
+	return pages[0];
+}
+
+/**
  * Get a list of categories.
  *
  * This returns a list of unique categories collected from all the non-draft

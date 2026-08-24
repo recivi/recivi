@@ -1,9 +1,11 @@
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import config from "virtual:pf/config";
+import nav from "virtual:pf/nav";
 import resumeData from "virtual:recivi/data";
 
+import { getPageByEntrypoint } from "../utils/collections";
 import { getBlogPostUrl } from "../utils/dynamic_pages";
 
 export const GET: APIRoute = async ({ site }) => {
@@ -12,7 +14,8 @@ export const GET: APIRoute = async ({ site }) => {
 	}
 
 	const title = config.title ?? resumeData.bio.name;
-	const description = (await getEntry("pages", config.pages.blog.slug))?.data.description ?? "";
+	const indexPage = await getPageByEntrypoint(nav.blog.index?.entrypoint);
+	const description = indexPage?.data.description ?? "";
 
 	const items = (await getCollection("blog")).map((post) => {
 		const data = post.data;

@@ -20,14 +20,7 @@ declare module "virtual:pf/project-context" {
 }
 
 declare module "virtual:pf/nav" {
-	const nav: {
-		blogIndex?: string;
-		blogPost?: string;
-		resumeIndex?: string;
-		resumeEpic?: string;
-		resumeOrg?: string;
-		resumeInstitute?: string;
-	};
+	const nav: import("./integration/navigation").PfNav;
 	export default nav;
 }
 

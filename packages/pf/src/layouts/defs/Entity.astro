@@ -2,9 +2,12 @@
 import "virtual:pf/custom-css/Entity";
 
 import { Breadcrumbs } from "virtual:pf/components";
+import nav from "virtual:pf/nav";
+import projectContext from "virtual:pf/project-context";
 
 import { pageSchema } from "../../content";
-import { getIndexUrl } from "../../utils/dynamic_pages";
+import { getPageByEntrypoint } from "../../utils/collections";
+import { getUrlFromPattern } from "../../utils/project_context";
 import type { EntityProps } from "../props/Entity";
 import Web from "./Web.astro";
 
@@ -22,7 +25,13 @@ const frontmatter = pageSchema.parse({
 	banRobots: true,
 });
 
-const navIndex = getIndexUrl("resume");
+const indexUrl = nav.resume.index
+	? getUrlFromPattern(projectContext, nav.resume.index.pattern)
+	: undefined;
+const indexPage = nav.resume.index
+	? await getPageByEntrypoint(nav.resume.index.entrypoint)
+	: undefined;
+const title = indexPage?.data.title ?? "Résumé";
 ---
 
 <Web {frontmatter} main={{ entity: singular.toLocaleLowerCase() }}>
@@ -30,7 +39,7 @@ const navIndex = getIndexUrl("resume");
 		slot="primary-header"
 		crumbs={[
 			{ url: { dest: "/", label: "Home" } },
-			navIndex ? { url: { dest: navIndex, label: "Résumé" } } : "Résumé",
+			indexUrl ? { url: { dest: indexUrl, label: title } } : title,
 			plural,
 			name,
 		]}

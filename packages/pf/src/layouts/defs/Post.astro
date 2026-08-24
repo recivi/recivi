@@ -9,13 +9,16 @@ import {
 	Table,
 	Toc,
 } from "virtual:pf/components";
+import nav from "virtual:pf/nav";
+import projectContext from "virtual:pf/project-context";
 
 import { getCollection } from "astro:content";
 
 import { pageSchema } from "../../content";
 import { getPostsTable, isNotDraft } from "../../utils/collections";
-import { getIndexUrl } from "../../utils/dynamic_pages";
+import { getPageByEntrypoint } from "../../utils/collections";
 import { getArticleMetaTags } from "../../utils/metas";
+import { getUrlFromPattern } from "../../utils/project_context";
 import type { PostProps } from "../props/Post";
 import Web from "./Web.astro";
 
@@ -38,7 +41,13 @@ const frontmatter = pageSchema.parse({
 	title: `Post: ${postData.title}`,
 });
 
-const navIndex = getIndexUrl("blog");
+const indexUrl = nav.blog.index
+	? getUrlFromPattern(projectContext, nav.blog.index.pattern)
+	: undefined;
+const indexPage = nav.blog.index
+	? await getPageByEntrypoint(nav.blog.index.entrypoint)
+	: undefined;
+const title = indexPage?.data.title ?? "Blog";
 ---
 
 <Web {frontmatter}>
@@ -48,7 +57,7 @@ const navIndex = getIndexUrl("blog");
 		slot="primary-header"
 		crumbs={[
 			{ url: { dest: "/", label: "Home" } },
-			navIndex ? { url: { dest: navIndex, label: "Blog" } } : "Blog",
+			indexUrl ? { url: { dest: indexUrl, label: title } } : title,
 			"Posts",
 			postData.title,
 		]}
