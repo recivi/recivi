@@ -1,87 +1,126 @@
 ---
 title: Colophon
 description: >-
-  Read about the ideology, design and technology behind this site.
+  Learn about the principles, design choices and technology behind this site.
 navIndex: 4
 ---
 
-import projectContext from "virtual:pf/project-context";
 import { Anchor, Brand } from "virtual:pf/components";
-import { pathWithBase as pathWithBaseRaw } from "@recivi/pf/utils/project_context";
+import nav from "virtual:pf/nav";
+import projectContext from "virtual:pf/project-context";
+import reciviData from "virtual:recivi/data";
 
-export const pathWithBase = (path) => pathWithBaseRaw(projectContext, path);
+import { getBlogPostUrl, getResumeEntityUrl } from "@recivi/pf/utils/dynamic_pages";
+import { getUrlFromPattern, getUrlFromSlug } from "@recivi/pf/utils/project_context";
 
-export const renderHref = pathWithBase("resume/pdf");
-export const pdfHref = pathWithBase("resume.pdf");
+export const resumeIndexUrl = getUrlFromPattern(projectContext, nav.resume.index.pattern);
+export const blogIndexUrl = getUrlFromPattern(projectContext, nav.blog.index.pattern);
 
 # Colophon
 
-> _A colophon is a nobby designer word for 'how this site was made'._
->
-> — [Maggie Appleton](https://maggieappleton.com/colophon)
+A colophon is a record of how a publication was made. This one documents the principles, design
+choices and technology behind this site.
 
-## Ideology
+## Principles
 
-This site subscribes to many [IndieWeb](https://indieweb.org/) tenets such as data and domain
-ownership, open-source tools and longevity of plain text files. It also works with
-[RelMeAuth](https://microformats.org/wiki/RelMeAuth) to verify domain ownership on platforms like
-Mastodon.
+### Data first
 
-The site also focuses on progressive enhancement, using a limited amount of CSS and little to no
-JavaScript. Even with both of those turned off, the experience of using the site remains mostly
-intact.
+At the heart of this site is a structured, machine-readable, JSON file that contains my résumé data.
+This file complies with the <Brand icon={{ pack: "pf", name: "recivi" }}
+anchor={{ url: "https://recivi.dhruvkb.dev" }} name="Récivi" /> specification.
+
+Then the PF renderer parses that document, validates it and generates a web site out of it, turning
+the same data into an interactive portfolio and a print-ready résumé PDF. This is the opposite of
+how résumés have traditionally worked with computers trying to extract facts from a freely formatted
+document.
+
+### IndieWeb
+
+This site follows several [IndieWeb](https://indieweb.org/) principles: owning the domain, retaining
+control of the underlying data, favouring open-source tools and keeping authored content in durable
+plain-text formats. Contact and profile links use `rel="me"`, which lets compatible services such as
+Mastodon verify that those profiles and this domain represent the same person through
+[RelMeAuth](https://microformats.org/wiki/RelMeAuth).
+
+[Webmention](https://indieweb.org/Webmention) is not implemented yet, but would be a natural next
+step toward making the site a more active participant in the independent web.
+
+### Progressive enhancement
+
+The site's content, links and navigation begin as semantic HTML. A minimal amount of CSS supplies
+the responsive layout, colour and print presentation. We sprinkle a little bit of client-side
+interactivity using <Brand icon={{ name: "alpinedotjs" }} anchor={{ url: "https://alpinejs.dev/" }}
+name="Alpine.js" />. This is completely optional and even with JavaScript disabled, the experience
+of using the site remains mostly intact.
 
 ## Design
 
 ### Color palette
 
-The site's color palette comes from [Catppuccin](https://catppuccin.com/), specifically the Mocha
-and Latte variants for the dark and light modes respectively. Catppuccin is a pastel color scheme
-that is easy on the eyes, and has ports for almost every application and platform, making it easy to
-use consistently for everything.
+The colour palette comes from [Catppuccin](https://catppuccin.com/) using the Latte theme for light
+mode and the Mocha theme for dark mode. The active flavour follows the visitor's system preference.
+Syntax highlighting colors use the same theme, giving the site a cohesive visual language.
+
+### Layout
+
+The web layout is deliberately content-led. It begins as a single column on smaller screens,
+introduces a fixed-width reading pane when space allows and can add a complementary second pane on
+wider displays. The print layout is designed separately around A4 pages instead of asking the web
+layout to masquerade as paper.
+
+### Accessibility
+
+The site tries to be as accessible as possible, with care taken to ensure semantic HTML, logical
+page structure and sufficient contrast. The site even uses a page layout that is optimised for
+reading prose and code.
 
 ### Typography
 
-This site uses the user's default `sans-serif` and `monospace` fonts. This decision has so many
-benefits:
+#### Web
 
-- Not having to load web fonts makes the site faster to load, reduces bandwidth usage, prevents
-  flash of unstyled text and alleviates privacy concerns.
-- It doesn't patronise the user and instead gives them back their rightful control over their
-  reading experience.
-- In some cases like for people with dyslexia or reading difficulties, it might even improve
-  accessibility.
+The site uses your default `sans-serif` and `monospace` fonts (which are controlled in the browser
+settings) for a multitude of reasons:
+
+- Using system fonts reduces bandwidth use and improves the site's load time.
+- It doesn't patronise you and respects the font choices you set in the browser.
+- It accommodates readers who have chosen typefaces that meet their particular accessibility needs.
+
+System font families vary by platform, and that variation is a feature: the page should feel at home
+on the device displaying it.
+
+#### Print
+
+Print needs repeatable line lengths and page breaks, so the printable layouts use specific fonts
+[Gelasio](https://github.com/sorkintype/Gelasio) for prose and
+[JetBrains Mono](https://www.jetbrains.com/lp/mono/) for monospaced text. Both fonts are sourced
+from Google Fonts and are licensed under the SIL Open Font License 1.1.
 
 ## Technology
 
-There is very little coding or scaffolding needed for this site. Most of the source code is content,
-written in <Brand icon={{ name: 'mdx', title: 'MDX' }} anchor={{ url: 'https://mdxjs.com/' }}
-name="MDX" />, which is just plain ol' Markdown but with the ability to embed components.
+The site is a collection of largely static pages which are generated automatically at build time,
+from content written using <Brand icon={{ name: "mdx", title: "MDX" }}
+anchor={{ url: "https://mdxjs.com/" }} name="MDX" />. MDX is the same Markdown we know and love, now
+with the added ability to embed components.
 
-This is possible because of both <Brand icon={{ name: 'astro', title: 'Astro' }}
-anchor={{ url: 'https://astro.build' }} name="Astro" /> which supports MDX, handles routing etc. and
-the <Brand icon={{ pack: "pf", name: "recivi", title: "Récivi" }}
-anchor={{ url: "https://recivi.dhruvkb.dev" }} name="Récivi PF" /> integration that does the rest of
-the heavy lifting for the site:
+### Récivi
 
-- It comes with all the utilities, components, layouts and pages that a portfolio site could
-  possibly need.
+This site is a combination of <Brand icon={{ name: "astro" }}
+anchor={{ url: "https://astro.build" }} name="Astro" /> and the <Brand
+icon={{ pack: "pf", name: "recivi", title: "Récivi" }}
+anchor={{ url: "https://recivi.dhruvkb.dev" }} name="Récivi PF" /> renderer. Astro handles the
+routing, content and build systems, while the PF renderer does the rest of the heavy lifting:
 
-- It provides some very neat features like favicon support, SEO meta tags, and Open Graph tags
-  (including OG images) out of the box.
+- It creates an <Anchor url={resumeIndexUrl}>interactive résumé</Anchor> with focused pages for
+  education, work and projects.
+- It turns routes with a `.pdf` into actuals PDFs during the build.
+- It creates a <Anchor url={blogIndexUrl}>blog/digital garden</Anchor> with features like categories
+  and post series.
+- It creates an RSS feed for the blog.
+- It turns routes with a `.png` into actual images during the build.
+- It adds metadata like canonical URLs and Open Graph images to all pages.
+- It provides components and layouts to build your own pages.
+- It exposes configuration hooks to deeply customise the site.
 
-- It also builds both the <Anchor url={pathWithBase("resume")}>interactive résumé</Anchor> as well
-  as a print-friendly <Anchor url={import.meta.env.DEV ? renderHref : pdfHref}>PDF version</Anchor>
-  automatically.
-
-- It gets all the necessary information from a single résumé data file that contains my personal and
-  professional information.
-
-## Credits
-
-The <Brand icon={{ pack: "pf", name: "recivi", title: "Récivi" }}
-anchor={{ url: "https://recivi.dhruvkb.dev" }} name="Récivi PF" /> integration was developed with a
-lot of ideas, and a little bit of code, borrowed from the <Brand
-icon={{ pack: "custom", name: "starlight", title: "Starlight" }}
-anchor={{ url: "https://starlight.astro.build" }} name="Starlight" /> integration that helps in
-building documentation sites.
+The result is opinionated enough to be useful immediately, but deliberately open at the edges. A
+site can replace individual components, extend its styles or add ordinary Astro pages without
+forking the integration.
