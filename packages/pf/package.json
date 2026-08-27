@@ -17,7 +17,11 @@
 		"name": "Dhruv Bhanushali",
 		"url": "https://dhruvkb.dev/"
 	},
-	"repository": "github:recivi/recivi",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/recivi/recivi.git",
+		"directory": "packages/pf"
+	},
 	"funding": "https://github.com/sponsors/dhruvkb",
 	"type": "module",
 	"exports": {
