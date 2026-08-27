@@ -2,8 +2,15 @@ import { icons as iconsLucide } from "@iconify-json/lucide";
 import { icons as iconsSi } from "@iconify-json/simple-icons";
 import { z } from "astro/zod";
 
+import reciviSvg from "../assets/icons/recivi.svg?raw";
 import { primaryRegistry } from "../registries/primary";
 import { stripSvgTag } from "../utils/markup";
+
+const defaultPacks = {
+	lucide: iconsLucide.icons,
+	"simple-icons": iconsSi.icons,
+	pf: { recivi: { body: stripSvgTag(reciviSvg) } },
+};
 
 export const iconsSchema = z
 	.object({
@@ -42,6 +49,12 @@ export const iconsSchema = z
 			)
 			.optional()
 			.default({})
+			.transform((val): typeof val => {
+				return {
+					...defaultPacks,
+					...val,
+				};
+			})
 			.register(primaryRegistry, {
 				description:
 					"a record of custom icon packs to use; You can use Iconify icons as the value of this record.",
@@ -72,21 +85,4 @@ export const iconsSchema = z
 	.register(primaryRegistry, {
 		id: "Icons",
 		description: "configuration to use icons in the site",
-	})
-	.transform((val) => {
-		if (!("lucide" in val.packs)) {
-			val.packs.lucide = iconsLucide.icons;
-		}
-		if (!("simple-icons" in val.packs)) {
-			val.packs["simple-icons"] = iconsSi.icons;
-		}
-		if (!("pf" in val.packs)) {
-			const reciviSvg = import.meta.glob("../assets/icons/recivi.svg", {
-				query: "?raw",
-				import: "default",
-				eager: true,
-			})["../assets/icons/recivi.svg"] as string;
-			val.packs.pf = { recivi: { body: stripSvgTag(reciviSvg) } };
-		}
-		return val;
 	});
