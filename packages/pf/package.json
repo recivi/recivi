@@ -23,6 +23,9 @@
 		"directory": "packages/pf"
 	},
 	"funding": "https://github.com/sponsors/dhruvkb",
+	"files": [
+		"src"
+	],
 	"type": "module",
 	"exports": {
 		".": "./src/index.ts",
