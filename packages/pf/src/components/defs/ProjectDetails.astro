@@ -82,9 +82,11 @@ const Heading = `h${1 + headingOffset}`;
 			margin-block: calc(2 * var(--pf-spacing));
 
 			.project-header {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
+				:root[data-media="print"] & {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				}
 
 				.meta {
 					color: var(--pf-color-fg-subtle);

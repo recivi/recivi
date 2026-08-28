@@ -75,9 +75,11 @@ const Heading = `h${1 + headingOffset}`;
 			margin-block: calc(2 * var(--pf-spacing));
 
 			.cert-header {
-				display: flex;
-				align-items: center;
-				gap: var(--pf-spacing);
+				:root[data-media="print"] & {
+					display: flex;
+					align-items: center;
+					gap: var(--pf-spacing);
+				}
 
 				.meta {
 					margin-inline-start: auto;

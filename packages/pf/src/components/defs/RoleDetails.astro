@@ -109,9 +109,11 @@ const Heading = `h${1 + headingOffset}`;
 			margin-block: calc(2 * var(--pf-spacing));
 
 			.role-header {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
+				:root[data-media="print"] & {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+				}
 			}
 		}
 	}

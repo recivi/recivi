@@ -83,10 +83,12 @@ const Heading = `h${1 + headingOffset}`;
 			margin-block-end: calc(2 * var(--pf-spacing));
 
 			.institute-header {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: calc(2 * var(--pf-spacing));
+				:root[data-media="print"] & {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					gap: calc(2 * var(--pf-spacing));
+				}
 
 				.meta {
 					color: var(--pf-color-fg-subtle);
