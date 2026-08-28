@@ -7,7 +7,7 @@ import { getRolesTable } from "../../recivi/table";
 const rolesTable = getRolesTable();
 ---
 
+<Table class="over-640px" table={rolesTable} />
 <div class="under-640px">
 	{reciviData.work.map((org) => <OrgCard {org} />)}
 </div>
-<Table class="over-640px" table={rolesTable} />

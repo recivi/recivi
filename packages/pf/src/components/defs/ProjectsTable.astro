@@ -7,7 +7,7 @@ import { getProjectsTable } from "../../recivi/table";
 const projectsTable = getProjectsTable();
 ---
 
+<Table class="over-640px" table={projectsTable} />
 <div class="under-640px">
 	{reciviData.creations.map((epic) => <EpicCard {epic} />)}
 </div>
-<Table class="over-640px" table={projectsTable} />

@@ -7,7 +7,7 @@ import { getCertsTable } from "../../recivi/table";
 const certsTable = getCertsTable();
 ---
 
+<Table class="over-640px" table={certsTable} />
 <div class="under-640px">
 	{reciviData.education.map((institute) => <InstituteCard {institute} />)}
 </div>
-<Table class="over-640px" table={certsTable} />
