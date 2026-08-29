@@ -73,7 +73,7 @@
 
 	p,
 	h2,
-	ul {
+	ul:not(.linear) {
 		margin-block: var(--pf-spacing);
 	}
 

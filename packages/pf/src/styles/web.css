@@ -12,14 +12,20 @@
 	h4,
 	h5,
 	h6,
-	ul,
+	ul:not(.linear),
 	ol,
+	dl,
 	pre,
 	blockquote,
 	figure,
 	table,
 	hr {
 		margin-block: calc(4 * var(--pf-spacing));
+	}
+
+	li ol,
+	li ul:not(.linear) {
+		margin-block: calc(2 * var(--pf-spacing));
 	}
 
 	/* Headings */
