@@ -13,17 +13,15 @@ const { url, class: className, ...attrs } = Astro.props;
 const dest = urlDest(url);
 
 const currentPath = Astro.url.pathname;
-const isExactActive = currentPath === dest;
-const isActive = currentPath.startsWith(dest);
+const isCurrentPage = currentPath === dest;
 ---
 
 <a
-	class:list={[
-		"pf-anchor",
-		className,
-		{ active: isActive, exact: isExactActive },
-	]}
+	class:list={["pf-anchor", className]}
 	href={dest}
+	aria-current={isCurrentPage ? "page" : undefined}
+	x-data={JSON.stringify({ isCurrentPage, href: dest })}
+	x-bind:aria-current="isCurrentPage ? 'page' : currentHash === href ? 'location' : undefined"
 	{...attrs}
 >
 	<slot>
@@ -35,13 +33,13 @@ const isActive = currentPath.startsWith(dest);
 <style>
 	@layer pf-components {
 		.pf-anchor {
-			&.exact {
-				color: var(--pf-color-accent);
-			}
-
 			.dest {
 				font-family: var(--pf-font-family-monospace);
 				font-size: 0.9em;
+			}
+
+			&[aria-current] {
+				color: var(--pf-color-accent);
 			}
 		}
 	}
