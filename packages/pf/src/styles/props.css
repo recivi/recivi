@@ -3,6 +3,7 @@
 		/* common styles */
 
 		--pf-font-family: sans-serif;
+		--pf-font-family-display: serif;
 		--pf-font-family-monospace: monospace;
 		--pf-font-size-base: 14px;
 		--pf-font-size-scale: 1.2457;
@@ -20,7 +21,6 @@
 
 	:root[data-media="print"] {
 		--pf-font-family: serif;
-		--pf-font-family-monospace: monospace;
 		--pf-font-size-base: 10pt;
 		--pf-font-size-scale: 1.1;
 
