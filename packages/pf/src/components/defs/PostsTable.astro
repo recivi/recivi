@@ -21,8 +21,8 @@ const categories = await getCategories();
 
 <div
 	class:list={["pf-posts-table", className]}
+	x-data={JSON.stringify({ activeCategories: [] })}
 	{...attrs}
-	x-data="{ activeCategories: [] }"
 >
 	{
 		posts.length ? (

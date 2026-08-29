@@ -28,12 +28,13 @@ const {
 } = Astro.props as TableProps<Record<string, ColumnSpec>>;
 ---
 
+<!-- `null` is used because `JSON.stringify` drops keys if value is `undefined`. -->
 <table
 	class:list={["pf-table", className]}
+	x-data={JSON.stringify({ hoveredGroupId: null })}
+	x-bind:data-has-hovered-group="hoveredGroupId !== null"
+	x-on:mouseleave="hoveredGroupId = null"
 	{...attrs}
-	x-data="{ hoveredGroupId: undefined }"
-	x-bind:data-has-hovered-group="hoveredGroupId !== undefined"
-	x-on:mouseleave="hoveredGroupId = undefined"
 >
 	<thead>
 		<tr>
