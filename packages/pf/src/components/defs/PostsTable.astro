@@ -70,6 +70,7 @@ const categories = await getCategories();
 				border-radius: var(--pf-spacing);
 				padding: calc(0.5 * var(--pf-spacing)) var(--pf-spacing);
 				cursor: pointer;
+				user-select: none;
 
 				&:has(input:checked) {
 					border-color: var(--pf-color-accent);
