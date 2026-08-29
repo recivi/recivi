@@ -24,6 +24,9 @@ const layers = `@layer ${config.css.layers.join(", ")};`;
 	lang={config.locale.bcp47}
 	dir={config.locale.dir}
 	class:list={[className]}
+	x-data="{ currentHash: null }"
+	x-init="currentHash = window.location.hash"
+	x-on:hashchange.window="currentHash = window.location.hash"
 	{...attrs}
 >
 	<head>
