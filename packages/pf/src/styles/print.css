@@ -80,11 +80,11 @@
 	/* Headings */
 
 	h1 {
-		font-size: var(--pf-font-size-l3);
+		font-size: var(--pf-font-size-p3);
 	}
 
 	h2 {
-		font-size: var(--pf-font-size-l4);
+		font-size: var(--pf-font-size-p2);
 		display: flex;
 		align-items: center;
 		gap: calc(2 * var(--pf-spacing));
@@ -98,11 +98,11 @@
 	}
 
 	h3 {
-		font-size: var(--pf-font-size-l5);
+		font-size: var(--pf-font-size-p1);
 	}
 
 	h4 {
-		font-size: var(--pf-font-size-l6);
+		font-size: var(--pf-font-size-base);
 	}
 
 	/* Anchors */

@@ -8,13 +8,15 @@
 		--pf-font-size-base: 14px;
 		--pf-font-size-scale: 1.2457;
 
-		--pf-font-size-l1: calc(1rem * pow(var(--pf-font-size-scale), 5));
-		--pf-font-size-l2: calc(1rem * pow(var(--pf-font-size-scale), 4));
-		--pf-font-size-l3: calc(1rem * pow(var(--pf-font-size-scale), 3));
-		--pf-font-size-l4: calc(1rem * pow(var(--pf-font-size-scale), 2));
-		--pf-font-size-l5: calc(1rem * pow(var(--pf-font-size-scale), 1));
-		--pf-font-size-l6: 1rem;
-		--pf-font-size-l7: calc(1rem * pow(var(--pf-font-size-scale), -1));
+		--pf-font-size-m1: calc(1rem * pow(var(--pf-font-size-scale), -1));
+
+		--pf-font-size-p1: calc(1rem * pow(var(--pf-font-size-scale), 1));
+		--pf-font-size-p2: calc(1rem * pow(var(--pf-font-size-scale), 2));
+		--pf-font-size-p3: calc(1rem * pow(var(--pf-font-size-scale), 3));
+		--pf-font-size-p4: calc(1rem * pow(var(--pf-font-size-scale), 4));
+		--pf-font-size-p5: calc(1rem * pow(var(--pf-font-size-scale), 5));
+		--pf-font-size-p6: calc(1rem * pow(var(--pf-font-size-scale), 6));
+		--pf-font-size-p7: calc(1rem * pow(var(--pf-font-size-scale), 7));
 
 		--pf-spacing: 0.25rem;
 	}
