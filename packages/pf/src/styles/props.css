@@ -54,6 +54,7 @@
 		--pf-color-blue: #1e66f5; /* blue */
 
 		--pf-color-accent: #179299; /* accent */
+		--pf-color-accent-translucent: color-mix(in srgb, var(--pf-color-accent) 10%, transparent 90%);
 
 		--pf-color-anchor-new: #04a5e5; /* sky */
 		--pf-color-anchor-visited: #8839ef; /* mauve */
