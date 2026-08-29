@@ -54,7 +54,7 @@ const dest = getBlogPostUrl(id.slice(5));
 							x-data={JSON.stringify({ category })}
 							x-bind:data-is-selected-category="activeCategories.includes(category)"
 						>
-							{category}
+							#{category}
 						</span>
 					</li>
 				))
