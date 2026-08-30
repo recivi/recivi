@@ -96,7 +96,7 @@ const title = indexPage?.data.title ?? "Blog";
 					This post is part of the "{postData.series}" series. If you liked it,
 					you might also like the other posts in this series.
 				</p>
-				<div x-data="{ activeCategories: [] }">
+				<div x-data={JSON.stringify({ activeCategories: [] })}>
 					<Table class="last-element" table={relatedPostsTable} />
 				</div>
 			</div>
