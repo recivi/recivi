@@ -106,7 +106,7 @@ const title = indexPage?.data.title ?? "Blog";
 					you might also like the other posts in this series.
 				</p>
 				<div x-data="{ activeCategories: [] }">
-					<Table table={relatedPostsTable} />
+					<Table class="last-element" table={relatedPostsTable} />
 				</div>
 			</Fragment>
 		) : undefined
