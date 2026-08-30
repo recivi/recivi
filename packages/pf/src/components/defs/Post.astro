@@ -71,6 +71,10 @@ const componentAttrs = (
 <style>
 	@layer pf-components {
 		.pf-post {
+			.post-title {
+				transition: color 100ms ease-in-out;
+			}
+
 			.draft {
 				color: var(--pf-color-yellow);
 				margin-inline-start: var(--pf-spacing);
@@ -86,20 +90,28 @@ const componentAttrs = (
 
 				.category {
 					span {
+						transition: color 100ms ease-in-out;
+
 						&[data-is-selected-category] {
 							color: var(--pf-color-fg);
 						}
 					}
 				}
 			}
+		}
 
-			:global([data-matches-some-selected-category]) & {
+		:global(tr) {
+			transition: background-color 100ms ease-in-out;
+
+			&[data-matches-some-selected-category] {
+				background-color: var(--pf-color-accent-translucent);
+
 				.post-title {
 					color: var(--pf-color-accent);
 				}
 			}
 
-			:global([data-matches-no-selected-category]) & {
+			&[data-matches-no-selected-category] {
 				.post-title {
 					color: var(--pf-color-fg-subtle);
 				}
