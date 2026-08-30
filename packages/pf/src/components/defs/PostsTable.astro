@@ -3,83 +3,28 @@ import { Table } from "virtual:pf/components";
 
 import { getCollection } from "astro:content";
 
-import {
-	getCategories,
-	getPostsTable,
-	isNotDraft,
-} from "../../utils/collections";
+import type { BaseProps } from "../../types/props";
+import { getPostsTable, isNotDraft } from "../../utils/collections";
 
+type Props = BaseProps;
 const { class: className, ...attrs } = Astro.props;
 
 const posts = (await getCollection("blog", isNotDraft)).toSorted(
 	(a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
 );
 const postsTable = getPostsTable(posts);
-
-const categories = await getCategories();
 ---
 
-<div
-	class:list={["pf-posts-table", className]}
-	x-data={JSON.stringify({ activeCategories: [] })}
-	{...attrs}
->
-	{
-		posts.length ? (
-			<Fragment>
-				<div class="js-enabled-only">
-					<p>
-						Click on a category to highlight the posts that belong to that
-						category.
-					</p>
-					{categories.length ? (
-						<fieldset class="categories-fieldset">
-							<legend class="sr-only">Categories</legend>
-							{categories.map((category) => (
-								<label class="category-field">
-									<input
-										type="checkbox"
-										value={category}
-										x-model="activeCategories"
-									/>
-									{category}
-								</label>
-							))}
-						</fieldset>
-					) : (
-						<p>∅ There are no categories.</p>
-					)}
-				</div>
-				<Table table={postsTable} />
-			</Fragment>
-		) : (
-			<p>∅ There are no blog posts.</p>
-		)
-	}
-</div>
-
-<style>
-	@layer pf-components {
-		.categories-fieldset {
-			display: flex;
-			flex-wrap: wrap;
-			gap: var(--pf-spacing);
-
-			.category-field {
-				border: 1px solid var(--pf-color-border);
-				border-radius: var(--pf-spacing);
-				padding: calc(0.5 * var(--pf-spacing)) var(--pf-spacing);
-				cursor: pointer;
-				user-select: none;
-
-				&:has(input:checked) {
-					border-color: var(--pf-color-accent);
-				}
-
-				input {
-					display: none;
-				}
-			}
-		}
-	}
-</style>
+{
+	posts.length ? (
+		<Table
+			class:list={["pf-posts-table", className]}
+			table={postsTable}
+			{...attrs}
+		/>
+	) : (
+		<p class:list={["pf-posts-table", "null", className]} {...attrs}>
+			<em>∅ There are no blog posts at the moment.</em>
+		</p>
+	)
+}

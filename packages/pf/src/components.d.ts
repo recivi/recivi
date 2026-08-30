@@ -4,6 +4,7 @@ declare module "virtual:pf/components" {
 	export const Anchor: typeof import("./components/defs/Anchor.astro").default;
 	export const Brand: typeof import("./components/defs/Brand.astro").default;
 	export const Breadcrumbs: typeof import("./components/defs/Breadcrumbs.astro").default;
+	export const CategoryFilter: typeof import("./components/defs/CategoryFilter.astro").default;
 	export const CertDetails: typeof import("./components/defs/CertDetails.astro").default;
 	export const CertsTable: typeof import("./components/defs/CertsTable.astro").default;
 	export const Comms: typeof import("./components/defs/Comms.astro").default;

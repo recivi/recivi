@@ -5,7 +5,7 @@ description: >-
 navIndex: 2
 ---
 
-import { Anchor, Icon, PostsTable } from "virtual:pf/components";
+import { Anchor, Icon, CategoryFilter, PostsTable } from "virtual:pf/components";
 import projectContext from "virtual:pf/project-context";
 
 import { prefixBase } from "@recivi/pf/utils/project_context";
@@ -19,6 +19,16 @@ Welcome to my blog, where you can read some of my long-form blog posts.
 You can subscribe to the <Anchor url={rssHref}><Icon name="rss" />RSS feed</Anchor> to get updates
 on new posts.
 
+<div x-data={JSON.stringify({ activeCategories: [] })}>
+<CategoryFilter>
+
+## Categories
+
+Click on a category name to highlight the posts in that particular category.
+
+</CategoryFilter>
+
 ## Posts
 
 <PostsTable />
+</div>

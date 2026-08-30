@@ -4,6 +4,7 @@ export const componentNames = [
 	"Anchor",
 	"Brand",
 	"Breadcrumbs",
+	"CategoryFilter",
 	"CertDetails",
 	"CertsTable",
 	"Comms",

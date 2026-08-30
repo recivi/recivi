@@ -1,0 +1,63 @@
+---
+import type { BaseProps } from "../../types/props";
+import { getCategories } from "../../utils/collections";
+
+type Props = BaseProps;
+const { class: className, ...attrs } = Astro.props;
+
+const categories = await getCategories();
+---
+
+{
+	categories.length ? (
+		<div
+			class:list={["pf-category-filter", "js-enabled-only", className]}
+			{...attrs}
+		>
+			<slot />
+			<fieldset class="categories-fieldset">
+				<legend class="sr-only">Categories</legend>
+				{categories.map((category) => (
+					<label class="category-field">
+						<input
+							type="checkbox"
+							value={category}
+							x-model="activeCategories"
+						/>
+						{category}
+					</label>
+				))}
+			</fieldset>
+		</div>
+	) : (
+		<p class:list={["pf-category-filter", "null", className]} {...attrs}>
+			<em>∅ There are no categories at the moment.</em>
+		</p>
+	)
+}
+
+<style>
+	@layer pf-components {
+		.categories-fieldset {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--pf-spacing);
+
+			.category-field {
+				border: 1px solid var(--pf-color-border);
+				border-radius: var(--pf-spacing);
+				padding: calc(0.5 * var(--pf-spacing)) var(--pf-spacing);
+				cursor: pointer;
+				user-select: none;
+
+				&:has(input:checked) {
+					border-color: var(--pf-color-accent);
+				}
+
+				input {
+					display: none;
+				}
+			}
+		}
+	}
+</style>
