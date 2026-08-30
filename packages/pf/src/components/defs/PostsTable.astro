@@ -12,7 +12,7 @@ const { class: className, ...attrs } = Astro.props;
 const posts = (await getCollection("blog", isNotDraft)).toSorted(
 	(a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
 );
-const postsTable = getPostsTable(posts);
+const postsTable = getPostsTable(posts, { groupBy: "month" });
 ---
 
 {

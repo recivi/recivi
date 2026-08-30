@@ -33,7 +33,7 @@ const relatedPosts = (
 			item.data.series === postData.series,
 	)
 ).toReversed();
-const relatedPostsTable = getPostsTable(relatedPosts);
+const relatedPostsTable = getPostsTable(relatedPosts, { groupBy: null });
 
 const frontmatter = pageSchema.parse({
 	...postData,

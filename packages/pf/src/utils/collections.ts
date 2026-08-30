@@ -59,7 +59,23 @@ export async function getCategories(): Promise<string[]> {
  * @param posts a list of blog posts to include in the table
  * @returns the complete data needed to render a table of blog posts
  */
-export function getPostsTable(posts: CollectionEntry<"blog">[]) {
+export function getPostsTable(
+	posts: CollectionEntry<"blog">[],
+	options: { groupBy?: "year" | "month" | "day" | null } = {},
+) {
+	const getGroupId = (post: CollectionEntry<"blog">) => {
+		const { groupBy = null } = options;
+
+		if (!groupBy) return post.id;
+
+		const groupParts = [post.data.pubDate.getFullYear()];
+		if (groupBy === "year") return groupParts.join("-");
+		groupParts.push(post.data.pubDate.getMonth());
+		if (groupBy === "month") return groupParts.join("-");
+		groupParts.push(post.data.pubDate.getDate());
+		return groupParts.join("-");
+	};
+
 	return defineTable(
 		{
 			publish: { title: "Published", renderer: "PfDate" },
@@ -67,7 +83,7 @@ export function getPostsTable(posts: CollectionEntry<"blog">[]) {
 		},
 		posts.map((post) => {
 			return {
-				groupId: post.data.pubDate.getFullYear().toString(),
+				groupId: getGroupId(post),
 				data: {
 					publish: { date: post.data.pubDate },
 					post: { post },
