@@ -4,7 +4,10 @@
 
 import { Anchor, Icon } from "virtual:pf/components";
 
+import type { HTMLAttributes } from "astro/types";
+
 import { getBlogPostUrl } from "../../utils/dynamic_pages";
+import type { AnchorProps } from "../props/Anchor";
 import type { PostProps } from "../props/Post";
 
 type Props = PostProps;
@@ -15,24 +18,26 @@ const {
 } = Astro.props;
 
 const dest = getBlogPostUrl(id.slice(5));
+
+const Component = dest ? Anchor : "span";
+const componentAttrs = (
+	dest ? { url: { dest, label: data.title } } : {}
+) as AnchorProps & HTMLAttributes<"span">;
 ---
 
 <div class:list={["pf-post", className]} {...attrs}>
+	<Component {...componentAttrs} class="post-title">
+		{data.title}
+	</Component>
+
 	{
-		dest ? (
-			<Anchor class="post-title" url={{ dest, label: data.title }}>
-				{data.title}
-			</Anchor>
-		) : (
-			<span class="post-title">
-				{data.title}
-				<Icon
-					class="missing-component"
-					name="square-dashed"
-					pack="lucide"
-					title="Missing `[postSlug].astro`"
-				/>
-			</span>
+		dest ? undefined : (
+			<Icon
+				class="missing-component"
+				name="square-dashed"
+				pack="lucide"
+				title="Missing `[postSlug].astro`"
+			/>
 		)
 	}
 	{

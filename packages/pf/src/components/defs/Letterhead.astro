@@ -3,7 +3,10 @@ import { Anchor, Comms } from "virtual:pf/components";
 import projectContext from "virtual:pf/project-context";
 import reciviData from "virtual:recivi/data";
 
+import type { HTMLAttributes } from "astro/types";
+
 import type { BaseProps } from "../../types/props";
+import type { AnchorProps } from "../props/Anchor";
 
 type Props = BaseProps;
 const { class: className, ...attrs } = Astro.props;
@@ -11,19 +14,20 @@ const { class: className, ...attrs } = Astro.props;
 // Unlike `Header.astro`, this must link to the full URL, not just the path.
 const { site, base } = projectContext;
 const href = site ? new URL(base, site).href : undefined;
+
+const Component = href ? Anchor : "span";
+
+// Have to use the escape hatch to silence the type checker.
+const componentAttrs = (
+	href ? { url: { dest: href, label: "Home" } } : {}
+) as AnchorProps & HTMLAttributes<"span">;
 ---
 
 <header class:list={["pf-letterhead", className]} {...attrs}>
 	<h1>
-		{
-			href ? (
-				<Anchor class="home" url={{ dest: href, label: "Home" }}>
-					{reciviData.bio.name}
-				</Anchor>
-			) : (
-				reciviData.bio.name
-			)
-		}
+		<Component {...componentAttrs} class="home">
+			{reciviData.bio.name}
+		</Component>
 	</h1>
 	{reciviData.bio.summary ? <p>{reciviData.bio.summary}</p> : undefined}
 	<Comms filterTag="resume_pdf" />

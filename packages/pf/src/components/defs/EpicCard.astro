@@ -3,6 +3,9 @@
 
 import { Anchor, Entity, TechStack } from "virtual:pf/components";
 
+import type { HTMLAttributes } from "astro/types";
+
+import type { AnchorProps } from "../props/Anchor";
 import type { EpicCardProps } from "../props/EpicCard";
 
 type Props = EpicCardProps;
@@ -13,16 +16,21 @@ const { epic, class: className, ...attrs } = Astro.props;
 	<Entity entity={epic} useInternalLink />
 	<ul class="projects-list">
 		{
-			epic.projects.map((project) => (
-				<li class="project">
-					{project.url ? (
-						<Anchor url={project.url}>{project.name}</Anchor>
-					) : (
-						project.name
-					)}
-					<TechStack class="tech-stack" technologies={project.technologies} />
-				</li>
-			))
+			epic.projects.map((project) => {
+				const Component = project.url ? Anchor : "span";
+				const componentAttrs = (
+					project.url ? { url: project.url } : {}
+				) as AnchorProps & HTMLAttributes<"span">;
+
+				return (
+					<li class="project">
+						<Component {...componentAttrs} class="project-name">
+							{project.name}
+						</Component>
+						<TechStack class="tech-stack" technologies={project.technologies} />
+					</li>
+				);
+			})
 		}
 	</ul>
 </div>
