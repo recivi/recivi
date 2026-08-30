@@ -113,4 +113,14 @@ const title = indexPage?.data.title ?? "Blog";
 			margin-inline: calc(-4 * var(--pf-spacing));
 		}
 	}
+
+	@layer pf-media {
+		.series-section {
+			:global(a) {
+				&[aria-current="page"] {
+					--link-suffix: "☜";
+				}
+			}
+		}
+	}
 </style>
