@@ -27,6 +27,12 @@ const { crumbs, class: className, ...attrs } = Astro.props as Props;
 	@layer pf-components {
 		.pf-breadcrumbs {
 			--list-linear-separator: "/";
+
+			&::after {
+				content: var(--list-linear-separator);
+				color: var(--pf-color-fg-subtle);
+				margin-inline: calc(2 * var(--pf-spacing));
+			}
 		}
 	}
 </style>
