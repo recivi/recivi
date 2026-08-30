@@ -26,6 +26,10 @@
 		text-align: end;
 	}
 
+	.text-accent {
+		color: var(--pf-color-accent);
+	}
+
 	:root:not([data-media="print"]) .print-only {
 		display: none;
 	}
