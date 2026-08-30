@@ -2,7 +2,6 @@
 import "virtual:pf/custom-css/Post";
 
 import {
-	Anchor,
 	Breadcrumbs,
 	Elements,
 	PfDate,
@@ -67,6 +66,11 @@ const title = indexPage?.data.title ?? "Blog";
 	<Toc slot="extra" {headings} />
 
 	<h1>{postData.title}</h1>
+
+	<slot />
+
+	<hr />
+
 	<dl>
 		<dt>Published</dt>
 		<dd>
@@ -78,22 +82,7 @@ const title = indexPage?.data.title ?? "Blog";
 				{postData.categories.map((category) => <li>#{category}</li>)}
 			</ul>
 		</dd>
-		{
-			postData.series ? (
-				<Fragment>
-					<dt>Series</dt>
-					<dd>
-						<Anchor url={{ dest: "#series", label: "Series" }}>
-							{postData.series}
-						</Anchor>
-					</dd>
-				</Fragment>
-			) : undefined
-		}
 	</dl>
-	<hr />
-
-	<slot />
 
 	{
 		postData.series ? (
