@@ -67,7 +67,11 @@ const title = indexPage?.data.title ?? "Blog";
 
 	<h1>{postData.title}</h1>
 
-	<slot />
+	<article>
+		<p class="post-description">{postData.description}</p>
+
+		<slot />
+	</article>
 
 	<hr />
 
