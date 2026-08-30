@@ -17,7 +17,7 @@ const { limit, class: className, ...attrs } = Astro.props;
 <ul class:list={["pf-now-updates", className]} {...attrs}>
 	{
 		updates.slice(0, limit).map((update, index) => (
-			<li>
+			<li class="update">
 				<NowUpdate isLatest={index === 0} {update} />
 			</li>
 		))
@@ -29,6 +29,20 @@ const { limit, class: className, ...attrs } = Astro.props;
 		.pf-now-updates {
 			list-style: none;
 			padding: 0;
+
+			.update {
+				&:not(:last-child) {
+					padding-block-end: calc(4 * var(--pf-spacing));
+
+					&::after {
+						content: "";
+						display: block;
+						border-bottom: 1px dashed var(--pf-color-border);
+						margin-inline: calc(-4 * var(--pf-spacing));
+						margin-block-start: calc(4 * var(--pf-spacing));
+					}
+				}
+			}
 		}
 	}
 </style>
