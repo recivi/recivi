@@ -14,15 +14,21 @@ type Props = NowUpdatesProps;
 const { limit, class: className, ...attrs } = Astro.props;
 ---
 
-<ul class:list={["pf-now-updates", className]} {...attrs}>
-	{
-		updates.slice(0, limit).map((update, index) => (
-			<li class="update">
-				<NowUpdate isLatest={index === 0} {update} />
-			</li>
-		))
-	}
-</ul>
+{
+	updates.length ? (
+		<ul class:list={["pf-now-updates", className]} {...attrs}>
+			{updates.slice(0, limit).map((update, index) => (
+				<li class="update">
+					<NowUpdate isLatest={index === 0} {update} />
+				</li>
+			))}
+		</ul>
+	) : (
+		<p class:list={["pf-now-updates", "null", className]} {...attrs}>
+			<em>∅ There are no updates at the moment.</em>
+		</p>
+	)
+}
 
 <style>
 	@layer pf-components {
