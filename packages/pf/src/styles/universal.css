@@ -83,7 +83,7 @@
 	/* Typographic elements */
 
 	blockquote {
-		border-inline-start: 1px solid var(--pf-color-border);
+		border-inline-start: var(--pf-spacing) solid var(--pf-color-border);
 		padding-inline-start: calc(4 * var(--pf-spacing));
 	}
 
