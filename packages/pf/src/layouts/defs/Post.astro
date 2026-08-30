@@ -73,25 +73,24 @@ const title = indexPage?.data.title ?? "Blog";
 		<slot />
 	</article>
 
-	<hr />
-
-	<dl>
-		<dt>Published</dt>
-		<dd>
-			<PfDate date={postData.pubDate} />
-		</dd>
-		<dt>Categories</dt>
-		<dd>
-			<ul class="linear">
-				{postData.categories.map((category) => <li>#{category}</li>)}
-			</ul>
-		</dd>
-	</dl>
+	<div class="metadata-section">
+		<dl>
+			<dt>Published</dt>
+			<dd>
+				<PfDate date={postData.pubDate} />
+			</dd>
+			<dt>Categories</dt>
+			<dd>
+				<ul class="linear">
+					{postData.categories.map((category) => <li>#{category}</li>)}
+				</ul>
+			</dd>
+		</dl>
+	</div>
 
 	{
 		postData.series ? (
-			<Fragment>
-				<hr />
+			<div class="series-section">
 				<h2 id="series">Series</h2>
 				<p>
 					This post is part of the "{postData.series}" series. If you liked it,
@@ -100,7 +99,18 @@ const title = indexPage?.data.title ?? "Blog";
 				<div x-data="{ activeCategories: [] }">
 					<Table class="last-element" table={relatedPostsTable} />
 				</div>
-			</Fragment>
+			</div>
 		) : undefined
 	}
 </Web>
+
+<style>
+	@layer pf-core {
+		.series-section,
+		.metadata-section {
+			padding-inline: calc(4 * var(--pf-spacing));
+			border-block-start: 1px dashed var(--pf-color-border);
+			margin-inline: calc(-4 * var(--pf-spacing));
+		}
+	}
+</style>
