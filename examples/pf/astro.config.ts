@@ -73,6 +73,32 @@ export default defineConfig({
 					instagram: { pack: "simple-icons", name: "instagram" },
 				},
 			},
+			head: {
+				elements: [
+					{ tag: "link", attrs: { rel: "preconnect", href: "https://fonts.googleapis.com" } },
+					{
+						tag: "link",
+						attrs: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
+					},
+					{
+						tag: "link",
+						attrs: {
+							href: [
+								"https://fonts.googleapis.com/css2?",
+								"&family=Gelasio:ital,wght@0,400..700;1,400..700",
+								"&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800",
+								"&display=swap",
+							].join(""),
+							rel: "stylesheet",
+						},
+					},
+				],
+			},
+			css: {
+				customCss: {
+					Root: ["./src/styles/props.css"],
+				},
+			},
 		}),
 	],
 });

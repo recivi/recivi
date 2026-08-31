@@ -1,0 +1,7 @@
+@layer props {
+	:root[data-media="print"] {
+		--pf-font-family: "Gelasio", sans-serif;
+		--pf-font-family-display: "Gelasio", sans-serif;
+		--pf-font-family-monospace: "JetBrains Mono", monospace;
+	}
+}
