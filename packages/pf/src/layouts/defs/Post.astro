@@ -61,9 +61,9 @@ const title = indexPage?.data.title ?? "Blog";
 		]}
 	/>
 
-	<div slot="extra-header"><strong>Table of contents</strong></div>
+	<div slot="extra-header" id="toc-header">On this page</div>
 
-	<Toc slot="extra" {headings} />
+	<Toc slot="extra" {headings} aria-labelledby="toc-header" />
 
 	<h1>{postData.title}</h1>
 
@@ -106,6 +106,12 @@ const title = indexPage?.data.title ?? "Blog";
 
 <style>
 	@layer pf-core {
+		#toc-header {
+			color: var(--pf-color-accent);
+			font-family: var(--pf-font-family-display);
+			font-weight: 500;
+		}
+
 		.series-section,
 		.metadata-section {
 			padding-inline: calc(4 * var(--pf-spacing));
