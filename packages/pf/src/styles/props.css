@@ -6,6 +6,7 @@
 		--pf-font-family-display: serif;
 		--pf-font-family-monospace: monospace;
 		--pf-font-size-base: 14px;
+		--pf-font-size-monospace: 0.9em;
 		--pf-font-size-scale: 1.2457;
 
 		--pf-font-size-m1: calc(1rem * pow(var(--pf-font-size-scale), -1));

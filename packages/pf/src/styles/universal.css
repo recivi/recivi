@@ -182,7 +182,7 @@
 	kbd,
 	samp {
 		font-family: var(--pf-font-family-monospace);
-		font-size: 0.9em;
+		font-size: var(--pf-font-size-monospace);
 	}
 
 	pre {
