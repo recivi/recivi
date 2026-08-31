@@ -66,6 +66,7 @@ CLAUDE.md
 # Superpowers
 # The globstar `**` is needed because the pattern contains a slash `/`.
 **/docs/superpowers/
+.superpowers/
 
 # § project
 # § =======
