@@ -22,5 +22,19 @@ up to.
 
 <NowUpdates limit={shownCount} />
 
-There { !hiddenCount ? undefined : hiddenCount >= 2 ? `are ${hiddenCount} older updates` :
-`is 1 older update` } not shown here.
+{totalCount > shownCount ? (
+
+<Fragment>
+  <hr />
+  <p>
+    There&#32;
+    {!hiddenCount
+      ? undefined
+      : hiddenCount >= 2
+        ? `are ${hiddenCount} older updates`
+        : `is 1 older update`}
+    &#32;not shown here.
+  </p>
+</Fragment>
+
+) : undefined}
