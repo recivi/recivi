@@ -93,8 +93,10 @@ const title = indexPage?.data.title ?? "Blog";
 			<div class="series-section">
 				<h2 id="series">Series</h2>
 				<p>
-					This post is part of the "{postData.series}" series. If you liked it,
-					you might also like the other posts in this series.
+					This post is a part of the&#32;
+					<span class="text-accent">"{postData.series}"</span> series. If you
+					enjoyed reading it, you might also like these other posts from the
+					series.
 				</p>
 				<div x-data={JSON.stringify({ activeCategories: [] })}>
 					<Table class="last-element" table={relatedPostsTable} />
