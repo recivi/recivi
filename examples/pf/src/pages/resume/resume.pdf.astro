@@ -66,7 +66,7 @@ const orgs = reciviData.work.filter((org) =>
 		reciviData.skills.length ? (
 			<section>
 				<h2>Skills</h2>
-				<SkillList class="list" />
+				<SkillList />
 			</section>
 		) : undefined
 	}
@@ -74,7 +74,7 @@ const orgs = reciviData.work.filter((org) =>
 		reciviData.languages.length ? (
 			<section>
 				<h2>Languages</h2>
-				<LanguageList class="list" />
+				<LanguageList />
 			</section>
 		) : undefined
 	}
@@ -85,14 +85,6 @@ const orgs = reciviData.work.filter((org) =>
 		h2 {
 			/* Don't leave dangling headings at the bottom of a page. */
 			break-after: avoid-page;
-		}
-
-		.list {
-			margin-block-start: calc(2 * var(--pf-spacing));
-
-			&:not(:last-child) {
-				margin-block-end: calc(2 * var(--pf-spacing));
-			}
 		}
 	}
 </style>

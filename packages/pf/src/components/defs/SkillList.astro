@@ -22,6 +22,6 @@ const { class: className, ...attrs } = Astro.props;
 		))
 	}
 </ul>
-<div class:list={["pf-skill-list", "print-only", className]} {...attrs}>
+<p class:list={["pf-skill-list", "print-only", className]} {...attrs}>
 	{formatSkills(reciviData.skills, config.locale.bcp47)}
-</div>
+</p>

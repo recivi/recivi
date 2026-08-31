@@ -42,6 +42,6 @@ const languages = reciviData.languages.filter((language) => {
 		))
 	}
 </ul>
-<div class:list={["pf-language-list", "print-only", className]} {...attrs}>
+<p class:list={["pf-language-list", "print-only", className]} {...attrs}>
 	{formatLanguages(languages, config.locale.bcp47)}
-</div>
+</p>
