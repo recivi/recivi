@@ -29,10 +29,10 @@ At the heart of this site is a structured, machine-readable, JSON file that cont
 This file complies with the <Brand icon={{ pack: "pf", name: "recivi" }}
 anchor={{ url: "https://recivi.dhruvkb.dev" }} name="Récivi" /> specification.
 
-Then the PF renderer parses that document, validates it and generates a web site out of it, turning
-the same data into an interactive portfolio and a print-ready résumé PDF. This is the opposite of
-how résumés have traditionally worked with computers trying to extract facts from a freely formatted
-document.
+The Récivi PF renderer parses that document, validates it and generates a web site out of it,
+turning the same data into an interactive portfolio and a print-ready PDF of my résumé. This turns
+the idea of how résumés have traditionally worked on its head. Instead of computers trying to
+extract facts from a freely formatted document, they can just read the JSON file.
 
 ### IndieWeb
 
@@ -59,7 +59,7 @@ of using the site remains mostly intact.
 
 The colour palette comes from [Catppuccin](https://catppuccin.com/) using the Latte theme for light
 mode and the Mocha theme for dark mode. The active flavour follows the visitor's system preference.
-Syntax highlighting colors use the same theme, giving the site a cohesive visual language.
+Syntax highlighting colours use the same theme, giving the site a cohesive visual language.
 
 ### Layout
 
@@ -71,8 +71,8 @@ layout to masquerade as paper.
 ### Accessibility
 
 The site tries to be as accessible as possible, with care taken to ensure semantic HTML, logical
-page structure and sufficient contrast. The site even uses a page layout that is optimised for
-reading prose and code.
+page structure and sufficient contrast. Its reading-focused layout is designed to make reading prose
+and code easier.
 
 ### Typography
 
@@ -91,15 +91,17 @@ on the device displaying it.
 
 #### Print
 
-Print needs repeatable line lengths and page breaks, so the printable layouts use specific fonts
-[Gelasio](https://github.com/sorkintype/Gelasio) for the headings and body
-[JetBrains Mono](https://www.jetbrains.com/lp/mono/) for code. Both fonts are sourced from Google
-Fonts and are licensed under the SIL Open Font License 1.1.
+Print needs repeatable line lengths and page breaks, so the printable layouts use specific fonts.
+
+- [Gelasio](https://github.com/sorkintype/Gelasio) by Eben Sorkin, for the headings and body
+- [JetBrains Mono](https://www.jetbrains.com/lp/mono/) by JetBrains, for code
+
+Both fonts are sourced from Google Fonts and are licensed under the SIL Open Font License 1.1.
 
 ## Technology
 
-The site is a collection of largely static pages which are generated automatically at build time,
-from content written using <Brand icon={{ name: "mdx", title: "MDX" }}
+The site is a collection of largely static HTML pages which are generated automatically at build
+time, from content written using <Brand icon={{ name: "mdx", title: "MDX" }}
 anchor={{ url: "https://mdxjs.com/" }} name="MDX" />. MDX is the same Markdown we know and love, now
 with the added ability to embed components.
 
@@ -113,7 +115,7 @@ routing, content and build systems, while the PF renderer does the rest of the h
 
 - It creates an <Anchor url={resumeIndexUrl}>interactive résumé</Anchor> with focused pages for
   education, work and projects.
-- It turns routes with a `.pdf` into actuals PDFs during the build.
+- It turns routes with a `.pdf` into actual PDFs during the build.
 - It creates a <Anchor url={blogIndexUrl}>blog/digital garden</Anchor> with features like categories
   and post series.
 - It creates an RSS feed for the blog.
