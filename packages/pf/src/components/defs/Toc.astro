@@ -1,36 +1,119 @@
 ---
 // Render a table of contents from headings.
 
+import { Anchor } from "virtual:pf/components";
+
 import type { TocProps } from "../props/Toc";
 
 type Props = TocProps;
 const { headings, class: className, ...attrs } = Astro.props;
 ---
 
-<ul class:list={["pf-toc", className]} {...attrs}>
-	{
-		headings.map((heading) => (
-			<li>
-				{Array.from({ length: heading.depth - 2 }).map(() => (
-					<div class="spacer" aria-hidden="true" />
-				))}
-				<a href={`#${heading.slug}`}>{heading.text}</a>
-			</li>
-		))
+<script is:inline>
+	const HEADING_SELECTOR = "h1, h2, h3, h4, h5, h6";
+
+	function getArticleChildren() {
+		const articleEl = document.querySelector("article");
+		const children = [...articleEl.children];
+		const footnotes = articleEl.querySelector("section[data-footnotes]");
+		if (footnotes) children.push(...footnotes.children);
+		return children;
 	}
-</ul>
+
+	document.addEventListener("alpine:init", () => {
+		Alpine.data("toc", () => ({
+			elementHeadingMap: new Map(),
+			visibleElements: new Set(),
+			observer: undefined,
+
+			/** Get the list of headings from the visible elements. */
+			get visibleHeadings() {
+				return new Set(
+					Array.from(this.visibleElements)
+						.map((element) => this.elementHeadingMap.get(element))
+						.filter(Boolean),
+				);
+			},
+
+			/** Associate each element with the last seen heading before it. */
+			mapElementsToHeadings() {
+				let currHeadingId;
+				for (const element of getArticleChildren()) {
+					if (element.matches(HEADING_SELECTOR)) currHeadingId = element.id;
+					if (currHeadingId) this.elementHeadingMap.set(element, currHeadingId);
+				}
+			},
+
+			/** Observe each element for visibility changes. */
+			observeElements() {
+				this.elementHeadingMap.forEach((_, element) => {
+					this.observer.observe(element);
+				});
+			},
+
+			init() {
+				this.observer = new IntersectionObserver((entries) => {
+					for (const entry of entries) {
+						if (entry.isIntersecting) this.visibleElements.add(entry.target);
+						else this.visibleElements.delete(entry.target);
+					}
+				});
+				this.$nextTick(() => {
+					this.mapElementsToHeadings();
+					this.observeElements();
+				});
+			},
+
+			destroy() {
+				this.observer?.disconnect();
+				this.observer = undefined;
+			},
+		}));
+	});
+</script>
+
+<nav class:list={["pf-toc", className]} x-data="toc" {...attrs}>
+	<ol>
+		{
+			headings.map((heading) => (
+				<li
+					x-data={JSON.stringify({ slug: heading.slug })}
+					x-bind:data-is-visible="visibleHeadings.has(slug)"
+					data-depth={heading.depth}
+					style={`--depth: ${heading.depth}`}
+				>
+					<Anchor url={`#${heading.slug}`}>{heading.text}</Anchor>
+				</li>
+			))
+		}
+	</ol>
+</nav>
 
 <style>
 	@layer pf-components {
 		.pf-toc {
-			padding-inline-start: 0;
-			list-style: none;
+			ol {
+				margin-inline: calc(-4 * var(--pf-spacing));
+				padding-inline-start: 0;
+				list-style: none;
 
-			.spacer {
-				display: inline-block;
-				border-inline-start: 1px solid var(--pf-color-border);
-				inline-size: calc(4 * var(--pf-spacing));
-				block-size: 100%;
+				li {
+					border-inline-start: var(--pf-spacing) solid transparent;
+					padding-inline-start: calc(
+						(var(--depth) - 1) * 4 * var(--pf-spacing)
+					);
+
+					&[data-is-visible] {
+						border-color: var(--pf-color-accent);
+					}
+
+					&[data-depth="3"],
+					&[data-depth="4"],
+					&[data-depth="5"],
+					&[data-depth="6"] {
+						color: var(--pf-color-fg-subtle);
+					}
+				}
 			}
 		}
 	}
