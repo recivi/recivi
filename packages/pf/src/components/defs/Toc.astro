@@ -102,9 +102,13 @@ const { headings, class: className, ...attrs } = Astro.props;
 					padding-inline-start: calc(
 						(var(--depth) - 1) * 4 * var(--pf-spacing)
 					);
+					transition:
+						border-color 100ms ease-in-out,
+						background-color 100ms ease-in-out;
 
 					&[data-is-visible] {
 						border-color: var(--pf-color-accent);
+						background-color: var(--pf-color-accent-translucent);
 					}
 
 					&[data-depth="3"],
