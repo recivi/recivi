@@ -10,7 +10,22 @@ categories:
 isDraft: true # DO NOT UNDRAFT THIS!
 ---
 
-import { Brand } from "virtual:pf/components";
+import { Anchor, Brand } from "virtual:pf/components";
+import nav from "virtual:pf/nav";
+import projectContext from "virtual:pf/project-context";
+import reciviData from "virtual:recivi/data";
+
+import { getBlogPostUrl, getResumeEntityUrl } from "@recivi/pf/utils/dynamic_pages";
+import { prefixBase, getUrlFromPattern, getUrlFromSlug } from "@recivi/pf/utils/project_context";
+
+export const resumeIndexUrl = getUrlFromPattern(projectContext, nav.resume.index.pattern);
+export const blogIndexUrl = getUrlFromPattern(projectContext, nav.blog.index.pattern);
+
+export const anyInstitute = reciviData.education[0];
+export const anyOrg = reciviData.work[0];
+export const anyEpic = reciviData.creations[0];
+
+export const resumePdfHref = prefixBase(projectContext, "/resume/resume.pdf");
 
 This is blog entry 0000. Hello there!
 
@@ -28,12 +43,21 @@ with raw HTML.
 
 These are some links in an unordered list[^unordered]:
 
-- [internal link](/resume/)
-- [external link](https://dhruvkb.dev)
-- non-web links like
-  - [phone](tel:+911234567890)
-  - [email](mailto:user@domain.tld)
-- [download link](/resume.pdf)
+- <Anchor url={getUrlFromSlug(projectContext, "colophon")}>internal link to Colophon</Anchor>
+- blog <Anchor url={blogIndexUrl}>index</Anchor> or <Anchor url={getUrlFromSlug(projectContext,
+  "blog")}>page</Anchor>
+- <Anchor url={getBlogPostUrl("kitchen_sink")}>blog post link</Anchor> (highlighted because active
+  page!)
+- résumé <Anchor url={resumeIndexUrl}>index</Anchor> or <Anchor url={getUrlFromSlug(projectContext,
+  "resume")}>page</Anchor>
+- {anyInstitute ? <Anchor url={getResumeEntityUrl(anyInstitute)}>institute link</Anchor> :
+  `no institute link`}
+- {anyOrg ? <Anchor url={getResumeEntityUrl(anyOrg)}>org link</Anchor> : `no org link`}
+- {anyEpic ? <Anchor url={getResumeEntityUrl(anyEpic)}>epic link</Anchor> : `no epic link`}
+- [external link to `pls`](https://pls.cli.rs)
+- [phone number](tel:+911234567890)
+- [email address](mailto:user@domain.tld)
+- <Anchor url={resumePdfHref}>download link to Résumé PDF</Anchor>
 
 [^unordered]: This is a footnote for the unordered list.
 
@@ -55,6 +79,20 @@ This is an ordered list[^ordered]:
 2. Then you peel the bananas.
 
 [^ordered]: Avoid going into the double digits as that'll break the alignment.
+
+### Horizontal rules
+
+This is a horizontal rule:
+
+---
+
+This is a solid horizontal rule:
+
+<hr class="solid" />
+
+This is a [dinkus](https://en.wikipedia.org/wiki/Dinkus):
+
+<hr class="dinkus" />
 
 ### Misc
 
@@ -83,10 +121,6 @@ from `astro:assets`
 
 ![Stones saying "Oof"](@/assets/images/oof.jpg)
 
-This is a horizontal rule:
-
----
-
 Here is a table:
 
 |     | A   | B   |
@@ -104,10 +138,8 @@ Here is a table:
 
 ###### Heading 6
 
-You can use HTML tags, e.g. keyboard tags `<kbd>` inline such as <kbd>⌘ Cmd</kbd> + <kbd>C</kbd>.
+You can use HTML tags, e.g. keyboard tags `<kbd>` inline such as <kbd>⌘ Cmd</kbd> + <kbd>⌥
+Opt</kbd> + <kbd>C</kbd>.
 
-<Brand
-  icon={{ name: "astro", title: "Astro" }}
-  anchor={{ url: "https://astro.build" }}
-  name="Astro" /> components, like
-`Brand`, work inside MDX.
+Regular <Brand icon={{ name: "astro", title: "Astro" }} anchor={{ url: "https://astro.build" }}
+name="Astro" /> components, like `Brand`, work inside MDX.
