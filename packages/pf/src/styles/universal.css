@@ -4,6 +4,7 @@
 		color: var(--pf-color-fg);
 		font-size: var(--pf-font-size-base);
 		font-family: var(--pf-font-family);
+		line-height: var(--pf-line-height);
 	}
 
 	:root::selection {
@@ -19,7 +20,7 @@
 	h5,
 	h6 {
 		font-family: var(--pf-font-family-display);
-		line-height: 1.2;
+		line-height: var(--pf-line-height-tight);
 		font-weight: 600;
 	}
 

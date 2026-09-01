@@ -27,7 +27,6 @@
 	body {
 		display: flex; /* to make sure child borders are considered in size */
 		inline-size: calc(var(--pf-print-inline-size) - 2 * var(--pf-print-margin-inline));
-		line-height: 1.2;
 
 		@media screen {
 			box-sizing: border-box;
