@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "@recivi/pf",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "personal portfolio powered by Récivi, a new kind of résumé for computers and humans, in that order",
 	"keywords": [
 		"astro-integration",
