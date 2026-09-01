@@ -8,8 +8,8 @@
 
 	body {
 		background-color: var(--pf-color-bg);
-		width: 600px;
-		height: 315px;
+		inline-size: 600px;
+		block-size: 315px;
 		line-height: 1.5;
 	}
 

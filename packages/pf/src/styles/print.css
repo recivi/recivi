@@ -92,8 +92,8 @@
 		&::after {
 			content: "";
 			flex-grow: 1;
-			height: 0;
-			border-bottom: 1px solid var(--pf-color-border);
+			block-size: 0;
+			border-block-end: 1px solid var(--pf-color-border);
 		}
 	}
 
