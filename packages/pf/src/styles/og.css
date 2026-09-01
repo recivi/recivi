@@ -1,9 +1,6 @@
 @layer pf-media {
 	html {
 		background-color: var(--pf-color-bg-secondary);
-		color: var(--pf-color-fg);
-		font-size: var(--pf-font-size-base);
-		font-family: var(--pf-font-family);
 	}
 
 	body {
