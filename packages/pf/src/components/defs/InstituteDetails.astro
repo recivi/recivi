@@ -63,7 +63,10 @@ const Heading = `h${1 + headingOffset}`;
 
 		{
 			institute.summary ? (
-				<p class="print-only" set:html={institute.summary} />
+				<p
+					class:list={{ "print-only": institute.description }}
+					set:html={institute.summary}
+				/>
 			) : undefined
 		}
 

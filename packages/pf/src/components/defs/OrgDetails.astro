@@ -55,7 +55,14 @@ const Heading = `h${1 + headingOffset}`;
 			) : undefined
 		}
 
-		{org.summary ? <p class="print-only" set:html={org.summary} /> : undefined}
+		{
+			org.summary ? (
+				<p
+					class:list={{ "print-only": org.description }}
+					set:html={org.summary}
+				/>
+			) : undefined
+		}
 
 		{
 			org.roles

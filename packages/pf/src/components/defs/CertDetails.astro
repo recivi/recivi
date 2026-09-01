@@ -56,7 +56,14 @@ const Heading = `h${1 + headingOffset}`;
 		) : undefined
 	}
 
-	{cert.summary ? <p class="print-only" set:html={cert.summary} /> : undefined}
+	{
+		cert.summary ? (
+			<p
+				class:list={{ "print-only": cert.description }}
+				set:html={cert.summary}
+			/>
+		) : undefined
+	}
 
 	{
 		cert.courses.length ? (

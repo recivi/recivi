@@ -90,7 +90,14 @@ const Heading = `h${1 + headingOffset}`;
 		) : undefined
 	}
 
-	{role.summary ? <p class="print-only" set:html={role.summary} /> : undefined}
+	{
+		role.summary ? (
+			<p
+				class:list={{ "print-only": role.description }}
+				set:html={role.summary}
+			/>
+		) : undefined
+	}
 
 	{
 		role.highlights?.length ? (

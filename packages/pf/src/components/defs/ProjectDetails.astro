@@ -61,7 +61,10 @@ const Heading = `h${1 + headingOffset}`;
 
 	{
 		project.summary ? (
-			<p class="print-only" set:html={project.summary} />
+			<p
+				class:list={{ "print-only": project.description }}
+				set:html={project.summary}
+			/>
 		) : undefined
 	}
 
