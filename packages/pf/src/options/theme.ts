@@ -43,6 +43,9 @@ export const themeSchema = z
 			.register(primaryRegistry, {
 				description: "color to set as the theme via `<meta>` tags",
 			}),
+		og: z.enum(["light", "dark"]).optional().default("dark").register(primaryRegistry, {
+			description: "the theme to use for Open Graph images",
+		}),
 	})
 	.register(primaryRegistry, {
 		id: "Theme",

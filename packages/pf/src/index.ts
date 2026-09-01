@@ -261,7 +261,7 @@ function createHooks(rawOptions: Options): AstroIntegration["hooks"] {
 
 			const dirPath = fileURLToPath(params.dir);
 			if (projectContext.site)
-				await generateOg(projectContext, dirPath, params.pages, params.logger);
+				await generateOg(options.theme.og, projectContext, dirPath, params.pages, params.logger);
 			await generatePdf(projectContext, dirPath, params.pages, params.logger);
 		},
 	};
