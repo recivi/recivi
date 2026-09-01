@@ -14,7 +14,7 @@
 	"dependencies": {
 		"@astrojs/check": "^0.9.10",
 		"@recivi/pf": "^0.0.4",
-		"@recivi/schema": "^0.0.5",
+		"@recivi/schema": "^0.0.6",
 		"astro": "^7.2.9",
 		"sharp": "^0.34.5"
 	},

@@ -93,7 +93,7 @@ importers:
         specifier: ^0.0.4
         version: link:../../packages/pf
       '@recivi/schema':
-        specifier: ^0.0.5
+        specifier: ^0.0.6
         version: link:../../packages/schema
       astro:
         specifier: ^7.2.9
