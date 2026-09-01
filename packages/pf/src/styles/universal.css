@@ -203,6 +203,9 @@
 		border: 1px solid var(--pf-color-border);
 		border-radius: var(--pf-spacing);
 		padding: calc(0.5 * var(--pf-spacing));
+		margin-block: 1px;
+		display: inline-block;
+		line-height: 1;
 	}
 
 	kbd {
