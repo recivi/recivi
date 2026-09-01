@@ -29,6 +29,12 @@
 		overflow-wrap: break-word;
 	}
 
+	/* Remove colors and underlines from links. */
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
 	/* Isolate root stacking context. */
 	#root,
 	#__next {

@@ -107,9 +107,6 @@
 	/* Anchors */
 
 	a {
-		color: inherit;
-		text-decoration: none;
-
 		@media screen {
 			text-decoration: underline;
 			text-decoration-color: var(--pf-color-anchor-new);
