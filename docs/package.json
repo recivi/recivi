@@ -10,12 +10,12 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/markdown-satteri": "^0.3.2",
-		"@astrojs/starlight": "^0.41.4",
+		"@astrojs/markdown-satteri": "^0.4.0",
+		"@astrojs/starlight": "^0.42.0",
 		"astro": "catalog:",
 		"marked": "^18.0.9",
-		"satteri": "^0.9.3",
-		"starlight-links-validator": "^0.25.2"
+		"satteri": "^0.10.5",
+		"starlight-links-validator": "^0.26.0"
 	},
 	"packageManager": "pnpm@11.15.1"
 }
