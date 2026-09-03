@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { type Tag, tagSchema } from "@/models/base/tag";
 import { primaryRegistry } from "@/registries/primary";
 
 export const formalSkillSchema = z.object({
@@ -10,6 +11,10 @@ export const formalSkillSchema = z.object({
 	name: z.string().register(primaryRegistry, {
 		description: "the name of the skill",
 	}),
+	tags: z.array(tagSchema).optional().default([]).register(primaryRegistry, {
+		description:
+			"tags to apply to this skill; The use of tags is left up to the application (for example, the portfolio uses tags for PDF résumés).",
+	}),
 	get subSkills(): z.ZodDefault<z.ZodOptional<z.ZodArray<typeof skillSchema>>> {
 		return z.array(skillSchema).optional().default([]).register(primaryRegistry, {
 			description: "a list of skills that are considered as sub-parts of this one",
@@ -17,7 +22,9 @@ export const formalSkillSchema = z.object({
 	},
 });
 
-export type FormalSkill = z.infer<typeof formalSkillSchema>;
+export type FormalSkill = Omit<z.infer<typeof formalSkillSchema>, "tags"> & {
+	tags: Tag[];
+};
 type _FormalSkill = z.input<typeof formalSkillSchema>;
 
 primaryRegistry.add(formalSkillSchema, {
@@ -27,15 +34,18 @@ primaryRegistry.add(formalSkillSchema, {
 		{
 			id: "javascript",
 			name: "JavaScript",
+			tags: ["language"],
 			subSkills: [
 				{
 					id: "vuedotjs",
 					name: "Vue.js",
+					tags: ["framework"],
 					subSkills: ["Nuxt.js" satisfies _Skill],
 				} satisfies _FormalSkill,
 				{
 					id: "react",
 					name: "React",
+					tags: ["framework"],
 				} satisfies _FormalSkill,
 			],
 		} satisfies _FormalSkill,
@@ -51,7 +61,9 @@ export const skillSchema = z.union([
 	formalSkillSchema,
 ]);
 
-export type Skill = z.infer<typeof skillSchema>;
+// `Omit` does not distribute over a union, so the `tags` override has to be
+// applied to the formal branch rather than to the union as a whole.
+export type Skill = string | FormalSkill;
 type _Skill = z.input<typeof skillSchema>;
 
 primaryRegistry.add(skillSchema, {
