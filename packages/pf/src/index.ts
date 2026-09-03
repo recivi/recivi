@@ -5,6 +5,7 @@
 //
 // oxlint-disable typescript/triple-slash-reference
 /// <reference path="./virtual.d.ts"/>
+/// <reference path="./layouts.d.ts"/>
 /// <reference path="./components.d.ts"/>
 
 import { fileURLToPath } from "node:url";
@@ -123,6 +124,17 @@ function setVirtualImports(
 		"pf/components": Object.entries(options.components)
 			.map(([name, path]) => `export { default as ${name} } from '${path}';`)
 			.join("\n"),
+
+		// Each layout gets its own virtual module. A single barrel module would pull
+		// every layout (and therefore every layout's CSS) into the module graph of
+		// any page that uses just one of them.
+		...Object.fromEntries(
+			Object.entries(options.layouts).map(([layoutName, path]) => [
+				`pf/layouts/${layoutName}`,
+				`export { default } from '${path}';`,
+			]),
+		),
+
 		...Object.fromEntries(
 			layoutNames.map((layoutName) => [
 				`pf/custom-css/${layoutName}`,

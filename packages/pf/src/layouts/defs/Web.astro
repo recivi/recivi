@@ -19,6 +19,7 @@ import "virtual:pf/custom-css/Web";
 import "../../styles/web.css";
 
 import { Elements, Footer, Header, Void } from "virtual:pf/components";
+import Root from "virtual:pf/layouts/Root";
 
 import { getIconLinkTags } from "../../utils/links";
 import {
@@ -28,7 +29,6 @@ import {
 	getWebsiteMetaTags,
 } from "../../utils/metas";
 import type { WebProps } from "../props/Web";
-import Root from "./Root.astro";
 
 type Props = WebProps;
 const { frontmatter, main = {}, ...attrs } = Astro.props;

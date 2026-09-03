@@ -1,6 +1,6 @@
 import { z } from "astro/zod";
 
-import { layoutNames, type LayoutName } from "../layouts";
+import { layoutNames, type LayoutName } from "../layouts/index";
 import { primaryRegistry } from "../registries/primary";
 
 const layerNames = [

@@ -6,6 +6,7 @@ import { cssSchema } from "./css";
 import { faviconSchema } from "./favicon";
 import { headSchema } from "./head";
 import { iconsSchema } from "./icons";
+import { layoutsSchema } from "./layouts";
 import { localeSchema } from "./locale";
 import { themeSchema } from "./theme";
 
@@ -73,6 +74,11 @@ export const optionsSchema = z
 		/** the custom component overrides for the site */
 		components: componentsSchema.optional().prefault({}).register(primaryRegistry, {
 			description: "the custom component overrides for the site",
+		}),
+
+		/** the custom layout overrides for the site */
+		layouts: layoutsSchema.optional().prefault({}).register(primaryRegistry, {
+			description: "the custom layout overrides for the site",
 		}),
 	})
 	.register(primaryRegistry, {

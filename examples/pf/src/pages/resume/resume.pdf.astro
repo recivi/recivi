@@ -6,9 +6,8 @@ import {
 	OrgDetails,
 	SkillList,
 } from "virtual:pf/components";
+import Print from "virtual:pf/layouts/Print";
 import reciviData from "virtual:recivi/data";
-
-import Print from "@recivi/pf/layouts/defs/Print.astro";
 
 const institutes = reciviData.education.filter((institute) =>
 	institute.certs.some((cert) => cert.tags.includes("resume_pdf")),

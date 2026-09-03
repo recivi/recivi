@@ -4,10 +4,10 @@ import "../../styles/print.css";
 
 import { Letterhead } from "virtual:pf/components";
 import config from "virtual:pf/config";
+import Root from "virtual:pf/layouts/Root";
 
 import { getFullPageTitle } from "../../utils/metas";
 import type { PrintProps } from "../props/Print";
-import Root from "./Root.astro";
 
 type Props = PrintProps;
 const { title = "Print", ...attrs } = Astro.props;
