@@ -52,25 +52,19 @@ const { title, description, breadcrumbs, right } = Astro.props;
 ---
 
 <Og>
-	<div>
-		<div class="header">
-			<span class="home">{config.title ?? reciviData.bio.name}</span>
-			{
-				breadcrumbs ? (
-					<span class="breadcrumbs">/{breadcrumbs}</span>
-				) : undefined
-			}
-			<span class="right" set:html={right} />
+	<div class="header">
+		<span class="home">{config.title ?? reciviData.bio.name}</span>
+		{breadcrumbs ? <span class="breadcrumbs">/{breadcrumbs}</span> : undefined}
+		<span class="right" set:html={right} />
+	</div>
+
+	<main>
+		<div class="title">
+			{typeof title === "string" ? title : <Entity {...title} />}
 		</div>
 
-		<main>
-			<div class="title">
-				{typeof title === "string" ? title : <Entity {...title} />}
-			</div>
-
-			<div class="description" set:html={description} />
-		</main>
-	</div>
+		<div class="description" set:html={description} />
+	</main>
 </Og>
 
 <style>
