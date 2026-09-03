@@ -10,8 +10,7 @@ import { jsDateToRcvDate } from "@recivi/schema/utils";
 import type { PfDateProps } from "../props/PfDate";
 
 type Props = PfDateProps;
-const { class: className, ...attrs } = Astro.props;
-let { date } = Astro.props;
+let { date, class: className, ...attrs } = Astro.props;
 
 if (date instanceof Date) {
 	// The given date is a JavaScript Date object.
@@ -38,7 +37,6 @@ const readableDate = formatDateForUsage("reading");
 <style>
 	@layer pf-components {
 		.pf-date {
-			display: inline-flex;
 			font-family: var(--pf-font-family-monospace);
 			font-size: var(--pf-font-size-monospace);
 
