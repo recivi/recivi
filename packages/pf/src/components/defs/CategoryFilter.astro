@@ -29,11 +29,7 @@ const categories = await getCategories();
 				))}
 			</fieldset>
 		</div>
-	) : (
-		<p class:list={["pf-category-filter", "null", className]} {...attrs}>
-			<em>∅ There are no categories at the moment.</em>
-		</p>
-	)
+	) : undefined
 }
 
 <style>
