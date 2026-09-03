@@ -3,11 +3,27 @@ import { OrgCard, Table } from "virtual:pf/components";
 import reciviData from "virtual:recivi/data";
 
 import { getRolesTable } from "../../recivi/table";
+import type { BaseProps } from "../../types/props";
+
+type Props = BaseProps;
+const { class: className, ...attrs } = Astro.props;
 
 const rolesTable = getRolesTable();
 ---
 
-<Table class="over-640px" table={rolesTable} />
-<div class="under-640px">
-	{reciviData.work.map((org) => <OrgCard {org} />)}
+<Table
+	class:list={["pf-roles-table", "over-640px", className]}
+	table={rolesTable}
+	{...attrs}
+>
+	<slot />
+</Table>
+<div class="pf-org-cards under-640px">
+	{
+		reciviData.work.length ? (
+			reciviData.work.map((org) => <OrgCard {org} />)
+		) : (
+			<slot />
+		)
+	}
 </div>

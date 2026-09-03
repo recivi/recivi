@@ -15,16 +15,6 @@ const posts = (await getCollection("blog", isNotDraft)).toSorted(
 const postsTable = getPostsTable(posts, { groupBy: "month" });
 ---
 
-{
-	posts.length ? (
-		<Table
-			class:list={["pf-posts-table", className]}
-			table={postsTable}
-			{...attrs}
-		/>
-	) : (
-		<p class:list={["pf-posts-table", "null", className]} {...attrs}>
-			<em>∅ There are no blog posts at the moment.</em>
-		</p>
-	)
-}
+<Table class:list={["pf-posts-table", className]} table={postsTable} {...attrs}>
+	<slot />
+</Table>

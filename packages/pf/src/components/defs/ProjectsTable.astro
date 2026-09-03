@@ -3,11 +3,27 @@ import { EpicCard, Table } from "virtual:pf/components";
 import reciviData from "virtual:recivi/data";
 
 import { getProjectsTable } from "../../recivi/table";
+import type { BaseProps } from "../../types/props";
+
+type Props = BaseProps;
+const { class: className, ...attrs } = Astro.props;
 
 const projectsTable = getProjectsTable();
 ---
 
-<Table class="over-640px" table={projectsTable} />
-<div class="under-640px">
-	{reciviData.creations.map((epic) => <EpicCard {epic} />)}
+<Table
+	class:list={["pf-projects-table", "over-640px", className]}
+	table={projectsTable}
+	{...attrs}
+>
+	<slot />
+</Table>
+<div class="pf-epic-cards under-640px">
+	{
+		reciviData.creations.length ? (
+			reciviData.creations.map((epic) => <EpicCard {epic} />)
+		) : (
+			<slot />
+		)
+	}
 </div>

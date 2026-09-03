@@ -19,7 +19,7 @@ import { isPeriodProps } from "../props/Period";
 import { isPfDateProps } from "../props/PfDate";
 import { isPostProps } from "../props/Post";
 import type { TableProps } from "../props/Table";
-import { isTechStackProps } from "../props/TechStack";
+import { isTechStackProps as isStackProps } from "../props/TechStack";
 
 const {
 	table: { rows, columnSpecs, expandingColumn },
@@ -28,84 +28,90 @@ const {
 } = Astro.props as TableProps<Record<string, ColumnSpec>>;
 ---
 
-<!-- `null` is used because `JSON.stringify` drops keys if value is `undefined`. -->
-<table
-	class:list={["pf-table", className]}
-	x-data={JSON.stringify({ hoveredGroupId: null })}
-	x-bind:data-has-hovered-group="hoveredGroupId !== null"
-	x-on:mouseleave="hoveredGroupId = null"
-	{...attrs}
->
-	<thead>
-		<tr>
-			{
-				Object.entries(columnSpecs).map(
-					([columnId, { title, class: className }]) => (
-						<th class:list={[{ fit: expandingColumn !== columnId }, className]}>
-							{title}
-						</th>
-					),
-				)
-			}
-		</tr>
-	</thead>
-	<tbody>
-		{
-			rows.map((row, idx, allRows) => {
-				const isLastSibling =
-					idx < allRows.length - 1 && row.groupId !== allRows[idx + 1]?.groupId;
-				return (
-					<tr
-						data-row-group-id={row.groupId}
-						{...row.attrs}
-						class:list={[{ "last-of-group": isLastSibling }]}
-						x-bind:data-belongs-to-hovered-group="hoveredGroupId === $el.dataset.rowGroupId"
-						x-on:mouseenter="hoveredGroupId = $el.dataset.rowGroupId"
-					>
-						{Object.entries(columnSpecs).map(
-							([columnId, { renderer, class: className }]) => {
-								const value = row.data[columnId];
-								const prevValue = allRows[idx - 1]?.data[columnId];
-								const isRepeat =
-									idx > 0 && util.isDeepStrictEqual(value, prevValue);
-								return (
-									<td
-										class:list={[
-											{ fit: expandingColumn !== columnId },
-											className,
-										]}
-										data-is-repeat={isRepeat || undefined}
-									>
-										{value === undefined && import.meta.env.DEV ? (
-											<span class="dev" title="Only visible during dev">
-												und
-											</span>
-										) : renderer === "Anchor" && isAnchorProps(value) ? (
-											<Anchor {...value}>link</Anchor>
-										) : renderer === "PfDate" && isPfDateProps(value) ? (
-											<PfDate {...value} />
-										) : renderer === "Entity" && isEntityProps(value) ? (
-											<Entity {...value} />
-										) : renderer === "Period" && isPeriodProps(value) ? (
-											<Period {...value} />
-										) : renderer === "TechStack" && isTechStackProps(value) ? (
-											<TechStack {...value} />
-										) : renderer === "Post" && isPostProps(value) ? (
-											<Post {...value} />
-										) : (
-											// Renderer is 'Text'.
-											value
-										)}
-									</td>
-								);
-							},
-						)}
-					</tr>
-				);
-			})
-		}
-	</tbody>
-</table>
+{
+	rows.length ? (
+		<table
+			class:list={["pf-table", className]}
+			x-data={JSON.stringify({ hoveredGroupId: null })}
+			x-bind:data-has-hovered-group="hoveredGroupId !== null"
+			x-on:mouseleave="hoveredGroupId = null"
+			{...attrs}
+		>
+			<thead>
+				<tr>
+					{Object.entries(columnSpecs).map(
+						([columnId, { title, class: className }]) => (
+							<th
+								class:list={[{ fit: expandingColumn !== columnId }, className]}
+							>
+								{title}
+							</th>
+						),
+					)}
+				</tr>
+			</thead>
+			<tbody>
+				{rows.map((row, idx, allRows) => {
+					const isLastSibling =
+						idx < allRows.length - 1 &&
+						row.groupId !== allRows[idx + 1]?.groupId;
+					return (
+						<tr
+							data-row-group-id={row.groupId}
+							{...row.attrs}
+							class:list={[{ "last-of-group": isLastSibling }]}
+							x-bind:data-belongs-to-hovered-group="hoveredGroupId === $el.dataset.rowGroupId"
+							x-on:mouseenter="hoveredGroupId = $el.dataset.rowGroupId"
+						>
+							{Object.entries(columnSpecs).map(
+								([columnId, { renderer, class: className }]) => {
+									const value = row.data[columnId];
+									const prevValue = allRows[idx - 1]?.data[columnId];
+									const isRepeat =
+										idx > 0 && util.isDeepStrictEqual(value, prevValue);
+									return (
+										<td
+											class:list={[
+												{ fit: expandingColumn !== columnId },
+												className,
+											]}
+											data-is-repeat={isRepeat || undefined}
+										>
+											{value === undefined && import.meta.env.DEV ? (
+												<span class="dev" title="Only visible during dev">
+													und
+												</span>
+											) : renderer === "Anchor" && isAnchorProps(value) ? (
+												<Anchor {...value}>link</Anchor>
+											) : renderer === "PfDate" && isPfDateProps(value) ? (
+												<PfDate {...value} />
+											) : renderer === "Entity" && isEntityProps(value) ? (
+												<Entity {...value} />
+											) : renderer === "Period" && isPeriodProps(value) ? (
+												<Period {...value} />
+											) : renderer === "TechStack" && isStackProps(value) ? (
+												<TechStack {...value} />
+											) : renderer === "Post" && isPostProps(value) ? (
+												<Post {...value} />
+											) : (
+												// Renderer is 'Text'.
+												value
+											)}
+										</td>
+									);
+								},
+							)}
+						</tr>
+					);
+				})}
+			</tbody>
+		</table>
+	) : (
+		<div class:list={["pf-table-empty", className]} {...attrs}>
+			<slot />
+		</div>
+	)
+}
 
 <style>
 	@layer pf-components {

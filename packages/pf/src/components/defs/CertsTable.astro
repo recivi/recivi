@@ -3,11 +3,27 @@ import { InstituteCard, Table } from "virtual:pf/components";
 import reciviData from "virtual:recivi/data";
 
 import { getCertsTable } from "../../recivi/table";
+import type { BaseProps } from "../../types/props";
+
+type Props = BaseProps;
+const { class: className, ...attrs } = Astro.props;
 
 const certsTable = getCertsTable();
 ---
 
-<Table class="over-640px" table={certsTable} />
-<div class="under-640px">
-	{reciviData.education.map((institute) => <InstituteCard {institute} />)}
+<Table
+	class:list={["pf-certs-table", "over-640px", className]}
+	table={certsTable}
+	{...attrs}
+>
+	<slot />
+</Table>
+<div class="pf-institute-cards under-640px">
+	{
+		reciviData.education.length ? (
+			reciviData.education.map((institute) => <InstituteCard {institute} />)
+		) : (
+			<slot />
+		)
+	}
 </div>
