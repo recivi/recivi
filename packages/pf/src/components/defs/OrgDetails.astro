@@ -4,6 +4,7 @@
 import { Anchor, Entity, RoleDetails } from "virtual:pf/components";
 
 import { formatAddress } from "@recivi/schema/display";
+import { matchesTag } from "@recivi/schema/utils";
 
 import type { OrgDetailsProps } from "../props/OrgDetails";
 
@@ -66,7 +67,7 @@ const Heading = `h${1 + headingOffset}`;
 
 		{
 			org.roles
-				.filter((role) => !filterTag || role.tags.includes(filterTag))
+				.filter((role) => matchesTag(role.tags, filterTag))
 				.map((role) => <RoleDetails {role} headingOffset={headingOffset + 1} />)
 		}
 	</div>

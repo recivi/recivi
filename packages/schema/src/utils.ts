@@ -3,7 +3,7 @@
  * types.
  */
 
-import type { Url, Date, Institute, Org, Epic, LanguageProficiency, Language } from "@/index";
+import type { Url, Date, Institute, Org, Epic, LanguageProficiency, Language, Tag } from "@/index";
 
 // Entities
 // ========
@@ -166,4 +166,20 @@ export function getOverallProficiency(language: Language): LanguageProficiency |
 	overallScore = Math.min(overallScore, speakScore + 1);
 
 	return getScoreProficiency(overallScore);
+}
+
+// Tags
+// ====
+
+/**
+ * Check whether a tagged entity should be included in the
+ * output. Returns true if no filter tag is set, or if the
+ * entity's tags contain the filter tag.
+ *
+ * @param tags the tags on the entity
+ * @param filterTag the tag to filter by; if undefined, all entities pass
+ * @returns whether the entity should be included
+ */
+export function matchesTag(tags: Tag[], filterTag?: string): boolean {
+	return !filterTag || tags.includes(filterTag);
 }

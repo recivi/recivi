@@ -15,7 +15,6 @@ import type {
 	RoleLocation,
 	RoleType,
 	Skill,
-	Tag,
 	Url,
 } from "@/index";
 import { urlDest, dateParts, getOverallProficiency } from "@/utils";
@@ -189,22 +188,6 @@ const LANGUAGE_PROFICIENCY_DISPLAYS: Record<LanguageProficiency, string> = {
  */
 export function formatProficiency(proficiency: LanguageProficiency): string {
 	return LANGUAGE_PROFICIENCY_DISPLAYS[proficiency];
-}
-
-// Tags
-// ====
-
-/**
- * Check whether a tagged entity should be included in the
- * output. Returns true if no filter tag is set, or if the
- * entity's tags contain the filter tag.
- *
- * @param tags the tags on the entity
- * @param filterTag the tag to filter by; if undefined, all entities pass
- * @returns whether the entity should be included
- */
-export function matchesTag(tags: Tag[], filterTag?: string): boolean {
-	return !filterTag || tags.includes(filterTag);
 }
 
 // Skills

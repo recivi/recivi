@@ -4,6 +4,7 @@
 import { Anchor, CertDetails, Entity } from "virtual:pf/components";
 
 import { formatAddress } from "@recivi/schema/display";
+import { matchesTag } from "@recivi/schema/utils";
 
 import type { InstituteDetailsProps } from "../props/InstituteDetails";
 
@@ -72,7 +73,7 @@ const Heading = `h${1 + headingOffset}`;
 
 		{
 			institute.certs
-				.filter((cert) => !filterTag || cert.tags.includes(filterTag))
+				.filter((cert) => matchesTag(cert.tags, filterTag))
 				.map((cert) => <CertDetails {cert} headingOffset={headingOffset + 1} />)
 		}
 	</div>

@@ -4,6 +4,8 @@
 import { Anchor, Brand } from "virtual:pf/components";
 import reciviData from "virtual:recivi/data";
 
+import { matchesTag } from "@recivi/schema/utils";
+
 import {
 	emailToComm,
 	phoneToComm,
@@ -22,7 +24,7 @@ const siteComm = webToComm();
 const emailComms = emails.map((email) => emailToComm(email));
 const phoneComms = phones.map((phone) => phoneToComm(phone));
 const profileComms = profiles
-	.filter((profile) => !filterTag || profile.tags.includes(filterTag))
+	.filter((profile) => matchesTag(profile.tags, filterTag))
 	.map((profile) => profileToComm(profile));
 ---
 
