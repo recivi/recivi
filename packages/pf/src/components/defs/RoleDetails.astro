@@ -86,14 +86,14 @@ const Heading = `h${1 + headingOffset}`;
 
 	{
 		role.description ? (
-			<p class="web-only" set:html={role.description} />
+			<p class="description web-only" set:html={role.description} />
 		) : undefined
 	}
 
 	{
 		role.summary ? (
 			<p
-				class:list={{ "print-only": role.description }}
+				class:list={["summary", { "print-only": role.description }]}
 				set:html={role.summary}
 			/>
 		) : undefined

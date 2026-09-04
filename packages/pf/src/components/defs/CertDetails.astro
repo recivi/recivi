@@ -52,14 +52,14 @@ const Heading = `h${1 + headingOffset}`;
 
 	{
 		cert.description ? (
-			<p class="web-only" set:html={cert.description} />
+			<p class="description web-only" set:html={cert.description} />
 		) : undefined
 	}
 
 	{
 		cert.summary ? (
 			<p
-				class:list={{ "print-only": cert.description }}
+				class:list={["summary", { "print-only": cert.description }]}
 				set:html={cert.summary}
 			/>
 		) : undefined

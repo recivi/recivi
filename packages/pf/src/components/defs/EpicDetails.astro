@@ -63,14 +63,14 @@ const Heading = `h${1 + headingOffset}`;
 	<div class="content">
 		{
 			epic.description ? (
-				<p class="web-only" set:html={epic.description} />
+				<p class="description web-only" set:html={epic.description} />
 			) : undefined
 		}
 
 		{
 			epic.summary ? (
 				<p
-					class:list={{ "print-only": epic.description }}
+					class:list={["summary", { "print-only": epic.description }]}
 					set:html={epic.summary}
 				/>
 			) : undefined
