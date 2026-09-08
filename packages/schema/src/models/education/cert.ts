@@ -17,7 +17,7 @@ export const certSchema = z
 		field: z.string().optional().register(primaryRegistry, {
 			description: "the field of study in which the certificate was obtained",
 		}),
-		period: periodSchema.clone().register(primaryRegistry, {
+		period: periodSchema.clone().optional().register(primaryRegistry, {
 			description: "the period of study for the certificate",
 		}),
 		issue: dateSchema.clone().register(primaryRegistry, {
@@ -88,10 +88,10 @@ export const certSchema = z
 	});
 
 export type Cert = Omit<z.infer<typeof certSchema>, "period" | "issue" | "expiration" | "tags"> & {
-	period: Period;
 	issue: RcvDate;
 } & {
 	tags: Tag[];
 } & PartialWithUndefined<{
+		period: Period;
 		expiration: RcvDate;
 	}>;
