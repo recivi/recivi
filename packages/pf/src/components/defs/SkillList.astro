@@ -5,17 +5,47 @@ import { Skill } from "virtual:pf/components";
 import config from "virtual:pf/config";
 import reciviData from "virtual:recivi/data";
 
+import type { Skill as RcvSkill } from "@recivi/schema";
 import { formatSkills } from "@recivi/schema/display";
+import { matchesTag } from "@recivi/schema/utils";
 
-import type { BaseProps } from "../../types/props";
+import type { SkillListProps } from "../props/SkillList";
 
-type Props = BaseProps;
-const { class: className, ...attrs } = Astro.props;
+type Props = SkillListProps;
+const { filterTag, class: className, ...attrs } = Astro.props;
+
+/**
+ * Filter a skill and its sub-skills based on the provided filter tag.
+ *
+ * A skill is retained if it matches the filter tag (in which case it's entire
+ * tree is retained) or if there are any sub-skills that remain after being
+ * filtered by the same logic (in which case only the matching sub-skills are
+ * retained).
+ *
+ * @param skill the skill to filter
+ * @returns The filtered skill or undefined if it doesn't match the filter tag.
+ */
+function filterSkill(skill: RcvSkill): RcvSkill | undefined {
+	if (typeof skill === "string")
+		return matchesTag([], filterTag) ? skill : undefined;
+
+	if (matchesTag(skill.tags, filterTag)) return skill;
+
+	const subSkills = skill.subSkills
+		.map((subSkill) => filterSkill(subSkill))
+		.filter((subSkill) => subSkill !== undefined);
+
+	return subSkills.length > 0 ? { ...skill, subSkills } : undefined;
+}
+
+const skills = reciviData.skills
+	.map((skill) => filterSkill(skill))
+	.filter((skill) => skill !== undefined);
 ---
 
 <ul class:list={["pf-skill-list", "web-only", className]} {...attrs}>
 	{
-		reciviData.skills.map((skill) => (
+		skills.map((skill) => (
 			<li>
 				<Skill {skill} />
 			</li>
@@ -23,5 +53,5 @@ const { class: className, ...attrs } = Astro.props;
 	}
 </ul>
 <p class:list={["pf-skill-list", "print-only", className]} {...attrs}>
-	{formatSkills(reciviData.skills, config.locale.bcp47)}
+	{formatSkills(skills, config.locale.bcp47)}
 </p>
