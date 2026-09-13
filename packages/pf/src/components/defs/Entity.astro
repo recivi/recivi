@@ -15,14 +15,21 @@ const {
 	entity,
 	useInternalLink = false,
 	useShortName = false,
+	stripInstituteIcon = true,
 	class: className,
 	...attrs
 } = Astro.props;
 
-// Most institutes don't have a logo and even if they do, it won't be in any
-// ready-made icon packs like Lucide or Simple Icons.
+// Most institutes either
+// - don't have a logo at all
+// - have a complex logo that doesn't scale down well to icon size
+// - don't provide SVG assets of the logo
+// - don't have their logo present in any ready-made icon pack
+//
+// So the default choice for institutes is to strip the icon unless the user
+// explicitly passes the prop to keep it.
 const icon =
-	!isInstitute(entity) && entity.id
+	entity.id && !(isInstitute(entity) && stripInstituteIcon)
 		? { name: entity.id, title: entity.name }
 		: undefined;
 

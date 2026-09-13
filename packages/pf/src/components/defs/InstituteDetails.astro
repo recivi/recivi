@@ -23,7 +23,7 @@ const Heading = `h${1 + headingOffset}`;
 <div class:list={["pf-institute-details", className]} {...attrs}>
 	<div class="institute-header">
 		<Heading>
-			<Entity entity={{ ...institute, id: undefined }} />
+			<Entity entity={institute} />
 		</Heading>
 		{
 			institute.address ? (

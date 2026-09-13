@@ -7,6 +7,8 @@ export interface EntityProps extends BaseProps {
 	entity: Org | Epic | Institute;
 	/** whether the entity should use internal links */
 	useInternalLink?: boolean;
+	/** whether to drop the icon for institutes */
+	stripInstituteIcon?: boolean;
 }
 
 /**
