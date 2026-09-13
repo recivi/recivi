@@ -17,13 +17,6 @@
 		}
 	}
 
-	html {
-		@media screen {
-			transform: scale(var(--pf-print-preview-scale));
-			transform-origin: top left;
-		}
-	}
-
 	body {
 		display: flex; /* to make sure child borders are considered in size */
 		inline-size: calc(var(--pf-print-inline-size) - 2 * var(--pf-print-margin-inline));
@@ -35,6 +28,8 @@
 			padding-inline: var(--pf-print-margin-inline);
 			padding-block: var(--pf-print-margin-block);
 			position: relative;
+			transform: scale(var(--pf-print-preview-scale));
+			transform-origin: top left;
 
 			&::before {
 				content: "";
