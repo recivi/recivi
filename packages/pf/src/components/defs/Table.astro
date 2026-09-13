@@ -7,6 +7,7 @@ import {
 	Period,
 	PfDate,
 	Post,
+	SubEntity,
 	TechStack,
 } from "virtual:pf/components";
 
@@ -18,6 +19,7 @@ import { isEntityProps } from "../props/Entity";
 import { isPeriodProps } from "../props/Period";
 import { isPfDateProps } from "../props/PfDate";
 import { isPostProps } from "../props/Post";
+import { isSubEntityProps as isSubProps } from "../props/SubEntity";
 import type { TableProps } from "../props/Table";
 import { isTechStackProps as isStackProps } from "../props/TechStack";
 
@@ -89,6 +91,8 @@ const {
 												<Entity {...value} />
 											) : renderer === "Period" && isPeriodProps(value) ? (
 												<Period {...value} />
+											) : renderer === "SubEntity" && isSubProps(value) ? (
+												<SubEntity {...value} />
 											) : renderer === "TechStack" && isStackProps(value) ? (
 												<TechStack {...value} />
 											) : renderer === "Post" && isPostProps(value) ? (

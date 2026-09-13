@@ -35,6 +35,7 @@ declare module "virtual:pf/components" {
 	export const RolesTable: typeof import("./components/defs/RolesTable.astro").default;
 	export const Skill: typeof import("./components/defs/Skill.astro").default;
 	export const SkillList: typeof import("./components/defs/SkillList.astro").default;
+	export const SubEntity: typeof import("./components/defs/SubEntity.astro").default;
 	export const Table: typeof import("./components/defs/Table.astro").default;
 	export const TechStack: typeof import("./components/defs/TechStack.astro").default;
 	export const Toc: typeof import("./components/defs/Toc.astro").default;

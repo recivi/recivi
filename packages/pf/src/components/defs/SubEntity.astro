@@ -1,0 +1,19 @@
+---
+// Render the name of a sub-entity as an anchor link to the parent entity's page.
+// This component is also a table renderer.
+
+import { Anchor } from "virtual:pf/components";
+
+import { getResumeEntityUrl } from "../../utils/dynamic_pages";
+import type { SubEntityProps } from "../props/SubEntity";
+
+type Props = SubEntityProps;
+const { subEntity, parent, class: className, ...attrs } = Astro.props;
+
+const parentUrl = getResumeEntityUrl(parent);
+const url = `${parentUrl}#${subEntity.id}`;
+---
+
+<Anchor class={["pf-sub-entity", className]} {url} {...attrs}>
+	{subEntity.name}
+</Anchor>

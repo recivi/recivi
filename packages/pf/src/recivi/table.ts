@@ -13,7 +13,7 @@ export function getCertsTable() {
 	return defineTable(
 		{
 			institute: { title: "Institute", renderer: "Entity" },
-			degree: { title: "Degree", renderer: "Text" },
+			degree: { title: "Degree", renderer: "SubEntity" },
 			issue: { title: "Issued", renderer: "PfDate", class: "align-end" },
 		},
 		reciviData.education.flatMap((institute) =>
@@ -29,7 +29,7 @@ export function getCertsTable() {
 							entity: institute,
 							useInternalLink: nav.resume.institute.pattern !== undefined,
 						},
-						degree,
+						degree: { subEntity: { id: cert.id, name: degree }, parent: institute },
 						issue: { date: cert.issue },
 					},
 				};
@@ -48,7 +48,7 @@ export function getRolesTable() {
 	return defineTable(
 		{
 			org: { title: "Org", renderer: "Entity" },
-			role: { title: "Role", renderer: "Text" },
+			role: { title: "Role", renderer: "SubEntity" },
 			epic: { title: "Epic", renderer: "Entity" },
 			period: { title: "Period", renderer: "Period" },
 		},
@@ -59,7 +59,7 @@ export function getRolesTable() {
 					groupId: org.id ?? org.name,
 					data: {
 						org: { entity: org, useInternalLink: nav.resume.org.pattern !== undefined },
-						role: role.name,
+						role: { subEntity: role, parent: org },
 						epic: epic ? { entity: epic } : undefined,
 						period: role.period ? { period: role.period } : undefined,
 					},
@@ -79,7 +79,7 @@ export function getProjectsTable() {
 	return defineTable(
 		{
 			epic: { title: "Epic", renderer: "Entity" },
-			project: { title: "Project", renderer: "Text" },
+			project: { title: "Project", renderer: "SubEntity" },
 			link: { title: "Link", renderer: "Anchor" },
 			org: { title: "Org", renderer: "Entity" },
 			tech: { title: "Tech", renderer: "TechStack" },
@@ -91,7 +91,7 @@ export function getProjectsTable() {
 					groupId: epic.id ?? epic.name,
 					data: {
 						epic: { entity: epic, useInternalLink: nav.resume.epic.pattern !== undefined },
-						project: project.name,
+						project: { subEntity: project, parent: epic },
 						link: project.url ? { url: project.url } : undefined,
 						org: org ? { entity: org, useShortName: true } : undefined,
 						tech: { technologies: project.technologies },

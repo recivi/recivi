@@ -35,6 +35,7 @@ export const componentNames = [
 	"RolesTable",
 	"Skill",
 	"SkillList",
+	"SubEntity",
 	"Table",
 	"TechStack",
 	"Toc",

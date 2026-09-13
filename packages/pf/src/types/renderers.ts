@@ -3,6 +3,7 @@ import type { EntityProps } from "../components/props/Entity";
 import type { PeriodProps } from "../components/props/Period";
 import type { PfDateProps } from "../components/props/PfDate";
 import type { PostProps } from "../components/props/Post";
+import type { SubEntityProps } from "../components/props/SubEntity";
 import type { TechStackProps } from "../components/props/TechStack";
 import type { WithUndefinedValues } from "./utils";
 
@@ -17,6 +18,7 @@ export type RendererRegistry = WithUndefinedValues<{
 	Period: PeriodProps;
 	PfDate: PfDateProps;
 	Post: PostProps;
+	SubEntity: SubEntityProps;
 	TechStack: TechStackProps;
 	Text: string;
 }>;
