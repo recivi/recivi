@@ -1,17 +1,18 @@
 ---
 import { Period } from "virtual:pf/components";
 
+import type { HtmlHeading } from "../../types/heading";
 import type { CertDetailsProps } from "../props/CertDetails";
 
 type Props = CertDetailsProps;
 const { cert, headingOffset = 0, class: className, ...attrs } = Astro.props;
 
-const Heading = `h${1 + headingOffset}`;
+const Heading = `h${1 + headingOffset}` as HtmlHeading;
 ---
 
 <div class:list={["pf-cert-details", className]} {...attrs}>
 	<div class="cert-header">
-		<Heading>{cert.name}</Heading>
+		<Heading id={cert.id}>{cert.name}</Heading>
 		{cert.field ? <span class="print-only">({cert.field})</span> : undefined}
 		<span class="meta print-only">
 			<Period period={cert.period} />

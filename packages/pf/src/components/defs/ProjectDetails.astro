@@ -1,17 +1,18 @@
 ---
 import { Anchor, TechStack } from "virtual:pf/components";
 
+import type { HtmlHeading } from "../../types/heading";
 import type { ProjectDetailsProps } from "../props/ProjectDetails";
 
 type Props = ProjectDetailsProps;
 const { project, headingOffset = 0, class: className, ...attrs } = Astro.props;
 
-const Heading = `h${1 + headingOffset}`;
+const Heading = `h${1 + headingOffset}` as HtmlHeading;
 ---
 
 <div class:list={["pf-project-details", className]} {...attrs}>
 	<div class="project-header">
-		<Heading>{project.name}</Heading>
+		<Heading id={project.id}>{project.name}</Heading>
 		{
 			project.technologies.length ? (
 				<TechStack
