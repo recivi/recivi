@@ -1,5 +1,5 @@
 ---
-import { Period } from "virtual:pf/components";
+import { Period, PfDate } from "virtual:pf/components";
 
 import type { HtmlHeading } from "../../types/heading";
 import type { CertDetailsProps } from "../props/CertDetails";
@@ -15,7 +15,13 @@ const Heading = `h${1 + headingOffset}` as HtmlHeading;
 		<Heading id={cert.id}>{cert.name}</Heading>
 		{cert.field ? <span class="print-only">({cert.field})</span> : undefined}
 		<span class="meta print-only">
-			<Period period={cert.period} />
+			{
+				cert.period ? (
+					<Period period={cert.period} />
+				) : cert.issue ? (
+					<PfDate date={cert.issue} />
+				) : undefined
+			}
 		</span>
 	</div>
 
