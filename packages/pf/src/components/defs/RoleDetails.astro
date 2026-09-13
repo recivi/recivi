@@ -18,11 +18,21 @@ const Heading = `h${1 + headingOffset}` as HtmlHeading;
 		<Heading id={role.id}>
 			{role.name}
 			{
-				role.teams.length ? (
-					<span class="print-only">&nbsp;({getArrayDisplay(role.teams)})</span>
-				) : undefined
+				role.type && role.type !== "full-time"
+					? ` (${formatRoleType(role.type)})`
+					: undefined
 			}
 		</Heading>
+		{
+			role.teams.length ? (
+				<span class="teams print-only">
+					<span class="sep" aria-hidden="true">
+						·
+					</span>
+					{getArrayDisplay(role.teams)}
+				</span>
+			) : undefined
+		}
 		{
 			role.period ? (
 				<span class="meta print-only">
@@ -120,7 +130,17 @@ const Heading = `h${1 + headingOffset}` as HtmlHeading;
 				:root[data-media="print"] & {
 					display: flex;
 					align-items: center;
-					justify-content: space-between;
+
+					.teams {
+						.sep {
+							margin-inline: calc(2 * var(--pf-spacing));
+						}
+					}
+
+					.meta {
+						margin-inline-start: auto;
+						color: var(--pf-color-fg-subtle);
+					}
 				}
 			}
 		}
