@@ -13,10 +13,21 @@ type Props = PrintProps;
 const { title = "Print", ...attrs } = Astro.props;
 
 const creditsCss = config.showCredits
-	? `@layer pf-props {
-	:root {
-		--pf-print-credits-left: "Built with Récivi";
-		--pf-print-credits-right: "https://recivi.dhruvkb.dev";
+	? `@layer pf-media {
+	@page {
+		@bottom-center {
+			content: "Built with Récivi";
+			color: var(--pf-color-fg-subtle);
+			text-align: right;
+		}
+
+		@bottom-right {
+			content: "recivi.pages.dev";
+			color: var(--pf-color-fg-subtle);
+			font-family: var(--pf-font-family-monospace);
+			font-size: var(--pf-font-size-monospace);
+			width: fit-content;
+		}
 	}
 }`
 	: "";
