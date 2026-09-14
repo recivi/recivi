@@ -6,7 +6,7 @@ const pdfJob: CaptureJob = {
 	capture: async ({ page, outputPath }) => {
 		await page.pdf({
 			path: outputPath,
-			format: "A4",
+			preferCSSPageSize: true,
 			printBackground: true,
 		});
 	},
