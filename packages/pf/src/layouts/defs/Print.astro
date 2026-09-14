@@ -57,7 +57,12 @@ const creditsCss = config.showCredits
 <script>
 	import { paginatePrintPreview } from "../../utils/print_preview";
 
-	void paginatePrintPreview();
+	// Event `load` always fires after `DOMContentLoaded`.
+	window.addEventListener("load", async () => {
+		const detail = await paginatePrintPreview();
+		const event = new CustomEvent("pf:paginated-print-preview", { detail });
+		document.dispatchEvent(event);
+	});
 </script>
 
 <style>
