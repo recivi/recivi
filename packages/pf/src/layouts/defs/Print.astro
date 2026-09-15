@@ -16,9 +16,10 @@ const creditsCss = config.showCredits
 	? `@layer pf-media {
 	@page {
 		@bottom-center {
-			content: "Built with Récivi";
+			content: "Built with Récivi:";
 			color: var(--pf-color-fg-subtle);
 			text-align: right;
+			padding-inline-end: calc(2 * var(--pf-spacing));
 		}
 
 		@bottom-right {
