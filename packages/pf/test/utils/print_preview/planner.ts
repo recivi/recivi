@@ -108,6 +108,29 @@ test("backtracks a short distance for a cleaner break", () => {
 	assert.strictEqual(plan.breaks[0]?.opportunityIndex, 0);
 });
 
+test("scales the backtrack budget to the space the page can actually hold", () => {
+	// Regression: the budget was a fraction of a whole sheet, so on a page cut
+	// short by an unbreakable block it could still reach far above the best
+	// boundary and strand content that fitted comfortably.
+	const opportunities = [
+		opportunity({ index: 0, start: 200 }),
+		opportunity({ index: 1, start: 280, score: BreakScore.VIOLATING_CONTAINER_ORPHANS_WIDOWS }),
+		opportunity({
+			index: 2,
+			start: 300,
+			afterSize: 700,
+			afterAvoidsInside: true,
+			score: BreakScore.VIOLATING_BREAK_AVOID,
+		}),
+	];
+
+	const plan = planPages(opportunities, 1000, geometry);
+
+	// The straddler caps the page at 300, leaving only 200 of usable block size,
+	// so backtracking 80 of it to 200 costs far more than the stranding it avoids.
+	assert.strictEqual(plan.breaks[0]?.opportunityIndex, 1);
+});
+
 test("never splits an avoided box while any other boundary exists", () => {
 	const opportunities = [
 		opportunity({ index: 0, start: 300 }),

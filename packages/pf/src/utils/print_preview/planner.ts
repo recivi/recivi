@@ -12,7 +12,8 @@ const positionEpsilon = 0.01;
 const maxPages = 1000;
 
 /**
- * Fraction of a page the planner may leave empty to honour a soft constraint.
+ * Fraction of a page's usable block size the planner may leave empty to honour
+ * a soft constraint.
  *
  * Block-level orphans and widows are a preference, not a rule: a fragmenter that
  * cannot split a block has no way to satisfy them exactly, so letting them push
@@ -114,7 +115,8 @@ function latest(candidates: MeasuredOpportunity[]): MeasuredOpportunity | undefi
  */
 function selectBreak(
 	candidates: MeasuredOpportunity[],
-	geometry: PageGeometry,
+	offset: number,
+	bounds: PageBounds,
 ): MeasuredOpportunity | undefined {
 	const forced = candidates.find((candidate) => candidate.isForced);
 	if (forced) return forced;
@@ -127,7 +129,12 @@ function selectBreak(
 	const last = latest(pool);
 	if (!last || last.score === BreakScore.PERFECT) return last;
 
-	const limit = last.start - maxSoftBacktrack * geometry.printableBlockSize;
+	// Budget the backtrack against the block size this page actually holds, not
+	// against a whole sheet. A straddling unbreakable block can cap a page well
+	// short of its end, and a tenth of a full sheet is then most of the room that
+	// is left — enough to strand content that fitted comfortably.
+	const usableBlockSize = last.start + offset - bounds.pageStart;
+	const limit = last.start - maxSoftBacktrack * usableBlockSize;
 	const cleaner = pool.filter(
 		(candidate) => candidate.score < last.score && candidate.start >= limit,
 	);
@@ -175,7 +182,7 @@ export function planPages(
 
 		// A straddling unbreakable element caps how far this page may fill.
 		const straddler = findStraddler(onThisPage, offset, bounds, geometry);
-		const chosen = forced ?? selectBreak(capTo(onThisPage, straddler), geometry);
+		const chosen = forced ?? selectBreak(capTo(onThisPage, straddler), offset, bounds);
 
 		if (!chosen) {
 			// Nothing legal on this page. Let it overflow rather than loop.
