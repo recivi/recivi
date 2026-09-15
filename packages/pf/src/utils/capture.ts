@@ -78,11 +78,19 @@ async function capturePage(
 	browser: Browser,
 	pathname: string,
 ) {
+	const url = `${baseUrl}${prefixBase(projectContext, pathname)}`;
+
 	const page = await browser.newPage();
+	// A page that fails in the browser is still captured, so these are the only
+	// signal that the resulting file may be wrong.
+	page.on("pageerror", (error) => logger.warn(`${url}: ${String(error)}`));
+	page.on("console", (message) => {
+		if (message.type() === "error") logger.warn(`${url}: ${message.text()}`);
+	});
+
 	try {
 		await job.preparePage?.(page);
 
-		const url = `${baseUrl}${prefixBase(projectContext, pathname)}`;
 		await page.goto(url, { waitUntil: "networkidle0" });
 
 		const body = await page.waitForSelector("body");
