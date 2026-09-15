@@ -27,6 +27,7 @@ export interface CaptureJob {
 	label: string;
 	matches: (pathname: string) => boolean;
 	preparePage?: (page: Page) => Promise<void>;
+	wait?: ((page: Page) => Promise<void>) | undefined;
 	capture: (context: CaptureContext) => Promise<void>;
 }
 
@@ -96,6 +97,15 @@ async function capturePage(
 		const body = await page.waitForSelector("body");
 		if (!body) {
 			throw new Error(`Could not find <body> at ${url}`);
+		}
+
+		if (job.wait) {
+			try {
+				await job.wait(page);
+			} catch (error) {
+				// The page never settled, so the capture below may be incomplete.
+				logger.warn(`Gave up waiting for ${url}, capturing anyway: ${String(error)}`);
+			}
 		}
 
 		// Replace the temporary directory page with the captured file.
