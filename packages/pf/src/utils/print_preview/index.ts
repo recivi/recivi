@@ -36,14 +36,31 @@ export interface PrintPreviewDiagnostics extends PlanDiagnostics {
 	isClean: boolean;
 }
 
-/** Wait until intrinsic resource sizes can no longer change the initial layout. */
-async function waitForInitialLayout(document: Document, view: Window): Promise<void> {
+/**
+ * Wait until intrinsic resource sizes can no longer change the initial layout.
+ *
+ * Pagination measures the document, so it must run after images without
+ * intrinsic dimensions and webfonts have settled; measuring earlier reports a
+ * shorter document and plans too few pages. This is the only DOM-event-aware
+ * part of pagination, kept separate so that `paginatePrintPreview` stays a
+ * plain measure-plan-apply pass that a caller can repeat at will.
+ *
+ * @param document the document to wait on, defaulting to the global one
+ */
+export async function waitForInitialLayout(
+	document: Document | undefined = globalThis.document,
+): Promise<void> {
+	const view = document?.defaultView;
+	if (!document || !view) return;
+
+	// Only `complete` means `load` has already fired; a deferred module script
+	// runs at `interactive`, so checking for `loading` here would skip the wait.
 	const documentLoaded =
-		document.readyState === "loading"
-			? new Promise<void>((resolve) => {
+		document.readyState === "complete"
+			? Promise.resolve()
+			: new Promise<void>((resolve) => {
 					view.addEventListener("load", () => resolve(), { once: true });
-				})
-			: Promise.resolve();
+				});
 	await Promise.all([document.fonts.ready, documentLoaded]);
 }
 
@@ -56,19 +73,21 @@ async function waitForInitialLayout(document: Document, view: Window): Promise<v
  * and the resulting plan is written back in a single batch. Print media is
  * unaffected, since both this and its companion styles are screen-scoped.
  *
+ * The caller owns readiness: await `waitForInitialLayout` first, or the
+ * measurements will be taken against a layout that images and fonts can still
+ * change.
+ *
  * @param options optional root and content overrides, primarily for custom layouts
  * @returns pagination statistics, or `undefined` when pagination does not apply
  */
-export async function paginatePrintPreview(
+export function paginatePrintPreview(
 	options: PrintPreviewPaginationOptions = {},
-): Promise<PrintPreviewPaginationResult | undefined> {
+): PrintPreviewPaginationResult | undefined {
 	const document =
 		options.root?.ownerDocument ?? options.content?.ownerDocument ?? globalThis.document;
 	const view = document?.defaultView;
 
 	if (!document || !view?.matchMedia("screen").matches) return;
-
-	await waitForInitialLayout(document, view);
 
 	const root = options.root ?? document.body;
 	const content = options.content ?? root.querySelector<HTMLElement>(contentSelector);

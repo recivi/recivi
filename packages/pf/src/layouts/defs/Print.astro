@@ -55,14 +55,18 @@ const creditsCss = config.showCredits
 </Root>
 
 <script>
-	import { paginatePrintPreview } from "../../utils/print_preview";
+	import {
+		paginatePrintPreview,
+		waitForInitialLayout,
+	} from "../../utils/print_preview";
 
-	// Event `load` always fires after `DOMContentLoaded`.
-	window.addEventListener("load", async () => {
-		const detail = await paginatePrintPreview();
-		const event = new CustomEvent("pf:paginated-print-preview", { detail });
-		document.dispatchEvent(event);
-	});
+	// Resolves on `load`, so every listener subscribed while the consumers'
+	// module scripts evaluated is in place before the dispatch below. A
+	// consumer that subscribes after its own `await` misses the event.
+	await waitForInitialLayout();
+	const detail = paginatePrintPreview();
+	const event = new CustomEvent("pf:paginated-print-preview", { detail });
+	document.dispatchEvent(event);
 </script>
 
 <style>
