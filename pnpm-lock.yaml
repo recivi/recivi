@@ -90,7 +90,7 @@ importers:
         specifier: ^0.9.10
         version: 0.9.10(prettier-plugin-astro@0.14.1)(prettier@3.9.6)(typescript@6.0.3)
       '@recivi/pf':
-        specifier: ^0.0.7
+        specifier: ^0.0.8
         version: link:../../packages/pf
       '@recivi/schema':
         specifier: ^0.0.7
