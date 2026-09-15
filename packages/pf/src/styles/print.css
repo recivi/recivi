@@ -45,12 +45,6 @@
 		}
 	}
 
-	[data-pf-print-page-break-offset] {
-		@media screen {
-			margin-block-start: var(--pf-print-page-break-offset);
-		}
-	}
-
 	/* Block elements */
 
 	p,
@@ -93,6 +87,22 @@
 		@media screen {
 			text-decoration: underline;
 			text-decoration-color: var(--pf-color-anchor-new);
+		}
+	}
+}
+
+/*
+ * The pagination offset must outrank component margins. Components live in the
+ * `pf-components` layer, which is ordered after `pf-media`, so a rule placed
+ * there will silently lose to the components' own block margin rules.
+ *
+ * The layer `pf-overrides` comes after `pf-components` so this rule belongs in
+ * that layer.
+ */
+@layer pf-overrides {
+	[data-pf-print-page-break-offset] {
+		@media screen {
+			margin-block-start: var(--pf-print-page-break-offset);
 		}
 	}
 }
