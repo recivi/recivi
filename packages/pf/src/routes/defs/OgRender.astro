@@ -52,11 +52,11 @@ const { title, description, breadcrumbs, right } = Astro.props;
 ---
 
 <Og>
-	<div class="header">
+	<header>
 		<span class="home">{config.title ?? reciviData.bio.name}</span>
 		{breadcrumbs ? <span class="breadcrumbs">/{breadcrumbs}</span> : undefined}
 		<span class="right" set:html={right} />
-	</div>
+	</header>
 
 	<main>
 		<div class="title">
@@ -69,12 +69,12 @@ const { title, description, breadcrumbs, right } = Astro.props;
 
 <style>
 	@layer pf-components {
-		.header,
+		header,
 		main {
 			padding: calc(4 * var(--pf-spacing)) calc(8 * var(--pf-spacing));
 		}
 
-		.header {
+		header {
 			display: flex;
 			align-items: center;
 			border-block-end: 1px solid var(--pf-color-border);
@@ -83,6 +83,7 @@ const { title, description, breadcrumbs, right } = Astro.props;
 		}
 
 		.home {
+			font-family: var(--pf-font-family-display);
 			font-weight: 700;
 		}
 
@@ -94,6 +95,8 @@ const { title, description, breadcrumbs, right } = Astro.props;
 			margin-block-end: calc(4 * var(--pf-spacing));
 			color: var(--pf-color-accent);
 			font-weight: 600;
+			line-height: var(--pf-line-height-tight);
+			font-family: var(--pf-font-family-display);
 			font-size: var(--pf-font-size-p5);
 		}
 
