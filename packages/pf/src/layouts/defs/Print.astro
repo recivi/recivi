@@ -60,13 +60,27 @@ const creditsCss = config.showCredits
 		waitForInitialLayout,
 	} from "../../utils/print_preview";
 
-	// Resolves on `load`, so every listener subscribed while the consumers'
-	// module scripts evaluated is in place before the dispatch below. A
-	// consumer that subscribes after its own `await` misses the event.
-	await waitForInitialLayout();
-	const detail = paginatePrintPreview();
-	const event = new CustomEvent("pf:paginated-print-preview", { detail });
-	document.dispatchEvent(event);
+	try {
+		// Resolves on `load`, so every listener subscribed while the consumers'
+		// module scripts evaluated is in place before the dispatch below. A
+		// consumer that subscribes after its own `await` misses the event.
+		await waitForInitialLayout();
+		const detail = paginatePrintPreview();
+		const event = new CustomEvent("pf:paginated-print-preview", { detail });
+		// Unlike "native" events, which the browser fires by queuing a task on
+		// the event loop, `dispatchEvent` invokes all applicable event handlers
+		// synchronously before returning. So we can immediately set the settled
+		// flag on `window`.
+		document.dispatchEvent(event);
+	} catch (error) {
+		// The capture proceeds either way, so leave a trace of why the preview
+		// it captures is unpaginated. Settled must not imply succeeded.
+		console.error("Could not paginate the print preview.", error);
+	} finally {
+		// The PDF capture job polls this flag so we must set it on every path to
+		// avoid wasting the full timeout time.
+		window.pfPrintPreviewSettled = true;
+	}
 </script>
 
 <style>

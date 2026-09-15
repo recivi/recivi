@@ -4,6 +4,7 @@
 // directives or comments.
 //
 // oxlint-disable typescript/triple-slash-reference
+/// <reference path="./global.d.ts" />
 /// <reference path="./virtual.d.ts"/>
 /// <reference path="./layouts.d.ts"/>
 /// <reference path="./components.d.ts"/>
